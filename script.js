@@ -370,18 +370,125 @@ class AudioManager {
     }
 }
 
-// State Management
+// Enhanced State Management with Teacher Analytics
 class StateManager {
     constructor() {
         this.userProgress = {
             points: 0,
             streak: 0,
             lastVisit: null,
-            techniques: {}
+            techniques: {},
+            analytics: {
+                totalTimeSpent: 0,
+                sessionsCompleted: 0,
+                averageAccuracy: 0,
+                timeByTechnique: {},
+                dailyActivity: {},
+                weakAreas: [],
+                strongAreas: []
+            }
         };
         this.currentTechniqueId = null;
         this.activitySession = {};
+        this.sessionStartTime = null;
+        this.difficultySettings = {
+            questionsPerSession: 5,
+            passingScore: 0.8,
+            enableHints: true,
+            autoAdvance: true
+        };
         this.loadProgress();
+        this.loadDifficultySettings();
+    }
+
+    startSession() {
+        this.sessionStartTime = Date.now();
+    }
+
+    endSession(techniqueId, correct, total) {
+        if (!this.sessionStartTime) return;
+        
+        const sessionTime = Date.now() - this.sessionStartTime;
+        const today = new Date().toDateString();
+        
+        // Update total time
+        this.userProgress.analytics.totalTimeSpent += sessionTime;
+        
+        // Update technique-specific time
+        if (!this.userProgress.analytics.timeByTechnique[techniqueId]) {
+            this.userProgress.analytics.timeByTechnique[techniqueId] = 0;
+        }
+        this.userProgress.analytics.timeByTechnique[techniqueId] += sessionTime;
+        
+        // Update daily activity
+        if (!this.userProgress.analytics.dailyActivity[today]) {
+            this.userProgress.analytics.dailyActivity[today] = {
+                timeSpent: 0,
+                sessionsCompleted: 0,
+                accuracy: []
+            };
+        }
+        this.userProgress.analytics.dailyActivity[today].timeSpent += sessionTime;
+        this.userProgress.analytics.dailyActivity[today].sessionsCompleted++;
+        
+        if (total > 0) {
+            const accuracy = correct / total;
+            this.userProgress.analytics.dailyActivity[today].accuracy.push(accuracy);
+            this.updateAccuracyAnalytics(techniqueId, accuracy);
+        }
+        
+        this.userProgress.analytics.sessionsCompleted++;
+        this.sessionStartTime = null;
+        this.saveProgress();
+    }
+
+    updateAccuracyAnalytics(techniqueId, accuracy) {
+        // Update average accuracy
+        const totalAccuracies = Object.values(this.userProgress.analytics.dailyActivity)
+            .flatMap(day => day.accuracy);
+        this.userProgress.analytics.averageAccuracy = 
+            totalAccuracies.reduce((sum, acc) => sum + acc, 0) / totalAccuracies.length;
+        
+        // Identify weak and strong areas
+        const techniqueAccuracies = {};
+        Object.values(this.userProgress.analytics.dailyActivity).forEach(day => {
+            day.accuracy.forEach(acc => {
+                if (!techniqueAccuracies[techniqueId]) techniqueAccuracies[techniqueId] = [];
+                techniqueAccuracies[techniqueId].push(acc);
+            });
+        });
+        
+        this.userProgress.analytics.weakAreas = Object.entries(techniqueAccuracies)
+            .filter(([_, accs]) => accs.reduce((sum, acc) => sum + acc, 0) / accs.length < 0.7)
+            .map(([id, _]) => id);
+            
+        this.userProgress.analytics.strongAreas = Object.entries(techniqueAccuracies)
+            .filter(([_, accs]) => accs.reduce((sum, acc) => sum + acc, 0) / accs.length > 0.9)
+            .map(([id, _]) => id);
+    }
+
+    saveDifficultySettings() {
+        try {
+            localStorage.setItem('phonicsDifficultySettings', JSON.stringify(this.difficultySettings));
+        } catch (error) {
+            console.error('Failed to save difficulty settings:', error);
+        }
+    }
+
+    loadDifficultySettings() {
+        try {
+            const saved = localStorage.getItem('phonicsDifficultySettings');
+            if (saved) {
+                this.difficultySettings = { ...this.difficultySettings, ...JSON.parse(saved) };
+            }
+        } catch (error) {
+            console.error('Failed to load difficulty settings:', error);
+        }
+    }
+
+    updateDifficultySetting(key, value) {
+        this.difficultySettings[key] = value;
+        this.saveDifficultySettings();
     }
 
     saveProgress() {
@@ -396,7 +503,19 @@ class StateManager {
         try {
             const saved = localStorage.getItem('modernPhonicsProgress');
             if (saved) {
-                this.userProgress = JSON.parse(saved);
+                this.userProgress = { ...this.userProgress, ...JSON.parse(saved) };
+                // Ensure analytics object exists for older saves
+                if (!this.userProgress.analytics) {
+                    this.userProgress.analytics = {
+                        totalTimeSpent: 0,
+                        sessionsCompleted: 0,
+                        averageAccuracy: 0,
+                        timeByTechnique: {},
+                        dailyActivity: {},
+                        weakAreas: [],
+                        strongAreas: []
+                    };
+                }
             }
             this.updateStreak();
         } catch (error) {
@@ -471,9 +590,547 @@ class StateManager {
         const prevProgress = this.getTechniqueProgress(prevTechnique.id);
         return prevProgress.mastered;
     }
+
+    generateProgressReport() {
+        const analytics = this.userProgress.analytics;
+        const totalHours = Math.round(analytics.totalTimeSpent / (1000 * 60 * 60) * 10) / 10;
+        const avgAccuracy = Math.round(analytics.averageAccuracy * 100);
+        
+        return {
+            totalTimeSpent: totalHours,
+            sessionsCompleted: analytics.sessionsCompleted,
+            averageAccuracy: avgAccuracy,
+            currentStreak: this.userProgress.streak,
+            totalPoints: this.userProgress.points,
+            weakAreas: analytics.weakAreas,
+            strongAreas: analytics.strongAreas,
+            techniqueProgress: Object.keys(this.userProgress.techniques).map(id => ({
+                id,
+                name: id.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                mastered: this.userProgress.techniques[id].mastered,
+                timeSpent: Math.round((analytics.timeByTechnique[id] || 0) / (1000 * 60)),
+                completedSteps: Object.values(this.userProgress.techniques[id].subSkills).flat().length
+            }))
+        };
+    }
 }
 
-// Enhanced UI Management
+// Teacher Dashboard Manager
+class TeacherDashboard {
+    constructor(dataManager, stateManager) {
+        this.data = dataManager;
+        this.state = stateManager;
+        this.isOpen = false;
+        this.currentView = 'overview';
+    }
+
+    toggle() {
+        this.isOpen = !this.isOpen;
+        if (this.isOpen) {
+            this.render();
+            document.getElementById('teacher-dashboard').classList.remove('hidden');
+        } else {
+            document.getElementById('teacher-dashboard').classList.add('hidden');
+        }
+    }
+
+    render() {
+        const dashboard = document.getElementById('teacher-dashboard');
+        const report = this.state.generateProgressReport();
+        
+        dashboard.innerHTML = `
+            <div class="glass-card p-8 max-w-6xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">📊 Teacher Dashboard</h2>
+                    <button id="close-dashboard" class="btn-secondary">✕ إغلاق</button>
+                </div>
+                
+                <!-- Navigation Tabs -->
+                <div class="flex gap-4 mb-8 border-b border-gray-200">
+                    <button class="tab-btn ${this.currentView === 'overview' ? 'active' : ''}" data-view="overview">📈 نظرة عامة</button>
+                    <button class="tab-btn ${this.currentView === 'analytics' ? 'active' : ''}" data-view="analytics">📊 التحليلات</button>
+                    <button class="tab-btn ${this.currentView === 'settings' ? 'active' : ''}" data-view="settings">⚙️ إعدادات الصعوبة</button>
+                    <button class="tab-btn ${this.currentView === 'reports' ? 'active' : ''}" data-view="reports">📋 التقارير</button>
+                </div>
+
+                <!-- Content Area -->
+                <div id="dashboard-content">
+                    ${this.renderCurrentView(report)}
+                </div>
+            </div>
+        `;
+
+        this.attachEventListeners();
+    }
+
+    renderCurrentView(report) {
+        switch (this.currentView) {
+            case 'overview':
+                return this.renderOverview(report);
+            case 'analytics':
+                return this.renderAnalytics(report);
+            case 'settings':
+                return this.renderSettings();
+            case 'reports':
+                return this.renderReports(report);
+            default:
+                return this.renderOverview(report);
+        }
+    }
+
+    renderOverview(report) {
+        const mastered = report.techniqueProgress.filter(t => t.mastered).length;
+        const total = report.techniqueProgress.length;
+        const completionRate = Math.round((mastered / total) * 100);
+
+        return `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Stats Cards -->
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value">${report.totalTimeSpent}h</div>
+                    <div class="stat-label">إجمالي وقت التعلم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">${report.averageAccuracy}%</div>
+                    <div class="stat-label">متوسط الدقة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value">${completionRate}%</div>
+                    <div class="stat-label">معدل الإتمام</div>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">📚 تقدم المهارات</h3>
+                    <div class="space-y-4">
+                        ${report.techniqueProgress.map(tech => `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">${tech.mastered ? '✅' : '⏳'}</span>
+                                    <div>
+                                        <div class="font-semibold">${tech.name}</div>
+                                        <div class="text-sm text-gray-600">${tech.timeSpent} دقيقة</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-lg">${tech.completedSteps}/12</div>
+                                    <div class="text-sm text-gray-500">خطوة</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">📋 ملخص الأداء</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                            <span class="font-semibold">الجلسات المكتملة</span>
+                            <span class="text-xl font-bold text-blue-600">${report.sessionsCompleted}</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                            <span class="font-semibold">النقاط المكتسبة</span>
+                            <span class="text-xl font-bold text-orange-600">${report.totalPoints}</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                            <span class="font-semibold">سلسلة الأيام</span>
+                            <span class="text-xl font-bold text-green-600">${report.currentStreak} أيام</span>
+                        </div>
+                    </div>
+                    
+                    ${report.weakAreas.length > 0 ? `
+                        <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <h4 class="font-bold text-red-800 mb-2">🔍 مناطق تحتاج تحسين:</h4>
+                            <div class="text-sm text-red-600">
+                                ${report.weakAreas.map(area => area.replace(/_/g, ' ')).join('، ')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${report.strongAreas.length > 0 ? `
+                        <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <h4 class="font-bold text-green-800 mb-2">⭐ نقاط القوة:</h4>
+                            <div class="text-sm text-green-600">
+                                ${report.strongAreas.map(area => area.replace(/_/g, ' ')).join('، ')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    renderAnalytics(report) {
+        const dailyData = this.state.userProgress.analytics.dailyActivity;
+        const last7Days = this.getLast7DaysData(dailyData);
+
+        return `
+            <div class="space-y-8">
+                <!-- Time Analytics -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">📊 تحليل الوقت</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">آخر 7 أيام</h4>
+                            <div class="space-y-2">
+                                ${last7Days.map(day => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm">${day.date}</span>
+                                        <span class="font-bold">${day.minutes}د</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-3">الوقت حسب المهارة</h4>
+                            <div class="space-y-2">
+                                ${Object.entries(this.state.userProgress.analytics.timeByTechnique || {}).map(([tech, time]) => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <span class="text-sm">${tech.replace(/_/g, ' ')}</span>
+                                        <span class="font-bold">${Math.round(time / (1000 * 60))}د</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accuracy Trends -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">🎯 اتجاهات الدقة</h3>
+                    <div class="text-center p-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                        <div class="text-4xl font-bold text-purple-600 mb-2">${report.averageAccuracy}%</div>
+                        <div class="text-lg text-gray-600">متوسط الدقة الإجمالي</div>
+                        <div class="mt-4 text-sm text-gray-500">
+                            ${report.averageAccuracy >= 90 ? '🏆 أداء ممتاز!' : 
+                              report.averageAccuracy >= 75 ? '👍 أداء جيد' : 
+                              '📈 يحتاج المزيد من التدريب'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    renderSettings() {
+        const settings = this.state.difficultySettings;
+        
+        return `
+            <div class="glass-card p-6 max-w-2xl">
+                <h3 class="text-xl font-bold mb-6">⚙️ إعدادات الصعوبة والتحكم</h3>
+                
+                <div class="space-y-6">
+                    <!-- Questions per session -->
+                    <div class="setting-item">
+                        <label class="block text-sm font-semibold mb-2">عدد الأسئلة في كل جلسة</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="questions-slider" min="3" max="10" value="${settings.questionsPerSession}" 
+                                   class="flex-grow">
+                            <span id="questions-value" class="font-bold text-lg w-8">${settings.questionsPerSession}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">المزيد من الأسئلة = تدريب أطول</p>
+                    </div>
+
+                    <!-- Passing score -->
+                    <div class="setting-item">
+                        <label class="block text-sm font-semibold mb-2">نسبة النجاح المطلوبة</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="passing-slider" min="0.5" max="1" step="0.1" value="${settings.passingScore}" 
+                                   class="flex-grow">
+                            <span id="passing-value" class="font-bold text-lg w-12">${Math.round(settings.passingScore * 100)}%</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">النسبة المطلوبة للانتقال للمرحلة التالية</p>
+                    </div>
+
+                    <!-- Enable hints -->
+                    <div class="setting-item">
+                        <label class="flex items-center gap-3">
+                            <input type="checkbox" id="hints-toggle" ${settings.enableHints ? 'checked' : ''} 
+                                   class="w-5 h-5">
+                            <span class="font-semibold">تفعيل التلميحات</span>
+                        </label>
+                        <p class="text-sm text-gray-600 mt-1">إظهار تلميحات مساعدة أثناء الأنشطة</p>
+                    </div>
+
+                    <!-- Auto advance -->
+                    <div class="setting-item">
+                        <label class="flex items-center gap-3">
+                            <input type="checkbox" id="auto-advance-toggle" ${settings.autoAdvance ? 'checked' : ''} 
+                                   class="w-5 h-5">
+                            <span class="font-semibold">الانتقال التلقائي</span>
+                        </label>
+                        <p class="text-sm text-gray-600 mt-1">الانتقال التلقائي للسؤال التالي بعد الإجابة الصحيحة</p>
+                    </div>
+
+                    <!-- Reset progress -->
+                    <div class="setting-item border-t pt-6">
+                        <h4 class="font-semibold text-red-600 mb-3">⚠️ إعادة تعيين</h4>
+                        <div class="flex gap-3">
+                            <button id="reset-progress-btn" class="btn-secondary bg-red-50 text-red-600 border-red-200">
+                                🔄 إعادة تعيين التقدم
+                            </button>
+                            <button id="export-data-btn" class="btn-secondary">
+                                📤 تصدير البيانات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    renderReports(report) {
+        return `
+            <div class="space-y-6">
+                <!-- Report Summary -->
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">📋 تقرير شامل</h3>
+                        <button id="download-report-btn" class="btn-primary">📥 تحميل التقرير</button>
+                    </div>
+                    
+                    <div class="prose max-w-none">
+                        <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                            <h4 class="text-lg font-bold mb-4">ملخص الأداء</h4>
+                            <ul class="space-y-2">
+                                <li>📅 <strong>تاريخ التقرير:</strong> ${new Date().toLocaleDateString('ar-SA')}</li>
+                                <li>⏱️ <strong>إجمالي وقت التعلم:</strong> ${report.totalTimeSpent} ساعة</li>
+                                <li>🎯 <strong>متوسط الدقة:</strong> ${report.averageAccuracy}%</li>
+                                <li>🏆 <strong>المهارات المتقنة:</strong> ${report.techniqueProgress.filter(t => t.mastered).length}/${report.techniqueProgress.length}</li>
+                                <li>🔥 <strong>أطول سلسلة أيام:</strong> ${report.currentStreak} يوم</li>
+                            </ul>
+                        </div>
+
+                        <!-- Detailed breakdown -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-lg font-bold mb-3">تفصيل المهارات</h4>
+                                <div class="space-y-3">
+                                    ${report.techniqueProgress.map(tech => `
+                                        <div class="p-3 border rounded-lg ${tech.mastered ? 'bg-green-50 border-green-200' : 'bg-gray-50'}">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-semibold">${tech.name}</span>
+                                                <span class="text-sm ${tech.mastered ? 'text-green-600' : 'text-gray-500'}">
+                                                    ${tech.mastered ? 'مكتمل ✅' : `${tech.completedSteps}/12 خطوة`}
+                                                </span>
+                                            </div>
+                                            <div class="text-sm text-gray-600 mt-1">وقت التدريب: ${tech.timeSpent} دقيقة</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-lg font-bold mb-3">التوصيات</h4>
+                                <div class="space-y-3">
+                                    ${this.generateRecommendations(report).map(rec => `
+                                        <div class="p-3 border rounded-lg ${rec.type === 'strength' ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}">
+                                            <div class="font-semibold">${rec.title}</div>
+                                            <div class="text-sm text-gray-600 mt-1">${rec.description}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    generateRecommendations(report) {
+        const recommendations = [];
+        
+        if (report.averageAccuracy < 70) {
+            recommendations.push({
+                type: 'improvement',
+                title: '🎯 تحسين الدقة',
+                description: 'ينصح بتكرار التمارين والتركيز على المهارات الأساسية'
+            });
+        }
+        
+        if (report.totalTimeSpent < 5) {
+            recommendations.push({
+                type: 'improvement',
+                title: '⏰ زيادة وقت التدريب',
+                description: 'المزيد من الممارسة اليومية سيحسن النتائج'
+            });
+        }
+        
+        if (report.strongAreas.length > 0) {
+            recommendations.push({
+                type: 'strength',
+                title: '⭐ نقاط القوة',
+                description: `أداء ممتاز في: ${report.strongAreas.join('، ')}`
+            });
+        }
+        
+        if (report.currentStreak > 7) {
+            recommendations.push({
+                type: 'strength',
+                title: '🔥 التزام ممتاز',
+                description: 'الاستمرارية في التعلم تؤتي ثمارها!'
+            });
+        }
+        
+        return recommendations;
+    }
+
+    getLast7DaysData(dailyData) {
+        const last7Days = [];
+        const today = new Date();
+        
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toDateString();
+            const dayData = dailyData[dateStr];
+            
+            last7Days.push({
+                date: date.toLocaleDateString('ar-SA', { weekday: 'short', month: 'short', day: 'numeric' }),
+                minutes: dayData ? Math.round(dayData.timeSpent / (1000 * 60)) : 0
+            });
+        }
+        
+        return last7Days;
+    }
+
+    attachEventListeners() {
+        // Tab navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.currentView = btn.dataset.view;
+                this.render();
+            });
+        });
+
+        // Close button
+        document.getElementById('close-dashboard')?.addEventListener('click', () => {
+            this.toggle();
+        });
+
+        // Settings controls
+        this.attachSettingsListeners();
+        this.attachReportListeners();
+    }
+
+    attachSettingsListeners() {
+        const questionsSlider = document.getElementById('questions-slider');
+        const questionsValue = document.getElementById('questions-value');
+        const passingSlider = document.getElementById('passing-slider');
+        const passingValue = document.getElementById('passing-value');
+        const hintsToggle = document.getElementById('hints-toggle');
+        const autoAdvanceToggle = document.getElementById('auto-advance-toggle');
+        const resetBtn = document.getElementById('reset-progress-btn');
+        const exportBtn = document.getElementById('export-data-btn');
+
+        questionsSlider?.addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            questionsValue.textContent = value;
+            this.state.updateDifficultySetting('questionsPerSession', value);
+        });
+
+        passingSlider?.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            passingValue.textContent = Math.round(value * 100) + '%';
+            this.state.updateDifficultySetting('passingScore', value);
+        });
+
+        hintsToggle?.addEventListener('change', (e) => {
+            this.state.updateDifficultySetting('enableHints', e.target.checked);
+        });
+
+        autoAdvanceToggle?.addEventListener('change', (e) => {
+            this.state.updateDifficultySetting('autoAdvance', e.target.checked);
+        });
+
+        resetBtn?.addEventListener('click', () => {
+            if (confirm('هل أنت متأكد من إعادة تعيين جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                localStorage.removeItem('modernPhonicsProgress');
+                location.reload();
+            }
+        });
+
+        exportBtn?.addEventListener('click', () => {
+            this.exportData();
+        });
+    }
+
+    attachReportListeners() {
+        const downloadBtn = document.getElementById('download-report-btn');
+        downloadBtn?.addEventListener('click', () => {
+            this.downloadReport();
+        });
+    }
+
+    exportData() {
+        const data = {
+            progress: this.state.userProgress,
+            settings: this.state.difficultySettings,
+            exportDate: new Date().toISOString()
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `phonics-data-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    downloadReport() {
+        const report = this.state.generateProgressReport();
+        const reportContent = this.generateReportContent(report);
+        
+        const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `تقرير-التقدم-${new Date().toLocaleDateString('ar-SA')}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    generateReportContent(report) {
+        return `
+تقرير تقدم تعلم الأصوات الإنجليزية
+=====================================
+
+تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}
+
+ملخص الأداء:
+- إجمالي وقت التعلم: ${report.totalTimeSpent} ساعة
+- عدد الجلسات المكتملة: ${report.sessionsCompleted}
+- متوسط الدقة: ${report.averageAccuracy}%
+- النقاط المكتسبة: ${report.totalPoints}
+- أطول سلسلة أيام: ${report.currentStreak}
+
+تفصيل المهارات:
+${report.techniqueProgress.map(tech => 
+    `- ${tech.name}: ${tech.mastered ? 'مكتمل ✓' : `${tech.completedSteps}/12 خطوة`} (${tech.timeSpent} دقيقة)`
+).join('\n')}
+
+${report.strongAreas.length > 0 ? `
+نقاط القوة:
+${report.strongAreas.map(area => `- ${area.replace(/_/g, ' ')}`).join('\n')}
+` : ''}
+
+${report.weakAreas.length > 0 ? `
+مناطق تحتاج تحسين:
+${report.weakAreas.map(area => `- ${area.replace(/_/g, ' ')}`).join('\n')}
+` : ''}
+
+التوصيات:
+${this.generateRecommendations(report).map(rec => `- ${rec.title}: ${rec.description}`).join('\n')}
+        `.trim();
+    }
+}
 class UIManager {
     constructor(dataManager, stateManager, audioManager, effectsManager) {
         this.data = dataManager;
@@ -760,9 +1417,13 @@ class GameEngine {
         this.ui.elements.modal_exit_btn.style.display = 'inline-block';
 
         let questions = this.prepareQuestions(subSkill, data);
-        this.state.activitySession.questions = this.shuffleArray(questions).slice(0, 5);
+        const questionsCount = this.state.difficultySettings.questionsPerSession;
+        this.state.activitySession.questions = this.shuffleArray(questions).slice(0, questionsCount);
         this.state.activitySession.currentIndex = 0;
         this.state.activitySession.correctAnswers = 0;
+
+        // Start time tracking
+        this.state.startSession();
 
         this.renderCurrentQuestion();
     }
@@ -831,6 +1492,13 @@ class GameEngine {
             if (this.state.activitySession.currentIndex < this.state.activitySession.questions.length) {
                 this.ui.elements.modal_action_btn.textContent = "التالي ➡️";
                 this.ui.elements.modal_action_btn.onclick = () => this.renderCurrentQuestion();
+                
+                // Auto-advance if enabled
+                if (this.state.difficultySettings.autoAdvance) {
+                    setTimeout(() => {
+                        this.renderCurrentQuestion();
+                    }, 1500);
+                }
             } else {
                 this.ui.elements.modal_action_btn.textContent = "إنهاء 🎉";
                 this.ui.elements.modal_action_btn.onclick = () => this.endSession();
@@ -855,6 +1523,10 @@ class GameEngine {
             this.ui.hideModal();
             this.ui.showSuccessModal('أحسنت! لقد أكملت الدرس', '+10 نقاط ⭐');
             this.effects.soundManager.playSuccessSound();
+            
+            // End time tracking
+            this.state.endSession(techniqueId, 1, 1);
+            
             setTimeout(() => {
                 this.ui.hideSuccessModal();
                 this.ui.renderTechniqueView(techniqueId);
@@ -863,7 +1535,11 @@ class GameEngine {
         }
 
         const { correctAnswers, questions } = this.state.activitySession;
-        const pass = (correctAnswers / questions.length) >= 0.8;
+        const passingScore = this.state.difficultySettings.passingScore;
+        const pass = (correctAnswers / questions.length) >= passingScore;
+
+        // End time tracking with results
+        this.state.endSession(techniqueId, correctAnswers, questions.length);
 
         if (pass) {
             if (subSkill.isDirectDrill) {
@@ -894,6 +1570,10 @@ class GameEngine {
             }
         } else {
             this.ui.hideModal();
+            this.ui.showSuccessModal(
+                `تحتاج ${Math.round(passingScore * 100)}% للنجاح. حاول مرة أخرى!`,
+                'لا تستسلم! 💪'
+            );
         }
 
         this.state.activitySession = {};
