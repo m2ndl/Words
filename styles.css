@@ -47,20 +47,6 @@
     --gradient-success: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
 }
 
-/* Dark Theme */
-[data-theme="dark"] {
-    --primary: #8B5CF6;
-    --primary-light: #A78BFA;
-    --success: #10B981;
-    --background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
-    --gradient: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
-    --gradient-warm: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
-    --gradient-success: linear-gradient(135deg, #10B981 0%, #047857 100%);
-    --card-bg: rgba(31, 41, 55, 0.95);
-    --text-primary: #F9FAFB;
-    --text-secondary: #D1D5DB;
-}
-
 /* Base Styles */
 body {
     font-family: 'Rubik', sans-serif;
@@ -112,7 +98,6 @@ body {
 .theme-btn[data-theme="ocean"] { background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%); }
 .theme-btn[data-theme="forest"] { background: linear-gradient(135deg, #059669 0%, #064E3B 100%); }
 .theme-btn[data-theme="sunset"] { background: linear-gradient(135deg, #F59E0B 0%, #DC2626 100%); }
-.theme-btn[data-theme="dark"] { background: linear-gradient(135deg, #1F2937 0%, #111827 100%); }
 
 /* Glass Effect */
 .glass-card {
@@ -334,6 +319,23 @@ body {
 
 .btn-primary:active {
     transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #667EEA;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: white;
+    border-color: #667EEA;
+    transform: translateY(-2px);
 }
 
 /* Enhanced Step Buttons */
