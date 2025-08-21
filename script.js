@@ -133,14 +133,6 @@ class SoundManager {
         setTimeout(() => this.playTone(369.99, 0.15, 'triangle', 0.2), 150);
     }
 
-    playButtonClick() {
-        if (!this.enabled) return;
-        this.resumeAudioContext();
-        
-        // Subtle click
-        this.playTone(1000, 0.05, 'square', 0.1);
-    }
-
     playAchievement() {
         if (!this.enabled) return;
         this.resumeAudioContext();
@@ -300,10 +292,6 @@ class EffectsManager {
 
     playWrongSound() {
         this.soundManager.playWrongAnswer();
-    }
-
-    playClickSound() {
-        this.soundManager.playButtonClick();
     }
 }
 
@@ -1148,7 +1136,6 @@ class ModernPhonicsApp {
 
         elements.start_btn.addEventListener('click', () => {
             this.effectsManager.soundManager.resumeAudioContext(); // Enable audio
-            this.effectsManager.soundManager.playSuccessSound();
             this.start();
         });
         elements.back_btn.addEventListener('click', () => this.uiManager.renderSkillsGrid());
@@ -1169,11 +1156,6 @@ class ModernPhonicsApp {
         });
 
         document.addEventListener('click', (e) => {
-            // Add click sound to all buttons
-            if (e.target.closest('button')) {
-                this.effectsManager.playClickSound();
-            }
-
             const speakerButton = e.target.closest('[data-speak]');
             if (speakerButton) {
                 this.audioManager.speak(speakerButton.dataset.speak);
