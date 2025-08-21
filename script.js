@@ -81,19 +81,119 @@ class ThemeManager {
     }
 }
 
-// Enhanced Effects Manager
+// Enhanced Audio Manager with Dopamine Sounds
+class SoundManager {
+    constructor() {
+        this.audioContext = null;
+        this.enabled = true;
+        this.initAudioContext();
+    }
+
+    initAudioContext() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.log('Web Audio API not supported');
+            this.enabled = false;
+        }
+    }
+
+    async resumeAudioContext() {
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            await this.audioContext.resume();
+        }
+    }
+
+    playSuccessSound() {
+        if (!this.enabled) return;
+        this.resumeAudioContext();
+        
+        // Happy ascending notes
+        const frequencies = [523.25, 659.25, 783.99]; // C5, E5, G5
+        frequencies.forEach((freq, i) => {
+            setTimeout(() => this.playTone(freq, 0.1, 'sine'), i * 100);
+        });
+    }
+
+    playCorrectAnswer() {
+        if (!this.enabled) return;
+        this.resumeAudioContext();
+        
+        // Quick positive chirp
+        this.playTone(880, 0.15, 'sine'); // A5
+        setTimeout(() => this.playTone(1108.73, 0.1, 'sine'), 100); // C#6
+    }
+
+    playWrongAnswer() {
+        if (!this.enabled) return;
+        this.resumeAudioContext();
+        
+        // Gentle descending tone
+        this.playTone(440, 0.2, 'triangle', 0.3);
+        setTimeout(() => this.playTone(369.99, 0.15, 'triangle', 0.2), 150);
+    }
+
+    playButtonClick() {
+        if (!this.enabled) return;
+        this.resumeAudioContext();
+        
+        // Subtle click
+        this.playTone(1000, 0.05, 'square', 0.1);
+    }
+
+    playAchievement() {
+        if (!this.enabled) return;
+        this.resumeAudioContext();
+        
+        // Triumphant fanfare
+        const melody = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        melody.forEach((freq, i) => {
+            setTimeout(() => this.playTone(freq, 0.2, 'sine'), i * 150);
+        });
+        
+        // Add sparkle effect
+        setTimeout(() => {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => this.playTone(2093 + Math.random() * 200, 0.05, 'sine', 0.3), i * 50);
+            }
+        }, 600);
+    }
+
+    playTone(frequency, duration, waveType = 'sine', volume = 0.1) {
+        if (!this.audioContext || !this.enabled) return;
+
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+        oscillator.type = waveType;
+
+        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(volume, this.audioContext.currentTime + 0.01);
+        gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
+
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + duration);
+    }
+}
+
+// Toned Down Effects Manager
 class EffectsManager {
     constructor() {
         this.particleContainer = document.getElementById('particles-container');
+        this.soundManager = new SoundManager();
     }
 
-    createParticleExplosion(x, y, count = 15) {
+    createParticleExplosion(x, y, count = 8) { // Reduced from 15 to 8
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             
-            const dx = (Math.random() - 0.5) * 300;
-            const dy = (Math.random() - 0.5) * 300;
+            const dx = (Math.random() - 0.5) * 200; // Reduced from 300 to 200
+            const dy = (Math.random() - 0.5) * 200;
             
             particle.style.cssText = `
                 left: ${x}px;
@@ -117,33 +217,47 @@ class EffectsManager {
         element.style.top = `${y || window.innerHeight - 100}px`;
         
         document.body.appendChild(element);
-        setTimeout(() => element.remove(), 4000);
+        setTimeout(() => element.remove(), 3000); // Reduced from 4000 to 3000
     }
 
     createCelebrationBurst() {
-        const emojis = ['🎉', '⭐', '🎊', '✨', '🎈', '🌟', '💫', '🎁'];
+        const emojis = ['🎉', '⭐', '✨', '🌟']; // Reduced emoji variety
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
         
-        // Create particle explosion at center
-        this.createParticleExplosion(centerX, centerY, 25);
+        // Smaller particle explosion
+        this.createParticleExplosion(centerX, centerY, 12); // Reduced from 25 to 12
         
-        // Create floating emojis
-        for (let i = 0; i < 15; i++) {
+        // Fewer floating emojis
+        for (let i = 0; i < 8; i++) { // Reduced from 15 to 8
             setTimeout(() => {
-                const x = centerX + (Math.random() - 0.5) * 400;
-                const y = centerY + (Math.random() - 0.5) * 200;
+                const x = centerX + (Math.random() - 0.5) * 300; // Reduced spread
+                const y = centerY + (Math.random() - 0.5) * 150;
                 this.createFloatingEmoji(
                     emojis[Math.floor(Math.random() * emojis.length)], 
                     x, y
                 );
-            }, i * 100);
+            }, i * 120); // Slightly faster timing
         }
+        
+        // Play achievement sound
+        this.soundManager.playAchievement();
     }
 
-    createScreenShake() {
-        document.body.classList.add('shake');
-        setTimeout(() => document.body.classList.remove('shake'), 500);
+    createQuickCelebration() {
+        // Mini celebration for correct answers
+        const emojis = ['⭐', '✨'];
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                this.createFloatingEmoji(
+                    emojis[Math.floor(Math.random() * emojis.length)],
+                    window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+                    window.innerHeight / 2
+                );
+            }, i * 100);
+        }
+        
+        this.soundManager.playCorrectAnswer();
     }
 
     createSuccessRipple(element) {
@@ -180,6 +294,16 @@ class EffectsManager {
             `;
             document.head.appendChild(style);
         }
+        
+        this.soundManager.playSuccessSound();
+    }
+
+    playWrongSound() {
+        this.soundManager.playWrongAnswer();
+    }
+
+    playClickSound() {
+        this.soundManager.playButtonClick();
     }
 }
 
@@ -542,7 +666,7 @@ class UIManager {
         this.elements.success_message.textContent = message;
         this.elements.success_reward.textContent = reward;
         this.elements.success_modal.classList.remove('hidden');
-        this.effects.createCelebrationBurst();
+        // Celebration effects are now called manually where needed
     }
 
     hideSuccessModal() {
@@ -554,7 +678,9 @@ class UIManager {
         container.innerHTML = `<span class="${isCorrect ? 'text-green-500' : 'text-red-500'}">${message}</span>`;
         
         if (isCorrect) {
-            this.effects.createFloatingEmoji('⭐');
+            this.effects.createQuickCelebration(); // Use smaller celebration
+        } else {
+            this.effects.playWrongSound();
         }
     }
 }
@@ -740,6 +866,7 @@ class GameEngine {
             this.state.markStepComplete(techniqueId, subSkillId, step);
             this.ui.hideModal();
             this.ui.showSuccessModal('أحسنت! لقد أكملت الدرس', '+10 نقاط ⭐');
+            this.effects.soundManager.playSuccessSound();
             setTimeout(() => {
                 this.ui.hideSuccessModal();
                 this.ui.renderTechniqueView(techniqueId);
@@ -766,13 +893,16 @@ class GameEngine {
                 this.state.markTechniqueMastered(techniqueId);
                 this.ui.hideModal();
                 this.ui.showSuccessModal(`لقد أتقنت مهارة ${technique.name_ar}!`, `+50 نقطة 🎊`);
-                this.effects.createScreenShake();
+                // Only big celebration for mastering entire technique
+                this.effects.createCelebrationBurst();
             } else {
                 this.ui.hideModal();
                 this.ui.showSuccessModal(
                     step === 'drill' ? 'أحسنت في التمرين!' : 'نجحت في الاختبار!',
                     `+10 نقاط ⭐`
                 );
+                // Smaller celebration for regular completion
+                this.effects.soundManager.playSuccessSound();
             }
         } else {
             this.ui.hideModal();
@@ -1016,7 +1146,11 @@ class ModernPhonicsApp {
     initEventListeners() {
         const { elements } = this.uiManager;
 
-        elements.start_btn.addEventListener('click', () => this.start());
+        elements.start_btn.addEventListener('click', () => {
+            this.effectsManager.soundManager.resumeAudioContext(); // Enable audio
+            this.effectsManager.soundManager.playSuccessSound();
+            this.start();
+        });
         elements.back_btn.addEventListener('click', () => this.uiManager.renderSkillsGrid());
         elements.success_close_btn.addEventListener('click', () => {
             this.uiManager.hideSuccessModal();
@@ -1035,6 +1169,11 @@ class ModernPhonicsApp {
         });
 
         document.addEventListener('click', (e) => {
+            // Add click sound to all buttons
+            if (e.target.closest('button')) {
+                this.effectsManager.playClickSound();
+            }
+
             const speakerButton = e.target.closest('[data-speak]');
             if (speakerButton) {
                 this.audioManager.speak(speakerButton.dataset.speak);
