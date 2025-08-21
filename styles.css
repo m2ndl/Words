@@ -747,6 +747,125 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
+/* Teacher Dashboard Styles */
+.tab-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: #6B7280;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary-light);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+.setting-item {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+}
+
+.setting-item input[type="range"] {
+    height: 6px;
+    background: #E5E7EB;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.setting-item input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.setting-item input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.setting-item input[type="checkbox"] {
+    accent-color: var(--primary);
+}
+
+/* Chart placeholder styles */
+.chart-placeholder {
+    background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #6B7280;
+    min-height: 200px;
+}
+
+/* Report styles */
+.prose {
+    line-height: 1.6;
+}
+
+.prose h4 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.prose ul {
+    margin-bottom: 1rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .skills-tree {
@@ -778,6 +897,29 @@ body {
     .theme-btn {
         width: 25px;
         height: 25px;
+    }
+    
+    /* Dashboard responsive */
+    #teacher-dashboard .glass-card {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-icon {
+        font-size: 2rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .tab-btn {
+        font-size: 0.875rem;
+        padding: 6px 12px;
     }
 }
 
