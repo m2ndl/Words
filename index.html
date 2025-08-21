@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="default">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
+        <div class="theme-btn" data-theme="ocean" title="Ocean Theme"></div>
+        <div class="theme-btn" data-theme="forest" title="Forest Theme"></div>
+        <div class="theme-btn" data-theme="sunset" title="Sunset Theme"></div>
+        <div class="theme-btn" data-theme="dark" title="Dark Theme"></div>
+    </div>
+
+    <!-- Celebration Particles Container -->
+    <div class="celebration-particles" id="particles-container"></div>
 
     <!-- Splash Screen -->
     <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
@@ -47,10 +59,13 @@
 
         <!-- Skills Overview -->
         <main id="skills-view" class="glass-card p-8">
-            <div class="mb-6 text-center">
-                <p class="text-gray-600">اختر مهارة لتبدأ التعلم</p>
+            <div class="mb-8 text-center">
+                <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
+                <div class="mt-4 text-sm text-gray-500">
+                    ✨ أكمل المهارات السابقة لفتح المهارات الجديدة
+                </div>
             </div>
-            <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="skills-tree" class="skills-tree"></div>
         </main>
 
         <!-- Technique Detail View -->
@@ -62,7 +77,7 @@
 
     <!-- Activity Modal -->
     <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh]">
+        <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
             <div class="flex justify-between items-center mb-6">
                 <h2 id="modal-title" class="text-3xl font-bold text-gray-800"></h2>
                 <div id="modal-progress" class="text-lg text-gray-600"></div>
@@ -78,7 +93,7 @@
 
     <!-- Success Modal -->
     <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-md p-8 text-center">
+        <div class="glass-card w-full max-w-md p-8 text-center modal-content">
             <div class="text-6xl mb-4">🎉</div>
             <h2 class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
             <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
