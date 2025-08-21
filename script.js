@@ -20,10 +20,172 @@ async function loadCurriculum() {
     }
 }
 
-// Data Management - Now much smaller!
+// Theme Manager
+class ThemeManager {
+    constructor() {
+        this.currentTheme = localStorage.getItem('phonics-theme') || 'default';
+        this.applyTheme(this.currentTheme);
+        this.initThemeSelector();
+    }
+
+    applyTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        this.currentTheme = themeName;
+        localStorage.setItem('phonics-theme', themeName);
+        
+        // Update active theme button
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.theme === themeName);
+        });
+    }
+
+    initThemeSelector() {
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.applyTheme(btn.dataset.theme);
+                this.createThemeChangeEffect();
+            });
+        });
+    }
+
+    createThemeChangeEffect() {
+        // Create a brief flash effect when changing themes
+        const flash = document.createElement('div');
+        flash.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            animation: theme-flash 0.3s ease-out;
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes theme-flash {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        document.body.appendChild(flash);
+        
+        setTimeout(() => {
+            flash.remove();
+            style.remove();
+        }, 300);
+    }
+}
+
+// Enhanced Effects Manager
+class EffectsManager {
+    constructor() {
+        this.particleContainer = document.getElementById('particles-container');
+    }
+
+    createParticleExplosion(x, y, count = 15) {
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const dx = (Math.random() - 0.5) * 300;
+            const dy = (Math.random() - 0.5) * 300;
+            
+            particle.style.cssText = `
+                left: ${x}px;
+                top: ${y}px;
+                --dx: ${dx}px;
+                --dy: ${dy}px;
+                background: hsl(${Math.random() * 360}, 70%, 60%);
+            `;
+            
+            this.particleContainer.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 2000);
+        }
+    }
+
+    createFloatingEmoji(emoji, x, y) {
+        const element = document.createElement('div');
+        element.className = 'floating-emoji';
+        element.textContent = emoji;
+        element.style.left = `${x || Math.random() * window.innerWidth}px`;
+        element.style.top = `${y || window.innerHeight - 100}px`;
+        
+        document.body.appendChild(element);
+        setTimeout(() => element.remove(), 4000);
+    }
+
+    createCelebrationBurst() {
+        const emojis = ['🎉', '⭐', '🎊', '✨', '🎈', '🌟', '💫', '🎁'];
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // Create particle explosion at center
+        this.createParticleExplosion(centerX, centerY, 25);
+        
+        // Create floating emojis
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                const x = centerX + (Math.random() - 0.5) * 400;
+                const y = centerY + (Math.random() - 0.5) * 200;
+                this.createFloatingEmoji(
+                    emojis[Math.floor(Math.random() * emojis.length)], 
+                    x, y
+                );
+            }, i * 100);
+        }
+    }
+
+    createScreenShake() {
+        document.body.classList.add('shake');
+        setTimeout(() => document.body.classList.remove('shake'), 500);
+    }
+
+    createSuccessRipple(element) {
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(72, 187, 120, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        `;
+        
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = rect.left + rect.width/2 - size/2 + 'px';
+        ripple.style.top = rect.top + rect.height/2 - size/2 + 'px';
+        
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+        
+        // Add ripple animation style if not exists
+        if (!document.getElementById('ripple-style')) {
+            const style = document.createElement('style');
+            style.id = 'ripple-style';
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+}
+
+// Data Management
 class DataManager {
     constructor() {
-        // No hardcoded data - everything comes from JSON
         this.isLoaded = false;
     }
 
@@ -187,14 +349,25 @@ class StateManager {
         this.addPoints(50);
         this.saveProgress();
     }
+
+    isTechniqueUnlocked(techniqueIndex, techniques) {
+        // First technique is always unlocked
+        if (techniqueIndex === 0) return true;
+        
+        // Check if previous technique is mastered
+        const prevTechnique = techniques[techniqueIndex - 1];
+        const prevProgress = this.getTechniqueProgress(prevTechnique.id);
+        return prevProgress.mastered;
+    }
 }
 
-// UI Management
+// Enhanced UI Management
 class UIManager {
-    constructor(dataManager, stateManager, audioManager) {
+    constructor(dataManager, stateManager, audioManager, effectsManager) {
         this.data = dataManager;
         this.state = stateManager;
         this.audio = audioManager;
+        this.effects = effectsManager;
         this.elements = {};
         this.initElements();
     }
@@ -202,7 +375,7 @@ class UIManager {
     initElements() {
         const ids = [
             'splash-screen', 'start-btn', 'app', 'main-title', 'skills-view', 'technique-view',
-            'skills-grid', 'back-btn', 'subskills-container', 'activity-modal', 'modal-title',
+            'skills-tree', 'back-btn', 'subskills-container', 'activity-modal', 'modal-title',
             'modal-progress', 'modal-body', 'modal-feedback', 'modal-action-btn', 'modal-exit-btn',
             'success-modal', 'success-message', 'success-reward', 'success-close-btn',
             'points-display', 'streak-count'
@@ -218,6 +391,10 @@ class UIManager {
     updateHeader() {
         this.elements.points_display.textContent = `${this.state.userProgress.points} نقطة ⭐`;
         this.elements.streak_count.textContent = this.state.userProgress.streak;
+        
+        // Add points animation
+        this.elements.points_display.classList.add('celebration');
+        setTimeout(() => this.elements.points_display.classList.remove('celebration'), 600);
     }
 
     showView(viewName) {
@@ -232,35 +409,64 @@ class UIManager {
     }
 
     renderSkillsGrid() {
-        const { skills_grid } = this.elements;
-        skills_grid.innerHTML = '';
+        const skillsTree = this.elements.skills_tree;
+        skillsTree.innerHTML = '';
         
-        this.data.getTechniques().forEach(tech => {
-            const techProgress = this.state.getTechniqueProgress(tech.id);
-            const isMastered = techProgress.mastered;
-            const completedSteps = Object.values(techProgress.subSkills).flat().length;
-            const totalSteps = tech.subSkills.length * 3;
-            const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+        const techniques = this.data.getTechniques();
+        
+        // Organize techniques into rows for tree layout
+        const rows = [
+            [techniques[0]], // Magic E
+            [techniques[1], techniques[2]], // Team Sounds, Soft Sounds
+            [techniques[3]], // R-Controlled
+            [techniques[4], techniques[5]], // Digraphs, Advanced Vowel Teams
+            [techniques[6]] // Production Drills
+        ];
 
-            const card = document.createElement('div');
-            card.className = `skill-card ${isMastered ? 'mastered' : ''}`;
-            card.dataset.techniqueId = tech.id;
+        rows.forEach((row, rowIndex) => {
+            const skillRow = document.createElement('div');
+            skillRow.className = 'skill-row';
             
-            card.innerHTML = `
-                <div class="flex items-center justify-between mb-4">
-                    <div class="text-4xl">${tech.icon}</div>
-                    ${isMastered ? '<span class="achievement-badge">متقن!</span>' : ''}
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${tech.name}</h3>
-                <p class="text-gray-600 mb-4">${tech.name_ar}</p>
-                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                    <div class="bg-gradient-to-r ${tech.color} h-2 rounded-full transition-all duration-500" 
-                         style="width: ${progressPercentage}%"></div>
-                </div>
-                <div class="text-sm text-gray-500">${completedSteps} / ${totalSteps} خطوة</div>
-            `;
+            row.forEach((tech, techIndex) => {
+                if (!tech) return;
+                
+                const techniqueIndex = techniques.indexOf(tech);
+                const techProgress = this.state.getTechniqueProgress(tech.id);
+                const isMastered = techProgress.mastered;
+                const isUnlocked = this.state.isTechniqueUnlocked(techniqueIndex, techniques);
+                const completedSteps = Object.values(techProgress.subSkills).flat().length;
+                const totalSteps = tech.subSkills.length * 3;
+                const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+
+                const card = document.createElement('div');
+                card.className = `skill-card ${isMastered ? 'mastered' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                card.dataset.techniqueId = tech.id;
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-4xl">${tech.icon}</div>
+                        ${isMastered ? '<span class="achievement-badge">متقن!</span>' : ''}
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${tech.name}</h3>
+                    <p class="text-gray-600 mb-4">${tech.name_ar}</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill bg-gradient-to-r ${tech.color}" 
+                             style="width: ${progressPercentage}%"></div>
+                    </div>
+                    <div class="text-sm text-gray-500">${completedSteps} / ${totalSteps} خطوة</div>
+                `;
+                
+                skillRow.appendChild(card);
+                
+                // Add connector between cards in the same row
+                if (techIndex < row.length - 1) {
+                    const connector = document.createElement('div');
+                    connector.className = 'skill-connector';
+                    skillRow.appendChild(connector);
+                }
+            });
             
-            skills_grid.appendChild(card);
+            skillsTree.appendChild(skillRow);
         });
         
         this.showView('skills');
@@ -336,7 +542,7 @@ class UIManager {
         this.elements.success_message.textContent = message;
         this.elements.success_reward.textContent = reward;
         this.elements.success_modal.classList.remove('hidden');
-        this.createCelebrationEmojis();
+        this.effects.createCelebrationBurst();
     }
 
     hideSuccessModal() {
@@ -348,38 +554,19 @@ class UIManager {
         container.innerHTML = `<span class="${isCorrect ? 'text-green-500' : 'text-red-500'}">${message}</span>`;
         
         if (isCorrect) {
-            this.createFloatingEmoji('⭐');
-        }
-    }
-
-    createFloatingEmoji(emoji) {
-        const element = document.createElement('div');
-        element.className = 'floating-emoji';
-        element.textContent = emoji;
-        element.style.left = `${Math.random() * window.innerWidth}px`;
-        element.style.bottom = '20px';
-        
-        document.body.appendChild(element);
-        setTimeout(() => element.remove(), 3000);
-    }
-
-    createCelebrationEmojis() {
-        const emojis = ['🎉', '⭐', '🎊', '✨', '🎈'];
-        for (let i = 0; i < 10; i++) {
-            setTimeout(() => {
-                this.createFloatingEmoji(emojis[Math.floor(Math.random() * emojis.length)]);
-            }, i * 100);
+            this.effects.createFloatingEmoji('⭐');
         }
     }
 }
 
 // Game Engine
 class GameEngine {
-    constructor(dataManager, stateManager, uiManager, audioManager) {
+    constructor(dataManager, stateManager, uiManager, audioManager, effectsManager) {
         this.data = dataManager;
         this.state = stateManager;
         this.ui = uiManager;
         this.audio = audioManager;
+        this.effects = effectsManager;
     }
 
     runActivity(techniqueId, subSkillId, step) {
@@ -505,14 +692,19 @@ class GameEngine {
         const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
         const data = step === 'drill' ? subSkill.drill : subSkill.quiz;
 
-        const renderer = new QuestionRenderer(this.ui, this.audio, this);
+        const renderer = new QuestionRenderer(this.ui, this.audio, this, this.effects);
         renderer.render(data.type || 'quiz', q, data, subSkill);
     }
 
     handleAnswer(isCorrect, element) {
         this.ui.showFeedback(isCorrect);
         
-        if (element) element.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (element) {
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            if (isCorrect) {
+                this.effects.createSuccessRipple(element);
+            }
+        }
 
         if (isCorrect) {
             document.querySelectorAll('.option-button, #action-btn, .letter-choice').forEach(b => b.style.pointerEvents = 'none');
@@ -574,6 +766,7 @@ class GameEngine {
                 this.state.markTechniqueMastered(techniqueId);
                 this.ui.hideModal();
                 this.ui.showSuccessModal(`لقد أتقنت مهارة ${technique.name_ar}!`, `+50 نقطة 🎊`);
+                this.effects.createScreenShake();
             } else {
                 this.ui.hideModal();
                 this.ui.showSuccessModal(
@@ -593,12 +786,13 @@ class GameEngine {
     }
 }
 
-// Question Renderer
+// Enhanced Question Renderer
 class QuestionRenderer {
-    constructor(uiManager, audioManager, gameEngine) {
+    constructor(uiManager, audioManager, gameEngine, effectsManager) {
         this.ui = uiManager;
         this.audio = audioManager;
         this.game = gameEngine;
+        this.effects = effectsManager;
     }
 
     render(type, question, data, subSkill) {
@@ -798,6 +992,8 @@ class QuestionRenderer {
 // Main Application
 class ModernPhonicsApp {
     constructor() {
+        this.themeManager = new ThemeManager();
+        this.effectsManager = new EffectsManager();
         this.dataManager = new DataManager();
         this.stateManager = new StateManager();
         this.audioManager = new AudioManager();
@@ -811,8 +1007,8 @@ class ModernPhonicsApp {
         await this.dataManager.init();
         
         // Then initialize UI and game engine
-        this.uiManager = new UIManager(this.dataManager, this.stateManager, this.audioManager);
-        this.gameEngine = new GameEngine(this.dataManager, this.stateManager, this.uiManager, this.audioManager);
+        this.uiManager = new UIManager(this.dataManager, this.stateManager, this.audioManager, this.effectsManager);
+        this.gameEngine = new GameEngine(this.dataManager, this.stateManager, this.uiManager, this.audioManager, this.effectsManager);
         
         this.initEventListeners();
     }
@@ -845,8 +1041,8 @@ class ModernPhonicsApp {
                 return;
             }
 
-            const skillCard = e.target.closest('#skills-grid .skill-card');
-            if (skillCard) {
+            const skillCard = e.target.closest('#skills-tree .skill-card');
+            if (skillCard && !skillCard.classList.contains('locked')) {
                 const techniqueId = skillCard.dataset.techniqueId;
                 if (techniqueId) {
                     this.stateManager.currentTechniqueId = techniqueId;
