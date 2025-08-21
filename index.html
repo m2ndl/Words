@@ -46,8 +46,13 @@
         <!-- Header -->
         <header class="glass-card p-6 mb-6 text-center">
             <div class="flex justify-between items-center">
-                <div class="streak-counter">
-                    🔥 <span id="streak-count">0</span> يوم
+                <div class="flex items-center gap-4">
+                    <div class="streak-counter">
+                        🔥 <span id="streak-count">0</span> يوم
+                    </div>
+                    <button id="teacher-dashboard-btn" class="btn-secondary text-sm">
+                        📊 لوحة المعلم
+                    </button>
                 </div>
                 <h1 id="main-title" class="text-3xl font-bold text-gray-800">اختر مهارة</h1>
                 <div class="text-sm text-gray-600">
@@ -99,6 +104,10 @@
             <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
             <button id="success-close-btn" class="btn-primary">استمر</button>
         </div>
+    </div>
+
+    <!-- Teacher Dashboard -->
+    <div id="teacher-dashboard" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4 overflow-y-auto">
     </div>
 
     <!-- JavaScript -->
