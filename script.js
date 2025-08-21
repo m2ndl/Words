@@ -249,7 +249,7 @@ class UIManager {
             card.innerHTML = `
                 <div class="flex items-center justify-between mb-4">
                     <div class="text-4xl">${tech.icon}</div>
-                    ${isMastered ? '<span class="achievement-badge">مُتقن!</span>' : ''}
+                    ${isMastered ? '<span class="achievement-badge">متقن!</span>' : ''}
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${tech.name}</h3>
                 <p class="text-gray-600 mb-4">${tech.name_ar}</p>
@@ -640,7 +640,15 @@ class QuestionRenderer {
         const { word, isCorrect } = q;
         this.ui.elements.modal_body.innerHTML = `
             <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div class="text-5xl english-font font-bold mb-8">${word}</div>
+            <div class="flex flex-col items-center mb-8">
+                <div class="text-5xl english-font font-bold mb-4">${word}</div>
+                <button class="speaker-btn" data-speak="${word}" aria-label="Listen to ${word}">
+                    <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/>
+                        <path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/>
+                    </svg>
+                </button>
+            </div>
             <div class="flex justify-center gap-4">
                 <button class="option-button" data-correct="${isCorrect}">
                     ✅ نعم
@@ -651,9 +659,11 @@ class QuestionRenderer {
             </div>
         `;
 
+        // Auto-play the word when the question loads
+        this.audio.speak(word);
+
         document.querySelectorAll('.option-button').forEach(btn => {
             btn.onclick = () => {
-                this.audio.speak(word);
                 const isRight = btn.dataset.correct === 'true';
                 this.game.handleAnswer(isRight, btn);
             };
