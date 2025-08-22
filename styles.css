@@ -330,12 +330,18 @@ body {
     border: 2px solid rgba(102, 126, 234, 0.3);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary:hover {
     background: white;
     border-color: #667EEA;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
 }
 
 /* Enhanced Step Buttons */
@@ -747,7 +753,18 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* Teacher Dashboard Styles */
+/* Teacher Dashboard Button Specific Styles */
+#teacher-dashboard-btn {
+    z-index: 10;
+    position: relative;
+    pointer-events: auto;
+    display: inline-block;
+}
+
+#teacher-dashboard-btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
 .tab-btn {
     padding: 8px 16px;
     border: none;
