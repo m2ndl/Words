@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phonics Journey</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <!-- Theme Selector -->
     <div class="theme-selector">
         <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
         <div class="theme-btn" data-theme="ocean" title="Ocean Theme"></div>
@@ -26,10 +22,8 @@
         <div class="theme-btn" data-theme="sunset" title="Sunset Theme"></div>
     </div>
 
-    <!-- Celebration Particles Container -->
     <div class="celebration-particles" id="particles-container"></div>
 
-    <!-- Splash Screen -->
     <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
         <div class="mb-8">
             <h1 class="welcome-title mb-4">Phonics Journey</h1>
@@ -41,10 +35,8 @@
         </div>
     </div>
 
-    <!-- Main Application -->
     <div id="app" class="w-full max-w-7xl hidden">
-        <!-- Header -->
-        <header class="glass-card p-6 mb-6 text-center">
+        <header class="glass-card p-4 sm:p-6 mb-6 text-center">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     <div class="streak-counter">
@@ -61,8 +53,7 @@
             </div>
         </header>
 
-        <!-- Skills Overview -->
-        <main id="skills-view" class="glass-card p-8">
+        <main id="skills-view" class="glass-card p-4 sm:p-8">
             <div class="mb-8 text-center">
                 <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
                 <div class="mt-4 text-sm text-gray-500">
@@ -72,14 +63,12 @@
             <div id="skills-tree" class="skills-tree"></div>
         </main>
 
-        <!-- Technique Detail View -->
-        <main id="technique-view" class="glass-card p-8 hidden">
+        <main id="technique-view" class="glass-card p-4 sm:p-8 hidden">
             <button id="back-btn" class="btn-secondary mb-6">← رجوع</button>
             <div id="subskills-container" class="space-y-4"></div>
         </main>
     </div>
 
-    <!-- Activity Modal -->
     <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
         <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
             <div class="flex justify-between items-center mb-6">
@@ -95,7 +84,6 @@
         </div>
     </div>
 
-    <!-- Success Modal -->
     <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
         <div class="glass-card w-full max-w-md p-8 text-center modal-content">
             <div class="text-6xl mb-4">🎉</div>
@@ -106,13 +94,9 @@
         </div>
     </div>
 
-    <!-- Teacher Dashboard -->
     <div id="teacher-dashboard" class="hidden fixed inset-0 z-50 modal-backdrop flex justify-center p-4 overflow-y-auto">
     </div>
 
-    <!-- JavaScript -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
-
-
