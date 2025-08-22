@@ -14,7 +14,7 @@ async function loadCurriculum() {
         // Fallback to minimal hardcoded data if JSON fails
         curriculumData = {
             techniques: [],
-            encouragingMessages: ["أحسنت! 🌟", "رائع! 🎉", "ممتاز! 👏"]
+            encouragingMessages: ["أحسنت! 🌟", "رائع! 🎉", "ممتاز! 👍"]
         };
         return curriculumData;
     }
@@ -687,7 +687,7 @@ class TeacherDashboard {
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <!-- Stats Cards -->
                 <div class="stat-card">
-                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-icon">ⱖ️</div>
                     <div class="stat-value">${report.totalTimeSpent}h</div>
                     <div class="stat-label">إجمالي وقت التعلم</div>
                 </div>
@@ -899,7 +899,7 @@ class TeacherDashboard {
                             <h4 class="text-lg font-bold mb-4">ملخص الأداء</h4>
                             <ul class="space-y-2">
                                 <li>📅 <strong>تاريخ التقرير:</strong> ${new Date().toLocaleDateString('ar-SA')}</li>
-                                <li>⏱️ <strong>إجمالي وقت التعلم:</strong> ${report.totalTimeSpent} ساعة</li>
+                                <li>ⱖ️ <strong>إجمالي وقت التعلم:</strong> ${report.totalTimeSpent} ساعة</li>
                                 <li>🎯 <strong>متوسط الدقة:</strong> ${report.averageAccuracy}%</li>
                                 <li>🏆 <strong>المهارات المتقنة:</strong> ${report.techniqueProgress.filter(t => t.mastered).length}/${report.techniqueProgress.length}</li>
                                 <li>🔥 <strong>أطول سلسلة أيام:</strong> ${report.currentStreak} يوم</li>
@@ -1131,6 +1131,7 @@ ${this.generateRecommendations(report).map(rec => `- ${rec.title}: ${rec.descrip
         `.trim();
     }
 }
+
 class UIManager {
     constructor(dataManager, stateManager, audioManager, effectsManager) {
         this.data = dataManager;
@@ -1797,6 +1798,7 @@ class ModernPhonicsApp {
         this.audioManager = new AudioManager();
         this.uiManager = null;
         this.gameEngine = null;
+        this.teacherDashboard = null;
         this.init();
     }
 
@@ -1807,6 +1809,7 @@ class ModernPhonicsApp {
         // Then initialize UI and game engine
         this.uiManager = new UIManager(this.dataManager, this.stateManager, this.audioManager, this.effectsManager);
         this.gameEngine = new GameEngine(this.dataManager, this.stateManager, this.uiManager, this.audioManager, this.effectsManager);
+        this.teacherDashboard = new TeacherDashboard(this.dataManager, this.stateManager);
         
         this.initEventListeners();
     }
@@ -1833,6 +1836,11 @@ class ModernPhonicsApp {
             if (step === 'learn') {
                this.gameEngine.endSession();
             }
+        });
+
+        // Teacher Dashboard button
+        document.getElementById('teacher-dashboard-btn').addEventListener('click', () => {
+            this.teacherDashboard.toggle();
         });
 
         document.addEventListener('click', (e) => {
