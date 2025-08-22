@@ -1,102 +1,142 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="default">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كورس قراءة الكلمات</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أسس صح!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="theme-selector">
-        <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
-        <div class="theme-btn" data-theme="ocean" title="Ocean Theme"></div>
-        <div class="theme-btn" data-theme="forest" title="Forest Theme"></div>
-        <div class="theme-btn" data-theme="sunset" title="Sunset Theme"></div>
+  <!-- Theme Quick Switch -->
+  <div class="theme-selector">
+    <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
+    <div class="theme-btn" data-theme="ocean" title="Ocean Theme"></div>
+    <div class="theme-btn" data-theme="forest" title="Forest Theme"></div>
+    <div class="theme-btn" data-theme="sunset" title="Sunset Theme"></div>
+  </div>
+
+  <div class="celebration-particles" id="particles-container"></div>
+
+  <!-- Splash / Landing -->
+  <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
+    <div class="mb-8">
+      <h1 class="welcome-title mb-4">أسس صح!</h1>
+      <p class="text-xl text-gray-600">برنامج تأسيسي للقراءة والكتابة للكبار</p>
     </div>
+    <div class="space-y-4">
+      <div class="text-6xl mb-6">📖</div>
+      <button id="start-btn" class="btn-primary text-xl pulse">ابدأ الآن</button>
+    </div>
+  </div>
 
-    <div class="celebration-particles" id="particles-container"></div>
-
-    <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
-        <div class="mb-8">
-            <h1 class="welcome-title mb-4">أسس صح!</h1>
-            <p class="text-xl text-gray-600">برنامج تأسيسي للقراءة والكتابة للكبار</p>
+  <!-- App -->
+  <div id="app" class="w-full max-w-7xl hidden">
+    <!-- Header -->
+    <header class="glass-card p-4 sm:p-6 mb-6">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <!-- Burger -->
+          <button id="menu-btn" class="btn-secondary !py-2 !px-3" aria-label="افتح القائمة">☰</button>
+          <div class="streak-counter">🔥 <span id="streak-count">0</span> يوم</div>
+          <button id="teacher-dashboard-btn" class="btn-secondary text-sm">📊 لوحة التعلم</button>
         </div>
-        <div class="space-y-4">
-            <div class="text-6xl mb-6">📖</div>
-            <button id="start-btn" class="btn-primary text-xl pulse">ابدأ الآن</button>
+        <h1 id="main-title" class="text-3xl font-bold text-gray-800 text-center flex-1">اختر مهارة</h1>
+        <div class="text-sm text-gray-600"><span id="points-display">0 نقطة ⭐</span></div>
+      </div>
+    </header>
+
+    <!-- Skills view -->
+    <main id="skills-view" class="glass-card p-4 sm:p-8">
+      <div class="mb-8 text-center">
+        <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
+        <div class="mt-4 text-sm text-gray-500">✨ أكمل المهارات السابقة لفتح المهارات الجديدة</div>
+      </div>
+      <div id="skills-tree" class="skills-tree"></div>
+    </main>
+
+    <!-- Technique view -->
+    <main id="technique-view" class="glass-card p-4 sm:p-8 hidden">
+      <button id="back-btn" class="btn-secondary mb-6">← رجوع</button>
+      <div id="subskills-container" class="space-y-4"></div>
+    </main>
+
+    <!-- Important Note page -->
+    <main id="note-page" class="glass-card p-4 sm:p-8 hidden">
+      <button id="note-back-btn" class="btn-secondary mb-6">← رجوع</button>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">ملاحظة مهمة</h2>
+      <div class="space-y-4 leading-8 text-gray-700">
+        <p>
+          البرنامج لا يتطلب تسجيل دخول، ويتم حفظ بيانات تقدمك عبر متصفح الجهاز الذي تستخدمه الآن.
+          في حال تغيير المتصفح أو الجهاز ستبدأ من جديد. إذا أردت متابعة التقدم نفسه،
+          عليك استخدام نفس المتصفح.
+        </p>
+        <p>
+          ويمكنك أيضاً اختيار <b>"فتح جميع الوحدات"</b> من القائمة الجانبية للانتقال مباشرةً لأي درس في حال بدأت من جهاز جديد.
+        </p>
+        <p>
+          إذا كان لديك أي ملاحظات أرحب بتواصلك معي عبر الإيميل
+          <span class="text-gray-500">—</span>
+          <span class="font-bold">hello@my2ndlang.com</span> :
+        </p>
+        <div class="flex items-center gap-3">
+          <input id="email-field" class="glass-card px-3 py-2 rounded-lg border border-gray-200 w-full sm:w-auto" value="hello@my2ndlang.com" readonly>
+          <button id="copy-email-btn" class="btn-primary">نسخ الإيميل</button>
         </div>
+        <div id="copy-toast" class="text-green-600 text-sm hidden">✅ تم نسخ البريد إلى الحافظة</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Activity modal -->
+  <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h2 id="modal-title" class="text-3xl font-bold text-gray-800"></h2>
+        <div id="modal-progress" class="text-lg text-gray-600"></div>
+      </div>
+      <div id="modal-body" class="flex-grow text-center overflow-y-auto"></div>
+      <div id="modal-feedback" class="h-12 mt-4 text-center text-xl font-bold"></div>
+      <div id="modal-footer" class="mt-6 flex justify-center items-center gap-4">
+        <button id="modal-exit-btn" class="btn-secondary">خروج</button>
+        <button id="modal-action-btn" class="btn-primary">التالي</button>
+      </div>
     </div>
+  </div>
 
-    <div id="app" class="w-full max-w-7xl hidden">
-        <header class="glass-card p-4 sm:p-6 mb-6 text-center">
-            <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="streak-counter">
-                        🔥 <span id="streak-count">0</span> يوم
-                    </div>
-                    <button id="teacher-dashboard-btn" class="btn-secondary text-sm">
-                        📊 لوحة المعلم
-                    </button>
-                </div>
-                <h1 id="main-title" class="text-3xl font-bold text-gray-800">اختر مهارة</h1>
-                <div class="text-sm text-gray-600">
-                    <span id="points-display">0 نقطة ⭐</span>
-                </div>
-            </div>
-        </header>
-
-        <main id="skills-view" class="glass-card p-4 sm:p-8">
-            <div class="mb-8 text-center">
-                <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
-                <div class="mt-4 text-sm text-gray-500">
-                    ✨ أكمل المهارات السابقة لفتح المهارات الجديدة
-                </div>
-            </div>
-            <div id="skills-tree" class="skills-tree"></div>
-        </main>
-
-        <main id="technique-view" class="glass-card p-4 sm:p-8 hidden">
-            <button id="back-btn" class="btn-secondary mb-6">← رجوع</button>
-            <div id="subskills-container" class="space-y-4"></div>
-        </main>
+  <!-- Success modal -->
+  <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-md p-8 text-center modal-content">
+      <div class="text-6xl mb-4">🎉</div>
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
+      <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
+      <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
+      <button id="success-close-btn" class="btn-primary">استمر</button>
     </div>
+  </div>
 
-    <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 id="modal-title" class="text-3xl font-bold text-gray-800"></h2>
-                <div id="modal-progress" class="text-lg text-gray-600"></div>
-            </div>
-            <div id="modal-body" class="flex-grow text-center overflow-y-auto"></div>
-            <div id="modal-feedback" class="h-12 mt-4 text-center text-xl font-bold"></div>
-            <div id="modal-footer" class="mt-6 flex justify-center items-center gap-4">
-                <button id="modal-exit-btn" class="btn-secondary">خروج</button>
-                <button id="modal-action-btn" class="btn-primary">التالي</button>
-            </div>
-        </div>
+  <!-- Learning Dashboard container -->
+  <div id="teacher-dashboard" class="hidden fixed inset-0 z-[70] modal-backdrop flex justify-center p-4 overflow-y-auto"></div>
+
+  <!-- Side Menu -->
+  <div id="side-menu-overlay" class="fixed inset-0 bg-black/40 hidden z-[65]"></div>
+  <aside id="side-menu" class="fixed inset-y-0 right-0 w-72 glass-card p-6 shadow-xl transform translate-x-full transition-transform z-[66]">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-bold">القائمة</h3>
+      <button id="menu-close" class="btn-secondary !py-1 !px-3">✕</button>
     </div>
+    <nav class="flex flex-col gap-3">
+      <button id="menu-dashboard" class="step-button !justify-start">📊 لوحة التعلم</button>
+      <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="step-button !justify-start">🌐 لغتي الثانية</a>
+      <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
+      <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
+    </nav>
+  </aside>
 
-    <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-md p-8 text-center modal-content">
-            <div class="text-6xl mb-4">🎉</div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
-            <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
-            <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
-            <button id="success-close-btn" class="btn-primary">استمر</button>
-        </div>
-    </div>
-
-    <div id="teacher-dashboard" class="hidden fixed inset-0 z-50 modal-backdrop flex justify-center p-4 overflow-y-auto">
-    </div>
-
-    <script type="module" src="js/main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
