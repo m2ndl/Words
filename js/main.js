@@ -8,7 +8,6 @@ import { UIManager } from './uiManager.js';
 import { GameEngine } from './gameEngine.js';
 import { TeacherDashboard } from './teacherDashboard.js';
 
-// The main application class that ties everything together.
 class ModernPhonicsApp {
     constructor() {
         this.themeManager = new ThemeManager();
@@ -53,8 +52,29 @@ class ModernPhonicsApp {
             }
         });
 
-        document.getElementById('teacher-dashboard-btn').addEventListener('click', () => {
+        // Burger menu toggle
+        document.getElementById('burger-btn').addEventListener('click', () => {
+            document.getElementById('menu-content').classList.toggle('hidden');
+        });
+
+        // Learning dashboard
+        document.getElementById('learning-dashboard-btn').addEventListener('click', () => {
             this.teacherDashboard.toggle();
+            document.getElementById('menu-content').classList.add('hidden');
+        });
+
+        // Important note
+        document.getElementById('note-btn').addEventListener('click', () => {
+            document.getElementById('note-modal').classList.remove('hidden');
+            document.getElementById('menu-content').classList.add('hidden');
+        });
+        document.getElementById('close-note').addEventListener('click', () => {
+            document.getElementById('note-modal').classList.add('hidden');
+        });
+        document.getElementById('copy-email').addEventListener('click', () => {
+            navigator.clipboard.writeText("hello@my2ndlang.com").then(() => {
+                alert("📋 تم نسخ البريد الإلكتروني");
+            });
         });
 
         document.addEventListener('click', (e) => {
@@ -91,7 +111,7 @@ class ModernPhonicsApp {
     }
 }
 
-// Initialize the application when DOM is loaded
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     new ModernPhonicsApp();
 });
