@@ -16,30 +16,31 @@
 <body class="flex flex-col min-h-screen p-4">
 
     <!-- Burger Menu (moved to top-right) -->
-    <div id="burger-menu" class="fixed top-4 right-4 z-[9999]">
-      <button id="burger-btn" class="p-3 bg-white rounded-lg shadow-md">
-        ☰
-      </button>
-      <div id="menu-content" class="hidden absolute mt-2 w-64 bg-white shadow-lg rounded-lg p-4 text-right right-0">
-        <ul class="space-y-3">
-          <li>
-            <a href="https://my2ndlang.blog/" target="_blank" class="text-blue-600 font-semibold hover:underline">
-              🌐 موقع لغتي الثانية
-            </a>
-          </li>
-          <li>
-            <button id="learning-dashboard-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
-              📊 لوحة التعلم
-            </button>
-          </li>
-          <li>
-            <button id="note-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
-              📝 ملاحظة مهمة
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <!-- Burger Menu -->
+<div id="burger-menu" class="fixed top-4 right-4 z-[9999]">
+  <button id="burger-btn" class="p-3 bg-white rounded-lg shadow-md">
+    ☰
+  </button>
+  <div id="menu-content" class="hidden absolute mt-2 w-64 bg-white shadow-lg rounded-lg p-4 text-right right-0">
+    <ul class="space-y-3">
+      <li>
+        <a href="https://my2ndlang.blog/" target="_blank" class="text-blue-600 font-semibold hover:underline">
+          🌐 موقع لغتي الثانية
+        </a>
+      </li>
+      <li>
+        <button id="learning-dashboard-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
+          📊 لوحة التعلم
+        </button>
+      </li>
+      <li>
+        <button id="note-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
+          📝 ملاحظة مهمة
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
 
     <div class="theme-selector">
         <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
@@ -155,5 +156,6 @@
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
+
 
 
