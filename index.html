@@ -6,14 +6,40 @@
     <title>Phonics Journey</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="flex flex-col min-h-screen p-4">
+
+    <!-- Burger Menu -->
+    <div id="burger-menu" class="fixed top-4 left-4 z-50">
+      <button id="burger-btn" class="p-3 bg-white rounded-lg shadow-md">
+        ☰
+      </button>
+      <div id="menu-content" class="hidden absolute mt-2 w-64 bg-white shadow-lg rounded-lg p-4 text-right">
+        <ul class="space-y-3">
+          <li>
+            <a href="https://my2ndlang.blog/" target="_blank" class="text-blue-600 font-semibold hover:underline">
+              🌐 موقع لغتي الثانية
+            </a>
+          </li>
+          <li>
+            <button id="learning-dashboard-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
+              📊 لوحة التعلم
+            </button>
+          </li>
+          <li>
+            <button id="note-btn" class="w-full text-right text-gray-700 font-semibold hover:text-blue-600">
+              📝 ملاحظة مهمة
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <div class="theme-selector">
         <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
@@ -24,27 +50,24 @@
 
     <div class="celebration-particles" id="particles-container"></div>
 
-    <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
+    <div id="splash-screen" class="glass-card p-12 max-w-lg text-center mx-auto mt-20">
         <div class="mb-8">
             <h1 class="welcome-title mb-4">Phonics Journey</h1>
-            <p class="text-xl text-gray-600">رحلتك لبناء أساس قوي في اللغة الإنجليزية</p>
+            <p class="text-xl text-gray-600">مغامرة ممتعة لتعلم الأصوات الإنجليزية</p>
         </div>
         <div class="space-y-4">
-            <div class="text-6xl mb-6">📜</div>
-            <button id="start-btn" class="btn-primary text-xl pulse">أسس صح!</button>
+            <div class="text-6xl mb-6">🚀</div>
+            <button id="start-btn" class="btn-primary text-xl pulse">هيا نبدأ المغامرة!</button>
         </div>
     </div>
 
-    <div id="app" class="w-full max-w-7xl hidden">
+    <div id="app" class="w-full max-w-7xl hidden mx-auto">
         <header class="glass-card p-4 sm:p-6 mb-6 text-center">
             <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
                 <div class="flex items-center gap-4">
                     <div class="streak-counter">
                         🔥 <span id="streak-count">0</span> يوم
                     </div>
-                    <button id="teacher-dashboard-btn" class="btn-secondary text-sm">
-                        📊 لوحة المعلم
-                    </button>
                 </div>
                 <h1 id="main-title" class="text-3xl font-bold text-gray-800">اختر مهارة</h1>
                 <div class="text-sm text-gray-600">
@@ -94,8 +117,39 @@
         </div>
     </div>
 
-    <div id="teacher-dashboard" class="hidden fixed inset-0 z-50 modal-backdrop flex justify-center p-4 overflow-y-auto">
+    <!-- Note Modal -->
+    <div id="note-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+      <div class="glass-card max-w-lg w-full p-6">
+        <h2 class="text-2xl font-bold mb-4">ملاحظة مهمة</h2>
+        <p class="mb-4 leading-relaxed">
+          البرنامج لا يتطلب تسجيل دخول, وبيانات تقدمك تحفظ عن طريق متصفح الجهاز الذي تستعمله الآن,
+          في حال تغيير المتصفح أو الجهاز ستبدأ من جديد. إذا أردت الموصلة على نفس سير التقدم
+          عليك استخدام نفس المتصفح.
+        </p>
+        <p class="mb-4">إذا كانت لديك ملاحظات أو استفسارات أحب بتواصلك معي:</p>
+        <div class="flex items-center gap-2 bg-gray-100 p-2 rounded-md">
+          <span class="text-blue-600">hello@my2ndlang.com</span>
+          <button id="copy-email" class="text-sm px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+            📋 نسخ
+          </button>
+        </div>
+        <div class="mt-6 text-center">
+          <button id="close-note" class="btn-secondary">إغلاق</button>
+        </div>
+      </div>
     </div>
+
+    <div id="teacher-dashboard" class="hidden fixed inset-0 z-50 modal-backdrop flex justify-center p-4 overflow-y-auto"></div>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 text-center text-gray-700 bg-white bg-opacity-80 rounded-t-xl shadow-inner">
+      <p class="font-bold text-lg">لغتي الثانية</p>
+      <p>
+        <a href="https://my2ndlang.blog/" target="_blank" class="text-blue-600 hover:underline">
+          my2ndlang.blog
+        </a>
+      </p>
+    </footer>
 
     <script type="module" src="js/main.js"></script>
 </body>
