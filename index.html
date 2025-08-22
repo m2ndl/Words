@@ -12,14 +12,7 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-  <!-- Theme Quick Switch -->
-  <div class="theme-selector">
-    <div class="theme-btn active" data-theme="default" title="Default Theme"></div>
-    <div class="theme-btn" data-theme="ocean" title="Ocean Theme"></div>
-    <div class="theme-btn" data-theme="forest" title="Forest Theme"></div>
-    <div class="theme-btn" data-theme="sunset" title="Sunset Theme"></div>
-  </div>
-
+  <!-- celebration particles container -->
   <div class="celebration-particles" id="particles-container"></div>
 
   <!-- Splash / Landing -->
@@ -129,15 +122,27 @@
       <h3 class="text-lg font-bold">القائمة</h3>
       <button id="menu-close" class="btn-secondary !py-1 !px-3">✕</button>
     </div>
+
     <nav class="flex flex-col gap-3">
       <button id="menu-dashboard" class="step-button !justify-start">📊 لوحة التعلم</button>
       <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="step-button !justify-start">🌐 لغتي الثانية</a>
       <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
       <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
+
+      <!-- Theme picker moved into the menu -->
+      <div class="menu-section">
+        <div class="menu-section-title">المظهر</div>
+        <div class="theme-selector in-menu">
+          <div class="theme-btn active" data-theme="default" title="افتراضي"></div>
+          <div class="theme-btn" data-theme="ocean" title="بحري"></div>
+          <div class="theme-btn" data-theme="forest" title="غابة"></div>
+          <div class="theme-btn" data-theme="sunset" title="غروب"></div>
+        </div>
+      </div>
     </nav>
   </aside>
 
-  <!-- NOTE: load from ./js/ -->
+  <!-- load app -->
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
