@@ -403,7 +403,8 @@ body {
 .floating-emoji {
     position: fixed;
     font-size: 2.5rem;
-    animation: float-up-enhanced 4s ease-out forwards;
+    /* faster: 1.2s instead of 4s */
+    animation: float-up-enhanced 1.2s ease-out forwards;
     pointer-events: none;
     z-index: 1000;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
@@ -444,7 +445,8 @@ body {
     height: 8px;
     background: var(--primary);
     border-radius: 50%;
-    animation: particle-burst 2s ease-out forwards;
+    /* faster: 0.9s instead of 2s */
+    animation: particle-burst 0.9s ease-out forwards;
 }
 
 @keyframes particle-burst {
