@@ -29,17 +29,25 @@
 
   <!-- App -->
   <div id="app" class="w-full max-w-7xl hidden">
-    <!-- Header -->
+    <!-- Header (responsive: title on its own row on small screens) -->
     <header class="glass-card p-4 sm:p-6 mb-6">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <!-- Burger -->
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Title: full width on mobile, centered -->
+        <h1 id="main-title" class="order-1 w-full text-center text-2xl sm:text-3xl font-bold text-gray-800">
+          اختر مهارة
+        </h1>
+
+        <!-- Controls group -->
+        <div class="order-2 flex items-center gap-3">
           <button id="menu-btn" class="btn-secondary !py-2 !px-3" aria-label="افتح القائمة">☰</button>
           <div class="streak-counter">🔥 <span id="streak-count">0</span> يوم</div>
           <button id="teacher-dashboard-btn" class="btn-secondary text-sm">📊 لوحة التعلم</button>
         </div>
-        <h1 id="main-title" class="text-3xl font-bold text-gray-800 text-center flex-1">اختر مهارة</h1>
-        <div class="text-sm text-gray-600"><span id="points-display">0 نقطة ⭐</span></div>
+
+        <!-- Points -->
+        <div class="order-2 text-sm text-gray-600">
+          <span id="points-display">0 نقطة ⭐</span>
+        </div>
       </div>
     </header>
 
@@ -129,7 +137,7 @@
       <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
       <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
 
-      <!-- Theme picker moved into the menu -->
+      <!-- Theme picker in the menu -->
       <div class="menu-section">
         <div class="menu-section-title">المظهر</div>
         <div class="theme-selector in-menu">
