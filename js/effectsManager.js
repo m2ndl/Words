@@ -12,8 +12,9 @@ export class EffectsManager {
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
-            const dx = (Math.random() - 0.5) * 200;
-            const dy = (Math.random() - 0.5) * 200;
+            // ⏬ reduced scatter distance (from 200 → 100px)
+            const dx = (Math.random() - 0.5) * 100;
+            const dy = (Math.random() - 0.5) * 100;
             particle.style.cssText = `
                 left: ${x}px;
                 top: ${y}px;
@@ -22,7 +23,8 @@ export class EffectsManager {
                 background: hsl(${Math.random() * 360}, 70%, 60%);
             `;
             this.particleContainer.appendChild(particle);
-            setTimeout(() => particle.remove(), 2000);
+            // ⏱️ shorter lifetime (1200ms instead of 2000ms)
+            setTimeout(() => particle.remove(), 1200);
         }
     }
 
@@ -33,7 +35,8 @@ export class EffectsManager {
         element.style.left = `${x || Math.random() * window.innerWidth}px`;
         element.style.top = `${y || window.innerHeight - 100}px`;
         document.body.appendChild(element);
-        setTimeout(() => element.remove(), 3000);
+        // ⏱️ quicker removal
+        setTimeout(() => element.remove(), 1200);
     }
 
     createCelebrationBurst() {
@@ -43,9 +46,13 @@ export class EffectsManager {
         this.createParticleExplosion(centerX, centerY, 12);
         for (let i = 0; i < 8; i++) {
             setTimeout(() => {
-                const x = centerX + (Math.random() - 0.5) * 300;
-                const y = centerY + (Math.random() - 0.5) * 150;
-                this.createFloatingEmoji(emojis[Math.floor(Math.random() * emojis.length)], x, y);
+                const x = centerX + (Math.random() - 0.5) * 150; // ⏬ reduced from 300
+                const y = centerY + (Math.random() - 0.5) * 80;  // ⏬ reduced from 150
+                this.createFloatingEmoji(
+                    emojis[Math.floor(Math.random() * emojis.length)], 
+                    x, 
+                    y
+                );
             }, i * 120);
         }
         this.soundManager.playAchievement();
@@ -57,7 +64,7 @@ export class EffectsManager {
             setTimeout(() => {
                 this.createFloatingEmoji(
                     emojis[Math.floor(Math.random() * emojis.length)],
-                    window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+                    window.innerWidth / 2 + (Math.random() - 0.5) * 100, // ⏬ reduced from 200
                     window.innerHeight / 2
                 );
             }, i * 100);
