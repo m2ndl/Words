@@ -15,12 +15,12 @@
 </head>
 <body class="flex flex-col min-h-screen p-4">
 
-    <!-- Burger Menu -->
-    <div id="burger-menu" class="fixed top-4 left-4 z-50">
+    <!-- Burger Menu (moved to top-right) -->
+    <div id="burger-menu" class="fixed top-4 right-4 z-50">
       <button id="burger-btn" class="p-3 bg-white rounded-lg shadow-md">
         ☰
       </button>
-      <div id="menu-content" class="hidden absolute mt-2 w-64 bg-white shadow-lg rounded-lg p-4 text-right">
+      <div id="menu-content" class="hidden absolute mt-2 w-64 bg-white shadow-lg rounded-lg p-4 text-right right-0">
         <ul class="space-y-3">
           <li>
             <a href="https://my2ndlang.blog/" target="_blank" class="text-blue-600 font-semibold hover:underline">
@@ -50,14 +50,15 @@
 
     <div class="celebration-particles" id="particles-container"></div>
 
+    <!-- Splash Screen -->
     <div id="splash-screen" class="glass-card p-12 max-w-lg text-center mx-auto mt-20">
         <div class="mb-8">
             <h1 class="welcome-title mb-4">Phonics Journey</h1>
             <p class="text-xl text-gray-600">مغامرة ممتعة لتعلم الأصوات الإنجليزية</p>
         </div>
         <div class="space-y-4">
-            <div class="text-6xl mb-6">🚀</div>
-            <button id="start-btn" class="btn-primary text-xl pulse">هيا نبدأ المغامرة!</button>
+            <!-- ✅ Changed button text to أسس صح and removed rocket -->
+            <button id="start-btn" class="btn-primary text-xl pulse">أسس صح</button>
         </div>
     </div>
 
