@@ -8,13 +8,19 @@ export class EffectsManager {
         this.soundManager = new SoundManager();
     }
 
+    clearEffects() {
+        // Remove particles, floating emojis, and ripples immediately
+        if (this.particleContainer) this.particleContainer.innerHTML = '';
+        document.querySelectorAll('.floating-emoji').forEach(el => el.remove());
+        document.querySelectorAll('.ripple-effect').forEach(el => el.remove());
+    }
+
     createParticleExplosion(x, y, count = 8) {
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
-            // ⏬ reduced scatter distance (from 200 → 100px)
-            const dx = (Math.random() - 0.5) * 100;
-            const dy = (Math.random() - 0.5) * 100;
+            const dx = (Math.random() - 0.5) * 200;
+            const dy = (Math.random() - 0.5) * 200;
             particle.style.cssText = `
                 left: ${x}px;
                 top: ${y}px;
@@ -23,8 +29,8 @@ export class EffectsManager {
                 background: hsl(${Math.random() * 360}, 70%, 60%);
             `;
             this.particleContainer.appendChild(particle);
-            // ⏱️ shorter lifetime (1200ms instead of 2000ms)
-            setTimeout(() => particle.remove(), 1200);
+            // faster cleanup: match CSS 0.9s
+            setTimeout(() => particle.remove(), 900);
         }
     }
 
@@ -35,7 +41,7 @@ export class EffectsManager {
         element.style.left = `${x || Math.random() * window.innerWidth}px`;
         element.style.top = `${y || window.innerHeight - 100}px`;
         document.body.appendChild(element);
-        // ⏱️ quicker removal
+        // faster cleanup: match CSS 1.2s
         setTimeout(() => element.remove(), 1200);
     }
 
@@ -44,16 +50,12 @@ export class EffectsManager {
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
         this.createParticleExplosion(centerX, centerY, 12);
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             setTimeout(() => {
-                const x = centerX + (Math.random() - 0.5) * 150; // ⏬ reduced from 300
-                const y = centerY + (Math.random() - 0.5) * 80;  // ⏬ reduced from 150
-                this.createFloatingEmoji(
-                    emojis[Math.floor(Math.random() * emojis.length)], 
-                    x, 
-                    y
-                );
-            }, i * 120);
+                const x = centerX + (Math.random() - 0.5) * 300;
+                const y = centerY + (Math.random() - 0.5) * 150;
+                this.createFloatingEmoji(emojis[Math.floor(Math.random() * emojis.length)], x, y);
+            }, i * 100);
         }
         this.soundManager.playAchievement();
     }
@@ -64,16 +66,17 @@ export class EffectsManager {
             setTimeout(() => {
                 this.createFloatingEmoji(
                     emojis[Math.floor(Math.random() * emojis.length)],
-                    window.innerWidth / 2 + (Math.random() - 0.5) * 100, // ⏬ reduced from 200
+                    window.innerWidth / 2 + (Math.random() - 0.5) * 200,
                     window.innerHeight / 2
                 );
-            }, i * 100);
+            }, i * 80);
         }
         this.soundManager.playCorrectAnswer();
     }
 
     createSuccessRipple(element) {
         const ripple = document.createElement('div');
+        ripple.className = 'ripple-effect';
         ripple.style.cssText = `
             position: absolute;
             border-radius: 50%;
