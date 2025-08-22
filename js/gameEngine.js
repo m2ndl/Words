@@ -12,6 +12,9 @@ export class GameEngine {
     }
 
     runActivity(techniqueId, subSkillId, step) {
+        // Clear any lingering effects when starting an activity
+        this.effects.clearEffects();
+
         const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
         if (!subSkill) return;
 
@@ -93,6 +96,9 @@ export class GameEngine {
     }
 
     renderCurrentQuestion() {
+        // Ensure previous effects are gone before showing a new question
+        this.effects.clearEffects();
+
         const { questions, currentIndex } = this.state.activitySession;
         this.ui.elements.modal_feedback.innerHTML = '';
         this.ui.elements.modal_action_btn.style.display = 'none';
