@@ -630,4 +630,15 @@ html, body { max-width: 100%; overflow-x: hidden; }
     transform: rotate(90deg) !important; /* <-- ADDED !important TO FORCE THE STYLE */
   }
 }
+/* ==============================
+   Question Transition Animation
+   ============================== */
+#modal-body {
+  /* This tells the container to animate any changes to its opacity */
+  transition: opacity 0.3s ease-in-out;
+}
 
+#modal-body.fade-out {
+  /* This class will make the container invisible */
+  opacity: 0;
+}
