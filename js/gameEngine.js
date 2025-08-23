@@ -40,23 +40,23 @@ export class GameEngine {
         const explanationHTML = `<div class="text-lg text-gray-700 mb-6">${subSkill.learn_info || ''}</div>`;
 
         // 2) "Other examples" displayed as BEFORE → AFTER with correct audio buttons,
-        //    and forced LTR inside each pair so order is visually stable in RTL UI.
+        //    Mobile-friendly layout with proper wrapping
         const examplesHTML = (subSkill.examples || []).map(ex => `
             <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div class="flex items-center justify-center gap-4" dir="ltr">
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4" dir="ltr">
                 <div class="inline-flex items-center gap-2">
-                  <button class="speaker-btn" data-speak="${ex.before}" aria-label="Listen to ${ex.before}">
-                    <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
+                  <button class="speaker-btn flex-shrink-0" data-speak="${ex.before}" aria-label="Listen to ${ex.before}">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
                   </button>
-                  <span class="text-3xl english-font">${ex.before}</span>
+                  <span class="text-2xl sm:text-3xl english-font">${ex.before}</span>
                 </div>
                 ${ex.before !== ex.after ? `
-                  <span class="text-3xl">➡️</span>
+                  <span class="text-2xl sm:text-3xl">➡️</span>
                   <div class="inline-flex items-center gap-2">
-                    <button class="speaker-btn" data-speak="${ex.after}" aria-label="Listen to ${ex.after}">
-                      <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
+                    <button class="speaker-btn flex-shrink-0" data-speak="${ex.after}" aria-label="Listen to ${ex.after}">
+                      <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
                     </button>
-                    <span class="text-3xl english-font font-bold text-purple-600">${ex.after}</span>
+                    <span class="text-2xl sm:text-3xl english-font font-bold text-purple-600">${ex.after}</span>
                   </div>` : ''}
               </div>
             </div>
@@ -64,7 +64,7 @@ export class GameEngine {
 
         this.ui.elements.modal_body.innerHTML = `
             ${explanationHTML}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">${examplesHTML}</div>
+            <div class="grid grid-cols-1 gap-4">${examplesHTML}</div>
         `;
     }
 
