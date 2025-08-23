@@ -545,91 +545,71 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .modal .body [dir="ltr"] > * { min-width: 0; }
 .modal .body .english-font { max-width: 100%; overflow-wrap: anywhere; }
 
+/* Fix for learning modal examples on mobile */
+#modal-body .bg-white {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#modal-body .inline-flex {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+
+/* Responsive adjustments for word transformation examples */
+@media (max-width: 640px) {
+  #modal-body [dir="ltr"] {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  #modal-body .inline-flex {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    max-width: 100%;
+  }
+  
+  #modal-body .text-3xl {
+    font-size: 1.5rem;
+  }
+  
+  /* Adjust speaker buttons in examples */
+  #modal-body .speaker-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  
+  #modal-body .english-font {
+    font-size: 1.25rem;
+  }
+  
+  /* Grid adjustment for examples */
+  #modal-body .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Tighten sizes slightly on very small phones */
 @media (max-width: 420px){
   .speaker-btn, button[data-speak]{ width: 38px; height: 38px; background-size: 18px 18px; }
   .modal .body .english-font{ font-size: clamp(16px, 5.2vw, 22px); }
-}
-
-/* keep big modal padding from causing overflow on tiny screens */
-@media (max-width: 480px){
-  .modal { padding-left: 12px; padding-right: 12px; }
-  .modal .surface { margin: 0; }
-}
-
-/* Media never wider than parent */
-img, svg, video { max-width: 100%; height: auto; display: block; }
-/* ===== FINAL MOBILE NO-SIDESCROLL FIX ===== */
-
-/* Page never scrolls sideways */
-html, body { max-width: 100%; overflow-x: hidden; }
-
-/* Use a small gutter on phones (also respects notches) */
-:root { --gutter: 12px; }
-@supports (padding: max(0px)){
-  .modal { padding-left: max(var(--gutter), env(safe-area-inset-left));
-           padding-right: max(var(--gutter), env(safe-area-inset-right)); }
-}
-
-/* Cap the modal surface to the viewport (subtract gutters/insets) */
-.modal .surface{
-  width: 100%;
-  max-width: calc(100vw - (2 * var(--gutter)));
-  overflow-x: hidden;
-}
-@supports (padding: max(0px)){
-  .modal .surface{
-    max-width: calc(100vw - max(var(--gutter), env(safe-area-inset-left))
-                           - max(var(--gutter), env(safe-area-inset-right)));
-  }
-}
-
-/* Ensure all modal sections and example cards cannot exceed width */
-.modal, .modal header, .modal .body, .modal .footer,
-.example-card, .modal .body .bg-white{
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* BEFORE→AFTER rows can wrap; children may shrink instead of overflow */
-.modal .body [dir="ltr"]{ 
-  display: flex; 
-  flex-wrap: wrap; 
-  gap: 10px; 
-  max-width: 100%; 
-  justify-content: center;
-  padding: 0 4px;
-}
-.modal .body [dir="ltr"] > *{ 
-  min-width: 0; 
-  flex-shrink: 1;
-}
-.modal .body .english-font{ 
-  max-width: 100%; 
-  overflow-wrap: anywhere;
-  font-size: clamp(1.75rem, 6vw, 3rem); /* 28px to 48px - more conservative */
-}
-
-/* Make content more mobile-friendly */
-@media (max-width: 480px){
-  .modal .body [dir="ltr"]{ 
-    gap: 8px; 
-    padding: 0 6px;
+  
+  #modal-body .speaker-btn {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
   }
   
-  /* Reduce speaker buttons but keep them usable */
-  .speaker-btn, button[data-speak]{ 
-    width: 50px; 
-    height: 50px; 
-    min-width: 50px;
-    flex-shrink: 0;
+  #modal-body .text-3xl {
+    font-size: 1.25rem;
   }
-  .speaker-btn svg {
-    width: 20px;
-    height: 20px;
+  
+  #modal-body .english-font {
+    font-size: 1.125rem;
   }
 }
-
-
-
-
