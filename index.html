@@ -1,157 +1,110 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="default">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دورة تعليم قراءة الكمات الإنجليزية</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لغتي الثانية | برنامج تعليم الحروف الإنجليزية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-
-  <!-- celebration particles container -->
+<body class="min-h-screen p-4">
+  <!-- celebration particles -->
   <div class="celebration-particles" id="particles-container"></div>
 
-  <!-- Splash / Landing -->
-  <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
-    <div class="mb-8">
-      <h1 class="welcome-title mb-4">دورة تعليم قراءة الكلمات الإنجليزية</h1>
-      <p class="text-xl text-gray-600">برنامج تأسيسي للقراءة والكتابة</p>
-    </div>
-    <div class="space-y-4">
-      <div class="text-6xl mb-6">📖</div>
-      <button id="start-btn" class="btn-primary text-xl pulse">أسس صح!</button>
-    </div>
-  </div>
+  <!-- Splash -->
+  <section id="splash-screen" class="w-full max-w-2xl mx-auto text-center">
+    <h1 class="text-3xl font-bold mb-4">لغتي الثانية</h1>
+    <p class="text-gray-700 mb-6">برنامج مبسّط لتعلّم القراءة (فونيكس)</p>
+    <button id="start-btn" class="btn-primary">ابدأ الآن</button>
+  </section>
 
   <!-- App -->
-  <div id="app" class="w-full max-w-7xl hidden">
-    <!-- Header (responsive: title on its own row on small screens) -->
-    <header class="glass-card p-4 sm:p-6 mb-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <!-- Title: full width on mobile, centered -->
-        <h1 id="main-title" class="order-1 w-full text-center text-2xl sm:text-3xl font-bold text-gray-800">
-          اختر مهارة
-        </h1>
-
-        <!-- Controls group -->
-        <div class="order-2 flex items-center gap-3">
-          <button id="menu-btn" class="btn-secondary !py-2 !px-3" aria-label="افتح القائمة">☰</button>
-          <div class="streak-counter">🔥 <span id="streak-count">0</span> يوم</div>
-          <button id="teacher-dashboard-btn" class="btn-secondary text-sm">📊 لوحة التعلم</button>
-        </div>
-
-        <!-- Points -->
-        <div class="order-2 text-sm text-gray-600">
-          <span id="points-display">0 نقطة ⭐</span>
-        </div>
+  <div id="app" class="w-full max-w-7xl mx-auto hidden">
+    <header class="glass-card p-4 sm:p-6 mb-6 flex items-center justify-between">
+      <h1 id="main-title" class="text-2xl sm:text-3xl font-bold text-gray-800">اختر مهارة</h1>
+      <div class="flex items-center gap-3">
+        <button id="menu-btn" class="btn-secondary !py-2 !px-3" aria-label="افتح القائمة">☰</button>
+        <div class="streak-counter">🔥 <span id="streak-count">0</span> يوم</div>
+        <div id="points-display" class="font-bold">0 نقطة ⭐</div>
+        <button id="teacher-dashboard-btn" class="btn-secondary">لوحة التعلم</button>
       </div>
     </header>
 
-    <!-- Skills view -->
-    <main id="skills-view" class="glass-card p-4 sm:p-8">
-      <div class="mb-8 text-center">
-        <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
-        <div class="mt-4 text-sm text-gray-500">✨ أكمل المهارات السابقة لفتح المهارات الجديدة</div>
-      </div>
-      <div id="skills-tree" class="skills-tree"></div>
-    </main>
+    <main>
+      <section id="skills-view">
+        <div id="skills-tree" class="skills-tree"></div>
+      </section>
 
-    <!-- Technique view -->
-    <main id="technique-view" class="glass-card p-4 sm:p-8 hidden">
-      <button id="back-btn" class="btn-secondary mb-6">← رجوع</button>
-      <div id="subskills-container" class="space-y-4"></div>
-    </main>
+      <section id="technique-view" class="hidden">
+        <button id="back-btn" class="btn-secondary mb-4">رجوع</button>
+        <div id="subskills-container" class="space-y-4"></div>
+      </section>
 
-    <!-- Important Note page -->
-    <main id="note-page" class="glass-card p-4 sm:p-8 hidden">
-      <button id="note-back-btn" class="btn-secondary mb-6">← رجوع</button>
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">ملاحظة مهمة</h2>
-      <div class="space-y-4 leading-8 text-gray-700">
-        <p>
-          البرنامج لا يتطلب تسجيل دخول، ويتم حفظ بيانات تقدمك عبر متصفح الجهاز الذي تستخدمه الآن.
-          في حال تغيير المتصفح أو الجهاز ستبدأ من جديد. إذا أردت متابعة التقدم نفسه،
-          عليك استخدام نفس المتصفح.
-        </p>
-        <p>
-          ويمكنك أيضاً اختيار <b>"فتح جميع الوحدات"</b> من القائمة الجانبية للانتقال مباشرةً لأي درس في حال بدأت من جهاز جديد.
-        </p>
-        <p>
-          إذا كان لديك أي ملاحظات أرحب بتواصلك معي عبر الإيميل
-          <span class="text-gray-500">—</span>
-          <span class="font-bold">hello@my2ndlang.com</span> :
-        </p>
-        <div class="flex items-center gap-3">
-          <input id="email-field" class="glass-card px-3 py-2 rounded-lg border border-gray-200 w-full sm:w-auto" value="hello@my2ndlang.com" readonly>
-          <button id="copy-email-btn" class="btn-primary">نسخ الإيميل</button>
+      <!-- Notes page (optional existing feature) -->
+      <section id="note-page" class="hidden">
+        <button id="note-back-btn" class="btn-secondary mb-4">رجوع</button>
+        <div class="glass-card p-6">
+          <h2 class="text-xl font-bold mb-2">ملاحظاتي</h2>
+          <p class="text-gray-600">سجّل ملاحظاتك هنا…</p>
         </div>
-        <div id="copy-toast" class="text-green-600 text-sm hidden">✅ تم نسخ البريد إلى الحافظة</div>
-      </div>
+      </section>
     </main>
   </div>
 
-  <!-- Activity modal -->
+  <!-- Activity Modal -->
   <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
-      <div class="flex justify-between items-center mb-6">
-        <h2 id="modal-title" class="text-3xl font-bold text-gray-800"></h2>
-        <div id="modal-progress" class="text-lg text-gray-600"></div>
+    <div class="glass-card w-full max-w-4xl p-6 sm:p-8 flex flex-col max-h-[90vh] modal-content">
+      <div class="flex justify-between items-center mb-4 sm:mb-6">
+        <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800"></h2>
+        <div id="modal-progress" class="text-sm sm:text-lg text-gray-600"></div>
       </div>
+
       <div id="modal-body" class="flex-grow text-center overflow-y-auto"></div>
-      <div id="modal-feedback" class="h-12 mt-4 text-center text-xl font-bold"></div>
-      <div id="modal-footer" class="mt-6 flex justify-center items-center gap-4">
+      <div id="modal-feedback" class="h-10 sm:h-12 mt-3 sm:mt-4 text-center text-lg sm:text-xl font-bold"></div>
+
+      <div id="modal-footer" class="mt-4 sm:mt-6 flex flex-wrap justify-center items-center gap-3">
+        <button id="modal-back-btn" class="btn-secondary hidden">السابق</button>
         <button id="modal-exit-btn" class="btn-secondary">خروج</button>
         <button id="modal-action-btn" class="btn-primary">التالي</button>
       </div>
     </div>
   </div>
 
-  <!-- Success modal -->
+  <!-- Success Modal -->
   <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-md p-8 text-center modal-content">
-      <div class="text-6xl mb-4">🎉</div>
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
-      <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
-      <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
-      <button id="success-close-btn" class="btn-primary">استمر</button>
+    <div class="glass-card w-full max-w-lg p-8 text-center">
+      <h3 id="success-message" class="text-2xl font-bold mb-2"></h3>
+      <div id="success-reward" class="text-5xl mb-6">🎉</div>
+      <button id="success-close-btn" class="btn-primary">استمرار</button>
     </div>
   </div>
 
-  <!-- Learning Dashboard container -->
-  <div id="teacher-dashboard" class="hidden fixed inset-0 z-[70] modal-backdrop flex justify-center p-4 overflow-y-auto"></div>
-
-  <!-- Side Menu -->
-  <div id="side-menu-overlay" class="fixed inset-0 bg-black/40 hidden z-[65]"></div>
-  <aside id="side-menu" class="fixed inset-y-0 right-0 w-72 glass-card p-6 shadow-xl transform translate-x-full transition-transform z-[66]">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-lg font-bold">القائمة</h3>
+  <!-- Side menu -->
+  <div id="side-menu-overlay" class="fixed inset-0 z-30 bg-black/30 hidden"></div>
+  <aside id="side-menu" class="fixed z-40 right-0 top-0 h-full w-80 bg-white shadow-2xl translate-x-full transition-transform">
+    <div class="p-4 flex items-center justify-between border-b">
+      <h3 class="font-bold">القائمة</h3>
       <button id="menu-close" class="btn-secondary !py-1 !px-3">✕</button>
     </div>
-
-    <nav class="flex flex-col gap-3">
-      <button id="menu-dashboard" class="step-button !justify-start">📊 لوحة التعلم</button>
-      <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="step-button !justify-start">🌐 لغتي الثانية</a>
-      <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
-      <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
-
-      <!-- Theme picker in the menu -->
-      <div class="menu-section">
-        <div class="menu-section-title">المظهر</div>
-        <div class="theme-selector in-menu">
-          <div class="theme-btn active" data-theme="default" title="افتراضي"></div>
-          <div class="theme-btn" data-theme="ocean" title="بحري"></div>
-          <div class="theme-btn" data-theme="forest" title="غابة"></div>
-          <div class="theme-btn" data-theme="sunset" title="غروب"></div>
-        </div>
+    <nav class="p-4 space-y-2">
+      <button id="menu-dashboard" class="w-full text-right btn-secondary">لوحة التعلم</button>
+      <a href="https://my2ndlang.blog" target="_blank" class="block btn-secondary text-right">لغتي الثانية</a>
+      <div class="border-t pt-3">
+        <label class="block mb-2 text-sm text-gray-600">مظهر اللون</label>
+        <select id="theme-select" class="w-full border rounded-lg p-2">
+          <option value="default">افتراضي</option>
+          <option value="mint">Mint</option>
+          <option value="sunset">Sunset</option>
+          <option value="ocean">Ocean</option>
+          <option value="fire">Fire</option>
+        </select>
       </div>
     </nav>
   </aside>
 
-  <!-- load app -->
-  <script type="module" src="./js/main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
-
