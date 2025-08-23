@@ -51,7 +51,7 @@ export class GameEngine {
                   <span class="text-2xl sm:text-3xl english-font">${ex.before}</span>
                 </div>
                 ${ex.before !== ex.after ? `
-                  <span class="text-2xl sm:text-3xl">➡️</span>
+                  <span class="text-2xl sm:text-3xl transformation-arrow">➡️</span>
                   <div class="inline-flex items-center gap-2">
                     <button class="speaker-btn flex-shrink-0" data-speak="${ex.after}" aria-label="Listen to ${ex.after}">
                       <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
