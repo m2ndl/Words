@@ -559,5 +559,48 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 /* Media never wider than parent */
 img, svg, video { max-width: 100%; height: auto; display: block; }
+/* ===== FINAL MOBILE NO-SIDESCROLL FIX ===== */
+
+/* Page never scrolls sideways */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* Use a small gutter on phones (also respects notches) */
+:root { --gutter: 12px; }
+@supports (padding: max(0px)){
+  .modal { padding-left: max(var(--gutter), env(safe-area-inset-left));
+           padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+}
+
+/* Cap the modal surface to the viewport (subtract gutters/insets) */
+.modal .surface{
+  width: 100%;
+  max-width: calc(100vw - (2 * var(--gutter)));
+  overflow-x: hidden;
+}
+@supports (padding: max(0px)){
+  .modal .surface{
+    max-width: calc(100vw - max(var(--gutter), env(safe-area-inset-left))
+                           - max(var(--gutter), env(safe-area-inset-right)));
+  }
+}
+
+/* Ensure all modal sections and example cards cannot exceed width */
+.modal, .modal header, .modal .body, .modal .footer,
+.example-card, .modal .body .bg-white{
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* BEFORE→AFTER rows can wrap; children may shrink instead of overflow */
+.modal .body [dir="ltr"]{ display:flex; flex-wrap:wrap; gap:12px; max-width:100%; }
+.modal .body [dir="ltr"] > *{ min-width:0; }
+.modal .body .english-font{ max-width:100%; overflow-wrap:anywhere; }
+
+/* Slightly tighter controls only on very small phones */
+@media (max-width: 420px){
+  .speaker-btn, button[data-speak]{ width:38px; height:38px; background-size:18px 18px; }
+}
+
+
 
 
