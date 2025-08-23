@@ -613,3 +613,20 @@ html, body { max-width: 100%; overflow-x: hidden; }
     font-size: 1.125rem;
   }
 }
+/* ==============================
+    Arrow Transformation Fix
+   ============================== */
+.transformation-arrow {
+  /* Ensures the arrow smoothly rotates instead of snapping */
+  transition: transform 0.4s ease;
+}
+
+@media (max-width: 640px) {
+  /*
+   * On mobile screens, when the layout becomes a column,
+   * we rotate our arrow 90 degrees to point down.
+   */
+  .transformation-arrow {
+    transform: rotate(90deg);
+  }
+}
