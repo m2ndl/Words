@@ -11,14 +11,12 @@
           "id": "a_e",
           "name": "تحويل صوت A",
           "icon": "🎭",
-          "learn_info": "<b>القاعدة السحرية:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!",
+          "learn_info": "<b>القاعدة السحرية:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hat'>🔊</button><span class='english-font'>hat</span><span>➜</span><button class='speaker-btn' data-speak='hate'>🔊</button><span class='english-font'>hate</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق الكلمة من \"هات\" إلى \"هيت\" والسبب هو وجود حرف e بالأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plane'>🔊</button><span class='english-font'>plane</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق حرف <span class='english-font'>a</span> بسبب حرف <span class='english-font'>e</span> في النهاية.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "hat", "after": "hate" },
             { "before": "mat", "after": "mate" },
             { "before": "can", "after": "cane" },
             { "before": "cap", "after": "cape" },
-            { "before": "tap", "after": "tape" },
-            { "before": "plan", "after": "plane" }
+            { "before": "tap", "after": "tape" }
           ],
           "drill": {
             "type": "morph",
@@ -47,13 +45,11 @@
           "id": "i_e",
           "name": "تحويل صوت I",
           "icon": "🎪",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!",
+          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='kit'>🔊</button><span class='english-font'>kit</span><span>➜</span><button class='speaker-btn' data-speak='kite'>🔊</button><span class='english-font'>kite</span></span><div class='mt-2 text-gray-700'>لاحظ كيف أصبح صوت <span class='english-font'>i</span> طويلاً عندما أضفنا <span class='english-font'>e</span> في النهاية.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='dim'>🔊</button><span class='english-font'>dim</span><span>➜</span><button class='speaker-btn' data-speak='dime'>🔊</button><span class='english-font'>dime</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> الأخير جعل <span class='english-font'>i</span> يقول اسمه (صوت طويل).</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "kit", "after": "kite" },
             { "before": "pin", "after": "pine" },
             { "before": "fin", "after": "fine" },
             { "before": "bit", "after": "bite" },
-            { "before": "dim", "after": "dime" },
             { "before": "rid", "after": "ride" }
           ],
           "drill": {
@@ -77,11 +73,9 @@
           "id": "o_e",
           "name": "تحويل صوت O",
           "icon": "🎩",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'o' من قصير إلى طويل.",
+          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'o' من قصير إلى طويل.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hop'>🔊</button><span class='english-font'>hop</span><span>➜</span><button class='speaker-btn' data-speak='hope'>🔊</button><span class='english-font'>hope</span></span><div class='mt-2 text-gray-700'>نلاحظ تحول صوت <span class='english-font'>o</span> إلى طويل بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='not'>🔊</button><span class='english-font'>not</span><span>➜</span><button class='speaker-btn' data-speak='note'>🔊</button><span class='english-font'>note</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> في النهاية يمد صوت <span class='english-font'>o</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "hop", "after": "hope" },
             { "before": "rob", "after": "robe" },
-            { "before": "not", "after": "note" },
             { "before": "cod", "after": "code" }
           ],
           "drill": {
@@ -108,10 +102,8 @@
           "id": "u_e",
           "name": "تحويل صوت U",
           "icon": "🦄",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'u' ليقول اسمه (صوت طويل).",
+          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'u' ليقول اسمه (صوت طويل).<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cub'>🔊</button><span class='english-font'>cub</span><span>➜</span><button class='speaker-btn' data-speak='cube'>🔊</button><span class='english-font'>cube</span></span><div class='mt-2 text-gray-700'>لاحظ كيف صار صوت <span class='english-font'>u</span> طويلاً بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='cute'>🔊</button><span class='english-font'>cute</span></span><div class='mt-2 text-gray-700'>نفس الفكرة: <span class='english-font'>e</span> في النهاية يغير نطق الحرف المتحرك.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "cub", "after": "cube" },
-            { "before": "cut", "after": "cute" },
             { "before": "tub", "after": "tube" },
             { "before": "us", "after": "use" }
           ],
@@ -144,10 +136,8 @@
           "id": "ee_ea",
           "name": "فريق EE و EA",
           "icon": "🤝",
-          "learn_info": "<b>عندما يعمل الحرفان معاً:</b> الفريقان 'ee' و 'ea' ينتجان صوت 'e' الطويل!",
+          "learn_info": "<b>عندما يعمل الحرفان معاً:</b> الفريقان 'ee' و 'ea' ينتجان صوت 'e' الطويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='met'>🔊</button><span class='english-font'>met</span><span>➜</span><button class='speaker-btn' data-speak='meet'>🔊</button><span class='english-font'>meet</span></span><div class='mt-2 text-gray-700'>لاحظ أن فريق <span class='english-font'>ee</span> أعطى صوت <span class='english-font'>e</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bet'>🔊</button><span class='english-font'>bet</span><span>➜</span><button class='speaker-btn' data-speak='beat'>🔊</button><span class='english-font'>beat</span></span><div class='mt-2 text-gray-700'>وكذلك فريق <span class='english-font'>ea</span> يعطي نفس الصوت الطويل.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "met", "after": "meet" },
-            { "before": "bet", "after": "beat" },
             { "before": "fed", "after": "feed" },
             { "before": "set", "after": "seat" }
           ],
@@ -175,11 +165,9 @@
           "id": "ai_ay",
           "name": "فريق AI و AY",
           "icon": "🌟",
-          "learn_info": "<b>أصدقاء صوت A:</b> الفريقان 'ai' و 'ay' ينتجان صوت 'a' الطويل!",
+          "learn_info": "<b>أصدقاء صوت A:</b> الفريقان 'ai' و 'ay' ينتجان صوت 'a' الطويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ran'>🔊</button><span class='english-font'>ran</span><span>➜</span><button class='speaker-btn' data-speak='rain'>🔊</button><span class='english-font'>rain</span></span><div class='mt-2 text-gray-700'>لاحظ أن <span class='english-font'>ai</span> يعطي صوت <span class='english-font'>a</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plain'>🔊</button><span class='english-font'>plain</span></span><div class='mt-2 text-gray-700'>وكذلك <span class='english-font'>ay</span> يعطي الصوت الطويل نفسه.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "ran", "after": "rain" },
             { "before": "pan", "after": "pain" },
-            { "before": "plan", "after": "plain" },
             { "before": "tr", "after": "tray" }
           ],
           "drill": {
@@ -214,10 +202,8 @@
           "id": "soft_c",
           "name": "حرف C الناعم",
           "icon": "🍋",
-          "learn_info": "<b>التحول العجيب:</b> حرف 'c' يصبح ناعماً (مثل صوت س) عندما يأتي بعده e, i, أو y!",
+          "learn_info": "<b>التحول العجيب:</b> حرف 'c' يصبح ناعماً (مثل صوت س) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cat'>🔊</button><span class='english-font'>cat</span><span>➜</span><button class='speaker-btn' data-speak='cent'>🔊</button><span class='english-font'>cent</span></span><div class='mt-2 text-gray-700'>هنا تحوّل <span class='english-font'>c</span> قبل <span class='english-font'>e</span> إلى صوت ناعم (س).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span><span>➜</span><button class='speaker-btn' data-speak='city'>🔊</button><span class='english-font'>city</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>i</span> أيضاً يصبح <span class='english-font'>c</span> ناعماً.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "cat", "after": "cent" },
-            { "before": "car", "after": "city" },
             { "before": "cup", "after": "cycle" }
           ],
           "drill": {
@@ -239,10 +225,8 @@
           "id": "soft_g",
           "name": "حرف G الناعم",
           "icon": "🦒",
-          "learn_info": "<b>التحول العجيب:</b> حرف 'g' يصبح ناعماً (مثل صوت ج) عندما يأتي بعده e, i, أو y!",
+          "learn_info": "<b>التحول العجيب:</b> حرف 'g' يصبح ناعماً (مثل ج) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='go'>🔊</button><span class='english-font'>go</span><span>➜</span><button class='speaker-btn' data-speak='gem'>🔊</button><span class='english-font'>gem</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>e</span> يصبح <span class='english-font'>g</span> ناعماً.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='gas'>🔊</button><span class='english-font'>gas</span><span>➜</span><button class='speaker-btn' data-speak='gym'>🔊</button><span class='english-font'>gym</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>y</span> أيضاً نلاحظ الصوت الناعم.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "go", "after": "gem" },
-            { "before": "gas", "after": "gym" },
             { "before": "got", "after": "giant" }
           ],
           "drill": {
@@ -276,10 +260,8 @@
           "id": "er_ir_ur",
           "name": "صوت /er/ (er, ir, ur)",
           "icon": "🦢",
-          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يسيطر على الحرف المتحرك الذي قبله! المجموعات <b>er</b>, <b>ir</b>, و <b>ur</b> غالباً ما تصدر نفس الصوت.",
+          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يسيطر على الحرف المتحرك الذي قبله! المجموعات <b>er</b>, <b>ir</b>, و <b>ur</b> غالباً ما تصدر نفس الصوت.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='her'>🔊</button><span class='english-font'>her</span></span><div class='mt-2 text-gray-700'>استمع لصوت /er/ الواضح.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bird'>🔊</button><span class='english-font'>bird</span></span><div class='mt-2 text-gray-700'>نفس النمط يظهر مع <span class='english-font'>ir</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "her", "after": "her" },
-            { "before": "bird", "after": "bird" },
             { "before": "turn", "after": "turn" }
           ],
           "drill": {
@@ -302,10 +284,8 @@
           "id": "ar_or",
           "name": "أصوات /ar/ و /or/",
           "icon": "🌽",
-          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يغير أيضاً أصوات 'a' و 'o'. استمع جيداً للفرق بينهما.",
+          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يغير أيضاً أصوات 'a' و 'o'. استمع للفرق بين /ar/ و /or/.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span></span><div class='mt-2 text-gray-700'>هنا نسمع /ar/.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='fork'>🔊</button><span class='english-font'>fork</span></span><div class='mt-2 text-gray-700'>وهنا نسمع /or/.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "car", "after": "car" },
-            { "before": "fork", "after": "fork" },
             { "before": "star", "after": "star" },
             { "before": "corn", "after": "corn" }
           ],
@@ -341,10 +321,8 @@
           "id": "ch_sh_th_wh",
           "name": "CH, SH, TH, WH",
           "icon": "👨‍👩‍👧‍👦",
-          "learn_info": "<b>الأصوات المدمجة:</b> حرفان يتحدان ليصدرا صوتاً جديداً واحداً! CH مثل 'تش'، SH مثل 'ش'، TH مثل 'ث'، WH مثل 'و'.",
+          "learn_info": "<b>الأصوات المدمجة:</b> حرفان يتحدان ليصدرا صوتاً جديداً واحداً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='chair'>🔊</button><span class='english-font'>chair</span></span><div class='mt-2 text-gray-700'>لاحظ صوت <span class='english-font'>ch</span> (مثل \"تش\").</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ship'>🔊</button><span class='english-font'>ship</span></span><div class='mt-2 text-gray-700'>هنا صوت <span class='english-font'>sh</span> (مثل \"ش\").</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "chair", "after": "chair" },
-            { "before": "ship", "after": "ship" },
             { "before": "think", "after": "think" },
             { "before": "whale", "after": "whale" },
             { "before": "cheese", "after": "cheese" },
@@ -371,10 +349,8 @@
           "id": "ck_ng_ph",
           "name": "CK, NG, PH",
           "icon": "🔇",
-          "learn_info": "<b>الأصوات الخاصة:</b> CK يصدر صوت 'ك'، NG يصدر صوت 'نغ'، PH يصدر صوت 'ف'. هذه أصوات مميزة!",
+          "learn_info": "<b>الأصوات الخاصة:</b> CK يصدر صوت 'ك'، NG يصدر صوت 'نغ'، PH يصدر صوت 'ف'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='back'>🔊</button><span class='english-font'>back</span></span><div class='mt-2 text-gray-700'>هنا نسمع صوت /k/ في نهاية الكلمة من <span class='english-font'>ck</span>.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ring'>🔊</button><span class='english-font'>ring</span></span><div class='mt-2 text-gray-700'>هنا صوت <span class='english-font'>ng</span> (نغ) في النهاية.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "back", "after": "back" },
-            { "before": "ring", "after": "ring" },
             { "before": "phone", "after": "phone" },
             { "before": "duck", "after": "duck" },
             { "before": "king", "after": "king" },
@@ -412,10 +388,8 @@
           "id": "oo_sounds",
           "name": "أصوات OO (قصير وطويل)",
           "icon": "👀",
-          "learn_info": "<b>صوتان مختلفان:</b> OO يمكن أن يصدر صوتاً قصيراً مثل 'book' أو صوتاً طويلاً مثل 'moon'. استمع جيداً للفرق!",
+          "learn_info": "<b>صوتان مختلفان:</b> OO يمكن أن يصدر صوتاً قصيراً مثل 'book' أو صوتاً طويلاً مثل 'moon'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='book'>🔊</button><span class='english-font'>book</span></span><div class='mt-2 text-gray-700'>هنا صوت قصير (مثل /ʊ/).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='moon'>🔊</button><span class='english-font'>moon</span></span><div class='mt-2 text-gray-700'>وهنا صوت طويل (مثل /uː/). انتبه للفرق.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "book", "after": "book" },
-            { "before": "moon", "after": "moon" },
             { "before": "cook", "after": "cook" },
             { "before": "cool", "after": "cool" },
             { "before": "good", "after": "good" },
@@ -442,10 +416,8 @@
           "id": "diphthongs",
           "name": "الأصوات المنزلقة OY/OI, OW/OU",
           "icon": "🎢",
-          "learn_info": "<b>الأصوات المنزلقة:</b> هذه الأصوات تبدأ بصوت وتنتهي بصوت آخر! OY/OI مثل 'boy' و 'coin'، OW/OU مثل 'cow' و 'house'.",
+          "learn_info": "<b>الأصوات المنزلقة:</b> تبدأ بصوت وتنتهي بصوت آخر!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='boy'>🔊</button><span class='english-font'>boy</span></span><div class='mt-2 text-gray-700'>هذا صوت <span class='english-font'>oy</span> المنزلق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='coin'>🔊</button><span class='english-font'>coin</span></span><div class='mt-2 text-gray-700'>وهذا <span class='english-font'>oi</span> بصوت مشابه.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "boy", "after": "boy" },
-            { "before": "coin", "after": "coin" },
             { "before": "cow", "after": "cow" },
             { "before": "house", "after": "house" },
             { "before": "joy", "after": "joy" },
@@ -474,10 +446,8 @@
           "id": "au_aw",
           "name": "أصوات AU و AW",
           "icon": "🦖",
-          "learn_info": "<b>الصوت العميق:</b> AU و AW ينتجان نفس الصوت العميق مثل 'saw' و 'auto'. صوت مميز وقوي!",
+          "learn_info": "<b>الصوت العميق:</b> AU و AW ينتجان نفس الصوت العميق مثل 'saw' و 'auto'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='saw'>🔊</button><span class='english-font'>saw</span></span><div class='mt-2 text-gray-700'>صوت <span class='english-font'>aw</span> العميق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='auto'>🔊</button><span class='english-font'>auto</span></span><div class='mt-2 text-gray-700'>وهنا <span class='english-font'>au</span> بنفس الجودة الصوتية تقريباً.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "saw", "after": "saw" },
-            { "before": "auto", "after": "auto" },
             { "before": "claw", "after": "claw" },
             { "before": "pause", "after": "pause" },
             { "before": "draw", "after": "draw" },
