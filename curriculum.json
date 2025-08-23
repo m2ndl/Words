@@ -11,23 +11,22 @@
           "id": "a_e",
           "name": "تحويل صوت A",
           "icon": "🎭",
-          "learn_info": "<b>القاعدة السحرية:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!",
+          "learn_info": "عندما نضيف الحرف e الصامت في نهاية الكلمة، يصبح نطق a طويلاً: /eɪ/.",
           "examples": [
             { "before": "hat", "after": "hate" },
             { "before": "cap", "after": "cape" },
             { "before": "mat", "after": "mate" },
             { "before": "tap", "after": "tape" },
-            { "before": "can", "after": "cane" },
-            { "before": "plan", "after": "plane" }
+            { "before": "can", "after": "cane" }
           ],
           "learn_comments": [
             "أضفنا الحرف e في النهاية؛ الآن a ينطق باسمه /eɪ/.",
-            "انظر كيف تغيّر نطق الكلمة من «كاب» إلى «كيب» والسبب وجود حرف e في آخر الكلمة."
+            "انظر كيف تغيّر نطق الكلمة من \"كاب\" إلى \"كيب\" والسبب وجود حرف e في آخر الكلمة."
           ],
           "learn_check": { "audio": "tape", "options": ["tap", "tape"], "answer": "tape" },
           "drill": {
             "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت 'a' الطويل، مثل كلمة tape؟",
+            "instruction": "هل هذه الكلمة بها صوت a الطويل (مثل tape)؟",
             "correct": ["tape", "cane", "late", "name", "plane", "cape"],
             "incorrect": ["tap", "can", "cap", "man", "mat", "pan"]
           },
@@ -44,23 +43,22 @@
           "id": "i_e",
           "name": "تحويل صوت I",
           "icon": "🎪",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!",
+          "learn_info": "عندما نضيف الحرف e الصامت في نهاية الكلمة، يصبح نطق i طويلاً: /aɪ/.",
           "examples": [
             { "before": "kit", "after": "kite" },
+            { "before": "rid", "after": "ride" },
             { "before": "pin", "after": "pine" },
             { "before": "fin", "after": "fine" },
-            { "before": "bit", "after": "bite" },
-            { "before": "dim", "after": "dime" },
-            { "before": "rid", "after": "ride" }
+            { "before": "bit", "after": "bite" }
           ],
           "learn_comments": [
             "أضفنا الحرف e في النهاية؛ الآن i تُنطق /aɪ/.",
-            "انظر كيف تغيّر النطق من «رِد» إلى «رايد» بسبب e النهائية."
+            "انظر كيف تغيّر نطق الكلمة من \"رِد\" إلى \"رايد\" والسبب وجود حرف e في آخر الكلمة."
           ],
           "learn_check": { "audio": "bite", "options": ["bit", "bite"], "answer": "bite" },
           "drill": {
             "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت 'i' الطويل، مثل كلمة kite؟",
+            "instruction": "هل هذه الكلمة بها صوت i الطويل (مثل kite)؟",
             "correct": ["like", "time", "nine", "ride", "dime", "fine"],
             "incorrect": ["sit", "big", "lip", "win", "hit", "fit"]
           },
@@ -77,7 +75,7 @@
           "id": "o_e",
           "name": "تحويل صوت O",
           "icon": "🎯",
-          "learn_info": "<b>القاعدة السحرية:</b> مع 'e' النهائية، يتحول صوت 'o' من قصير إلى طويل!",
+          "learn_info": "مع e النهائية، يتحول صوت o من قصير إلى طويل /oʊ/.",
           "examples": [
             { "before": "hop", "after": "hope" },
             { "before": "not", "after": "note" },
@@ -87,12 +85,12 @@
           ],
           "learn_comments": [
             "أضفنا الحرف e في النهاية؛ الآن o تُنطق /oʊ/.",
-            "انظر التحوّل من «نَت» إلى «نوت» بسبب e النهائية."
+            "انظر التحوّل من \"نَت\" إلى \"نوت\" بسبب e النهائية."
           ],
           "learn_check": { "audio": "note", "options": ["not", "note"], "answer": "note" },
           "drill": {
             "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت 'o' الطويل، مثل كلمة note؟",
+            "instruction": "هل هذه الكلمة بها صوت o الطويل (مثل note)؟",
             "correct": ["note", "code", "hope", "rode", "joke", "home"],
             "incorrect": ["not", "cop", "rod", "hop", "mop", "dot"]
           },
@@ -109,21 +107,21 @@
           "id": "u_e",
           "name": "تحويل صوت U",
           "icon": "🧩",
-          "learn_info": "<b>القاعدة:</b> وجود 'e' في نهاية الكلمة يجعل 'u' غالبًا طويلاً /juː/ (وأحيانًا /uː/).",
+          "learn_info": "وجود e في نهاية الكلمة يجعل u غالبًا طويلاً /juː/ (وأحيانًا /uː/).",
           "examples": [
-            { "before": "cub", "after": "cube" },
             { "before": "cut", "after": "cute" },
             { "before": "tub", "after": "tube" },
+            { "before": "cub", "after": "cube" },
             { "before": "us", "after": "use" }
           ],
           "learn_comments": [
-            "لاحظ التغيّر من «كت» إلى «كيوت» بسبب e النهائية (u غالبًا /juː/).",
-            "تحوّلت «تب» إلى «تيوب» لأن u صار طويلًا بوجود e الأخيرة."
+            "انظر كيف تغيّر النطق من \"كت\" إلى \"كيوت\" بسبب وجود e في آخر الكلمة.",
+            "تحوّلت \"تب\" إلى \"تيوب\" لأن u صار طويلًا بوجود e الأخيرة."
           ],
           "learn_check": { "audio": "tube", "options": ["tub", "tube"], "answer": "tube" },
           "drill": {
             "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت 'u' الطويل، مثل كلمة cute؟",
+            "instruction": "هل هذه الكلمة بها صوت u الطويل (مثل cute)؟",
             "correct": ["flute", "june", "rude", "fuse", "cute", "tube"],
             "incorrect": ["run", "fun", "duck", "bus", "cut", "hut"]
           },
@@ -136,12 +134,125 @@
               { "audio": "tube", "options": ["tub", "tube"], "answer": "tube" }
             ]
           }
+        },
+        {
+          "id": "e_e",
+          "name": "تحويل صوت E",
+          "icon": "🎵",
+          "learn_info": "وجود e صامتة في النهاية قد يجعل e تُنطق طويلة /iː/.",
+          "examples": [
+            { "before": "pet", "after": "Pete" },
+            { "before": "them", "after": "theme" },
+            { "before": "ten", "after": "teen" }
+          ],
+          "learn_comments": [
+            "ارتفع نطق e من /ɛ/ إلى /iː/ بسبب e النهائية.",
+            "انظر التحوّل إلى /iː/ في \"theme\"؛ السبب هو e الأخيرة."
+          ],
+          "learn_check": { "audio": "these", "options": ["this", "these"], "answer": "these" },
+          "drill": {
+            "type": "sort",
+            "instruction": "هل هذه الكلمة بها صوت e الطويل (مثل theme)؟",
+            "correct": ["theme", "scene", "these", "Pete", "Steve"],
+            "incorrect": ["them", "pet", "this", "ten", "set"]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              { "audio": "these", "options": ["this", "these"], "answer": "these" },
+              { "audio": "theme", "options": ["them", "theme"], "answer": "theme" }
+            ]
+          }
+        },
+        {
+          "id": "a_e_clusters",
+          "name": "A الطويل مع مجموعات ساكنة",
+          "icon": "🧱",
+          "learn_info": "حتى مع وجود مجموعات ساكنة، e النهائية تجعل a طويلًا /eɪ/.",
+          "examples": [
+            { "before": "plan", "after": "plane" },
+            { "before": "glad", "after": "glade" },
+            { "before": "man", "after": "mane" }
+          ],
+          "learn_comments": [
+            "أُضيفت e؛ فأصبح a /eɪ/: plan → plane.",
+            "انظر كيف تغيّر النطق: a صار /eɪ/ بسبب e النهائية."
+          ],
+          "learn_check": { "audio": "plane", "options": ["plan", "plane"], "answer": "plane" },
+          "drill": {
+            "type": "sort",
+            "instruction": "اختر الكلمات ذات a الطويل (مثل plane).",
+            "correct": ["plane", "glade", "grape", "brake", "shade"],
+            "incorrect": ["plan", "glad", "grab", "brag", "sham"]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              { "audio": "plane", "options": ["plan", "plane"], "answer": "plane" },
+              { "audio": "glade", "options": ["glad", "glade"], "answer": "glade" }
+            ]
+          }
+        },
+        {
+          "id": "i_e_clusters",
+          "name": "I الطويل مع مجموعات ساكنة",
+          "icon": "🧱",
+          "learn_info": "حتى مع المجموعات الساكنة، e النهائية تجعل i طويلًا /aɪ/.",
+          "examples": [
+            { "before": "slim", "after": "slime" },
+            { "before": "grip", "after": "gripe" },
+            { "before": "strip", "after": "stripe" }
+          ],
+          "learn_comments": [
+            "أضفنا e؛ فأصبح i /aɪ/: slim → slime.",
+            "لاحظ التحوّل إلى /aɪ/ بسبب e النهائية."
+          ],
+          "learn_check": { "audio": "stripe", "options": ["strip", "stripe"], "answer": "stripe" },
+          "drill": {
+            "type": "sort",
+            "instruction": "اختر الكلمات ذات i الطويل (مثل slime/stripe).",
+            "correct": ["slime", "gripe", "stripe", "shine", "prize"],
+            "incorrect": ["slim", "grip", "strip", "shin", "print"]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              { "audio": "slime", "options": ["slim", "slime"], "answer": "slime" },
+              { "audio": "stripe", "options": ["strip", "stripe"], "answer": "stripe" }
+            ]
+          }
+        },
+        {
+          "id": "o_e_clusters",
+          "name": "O الطويل مع مجموعات ساكنة",
+          "icon": "🧱",
+          "learn_info": "حتى مع المجموعات الساكنة، e النهائية تجعل o طويلًا /oʊ/.",
+          "examples": [
+            { "before": "slop", "after": "slope" },
+            { "before": "con", "after": "cone" },
+            { "before": "cod", "after": "code" }
+          ],
+          "learn_comments": [
+            "إضافة e جعلت o طويلًا /oʊ/: slop → slope.",
+            "انظر التحوّل: o صار /oʊ/ بسبب e النهائية."
+          ],
+          "learn_check": { "audio": "cone", "options": ["con", "cone"], "answer": "cone" },
+          "drill": {
+            "type": "sort",
+            "instruction": "اختر الكلمات ذات o الطويل (مثل cone/slope).",
+            "correct": ["slope", "cone", "code", "rode", "stone"],
+            "incorrect": ["slop", "con", "cod", "rod", "stun"]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              { "audio": "cone", "options": ["con", "cone"], "answer": "cone" },
+              { "audio": "code", "options": ["cod", "code"], "answer": "code" }
+            ]
+          }
         }
       ]
-    },
-
-    /* ——— Other techniques stay unchanged ——— */
-    /* Your existing JSON content continues here exactly as before */
+    }
   ],
   "encouragingMessages": [
     "أحسنت! 🌟",
