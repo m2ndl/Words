@@ -14,149 +14,122 @@ export class UIManager {
   initElements() {
     const ids = [
       'splash-screen', 'start-btn', 'app', 'main-title', 'skills-view', 'technique-view',
-      'skills-tree', 'back-btn', 'subskills-container', 'activity-modal', 'modal-title',
-      'modal-progress', 'modal-body', 'modal-feedback', 'modal-action-btn', 'modal-exit-btn',
+      'skills-tree', 'back-btn', 'subskills-container',
+      'activity-modal', 'modal-title', 'modal-progress', 'modal-body', 'modal-feedback',
+      'modal-action-btn', 'modal-exit-btn', 'modal-back-btn',
       'success-modal', 'success-message', 'success-reward', 'success-close-btn',
       'points-display', 'streak-count',
-      // NEW:
-      'note-page','note-back-btn'
+      'note-page','note-back-btn',
+      'menu-btn','side-menu','side-menu-overlay','menu-close','menu-dashboard','theme-select'
     ];
     ids.forEach(id => {
-      this.elements[id.replace(/-/g, '_')] = document.getElementById(id);
+      const el = document.getElementById(id);
+      if (el) this.elements[id.replace(/-/g, '_')] = el;
     });
     this.updateHeader();
   }
 
   updateHeader() {
-    this.elements.points_display.textContent = `${this.state.userProgress.points} نقطة ⭐`;
-    this.elements.streak_count.textContent = this.state.userProgress.streak;
-    this.elements.points_display.classList.add('celebration');
-    setTimeout(() => this.elements.points_display.classList.remove('celebration'), 600);
+    if (this.elements.points_display) {
+      this.elements.points_display.textContent = `${this.state.userProgress.points} نقطة ⭐`;
+      this.elements.points_display.classList.add('celebration');
+      setTimeout(() => this.elements.points_display.classList.remove('celebration'), 600);
+    }
+    if (this.elements.streak_count) {
+      this.elements.streak_count.textContent = this.state.userProgress.streak;
+    }
   }
 
   showView(viewName) {
-    // hide main views
-    [this.elements.skills_view, this.elements.technique_view, this.elements.note_page].forEach(v => v.classList.add('hidden'));
+    [this.elements.skills_view, this.elements.technique_view, this.elements.note_page].forEach(v => v && v.classList.add('hidden'));
     if (viewName === 'skills') {
-      this.elements.main_title.textContent = "اختر مهارة";
+      this.elements.main_title.textContent = 'اختر مهارة';
       this.elements.skills_view.classList.remove('hidden');
     } else if (viewName === 'technique') {
+      this.elements.main_title.textContent = 'اختر درسًا';
       this.elements.technique_view.classList.remove('hidden');
     } else if (viewName === 'note') {
-      this.elements.main_title.textContent = "ملاحظة مهمة";
+      this.elements.main_title.textContent = 'الملاحظات';
       this.elements.note_page.classList.remove('hidden');
     }
   }
 
+  showModal() { this.elements.activity_modal.classList.remove('hidden'); }
+  hideModal() { this.elements.activity_modal.classList.add('hidden'); }
+
+  showSuccessModal(message, reward) {
+    this.elements.success_message.textContent = message;
+    this.elements.success_reward.textContent = reward || '';
+    this.elements.success_modal.classList.remove('hidden');
+  }
+  hideSuccessModal() { this.elements.success_modal.classList.add('hidden'); }
+
+  showFeedback(isCorrect, container = this.elements.modal_feedback) {
+    const message = isCorrect ? (this.data.getRandomEncouragement() || 'أحسنت!') : 'حاول مرة أخرى 💪';
+    if (container) {
+      container.innerHTML = `<span class="${isCorrect ? 'text-green-600' : 'text-red-500'}">${message}</span>`;
+    }
+    if (isCorrect) this.effects.createQuickCelebration(); else this.effects.playWrongSound();
+  }
+
+  // ---------- Skills grid ----------
   renderSkillsGrid() {
     const skillsTree = this.elements.skills_tree;
     skillsTree.innerHTML = '';
     const techniques = this.data.getTechniques();
-    const rows = [
-      [techniques[0]], [techniques[1], techniques[2]], [techniques[3]],
-      [techniques[4], techniques[5]], [techniques[6]]
-    ];
 
-    rows.forEach((row) => {
-      const skillRow = document.createElement('div');
-      skillRow.className = 'skill-row';
-      row.forEach((tech, techIndex) => {
-        if (!tech) return;
-        const techniqueIndex = techniques.indexOf(tech);
-        const techProgress = this.state.getTechniqueProgress(tech.id);
-        const isMastered = techProgress.mastered;
-        const isUnlocked = this.state.isTechniqueUnlocked(techniqueIndex, techniques);
-        const completedSteps = Object.values(techProgress.subSkills).flat().length;
-        const totalSteps = tech.subSkills.length * 3;
-        const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+    // simple grid
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+    techniques.forEach(tech => {
+      const techProgress = this.state.getTechniqueProgress(tech.id);
+      const isMastered = !!techProgress.mastered;
 
-        const card = document.createElement('div');
-        card.className = `skill-card ${isMastered ? 'mastered' : ''} ${!isUnlocked ? 'locked' : ''}`;
-        card.dataset.techniqueId = tech.id;
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-4">
-            <div class="text-4xl">${tech.icon}</div>
-            ${isMastered ? '<span class="achievement-badge">متقن!</span>' : ''}
-          </div>
-          <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${tech.name}</h3>
-          <p class="text-gray-600 mb-4">${tech.name_ar}</p>
-          <div class="progress-bar mb-2">
-            <div class="progress-fill" style="width: ${progressPercentage}%"></div>
-          </div>
-          <div class="text-sm text-gray-500">${completedSteps} / ${totalSteps} خطوة</div>`;
-        skillRow.appendChild(card);
-
-        if (techIndex < row.length - 1) {
-          const connector = document.createElement('div');
-          connector.className = 'skill-connector';
-          skillRow.appendChild(connector);
-        }
-      });
-      skillsTree.appendChild(skillRow);
+      const card = document.createElement('div');
+      card.className = `skill-card ${isMastered ? 'mastered' : ''}`;
+      card.dataset.techniqueId = tech.id;
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-4xl">${tech.icon || '📘'}</div>
+          ${isMastered ? '<span class="achievement-badge">متقن!</span>' : ''}
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${tech.name}</h3>
+        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+      `;
+      grid.appendChild(card);
     });
-    this.showView('skills');
-    this.updateHeader();
+
+    skillsTree.appendChild(grid);
   }
 
+  // ---------- Technique view ----------
   renderTechniqueView(techniqueId) {
-    const { main_title, subskills_container } = this.elements;
-    const tech = this.data.getTechnique(techniqueId);
-    const techProgress = this.state.getTechniqueProgress(techniqueId);
+    this.showView('technique');
+    const technique = this.data.getTechnique(techniqueId);
+    const container = this.elements.subskills_container;
+    container.innerHTML = '';
 
-    main_title.textContent = tech.name_ar;
-    subskills_container.innerHTML = '';
+    technique.subSkills.forEach(subSkill => {
+      const subSkillProgress = this.state.getTechniqueProgress(techniqueId).subSkills[subSkill.id] || [];
+      const learnDone = subSkillProgress.includes('learn');
+      const drillDone = subSkillProgress.includes('drill');
 
-    tech.subSkills.forEach(subSkill => {
-      const subSkillProgress = techProgress.subSkills[subSkill.id] || [];
       const card = document.createElement('div');
-      card.className = 'skill-card p-4';
-      let buttonsHTML = '';
-      if (subSkill.isDirectDrill) {
-        const drillCompleted = subSkillProgress.includes('drill');
-        buttonsHTML = `<div class="flex-grow flex items-center justify-end gap-2">
-            <button class="btn-primary step-button flex-grow ${drillCompleted ? 'opacity-50' : ''}" data-step="drill" data-subskill-id="${subSkill.id}" ${drillCompleted ? 'disabled' : ''}>🎯 ابدأ التمرين</button>
-            <button class="step-button ${subSkillProgress.includes('quiz') ? 'completed' : ''}" data-step="quiz" data-subskill-id="${subSkill.id}" ${!drillCompleted ? 'disabled' : ''}>🏆 اختبار</button>
-          </div>`;
-      } else {
-        buttonsHTML = `<div class="flex gap-2">
-            <button class="step-button ${subSkillProgress.includes('learn') ? 'completed' : ''}" data-step="learn" data-subskill-id="${subSkill.id}">📖 تعلم</button>
-            <button class="step-button ${subSkillProgress.includes('drill') ? 'completed' : ''}" data-step="drill" data-subskill-id="${subSkill.id}" ${!subSkillProgress.includes('learn') ? 'disabled' : ''}>🎯 تمرين</button>
-            <button class="step-button ${subSkillProgress.includes('quiz') ? 'completed' : ''}" data-step="quiz" data-subskill-id="${subSkill.id}" ${!subSkillProgress.includes('drill') ? 'disabled' : ''}>🏆 اختبار</button>
-          </div>`;
-      }
+      card.className = 'glass-card p-4';
       card.innerHTML = `
         <div class="flex items-center justify-between flex-wrap gap-y-4">
-          <div class="flex items-center gap-3"><span class="text-3xl">${subSkill.icon}</span><h3 class="text-xl font-bold text-gray-800">${subSkill.name}</h3></div>
-          ${buttonsHTML}
-        </div>`;
-      subskills_container.appendChild(card);
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">${subSkill.icon || '📖'}</span>
+            <h3 class="text-xl font-bold text-gray-800">${subSkill.name}</h3>
+          </div>
+          <div class="flex gap-2">
+            <button class="step-button" data-step="learn" data-subskill-id="${subSkill.id}" ${learnDone ? 'disabled' : ''}>📖 تعلم</button>
+            <button class="step-button" data-step="drill" data-subskill-id="${subSkill.id}" ${!learnDone ? 'disabled' : ''}>🎯 تمرين</button>
+            <button class="step-button" data-step="quiz" data-subskill-id="${subSkill.id}" ${!drillDone ? 'disabled' : ''}>🏆 اختبار</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
     });
-    this.showView('technique');
-  }
-
-  showModal() { this.elements.activity_modal.classList.remove('hidden'); }
-
-  hideModal() {
-    this.elements.activity_modal.classList.add('hidden');
-    // Make sure no effects remain visible after closing modal
-    this.effects.clearEffects();
-  }
-
-  showSuccessModal(message, reward) {
-    this.elements.success_message.textContent = message;
-    this.elements.success_reward.textContent = reward;
-    this.elements.success_modal.classList.remove('hidden');
-  }
-
-  hideSuccessModal() { this.elements.success_modal.classList.add('hidden'); }
-
-  showFeedback(isCorrect, container = this.elements.modal_feedback) {
-    const message = isCorrect ? this.data.getRandomEncouragement() : "حاول مرة أخرى 💪";
-    container.innerHTML = `<span class="${isCorrect ? 'text-green-500' : 'text-red-500'}">${message}</span>`;
-    if (isCorrect) {
-      this.effects.createQuickCelebration();
-    } else {
-      this.effects.playWrongSound();
-    }
   }
 }
