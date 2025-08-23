@@ -36,29 +36,36 @@ export class GameEngine {
         this.ui.elements.modal_title.innerHTML = `<span class="text-4xl mr-3">${subSkill.icon}</span> ${subSkill.name}`;
         this.ui.elements.modal_action_btn.textContent = "فهمت! 💪";
 
-        if (!subSkill.examples || subSkill.examples.length === 0) {
-            this.ui.elements.modal_body.innerHTML = `<div class="text-lg text-gray-700 mb-8">${subSkill.learn_info}</div>`;
-            return;
-        }
+        // 1) Explanation / narrative (as provided in curriculum)
+        const explanationHTML = `<div class="text-lg text-gray-700 mb-6">${subSkill.learn_info || ''}</div>`;
 
-        const examplesHTML = subSkill.examples.map(ex => `
+        // 2) "Other examples" displayed as BEFORE → AFTER with correct audio buttons,
+        //    and forced LTR inside each pair so order is visually stable in RTL UI.
+        const examplesHTML = (subSkill.examples || []).map(ex => `
             <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-                <div class="flex items-center justify-center gap-4">
-                    <div class="text-center">
-                        <div class="text-3xl english-font mb-2">${ex.before}</div>
-                        <button class="speaker-btn" data-speak="${ex.before}" aria-label="Listen to ${ex.before}"><svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg></button>
-                    </div>
-                    ${ex.before !== ex.after ? `<span class="text-3xl">➡️</span>
-                    <div class="text-center">
-                        <div class="text-3xl english-font font-bold text-purple-600 mb-2">${ex.after}</div>
-                        <button class="speaker-btn" data-speak="${ex.after}" aria-label="Listen to ${ex.after}"><svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg></button>
-                    </div>` : ''}
+              <div class="flex items-center justify-center gap-4" dir="ltr">
+                <div class="inline-flex items-center gap-2">
+                  <button class="speaker-btn" data-speak="${ex.before}" aria-label="Listen to ${ex.before}">
+                    <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
+                  </button>
+                  <span class="text-3xl english-font">${ex.before}</span>
                 </div>
-            </div>`).join('');
+                ${ex.before !== ex.after ? `
+                  <span class="text-3xl">➡️</span>
+                  <div class="inline-flex items-center gap-2">
+                    <button class="speaker-btn" data-speak="${ex.after}" aria-label="Listen to ${ex.after}">
+                      <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
+                    </button>
+                    <span class="text-3xl english-font font-bold text-purple-600">${ex.after}</span>
+                  </div>` : ''}
+              </div>
+            </div>
+        `).join('');
 
         this.ui.elements.modal_body.innerHTML = `
-            <div class="text-lg text-gray-700 mb-8">${subSkill.learn_info}</div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">${examplesHTML}</div>`;
+            ${explanationHTML}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">${examplesHTML}</div>
+        `;
     }
 
     startSession(subSkill, step) {
