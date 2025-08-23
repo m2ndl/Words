@@ -102,21 +102,33 @@ export class GameEngine {
         return data.questions || data.pairs?.map(p => ({ pair: p })) || [];
     }
 
-    renderCurrentQuestion() {
-        // Ensure previous effects are gone before showing a new question
-        this.effects.clearEffects();
+    // REPLACE the old function with this new one
+async renderCurrentQuestion() {
+    const questionContainer = this.ui.elements.modal_body;
 
-        const { questions, currentIndex } = this.state.activitySession;
-        this.ui.elements.modal_feedback.innerHTML = '';
-        this.ui.elements.modal_action_btn.style.display = 'none';
-        this.ui.elements.modal_progress.innerHTML = `<div class="flex gap-2">${questions.map((_, i) => `<span class="progress-dot ${i < currentIndex ? 'completed' : ''} ${i === currentIndex ? 'pulse' : ''}"></span>`).join('')}</div>`;
+    // 1. Fade out the current question by adding the CSS class
+    questionContainer.classList.add('fade-out');
+    await new Promise(resolve => setTimeout(resolve, 300)); // Wait for the fade-out animation to finish
 
-        const { step, subSkillId, techniqueId } = this.state.activitySession;
-        const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
-        const data = step === 'drill' ? subSkill.drill : subSkill.quiz;
-        const renderer = new QuestionRenderer(this.ui, this.audio, this, this.effects);
-        renderer.render(data.type || 'quiz', questions[currentIndex], data, subSkill);
-    }
+    // --- This is the original logic, which now runs while the container is invisible ---
+    this.effects.clearEffects();
+
+    const { questions, currentIndex } = this.state.activitySession;
+    this.ui.elements.modal_feedback.innerHTML = '';
+    this.ui.elements.modal_action_btn.style.display = 'none';
+    this.ui.elements.modal_progress.innerHTML = `<div class="flex gap-2">${questions.map((_, i) => `<span class="progress-dot ${i < currentIndex ? 'completed' : ''} ${i === currentIndex ? 'pulse' : ''}"></span>`).join('')}</div>`;
+
+    const { step, subSkillId, techniqueId } = this.state.activitySession;
+    const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
+    const data = step === 'drill' ? subSkill.drill : subSkill.quiz;
+    const renderer = new QuestionRenderer(this.ui, this.audio, this, this.effects);
+    
+    // 2. Render the new question's content
+    renderer.render(data.type || 'quiz', questions[currentIndex], data, subSkill);
+
+    // 3. Fade the new question back in by removing the CSS class
+    questionContainer.classList.remove('fade-out');
+}
 
     handleAnswer(isCorrect, element) {
         this.ui.showFeedback(isCorrect);
