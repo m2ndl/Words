@@ -110,25 +110,64 @@ export class UIManager {
       const subSkillProgress = techProgress.subSkills[subSkill.id] || [];
       const card = document.createElement('div');
       card.className = 'skill-card p-4';
+      
       let buttonsHTML = '';
       if (subSkill.isDirectDrill) {
         const drillCompleted = subSkillProgress.includes('drill');
-        buttonsHTML = `<div class="flex-grow flex items-center justify-end gap-2">
-            <button class="btn-primary step-button flex-grow ${drillCompleted ? 'opacity-50' : ''}" data-step="drill" data-subskill-id="${subSkill.id}" ${drillCompleted ? 'disabled' : ''}>🎯 ابدأ التمرين</button>
-            <button class="step-button ${subSkillProgress.includes('quiz') ? 'completed' : ''}" data-step="quiz" data-subskill-id="${subSkill.id}" ${!drillCompleted ? 'disabled' : ''}>🏆 اختبار</button>
+        // FIXED: Better mobile layout for direct drill lessons
+        buttonsHTML = `
+          <div class="w-full mt-4">
+            <div class="flex flex-col sm:flex-row gap-3 w-full">
+              <button class="btn-primary step-button flex-1 ${drillCompleted ? 'opacity-50' : ''}" 
+                      data-step="drill" 
+                      data-subskill-id="${subSkill.id}" 
+                      ${drillCompleted ? 'disabled' : ''}>
+                🎯 ابدأ التمرين
+              </button>
+              <button class="step-button flex-none px-6 ${subSkillProgress.includes('quiz') ? 'completed' : ''}" 
+                      data-step="quiz" 
+                      data-subskill-id="${subSkill.id}" 
+                      ${!drillCompleted ? 'disabled' : ''}>
+                🏆 اختبار
+              </button>
+            </div>
           </div>`;
       } else {
-        buttonsHTML = `<div class="flex gap-2">
-            <button class="step-button ${subSkillProgress.includes('learn') ? 'completed' : ''}" data-step="learn" data-subskill-id="${subSkill.id}">📖 تعلم</button>
-            <button class="step-button ${subSkillProgress.includes('drill') ? 'completed' : ''}" data-step="drill" data-subskill-id="${subSkill.id}" ${!subSkillProgress.includes('learn') ? 'disabled' : ''}>🎯 تمرين</button>
-            <button class="step-button ${subSkillProgress.includes('quiz') ? 'completed' : ''}" data-step="quiz" data-subskill-id="${subSkill.id}" ${!subSkillProgress.includes('drill') ? 'disabled' : ''}>🏆 اختبار</button>
+        // FIXED: Better mobile layout for regular lessons
+        buttonsHTML = `
+          <div class="w-full mt-4">
+            <div class="flex flex-col sm:flex-row gap-2 w-full">
+              <button class="step-button flex-1 ${subSkillProgress.includes('learn') ? 'completed' : ''}" 
+                      data-step="learn" 
+                      data-subskill-id="${subSkill.id}">
+                📖 تعلم
+              </button>
+              <button class="step-button flex-1 ${subSkillProgress.includes('drill') ? 'completed' : ''}" 
+                      data-step="drill" 
+                      data-subskill-id="${subSkill.id}" 
+                      ${!subSkillProgress.includes('learn') ? 'disabled' : ''}>
+                🎯 تمرين
+              </button>
+              <button class="step-button flex-1 ${subSkillProgress.includes('quiz') ? 'completed' : ''}" 
+                      data-step="quiz" 
+                      data-subskill-id="${subSkill.id}" 
+                      ${!subSkillProgress.includes('drill') ? 'disabled' : ''}>
+                🏆 اختبار
+              </button>
+            </div>
           </div>`;
       }
+      
+      // FIXED: Simplified card layout that works better on mobile
       card.innerHTML = `
-        <div class="flex items-center justify-between flex-wrap gap-y-4">
-          <div class="flex items-center gap-3"><span class="text-3xl">${subSkill.icon}</span><h3 class="text-xl font-bold text-gray-800">${subSkill.name}</h3></div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">${subSkill.icon}</span>
+            <h3 class="text-xl font-bold text-gray-800">${subSkill.name}</h3>
+          </div>
           ${buttonsHTML}
         </div>`;
+        
       subskills_container.appendChild(card);
     });
     this.showView('technique');
