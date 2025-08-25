@@ -11,7 +11,7 @@
           "id": "a_e",
           "name": "تحويل صوت A",
           "icon": "🎭",
-          "learn_info": "<b>القاعدة السحرية:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hat'>🔊</button><span class='english-font'>hat</span><span>➜</span><button class='speaker-btn' data-speak='hate'>🔊</button><span class='english-font'>hate</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق الكلمة من \"هات\" إلى \"هيت\" والسبب هو وجود حرف e بالأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plane'>🔊</button><span class='english-font'>plane</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق حرف <span class='english-font'>a</span> بسبب حرف <span class='english-font'>e</span> في النهاية.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hat'>🔊</button><span class='english-font'>hat</span><span>➜</span><button class='speaker-btn' data-speak='hate'>🔊</button><span class='english-font'>hate</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق الكلمة من \"هات\" إلى \"هيت\" والسبب هو وجود حرف e بالأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plane'>🔊</button><span class='english-font'>plane</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق حرف <span class='english-font'>a</span> بسبب حرف <span class='english-font'>e</span> في النهاية.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "mat", "after": "mate" },
             { "before": "can", "after": "cane" },
@@ -45,7 +45,7 @@
           "id": "i_e",
           "name": "تحويل صوت I",
           "icon": "🎪",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='kit'>🔊</button><span class='english-font'>kit</span><span>➜</span><button class='speaker-btn' data-speak='kite'>🔊</button><span class='english-font'>kite</span></span><div class='mt-2 text-gray-700'>لاحظ كيف أصبح صوت <span class='english-font'>i</span> طويلاً عندما أضفنا <span class='english-font'>e</span> في النهاية.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='dim'>🔊</button><span class='english-font'>dim</span><span>➜</span><button class='speaker-btn' data-speak='dime'>🔊</button><span class='english-font'>dime</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> الأخير جعل <span class='english-font'>i</span> يقول اسمه (صوت طويل).</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='kit'>🔊</button><span class='english-font'>kit</span><span>➜</span><button class='speaker-btn' data-speak='kite'>🔊</button><span class='english-font'>kite</span></span><div class='mt-2 text-gray-700'>لاحظ كيف أصبح صوت <span class='english-font'>i</span> طويلاً عندما أضفنا <span class='english-font'>e</span> في النهاية.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='dim'>🔊</button><span class='english-font'>dim</span><span>➜</span><button class='speaker-btn' data-speak='dime'>🔊</button><span class='english-font'>dime</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> الأخير جعل <span class='english-font'>i</span> يقول اسمه (صوت طويل).</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "pin", "after": "pine" },
             { "before": "fin", "after": "fine" },
@@ -63,9 +63,9 @@
             "questions": [
               { "audio": "kite", "options": ["kit", "kite"], "answer": "kite" },
               { "audio": "fine", "options": ["fin", "fine"], "answer": "fine" },
-              { "audio": "bite", "options": ["bit", "bite"], "answer": "bite" },
+              { "audio": "bit", "options": ["bit", "bite"], "answer": "bit" },
               { "audio": "dime", "options": ["dim", "dime"], "answer": "dime" },
-              { "audio": "ride", "options": ["rid", "ride"], "answer": "ride" }
+              { "audio": "rid", "options": ["rid", "ride"], "answer": "rid" }
             ]
           }
         },
@@ -73,14 +73,14 @@
           "id": "o_e",
           "name": "تحويل صوت O",
           "icon": "🎩",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'o' من قصير إلى طويل.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hop'>🔊</button><span class='english-font'>hop</span><span>➜</span><button class='speaker-btn' data-speak='hope'>🔊</button><span class='english-font'>hope</span></span><div class='mt-2 text-gray-700'>نلاحظ تحول صوت <span class='english-font'>o</span> إلى طويل بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='not'>🔊</button><span class='english-font'>not</span><span>➜</span><button class='speaker-btn' data-speak='note'>🔊</button><span class='english-font'>note</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> في النهاية يمد صوت <span class='english-font'>o</span>.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> حرف 'e' يغير صوت 'o' من قصير إلى طويل.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hop'>🔊</button><span class='english-font'>hop</span><span>➜</span><button class='speaker-btn' data-speak='hope'>🔊</button><span class='english-font'>hope</span></span><div class='mt-2 text-gray-700'>نلاحظ تحول صوت <span class='english-font'>o</span> إلى طويل بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='not'>🔊</button><span class='english-font'>not</span><span>➜</span><button class='speaker-btn' data-speak='note'>🔊</button><span class='english-font'>note</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> في النهاية يمد صوت <span class='english-font'>o</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "rob", "after": "robe" },
             { "before": "cod", "after": "code" }
           ],
           "drill": {
             "type": "morph",
-            "instruction": "اضغط على الزر السحري لإضافة 'e' وشاهد التحول!",
+            "instruction": "أضف حرف e وشاهد التحول!",
             "pairs": [
               ["rod", "rode"],
               ["glob", "globe"],
@@ -92,7 +92,7 @@
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
               { "audio": "hope", "options": ["hop", "hope"], "answer": "hope" },
-              { "audio": "note", "options": ["not", "note"], "answer": "note" },
+              { "audio": "not", "options": ["not", "note"], "answer": "not" },
               { "audio": "robe", "options": ["rob", "robe"], "answer": "robe" },
               { "audio": "code", "options": ["cod", "code"], "answer": "code" }
             ]
@@ -102,7 +102,7 @@
           "id": "u_e",
           "name": "تحويل صوت U",
           "icon": "🦄",
-          "learn_info": "<b>القاعدة السحرية:</b> حرف 'e' يغير صوت 'u' ليقول اسمه (صوت طويل).<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cub'>🔊</button><span class='english-font'>cub</span><span>➜</span><button class='speaker-btn' data-speak='cube'>🔊</button><span class='english-font'>cube</span></span><div class='mt-2 text-gray-700'>لاحظ كيف صار صوت <span class='english-font'>u</span> طويلاً بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='cute'>🔊</button><span class='english-font'>cute</span></span><div class='mt-2 text-gray-700'>نفس الفكرة: <span class='english-font'>e</span> في النهاية يغير نطق الحرف المتحرك.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> حرف 'e' يغير صوت 'u' ليقول اسمه (صوت طويل).<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cub'>🔊</button><span class='english-font'>cub</span><span>➜</span><button class='speaker-btn' data-speak='cube'>🔊</button><span class='english-font'>cube</span></span><div class='mt-2 text-gray-700'>لاحظ كيف صار صوت <span class='english-font'>u</span> طويلاً بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='cute'>🔊</button><span class='english-font'>cute</span></span><div class='mt-2 text-gray-700'>نفس الفكرة: <span class='english-font'>e</span> في النهاية يغير نطق الحرف المتحرك.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "tub", "after": "tube" },
             { "before": "us", "after": "use" }
@@ -117,9 +117,10 @@
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
               { "audio": "cube", "options": ["cub", "cube"], "answer": "cube" },
-              { "audio": "cute", "options": ["cut", "cute"], "answer": "cute" },
+              { "audio": "cut", "options": ["cut", "cute"], "answer": "cut" },
               { "audio": "use", "options": ["us", "use"], "answer": "use" },
-              { "audio": "tube", "options": ["tub", "tube"], "answer": "tube" }
+              { "audio": "cute", "options": ["cut", "cute"], "answer": "cute" },
+              { "audio": "tub", "options": ["tub", "tube"], "answer": "tube" }
             ]
           }
         }
@@ -145,9 +146,9 @@
             "type": "fill_in_blank",
             "instruction": "اختر الفريق الصحيح لإكمال الكلمة",
             "questions": [
-              { "partial": "s__d", "correct": "ee", "options": ["ee", "ea"], "answer": "seed" },
-              { "partial": "t__m", "correct": "ea", "options": ["ee", "ea"], "answer": "team" },
-              { "partial": "f__t", "correct": "ee", "options": ["ee", "ea"], "answer": "feet" },
+              { "partial": "s__d", "correct": "ee", "options": ["ee", "e"], "answer": "seed" },
+              { "partial": "t__m", "correct": "ea", "options": ["ee", "a"], "answer": "team" },
+              { "partial": "f__t", "correct": "ee", "options": ["ee", "i"], "answer": "fit" },
               { "partial": "tr__", "correct": "ee", "options": ["ee", "ea"], "answer": "tree" }
             ]
           },
@@ -155,7 +156,7 @@
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
               { "audio": "feet", "options": ["feet", "fit"], "answer": "feet" },
-              { "audio": "beat", "options": ["bet", "beat"], "answer": "beat" },
+              { "audio": "bat", "options": ["bet", "beat"], "answer": "bat" },
               { "audio": "team", "options": ["tim", "team"], "answer": "team" },
               { "audio": "tree", "options": ["try", "tree"], "answer": "tree" }
             ]
@@ -167,8 +168,8 @@
           "icon": "🌟",
           "learn_info": "<b>أصدقاء صوت A:</b> الفريقان 'ai' و 'ay' ينتجان صوت 'a' الطويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ran'>🔊</button><span class='english-font'>ran</span><span>➜</span><button class='speaker-btn' data-speak='rain'>🔊</button><span class='english-font'>rain</span></span><div class='mt-2 text-gray-700'>لاحظ أن <span class='english-font'>ai</span> يعطي صوت <span class='english-font'>a</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plain'>🔊</button><span class='english-font'>plain</span></span><div class='mt-2 text-gray-700'>وكذلك <span class='english-font'>ay</span> يعطي الصوت الطويل نفسه.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "pan", "after": "pain" },
-            { "before": "tr", "after": "tray" }
+            { "before": "man", "after": "main" },
+            { "before": "mad", "after": "may" }
           ],
           "drill": {
             "type": "odd_one_out",
@@ -184,7 +185,7 @@
             "questions": [
               { "audio": "rain", "options": ["ran", "rain"], "answer": "rain" },
               { "audio": "play", "options": ["pla", "play"], "answer": "play" },
-              { "audio": "pain", "options": ["pan", "pain"], "answer": "pain" },
+              { "audio": "pan", "options": ["pan", "pain"], "answer": "pan" },
               { "audio": "day", "options": ["day", "dad"], "answer": "day" }
             ]
           }
@@ -202,7 +203,7 @@
           "id": "soft_c",
           "name": "حرف C الناعم",
           "icon": "🍋",
-          "learn_info": "<b>التحول العجيب:</b> حرف 'c' يصبح ناعماً (مثل صوت س) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cat'>🔊</button><span class='english-font'>cat</span><span>➜</span><button class='speaker-btn' data-speak='cent'>🔊</button><span class='english-font'>cent</span></span><div class='mt-2 text-gray-700'>هنا تحوّل <span class='english-font'>c</span> قبل <span class='english-font'>e</span> إلى صوت ناعم (س).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span><span>➜</span><button class='speaker-btn' data-speak='city'>🔊</button><span class='english-font'>city</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>i</span> أيضاً يصبح <span class='english-font'>c</span> ناعماً.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>التحول:</b> حرف 'c' يصبح ناعماً (مثل صوت س) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cat'>🔊</button><span class='english-font'>cat</span><span>➜</span><button class='speaker-btn' data-speak='cent'>🔊</button><span class='english-font'>cent</span></span><div class='mt-2 text-gray-700'>هنا تحوّل <span class='english-font'>c</span> قبل <span class='english-font'>e</span> إلى صوت ناعم (س).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span><span>➜</span><button class='speaker-btn' data-speak='city'>🔊</button><span class='english-font'>city</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>i</span> أيضاً يصبح <span class='english-font'>c</span> ناعماً.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "cup", "after": "cycle" }
           ],
@@ -217,6 +218,7 @@
             "questions": [
               { "audio": "cell", "options": ["cell", "call"], "answer": "cell" },
               { "audio": "rice", "options": ["rice", "rock"], "answer": "rice" },
+              { "audio": "cold", "options": ["city", "cold"], "answer": "cold" },
               { "audio": "city", "options": ["city", "cat"], "answer": "city" }
             ]
           }
@@ -225,7 +227,7 @@
           "id": "soft_g",
           "name": "حرف G الناعم",
           "icon": "🦒",
-          "learn_info": "<b>التحول العجيب:</b> حرف 'g' يصبح ناعماً (مثل ج) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='go'>🔊</button><span class='english-font'>go</span><span>➜</span><button class='speaker-btn' data-speak='gem'>🔊</button><span class='english-font'>gem</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>e</span> يصبح <span class='english-font'>g</span> ناعماً.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='gas'>🔊</button><span class='english-font'>gas</span><span>➜</span><button class='speaker-btn' data-speak='gym'>🔊</button><span class='english-font'>gym</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>y</span> أيضاً نلاحظ الصوت الناعم.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>التحول:</b> حرف 'g' يصبح ناعماً (مثل ج) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='go'>🔊</button><span class='english-font'>go</span><span>➜</span><button class='speaker-btn' data-speak='gem'>🔊</button><span class='english-font'>gem</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>e</span> يصبح <span class='english-font'>g</span> ناعماً.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='gas'>🔊</button><span class='english-font'>gas</span><span>➜</span><button class='speaker-btn' data-speak='gym'>🔊</button><span class='english-font'>gym</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>y</span> أيضاً نلاحظ الصوت الناعم.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
             { "before": "got", "after": "giant" }
           ],
@@ -243,6 +245,7 @@
             "questions": [
               { "audio": "gem", "options": ["gem", "game"], "answer": "gem" },
               { "audio": "page", "options": ["page", "cage"], "answer": "page" },
+              { "audio": "goal", "options": ["goal", "cage"], "answer": "goal" },
               { "audio": "giant", "options": ["giant", "gate"], "answer": "giant" }
             ]
           }
@@ -548,4 +551,5 @@
     "عمل رائع! ✨"
   ]
 }
+
 
