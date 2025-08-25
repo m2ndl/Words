@@ -59,22 +59,29 @@ export class QuestionRenderer {
     }
 
     renderFillInBlank(q, data) {
-        const { partial, options, answer, correct } = q;
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div dir="ltr" class="text-6xl english-font font-bold mb-8">${partial.replace('__', '<span id="blank" class="text-purple-400">__</span>')}</div>
-            <div class="flex justify-center gap-4">${options.map(opt => `<button class="option-button english-font" data-option="${opt}">${opt}</button>`).join('')}</div>`;
-        document.querySelectorAll('.option-button').forEach(btn => {
-            btn.onclick = () => {
-                const isCorrect = btn.dataset.option === correct;
-                if (isCorrect) {
-                    document.getElementById('blank').textContent = correct;
-                    this.audio.speak(answer);
-                }
-                this.game.handleAnswer(isCorrect, btn);
-            };
-        });
-    }
+    const { partial, options, answer, correct } = q;
+    this.ui.elements.modal_body.innerHTML = `
+        <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
+        <div dir="ltr" class="text-6xl english-font font-bold mb-4">${partial.replace('__', '<span id="blank" class="text-purple-400">__</span>')}</div>
+        <button class="speaker-btn mb-8" data-speak="${answer}" aria-label="Listen to ${answer}">
+            <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
+        </button>
+        <div class="flex justify-center gap-4">${options.map(opt => `<button class="option-button english-font" data-option="${opt}">${opt}</button>`).join('')}</div>`;
+    
+    // Auto-play the word when the question appears
+    this.audio.speak(answer);
+    
+    document.querySelectorAll('.option-button').forEach(btn => {
+        btn.onclick = () => {
+            const isCorrect = btn.dataset.option === correct;
+            if (isCorrect) {
+                document.getElementById('blank').textContent = correct;
+                this.audio.speak(answer);
+            }
+            this.game.handleAnswer(isCorrect, btn);
+        };
+    });
+}
 
     renderOddOneOut(q, data) {
         const { options, answer } = q;
