@@ -1572,278 +1572,117 @@
       ]
     },
     {
-      "id": "advanced_vowel_teams",
-      "name": "Advanced Vowel Teams",
-      "name_ar": "فرق حروف العلة المتقدمة",
-      "icon": "🌊",
-      "color": "from-cyan-400 to-blue-400",
-      "subSkills": [
-        {
-          "id": "oo_sounds",
-          "name": "أصوات OO (قصير وطويل)",
-          "icon": "👀",
-          "learn_info": "<b>صوتان مختلفان:</b> OO يمكن أن يصدر صوتاً قصيراً مثل 'book' أو صوتاً طويلاً مثل 'moon'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='book'>🔊</button><span class='english-font'>book</span></span><div class='mt-2 text-gray-700'>هنا صوت قصير (مثل /ʊ/).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='moon'>🔊</button><span class='english-font'>moon</span></span><div class='mt-2 text-gray-700'>وهنا صوت طويل (مثل /uː/). انتبه للفرق.</div><br><b>أمثلة أخرى:</b>",
-          "examples": [
-            {
-              "before": "cook",
-              "after": "cook"
-            },
-            {
-              "before": "cool",
-              "after": "cool"
-            },
-            {
-              "before": "good",
-              "after": "good"
-            },
-            {
-              "before": "food",
-              "after": "food"
-            }
-          ],
-          "drill": {
-            "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت OO الطويل، مثل كلمة moon؟",
-            "correct": [
-              "soon",
-              "zoom",
-              "pool",
-              "tool",
-              "school",
-              "spoon"
-            ],
-            "incorrect": [
-              "look",
-              "took",
-              "hook",
-              "wood",
-              "stood",
-              "foot"
-            ]
-          },
-          "quiz": {
-            "instruction": "استمع واختر الكلمة الصحيحة",
-            "questions": [
-              {
-                "audio": "book",
-                "options": [
-                  "book",
-                  "boot"
-                ],
-                "answer": "book"
-              },
-              {
-                "audio": "moon",
-                "options": [
-                  "moon",
-                  "moan"
-                ],
-                "answer": "moon"
-              },
-              {
-                "audio": "cook",
-                "options": [
-                  "cook",
-                  "cool"
-                ],
-                "answer": "cook"
-              },
-              {
-                "audio": "pool",
-                "options": [
-                  "pool",
-                  "pull"
-                ],
-                "answer": "pool"
-              },
-              {
-                "audio": "good",
-                "options": [
-                  "good",
-                  "goose"
-                ],
-                "answer": "good"
-              }
-            ]
-          }
-        },
-        {
-          "id": "diphthongs",
-          "name": "الأصوات المنزلقة OY/OI, OW/OU",
-          "icon": "🎢",
-          "learn_info": "<b>الأصوات المنزلقة:</b> تبدأ بصوت وتنتهي بصوت آخر!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='boy'>🔊</button><span class='english-font'>boy</span></span><div class='mt-2 text-gray-700'>هذا صوت <span class='english-font'>oy</span> المنزلق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='coin'>🔊</button><span class='english-font'>coin</span></span><div class='mt-2 text-gray-700'>وهذا <span class='english-font'>oi</span> بصوت مشابه.</div><br><b>أمثلة أخرى:</b>",
-          "examples": [
-            {
-              "before": "cow",
-              "after": "cow"
-            },
-            {
-              "before": "house",
-              "after": "house"
-            },
-            {
-              "before": "joy",
-              "after": "joy"
-            },
-            {
-              "before": "mouse",
-              "after": "mouse"
-            }
-          ],
-          "drill": {
-            "type": "odd_one_out",
-            "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
-            "questions": [
-              {
-                "options": [
-                  "boy",
-                  "toy",
-                  "joy",
-                  "bay"
-                ],
-                "answer": "bay"
-              },
-              {
-                "options": [
-                  "cow",
-                  "how",
-                  "now",
-                  "row"
-                ],
-                "answer": "row"
-              },
-              {
-                "options": [
-                  "coin",
-                  "join",
-                  "point",
-                  "cone"
-                ],
-                "answer": "cone"
-              }
-            ]
-          },
-          "quiz": {
-            "instruction": "استمع واختر الكلمة الصحيحة",
-            "questions": [
-              {
-                "audio": "boy",
-                "options": [
-                  "boy",
-                  "buy"
-                ],
-                "answer": "boy"
-              },
-              {
-                "audio": "coin",
-                "options": [
-                  "coin",
-                  "cone"
-                ],
-                "answer": "coin"
-              },
-              {
-                "audio": "cow",
-                "options": [
-                  "cow",
-                  "coo"
-                ],
-                "answer": "cow"
-              },
-              {
-                "audio": "house",
-                "options": [
-                  "house",
-                  "horse"
-                ],
-                "answer": "house"
-              }
-            ]
-          }
-        },
-        {
-          "id": "au_aw",
-          "name": "أصوات AU و AW",
-          "icon": "🦖",
-          "learn_info": "<b>الصوت العميق:</b> AU و AW ينتجان نفس الصوت العميق مثل 'saw' و 'auto'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='saw'>🔊</button><span class='english-font'>saw</span></span><div class='mt-2 text-gray-700'>صوت <span class='english-font'>aw</span> العميق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='auto'>🔊</button><span class='english-font'>auto</span></span><div class='mt-2 text-gray-700'>وهنا <span class='english-font'>au</span> بنفس الجودة الصوتية تقريباً.</div><br><b>أمثلة أخرى:</b>",
-          "examples": [
-            {
-              "before": "claw",
-              "after": "claw"
-            },
-            {
-              "before": "pause",
-              "after": "pause"
-            },
-            {
-              "before": "draw",
-              "after": "draw"
-            },
-            {
-              "before": "launch",
-              "after": "launch"
-            }
-          ],
-          "drill": {
-            "type": "sort",
-            "instruction": "هل تسمع صوت AU/AW في هذه الكلمة، مثل كلمة saw؟",
-            "correct": [
-              "law",
-              "raw",
-              "cause",
-              "taught",
-              "hawk",
-              "crawl"
-            ],
-            "incorrect": [
-              "low",
-              "row",
-              "come",
-              "tight",
-              "hack",
-              "call"
-            ]
-          },
-          "quiz": {
-            "instruction": "استمع واختر الكلمة الصحيحة",
-            "questions": [
-              {
-                "audio": "saw",
-                "options": [
-                  "saw",
-                  "so"
-                ],
-                "answer": "saw"
-              },
-              {
-                "audio": "claw",
-                "options": [
-                  "claw",
-                  "clay"
-                ],
-                "answer": "claw"
-              },
-              {
-                "audio": "auto",
-                "options": [
-                  "auto",
-                  "otto"
-                ],
-                "answer": "auto"
-              },
-              {
-                "audio": "draw",
-                "options": [
-                  "draw",
-                  "dry"
-                ],
-                "answer": "draw"
-              }
-            ]
-          }
-        }
-      ]
+  "id": "advanced_vowel_teams",
+  "name": "Advanced Vowel Teams",
+  "name_ar": "فرق حروف العلة المتقدمة",
+  "icon": "🌊",
+  "color": "from-cyan-400 to-blue-400",
+  "subSkills": [
+    {
+      "id": "oo_sounds",
+      "name": "أصوات OO (قصير وطويل)",
+      "icon": "👀",
+      "learn_info": "<b>OO له صوتان شائعان:</b> /ʊ/ كما في <span class='english-font'>book</span>، و/uː/ كما في <span class='english-font'>moon</span>. تعلّم أيّهما يظهر بالنظر إلى الكلمة كاملة.",
+      "examples": [
+        { "before": "book", "after": "book" },
+        { "before": "cook", "after": "cook" },
+        { "before": "look", "after": "look" },
+        { "before": "good", "after": "good" },
+        { "before": "wood", "after": "wood" },
+        { "before": "moon", "after": "moon" },
+        { "before": "food", "after": "food" },
+        { "before": "pool", "after": "pool" },
+        { "before": "school", "after": "school" },
+        { "before": "spoon", "after": "spoon" }
+      ],
+      "drill": {
+        "type": "sort",
+        "instruction": "هل الكلمة بها صوت OO الطويل /uː/ مثل كلمة moon؟",
+        "correct": ["moon", "food", "pool", "cool", "spoon", "school", "bloom"],
+        "incorrect": ["book", "cook", "look", "foot", "good", "wood", "hood"]
+      },
+      "quiz": {
+        "instruction": "استمع واختر الكلمة التي سمعتَها (كل الخيارات بها OO).",
+        "questions": [
+          { "audio": "food", "options": ["food", "foot"], "answer": "food" },
+          { "audio": "foot", "options": ["foot", "food"], "answer": "foot" },
+          { "audio": "cool", "options": ["cool", "cook"], "answer": "cool" },
+          { "audio": "cook", "options": ["cook", "cool"], "answer": "cook" },
+          { "audio": "shoot", "options": ["shoot", "shook"], "answer": "shoot" },
+          { "audio": "shook", "options": ["shook", "shoot"], "answer": "shook" },
+          { "audio": "root", "options": ["root", "rook"], "answer": "root" },
+          { "audio": "rook", "options": ["rook", "root"], "answer": "rook" }
+        ]
+      }
     },
+    {
+      "id": "diphthongs",
+      "name": "الأصوات المنزلقة: OI/OY و OW/OU",
+      "icon": "🌀",
+      "learn_info": "<b>منزلقتان شائعتان:</b> OI/OY = /ɔɪ/ كما في <span class='english-font'>boy</span>، وOW/OU = /aʊ/ كما في <span class='english-font'>cow</span>.",
+      "examples": [
+        { "before": "boy", "after": "boy" },
+        { "before": "toy", "after": "toy" },
+        { "before": "coin", "after": "coin" },
+        { "before": "join", "after": "join" },
+        { "before": "cow", "after": "cow" },
+        { "before": "how", "after": "how" },
+        { "before": "house", "after": "house" },
+        { "before": "out", "after": "out" }
+      ],
+      "drill": {
+        "type": "odd_one_out",
+        "instruction": "اختر الكلمة ذات الصوت المختلف.",
+        "questions": [
+          { "options": ["boy", "toy", "joy", "bay"], "answer": "bay" },
+          { "options": ["cow", "how", "now", "snow"], "answer": "snow" },
+          { "options": ["coin", "join", "boil", "cone"], "answer": "cone" },
+          { "options": ["out", "shout", "loud", "said"], "answer": "said" }
+        ]
+      },
+      "quiz": {
+        "instruction": "استمع ثم اختر الكلمة الصحيحة (ركّز على صوت المنزلقة).",
+        "questions": [
+          { "audio": "boy", "options": ["boy", "buy"], "answer": "boy" },
+          { "audio": "coin", "options": ["coin", "cone"], "answer": "coin" },
+          { "audio": "cow", "options": ["cow", "coo"], "answer": "cow" },
+          { "audio": "house", "options": ["house", "horse"], "answer": "house" },
+          { "audio": "out", "options": ["out", "ought"], "answer": "out" }
+        ]
+      }
+    },
+    {
+      "id": "au_aw",
+      "name": "أصوات AU و AW",
+      "icon": "🦖",
+      "learn_info": "<b>تهجيتان لصوت واحد غالبًا:</b> AU و AW غالبًا ما ينطقان /ɔː/ كما في <span class='english-font'>saw</span>.",
+      "examples": [
+        { "before": "claw", "after": "claw" },
+        { "before": "draw", "after": "draw" },
+        { "before": "sauce", "after": "sauce" },
+        { "before": "author", "after": "author" },
+        { "before": "August", "after": "August" },
+        { "before": "haunt", "after": "haunt" }
+      ],
+      "drill": {
+        "type": "sort",
+        "instruction": "هل الكلمة مكتوبة بـ AU/AW (مع صوت /ɔː/ مثل saw)؟",
+        "correct": ["saw", "paws", "cause", "taught", "hawk", "crawl", "August", "author", "sauce"],
+        "incorrect": ["low", "row", "come", "tight", "hack", "call", "cough"]
+      },
+      "quiz": {
+        "instruction": "استمع واختر الإملاء الصحيح (ركز على AU/AW).",
+        "questions": [
+          { "audio": "author", "options": ["author", "other"], "answer": "author" },
+          { "audio": "August", "options": ["August", "against"], "answer": "August" },
+          { "audio": "sauce", "options": ["sauce", "socks"], "answer": "sauce" },
+          { "audio": "claw", "options": ["claw", "cloud"], "answer": "claw" },
+          { "audio": "draw", "options": ["draw", "dry"], "answer": "draw" }
+        ]
+      }
+    }
+  ]
+},
     {
       "id": "production_drills",
       "name": "Production Drills",
