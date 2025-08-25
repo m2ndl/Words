@@ -13,31 +13,96 @@
           "icon": "🎭",
           "learn_info": "<b>القاعدة:</b> عندما نضيف حرف 'e' في نهاية الكلمة، يتحول صوت 'a' من قصير إلى طويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hat'>🔊</button><span class='english-font'>hat</span><span>➜</span><button class='speaker-btn' data-speak='hate'>🔊</button><span class='english-font'>hate</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق الكلمة من \"هات\" إلى \"هيت\" والسبب هو وجود حرف e بالأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plane'>🔊</button><span class='english-font'>plane</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير نطق حرف <span class='english-font'>a</span> بسبب حرف <span class='english-font'>e</span> في النهاية.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "mat", "after": "mate" },
-            { "before": "can", "after": "cane" },
-            { "before": "cap", "after": "cape" },
-            { "before": "tap", "after": "tape" }
+            {
+              "before": "mat",
+              "after": "mate"
+            },
+            {
+              "before": "can",
+              "after": "cane"
+            },
+            {
+              "before": "cap",
+              "after": "cape"
+            },
+            {
+              "before": "tap",
+              "after": "tape"
+            }
           ],
           "drill": {
             "type": "morph",
             "instruction": "أضف حرف e وشاهد التحول!",
             "pairs": [
-              ["pan", "pane"],
-              ["plan", "plane"],
-              ["sam", "same"],
-              ["fat", "fate"],
-              ["tap", "tape"],
-              ["cap", "cape"]
+              [
+                "pan",
+                "pane"
+              ],
+              [
+                "plan",
+                "plane"
+              ],
+              [
+                "sam",
+                "same"
+              ],
+              [
+                "fat",
+                "fate"
+              ],
+              [
+                "tap",
+                "tape"
+              ],
+              [
+                "cap",
+                "cape"
+              ]
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "cane", "options": ["can", "cane"], "answer": "cane" },
-              { "audio": "made", "options": ["mad", "made"], "answer": "made" },
-              { "audio": "tap", "options": ["tap", "tape"], "answer": "tap" },
-              { "audio": "plane", "options": ["plan", "plane"], "answer": "plane" },
-              { "audio": "cape", "options": ["cap", "cape"], "answer": "cape" }
+              {
+                "audio": "cane",
+                "options": [
+                  "can",
+                  "cane"
+                ],
+                "answer": "cane"
+              },
+              {
+                "audio": "made",
+                "options": [
+                  "mad",
+                  "made"
+                ],
+                "answer": "made"
+              },
+              {
+                "audio": "tap",
+                "options": [
+                  "tap",
+                  "tape"
+                ],
+                "answer": "tap"
+              },
+              {
+                "audio": "plane",
+                "options": [
+                  "plan",
+                  "plane"
+                ],
+                "answer": "plane"
+              },
+              {
+                "audio": "cape",
+                "options": [
+                  "cap",
+                  "cape"
+                ],
+                "answer": "cape"
+              }
             ]
           }
         },
@@ -45,27 +110,88 @@
           "id": "i_e",
           "name": "تحويل صوت I",
           "icon": "🎪",
-          "learn_info": "<b>القاعدة:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='kit'>🔊</button><span class='english-font'>kit</span><span>➜</span><button class='speaker-btn' data-speak='kite'>🔊</button><span class='english-font'>kite</span></span><div class='mt-2 text-gray-700'>لاحظ كيف أصبح صوت <span class='english-font'>i</span> طويلاً عندما أضفنا <span class='english-font'>e</span> في النهاية.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='dim'>🔊</button><span class='english-font'>dim</span><span>➜</span><button class='speaker-btn' data-speak='dime'>🔊</button><span class='english-font'>dime</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> الأخير جعل <span class='english-font'>i</span> يقول اسمه (صوت طويل).</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> حرف 'e' يحول صوت 'i' من قصير إلى طويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='kit'>🔊</button><span class='english-font'>kit</span><span>➜</span><button class='speaker-btn' data-speak='kite'>🔊</button><span class='english-font'>kite</span></span><div class='mt-2 text-gray-700'>لاحظ كيف أصبح صوت <span class='english-font'>i</span> طويلاً عندما أضفنا <span class='english-font'>e</span> في النهاية.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='dim'>🔊</button><span class='english-font'>dim</span><span>➜</span><button class='speaker-btn' data-speak='dime'>🔊</button><span class='english-font'>dime</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> الأخير جعل <span class='english-font'>i</span> صوت طويل.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "pin", "after": "pine" },
-            { "before": "fin", "after": "fine" },
-            { "before": "bit", "after": "bite" },
-            { "before": "rid", "after": "ride" }
+            {
+              "before": "pin",
+              "after": "pine"
+            },
+            {
+              "before": "fin",
+              "after": "fine"
+            },
+            {
+              "before": "bit",
+              "after": "bite"
+            },
+            {
+              "before": "rid",
+              "after": "ride"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل هذه الكلمة بها صوت 'i' الطويل، مثل كلمة kite؟",
-            "correct": ["like", "time", "nine", "ride", "dime", "fine"],
-            "incorrect": ["sit", "big", "lip", "win", "hit", "fit"]
+            "correct": [
+              "like",
+              "time",
+              "nine",
+              "ride",
+              "dime",
+              "fine"
+            ],
+            "incorrect": [
+              "sit",
+              "big",
+              "lip",
+              "win",
+              "hit",
+              "fit"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "kite", "options": ["kit", "kite"], "answer": "kite" },
-              { "audio": "fine", "options": ["fin", "fine"], "answer": "fine" },
-              { "audio": "bit", "options": ["bit", "bite"], "answer": "bit" },
-              { "audio": "dime", "options": ["dim", "dime"], "answer": "dime" },
-              { "audio": "rid", "options": ["rid", "ride"], "answer": "rid" }
+              {
+                "audio": "kite",
+                "options": [
+                  "kit",
+                  "kite"
+                ],
+                "answer": "kite"
+              },
+              {
+                "audio": "fine",
+                "options": [
+                  "fin",
+                  "fine"
+                ],
+                "answer": "fine"
+              },
+              {
+                "audio": "bit",
+                "options": [
+                  "bit",
+                  "bite"
+                ],
+                "answer": "bit"
+              },
+              {
+                "audio": "dime",
+                "options": [
+                  "dim",
+                  "dime"
+                ],
+                "answer": "dime"
+              },
+              {
+                "audio": "rid",
+                "options": [
+                  "rid",
+                  "ride"
+                ],
+                "answer": "rid"
+              }
             ]
           }
         },
@@ -75,26 +201,72 @@
           "icon": "🎩",
           "learn_info": "<b>القاعدة:</b> حرف 'e' يغير صوت 'o' من قصير إلى طويل.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hop'>🔊</button><span class='english-font'>hop</span><span>➜</span><button class='speaker-btn' data-speak='hope'>🔊</button><span class='english-font'>hope</span></span><div class='mt-2 text-gray-700'>نلاحظ تحول صوت <span class='english-font'>o</span> إلى طويل بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='not'>🔊</button><span class='english-font'>not</span><span>➜</span><button class='speaker-btn' data-speak='note'>🔊</button><span class='english-font'>note</span></span><div class='mt-2 text-gray-700'>مرة أخرى، حرف <span class='english-font'>e</span> في النهاية يمد صوت <span class='english-font'>o</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "rob", "after": "robe" },
-            { "before": "cod", "after": "code" }
+            {
+              "before": "rob",
+              "after": "robe"
+            },
+            {
+              "before": "cod",
+              "after": "code"
+            }
           ],
           "drill": {
             "type": "morph",
             "instruction": "أضف حرف e وشاهد التحول!",
             "pairs": [
-              ["rod", "rode"],
-              ["glob", "globe"],
-              ["hop", "hope"],
-              ["not", "note"]
+              [
+                "rod",
+                "rode"
+              ],
+              [
+                "glob",
+                "globe"
+              ],
+              [
+                "hop",
+                "hope"
+              ],
+              [
+                "not",
+                "note"
+              ]
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "hope", "options": ["hop", "hope"], "answer": "hope" },
-              { "audio": "not", "options": ["not", "note"], "answer": "not" },
-              { "audio": "robe", "options": ["rob", "robe"], "answer": "robe" },
-              { "audio": "code", "options": ["cod", "code"], "answer": "code" }
+              {
+                "audio": "hope",
+                "options": [
+                  "hop",
+                  "hope"
+                ],
+                "answer": "hope"
+              },
+              {
+                "audio": "not",
+                "options": [
+                  "not",
+                  "note"
+                ],
+                "answer": "not"
+              },
+              {
+                "audio": "robe",
+                "options": [
+                  "rob",
+                  "robe"
+                ],
+                "answer": "robe"
+              },
+              {
+                "audio": "code",
+                "options": [
+                  "cod",
+                  "code"
+                ],
+                "answer": "code"
+              }
             ]
           }
         },
@@ -102,25 +274,80 @@
           "id": "u_e",
           "name": "تحويل صوت U",
           "icon": "🦄",
-          "learn_info": "<b>القاعدة:</b> حرف 'e' يغير صوت 'u' ليقول اسمه (صوت طويل).<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cub'>🔊</button><span class='english-font'>cub</span><span>➜</span><button class='speaker-btn' data-speak='cube'>🔊</button><span class='english-font'>cube</span></span><div class='mt-2 text-gray-700'>لاحظ كيف صار صوت <span class='english-font'>u</span> طويلاً بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='cute'>🔊</button><span class='english-font'>cute</span></span><div class='mt-2 text-gray-700'>نفس الفكرة: <span class='english-font'>e</span> في النهاية يغير نطق الحرف المتحرك.</div><br><b>أمثلة أخرى:</b>",
+          "learn_info": "<b>القاعدة:</b> حرف 'e' يغير صوت 'u' ليكون صوت طويل.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cub'>🔊</button><span class='english-font'>cub</span><span>➜</span><button class='speaker-btn' data-speak='cube'>🔊</button><span class='english-font'>cube</span></span><div class='mt-2 text-gray-700'>لاحظ كيف صار صوت <span class='english-font'>u</span> طويلاً بسبب <span class='english-font'>e</span> الأخير.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='cute'>🔊</button><span class='english-font'>cute</span></span><div class='mt-2 text-gray-700'>نفس الفكرة: <span class='english-font'>e</span> في النهاية يغير نطق الحرف المتحرك.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "tub", "after": "tube" },
-            { "before": "us", "after": "use" }
+            {
+              "before": "tub",
+              "after": "tube"
+            },
+            {
+              "before": "us",
+              "after": "use"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل هذه الكلمة بها صوت 'u' الطويل، مثل كلمة cute؟",
-            "correct": ["flute", "june", "rude", "fuse", "cute", "tube"],
-            "incorrect": ["run", "fun", "duck", "bus", "cut", "hut"]
+            "correct": [
+              "flute",
+              "june",
+              "rude",
+              "fuse",
+              "cute",
+              "tube"
+            ],
+            "incorrect": [
+              "run",
+              "fun",
+              "duck",
+              "bus",
+              "cut",
+              "hut"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "cube", "options": ["cub", "cube"], "answer": "cube" },
-              { "audio": "cut", "options": ["cut", "cute"], "answer": "cut" },
-              { "audio": "use", "options": ["us", "use"], "answer": "use" },
-              { "audio": "cute", "options": ["cut", "cute"], "answer": "cute" },
-              { "audio": "tub", "options": ["tub", "tube"], "answer": "tube" }
+              {
+                "audio": "cube",
+                "options": [
+                  "cub",
+                  "cube"
+                ],
+                "answer": "cube"
+              },
+              {
+                "audio": "cut",
+                "options": [
+                  "cut",
+                  "cute"
+                ],
+                "answer": "cut"
+              },
+              {
+                "audio": "use",
+                "options": [
+                  "us",
+                  "use"
+                ],
+                "answer": "use"
+              },
+              {
+                "audio": "cute",
+                "options": [
+                  "cut",
+                  "cute"
+                ],
+                "answer": "cute"
+              },
+              {
+                "audio": "tub",
+                "options": [
+                  "tub",
+                  "tube"
+                ],
+                "answer": "tube"
+              }
             ]
           }
         }
@@ -139,26 +366,92 @@
           "icon": "🤝",
           "learn_info": "<b>عندما يعمل الحرفان معاً:</b> الفريقان 'ee' و 'ea' ينتجان صوت 'e' الطويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='met'>🔊</button><span class='english-font'>met</span><span>➜</span><button class='speaker-btn' data-speak='meet'>🔊</button><span class='english-font'>meet</span></span><div class='mt-2 text-gray-700'>لاحظ أن فريق <span class='english-font'>ee</span> أعطى صوت <span class='english-font'>e</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bet'>🔊</button><span class='english-font'>bet</span><span>➜</span><button class='speaker-btn' data-speak='beat'>🔊</button><span class='english-font'>beat</span></span><div class='mt-2 text-gray-700'>وكذلك فريق <span class='english-font'>ea</span> يعطي نفس الصوت الطويل.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "fed", "after": "feed" },
-            { "before": "set", "after": "seat" }
+            {
+              "before": "fed",
+              "after": "feed"
+            },
+            {
+              "before": "set",
+              "after": "seat"
+            }
           ],
           "drill": {
             "type": "fill_in_blank",
             "instruction": "اختر الفريق الصحيح لإكمال الكلمة",
             "questions": [
-              { "partial": "s__d", "correct": "ee", "options": ["ee", "e"], "answer": "seed" },
-              { "partial": "t__m", "correct": "ea", "options": ["ea", "a"], "answer": "team" },
-              { "partial": "f__t", "correct": "i", "options": ["ee", "i"], "answer": "fit" },
-              { "partial": "tr__", "correct": "ee", "options": ["ee", "e"], "answer": "tree" }
+              {
+                "partial": "s__d",
+                "correct": "ee",
+                "options": [
+                  "ee",
+                  "e"
+                ],
+                "answer": "seed"
+              },
+              {
+                "partial": "t__m",
+                "correct": "ea",
+                "options": [
+                  "ea",
+                  "a"
+                ],
+                "answer": "team"
+              },
+              {
+                "partial": "f__t",
+                "correct": "i",
+                "options": [
+                  "ee",
+                  "i"
+                ],
+                "answer": "fit"
+              },
+              {
+                "partial": "tr__",
+                "correct": "ee",
+                "options": [
+                  "ee",
+                  "e"
+                ],
+                "answer": "tree"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "feet", "options": ["feet", "fit"], "answer": "feet" },
-              { "audio": "bat", "options": ["bt", "beat"], "answer": "bat" },
-              { "audio": "team", "options": ["tim", "team"], "answer": "team" },
-              { "audio": "tree", "options": ["try", "tree"], "answer": "tree" }
+              {
+                "audio": "feet",
+                "options": [
+                  "feet",
+                  "fit"
+                ],
+                "answer": "feet"
+              },
+              {
+                "audio": "bat",
+                "options": [
+                  "bt",
+                  "beat"
+                ],
+                "answer": "bat"
+              },
+              {
+                "audio": "team",
+                "options": [
+                  "tim",
+                  "team"
+                ],
+                "answer": "team"
+              },
+              {
+                "audio": "tree",
+                "options": [
+                  "try",
+                  "tree"
+                ],
+                "answer": "tree"
+              }
             ]
           }
         },
@@ -168,25 +461,83 @@
           "icon": "🌟",
           "learn_info": "<b>أصدقاء صوت A:</b> الفريقان 'ai' و 'ay' ينتجان صوت 'a' الطويل!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ran'>🔊</button><span class='english-font'>ran</span><span>➜</span><button class='speaker-btn' data-speak='rain'>🔊</button><span class='english-font'>rain</span></span><div class='mt-2 text-gray-700'>لاحظ أن <span class='english-font'>ai</span> يعطي صوت <span class='english-font'>a</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='plan'>🔊</button><span class='english-font'>plan</span><span>➜</span><button class='speaker-btn' data-speak='plain'>🔊</button><span class='english-font'>plain</span></span><div class='mt-2 text-gray-700'>وكذلك <span class='english-font'>ay</span> يعطي الصوت الطويل نفسه.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "man", "after": "main" },
-            { "before": "mad", "after": "may" }
+            {
+              "before": "man",
+              "after": "main"
+            },
+            {
+              "before": "mad",
+              "after": "may"
+            }
           ],
           "drill": {
             "type": "odd_one_out",
             "instruction": "ابحث عن الكلمة ذات صوت الحرف المتحرك المختلف",
             "questions": [
-              { "options": ["rain", "play", "cake", "cat"], "answer": "cat" },
-              { "options": ["day", "van", "train", "main"], "answer": "van" },
-              { "options": ["may", "say", "bay", "bad"], "answer": "bad" }
+              {
+                "options": [
+                  "rain",
+                  "play",
+                  "cake",
+                  "cat"
+                ],
+                "answer": "cat"
+              },
+              {
+                "options": [
+                  "day",
+                  "van",
+                  "train",
+                  "main"
+                ],
+                "answer": "van"
+              },
+              {
+                "options": [
+                  "may",
+                  "say",
+                  "bay",
+                  "bad"
+                ],
+                "answer": "bad"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "rain", "options": ["ran", "rain"], "answer": "rain" },
-              { "audio": "play", "options": ["pla", "play"], "answer": "play" },
-              { "audio": "pan", "options": ["pan", "pain"], "answer": "pan" },
-              { "audio": "day", "options": ["day", "dad"], "answer": "day" }
+              {
+                "audio": "rain",
+                "options": [
+                  "ran",
+                  "rain"
+                ],
+                "answer": "rain"
+              },
+              {
+                "audio": "play",
+                "options": [
+                  "pla",
+                  "play"
+                ],
+                "answer": "play"
+              },
+              {
+                "audio": "pan",
+                "options": [
+                  "pan",
+                  "pain"
+                ],
+                "answer": "pan"
+              },
+              {
+                "audio": "day",
+                "options": [
+                  "day",
+                  "dad"
+                ],
+                "answer": "day"
+              }
             ]
           }
         }
@@ -205,21 +556,66 @@
           "icon": "🍋",
           "learn_info": "<b>التحول:</b> حرف 'c' يصبح ناعماً (مثل صوت س) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cat'>🔊</button><span class='english-font'>cat</span><span>➜</span><button class='speaker-btn' data-speak='cent'>🔊</button><span class='english-font'>cent</span></span><div class='mt-2 text-gray-700'>هنا تحوّل <span class='english-font'>c</span> قبل <span class='english-font'>e</span> إلى صوت ناعم (س).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span><span>➜</span><button class='speaker-btn' data-speak='city'>🔊</button><span class='english-font'>city</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>i</span> أيضاً يصبح <span class='english-font'>c</span> ناعماً.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "cup", "after": "cycle" }
+            {
+              "before": "cup",
+              "after": "cycle"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل هذه الكلمة بها صوت C الناعم، مثل كلمة cent؟",
-            "correct": ["cell", "face", "rice", "city", "ice", "nice"],
-            "incorrect": ["can", "cup", "cold", "cat", "come", "cut"]
+            "correct": [
+              "cell",
+              "face",
+              "rice",
+              "city",
+              "ice",
+              "nice"
+            ],
+            "incorrect": [
+              "can",
+              "cup",
+              "cold",
+              "cat",
+              "come",
+              "cut"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "cell", "options": ["cell", "call"], "answer": "cell" },
-              { "audio": "rice", "options": ["rice", "rock"], "answer": "rice" },
-              { "audio": "cold", "options": ["city", "cold"], "answer": "cold" },
-              { "audio": "city", "options": ["city", "cat"], "answer": "city" }
+              {
+                "audio": "cell",
+                "options": [
+                  "cell",
+                  "call"
+                ],
+                "answer": "cell"
+              },
+              {
+                "audio": "rice",
+                "options": [
+                  "rice",
+                  "rock"
+                ],
+                "answer": "rice"
+              },
+              {
+                "audio": "cold",
+                "options": [
+                  "city",
+                  "cold"
+                ],
+                "answer": "cold"
+              },
+              {
+                "audio": "city",
+                "options": [
+                  "city",
+                  "cat"
+                ],
+                "answer": "city"
+              }
             ]
           }
         },
@@ -229,30 +625,85 @@
           "icon": "🦒",
           "learn_info": "<b>التحول:</b> حرف 'g' يصبح ناعماً (مثل ج) عندما يأتي بعده e, i, أو y!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='go'>🔊</button><span class='english-font'>go</span><span>➜</span><button class='speaker-btn' data-speak='gem'>🔊</button><span class='english-font'>gem</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>e</span> يصبح <span class='english-font'>g</span> ناعماً.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='gas'>🔊</button><span class='english-font'>gas</span><span>➜</span><button class='speaker-btn' data-speak='gym'>🔊</button><span class='english-font'>gym</span></span><div class='mt-2 text-gray-700'>قبل <span class='english-font'>y</span> أيضاً نلاحظ الصوت الناعم.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "got", "after": "giant" }
+            {
+              "before": "got",
+              "after": "giant"
+            }
           ],
           "drill": {
             "type": "odd_one_out",
             "instruction": "ابحث عن الكلمة ذات صوت G المختلف",
             "questions": [
-              { "options": ["gem", "gym", "giant", "gold"], "answer": "gold" },
-              { "options": ["page", "gym", "gentle", "gate"], "answer": "gate" },
-              { "options": ["age", "cage", "stage", "gap"], "answer": "gap" }
+              {
+                "options": [
+                  "gem",
+                  "gym",
+                  "giant",
+                  "gold"
+                ],
+                "answer": "gold"
+              },
+              {
+                "options": [
+                  "page",
+                  "gym",
+                  "gentle",
+                  "gate"
+                ],
+                "answer": "gate"
+              },
+              {
+                "options": [
+                  "age",
+                  "cage",
+                  "stage",
+                  "gap"
+                ],
+                "answer": "gap"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "gem", "options": ["gem", "game"], "answer": "gem" },
-              { "audio": "page", "options": ["page", "cage"], "answer": "page" },
-              { "audio": "goal", "options": ["goal", "cage"], "answer": "goal" },
-              { "audio": "giant", "options": ["giant", "gate"], "answer": "giant" }
+              {
+                "audio": "gem",
+                "options": [
+                  "gem",
+                  "game"
+                ],
+                "answer": "gem"
+              },
+              {
+                "audio": "page",
+                "options": [
+                  "page",
+                  "cage"
+                ],
+                "answer": "page"
+              },
+              {
+                "audio": "goal",
+                "options": [
+                  "goal",
+                  "cage"
+                ],
+                "answer": "goal"
+              },
+              {
+                "audio": "giant",
+                "options": [
+                  "giant",
+                  "gate"
+                ],
+                "answer": "giant"
+              }
             ]
           }
         }
       ]
     },
-{
+    {
       "id": "r_controlled",
       "name": "R-Controlled Vowels",
       "name_ar": "حروف العلة مع R",
@@ -265,27 +716,102 @@
           "icon": "🦢",
           "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يسيطر على الحرف المتحرك الذي قبله! المجموعات <b>er</b>, <b>ir</b>, و <b>ur</b> كلها تصدر نفس الصوت تقريباً.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='her'>🔊</button><span class='english-font'>her</span></span><div class='mt-2 text-gray-700'>استمع لصوت /er/.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bird'>🔊</button><span class='english-font'>bird</span></span><div class='mt-2 text-gray-700'>نفس الصوت مع <span class='english-font'>ir</span>.</div><br><b>مثال ثالث:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='turn'>🔊</button><span class='english-font'>turn</span></span><div class='mt-2 text-gray-700'>ونفس الصوت مع <span class='english-font'>ur</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "term", "after": "term" },
-            { "before": "first", "after": "first" },
-            { "before": "burn", "after": "burn" },
-            { "before": "serve", "after": "serve" },
-            { "before": "girl", "after": "girl" },
-            { "before": "nurse", "after": "nurse" }
+            {
+              "before": "term",
+              "after": "term"
+            },
+            {
+              "before": "first",
+              "after": "first"
+            },
+            {
+              "before": "burn",
+              "after": "burn"
+            },
+            {
+              "before": "serve",
+              "after": "serve"
+            },
+            {
+              "before": "girl",
+              "after": "girl"
+            },
+            {
+              "before": "nurse",
+              "after": "nurse"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل هذه الكلمة بها صوت /er/، مثل كلمة her؟",
-            "correct": ["first", "burn", "serve", "girl", "nurse", "third", "verb", "church", "shirt", "hurt"],
-            "incorrect": ["fire", "farm", "for", "four", "far", "fork", "hear", "bear", "care", "more"]
+            "correct": [
+              "first",
+              "burn",
+              "serve",
+              "girl",
+              "nurse",
+              "third",
+              "verb",
+              "church",
+              "shirt",
+              "hurt"
+            ],
+            "incorrect": [
+              "fire",
+              "farm",
+              "for",
+              "four",
+              "far",
+              "fork",
+              "hear",
+              "bear",
+              "care",
+              "more"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "bird", "options": ["bird", "bad"], "answer": "bird" },
-              { "audio": "turn", "options": ["turn", "torn"], "answer": "turn" },
-              { "audio": "her", "options": ["her", "hair"], "answer": "her" },
-              { "audio": "girl", "options": ["girl", "grill"], "answer": "girl" },
-              { "audio": "first", "options": ["fast", "first"], "answer": "first" }
+              {
+                "audio": "bird",
+                "options": [
+                  "bird",
+                  "bad"
+                ],
+                "answer": "bird"
+              },
+              {
+                "audio": "turn",
+                "options": [
+                  "turn",
+                  "torn"
+                ],
+                "answer": "turn"
+              },
+              {
+                "audio": "her",
+                "options": [
+                  "her",
+                  "hair"
+                ],
+                "answer": "her"
+              },
+              {
+                "audio": "girl",
+                "options": [
+                  "girl",
+                  "grill"
+                ],
+                "answer": "girl"
+              },
+              {
+                "audio": "first",
+                "options": [
+                  "fast",
+                  "first"
+                ],
+                "answer": "first"
+              }
             ]
           }
         },
@@ -295,29 +821,108 @@
           "icon": "🌽",
           "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يغير أيضاً أصوات 'a' و 'o'. استمع للفرق بين /ar/ و /or/.<br><br><b>مثال /ar/:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span></span><div class='mt-2 text-gray-700'>هنا نسمع /ar/ العميق.</div><br><b>مثال /or/:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='fork'>🔊</button><span class='english-font'>fork</span></span><div class='mt-2 text-gray-700'>وهنا نسمع /or/.</div><br><b>ملاحظة:</b> بعض الكلمات مثل 'word' و 'work' تُكتب بـ 'or' لكنها تُنطق مثل /er/ - هذه استثناءات!<br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "star", "after": "star" },
-            { "before": "park", "after": "park" },
-            { "before": "corn", "after": "corn" },
-            { "before": "sport", "after": "sport" }
+            {
+              "before": "star",
+              "after": "star"
+            },
+            {
+              "before": "park",
+              "after": "park"
+            },
+            {
+              "before": "corn",
+              "after": "corn"
+            },
+            {
+              "before": "sport",
+              "after": "sport"
+            }
           ],
           "drill": {
             "type": "odd_one_out",
             "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
             "questions": [
-              { "options": ["car", "star", "park", "fork"], "answer": "fork" },
-              { "options": ["corn", "born", "torn", "barn"], "answer": "barn" },
-              { "options": ["short", "sport", "start", "fort"], "answer": "start" },
-              { "options": ["more", "store", "mark", "before"], "answer": "mark" }
+              {
+                "options": [
+                  "car",
+                  "star",
+                  "park",
+                  "fork"
+                ],
+                "answer": "fork"
+              },
+              {
+                "options": [
+                  "corn",
+                  "born",
+                  "torn",
+                  "barn"
+                ],
+                "answer": "barn"
+              },
+              {
+                "options": [
+                  "short",
+                  "sport",
+                  "start",
+                  "fort"
+                ],
+                "answer": "start"
+              },
+              {
+                "options": [
+                  "more",
+                  "store",
+                  "mark",
+                  "before"
+                ],
+                "answer": "mark"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "car", "options": ["car", "core"], "answer": "car" },
-              { "audio": "fork", "options": ["fork", "dark"], "answer": "fork" },
-              { "audio": "star", "options": ["star", "store"], "answer": "star" },
-              { "audio": "corn", "options": ["corn", "barn"], "answer": "corn" },
-              { "audio": "park", "options": ["park", "pork"], "answer": "park" }
+              {
+                "audio": "car",
+                "options": [
+                  "car",
+                  "core"
+                ],
+                "answer": "car"
+              },
+              {
+                "audio": "fork",
+                "options": [
+                  "fork",
+                  "dark"
+                ],
+                "answer": "fork"
+              },
+              {
+                "audio": "star",
+                "options": [
+                  "star",
+                  "store"
+                ],
+                "answer": "star"
+              },
+              {
+                "audio": "corn",
+                "options": [
+                  "corn",
+                  "barn"
+                ],
+                "answer": "corn"
+              },
+              {
+                "audio": "park",
+                "options": [
+                  "park",
+                  "pork"
+                ],
+                "answer": "park"
+              }
             ]
           }
         }
@@ -331,60 +936,636 @@
       "color": "from-indigo-400 to-purple-400",
       "subSkills": [
         {
-          "id": "ch_sh_th_wh",
-          "name": "CH, SH, TH, WH",
-          "icon": "👨‍👩‍👧‍👦",
-          "learn_info": "<b>الأصوات المدمجة:</b> حرفان يتحدان ليصدرا صوتاً جديداً واحداً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='chair'>🔊</button><span class='english-font'>chair</span></span><div class='mt-2 text-gray-700'>لاحظ صوت <span class='english-font'>ch</span> (مثل \"تش\").</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ship'>🔊</button><span class='english-font'>ship</span></span><div class='mt-2 text-gray-700'>هنا صوت <span class='english-font'>sh</span> (مثل \"ش\").</div><br><b>أمثلة أخرى:</b>",
+          "id": "sh",
+          "name": "صوت SH (ش)",
+          "icon": "🚢",
+          "learn_info": "SH يصدر صوت <b>ش</b> — مثل حرف الشين في العربية.<br>أمثلة بحسب الموضع:<br><b>البداية:</b> <span class='english-font'>ship</span><br><b>الوسط:</b> <span class='english-font'>washing</span><br><b>النهاية:</b> <span class='english-font'>fish</span>",
           "examples": [
-            { "before": "think", "after": "think" },
-            { "before": "whale", "after": "whale" },
-            { "before": "cheese", "after": "cheese" },
-            { "before": "shell", "after": "shell" }
+            {
+              "before": "shoe",
+              "after": "shoe"
+            },
+            {
+              "before": "fish",
+              "after": "fish"
+            },
+            {
+              "before": "push",
+              "after": "push"
+            },
+            {
+              "before": "shell",
+              "after": "shell"
+            },
+            {
+              "before": "washing",
+              "after": "washing"
+            },
+            {
+              "before": "brush",
+              "after": "brush"
+            }
           ],
           "drill": {
-            "type": "sort",
-            "instruction": "هل تسمع صوت 'ش' في هذه الكلمة، مثل كلمة ship؟",
-            "correct": ["fish", "wish", "cash", "rush", "fresh", "brush"],
-            "incorrect": ["fist", "west", "cast", "rust", "frost", "trust"]
+            "type": "odd_one_out",
+            "instruction": "ابحث عن الكلمة التي لا تحتوي على صوت SH",
+            "questions": [
+              {
+                "options": [
+                  "ship",
+                  "wish",
+                  "shop",
+                  "chip"
+                ],
+                "answer": "chip"
+              },
+              {
+                "options": [
+                  "cash",
+                  "wash",
+                  "dish",
+                  "desk"
+                ],
+                "answer": "desk"
+              },
+              {
+                "options": [
+                  "shell",
+                  "shelf",
+                  "self",
+                  "sheep"
+                ],
+                "answer": "self"
+              },
+              {
+                "options": [
+                  "rush",
+                  "brush",
+                  "crush",
+                  "trust"
+                ],
+                "answer": "trust"
+              }
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "chair", "options": ["care", "chair"], "answer": "chair" },
-              { "audio": "ship", "options": ["ship", "skip"], "answer": "ship" },
-              { "audio": "think", "options": ["think", "sink"], "answer": "think" },
-              { "audio": "whale", "options": ["whale", "wale"], "answer": "whale" },
-              { "audio": "cheese", "options": ["cheese", "these"], "answer": "cheese" }
+              {
+                "audio": "ship",
+                "options": [
+                  "ship",
+                  "chip"
+                ],
+                "answer": "ship"
+              },
+              {
+                "audio": "wish",
+                "options": [
+                  "wish",
+                  "with"
+                ],
+                "answer": "wish"
+              },
+              {
+                "audio": "sheep",
+                "options": [
+                  "sheep",
+                  "cheap"
+                ],
+                "answer": "sheep"
+              },
+              {
+                "audio": "cash",
+                "options": [
+                  "cash",
+                  "case"
+                ],
+                "answer": "cash"
+              },
+              {
+                "audio": "shop",
+                "options": [
+                  "shop",
+                  "chop"
+                ],
+                "answer": "shop"
+              }
             ]
           }
         },
         {
-          "id": "ck_ng_ph",
-          "name": "CK, NG, PH",
-          "icon": "🔇",
-          "learn_info": "<b>الأصوات الخاصة:</b> CK يصدر صوت 'ك'، NG يصدر صوت 'نغ'، PH يصدر صوت 'ف'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='back'>🔊</button><span class='english-font'>back</span></span><div class='mt-2 text-gray-700'>هنا نسمع صوت /k/ في نهاية الكلمة من <span class='english-font'>ck</span>.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='ring'>🔊</button><span class='english-font'>ring</span></span><div class='mt-2 text-gray-700'>هنا صوت <span class='english-font'>ng</span> (نغ) في النهاية.</div><br><b>أمثلة أخرى:</b>",
+          "id": "ch",
+          "name": "صوت CH (تش)",
+          "icon": "🧀",
+          "learn_info": "حرفان يتحدان ليصدرا صوتاً جديداً واحداً: CH → <b>تش</b>.<br>أمثلة بحسب الموضع:<br><b>البداية:</b> <span class='english-font'>chair</span><br><b>الوسط:</b> <span class='english-font'>peaches</span><br><b>النهاية:</b> <span class='english-font'>lunch</span><br><i>ملاحظة لاحقاً:</i> أحياناً تُنطق CH /k/ (*school*) أو /ʃ/ (*chef*) — سنؤجل ذلك.",
           "examples": [
-            { "before": "phone", "after": "phone" },
-            { "before": "duck", "after": "duck" },
-            { "before": "king", "after": "king" },
-            { "before": "graph", "after": "graph" }
+            {
+              "before": "cheese",
+              "after": "cheese"
+            },
+            {
+              "before": "chair",
+              "after": "chair"
+            },
+            {
+              "before": "lunch",
+              "after": "lunch"
+            },
+            {
+              "before": "teacher",
+              "after": "teacher"
+            },
+            {
+              "before": "peach",
+              "after": "peach"
+            },
+            {
+              "before": "beach",
+              "after": "beach"
+            }
+          ],
+          "drill": {
+            "type": "sort",
+            "instruction": "هل تسمع صوت CH (تش) في هذه الكلمة؟",
+            "correct": [
+              "chair",
+              "cheese",
+              "lunch",
+              "peach",
+              "rich",
+              "beach",
+              "bench"
+            ],
+            "incorrect": [
+              "ship",
+              "cash",
+              "she",
+              "wash",
+              "sheet",
+              "this"
+            ]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              {
+                "audio": "chair",
+                "options": [
+                  "chair",
+                  "share"
+                ],
+                "answer": "chair"
+              },
+              {
+                "audio": "chip",
+                "options": [
+                  "chip",
+                  "ship"
+                ],
+                "answer": "chip"
+              },
+              {
+                "audio": "chop",
+                "options": [
+                  "chop",
+                  "shop"
+                ],
+                "answer": "chop"
+              },
+              {
+                "audio": "chin",
+                "options": [
+                  "chin",
+                  "shin"
+                ],
+                "answer": "chin"
+              },
+              {
+                "audio": "rich",
+                "options": [
+                  "rich",
+                  "rush"
+                ],
+                "answer": "rich"
+              }
+            ]
+          }
+        },
+        {
+          "id": "th_voiceless",
+          "name": "TH الخفيف (ث)",
+          "icon": "🌬️",
+          "learn_info": "ضع لسانك بين الأسنان وادفع الهواء بدون اهتزاز: TH → <b>/θ/</b> (مثل <span class='english-font'>think</span>).<br>أمثلة: <span class='english-font'>think, three, thin, tooth, bath, both</span>.",
+          "examples": [
+            {
+              "before": "thin",
+              "after": "thin"
+            },
+            {
+              "before": "three",
+              "after": "three"
+            },
+            {
+              "before": "think",
+              "after": "think"
+            },
+            {
+              "before": "tooth",
+              "after": "tooth"
+            },
+            {
+              "before": "math",
+              "after": "math"
+            },
+            {
+              "before": "both",
+              "after": "both"
+            }
+          ],
+          "drill": {
+            "type": "sort",
+            "instruction": "هل تسمع صوت TH الخفيف (ث) في هذه الكلمة؟",
+            "correct": [
+              "think",
+              "three",
+              "thin",
+              "math",
+              "tooth",
+              "both",
+              "thank",
+              "throw"
+            ],
+            "incorrect": [
+              "tree",
+              "free",
+              "tin",
+              "mouse",
+              "tank",
+              "sank"
+            ]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              {
+                "audio": "think",
+                "options": [
+                  "think",
+                  "sink"
+                ],
+                "answer": "think"
+              },
+              {
+                "audio": "three",
+                "options": [
+                  "three",
+                  "tree"
+                ],
+                "answer": "three"
+              },
+              {
+                "audio": "thin",
+                "options": [
+                  "thin",
+                  "tin"
+                ],
+                "answer": "thin"
+              },
+              {
+                "audio": "math",
+                "options": [
+                  "math",
+                  "mat"
+                ],
+                "answer": "math"
+              },
+              {
+                "audio": "tooth",
+                "options": [
+                  "tooth",
+                  "tool"
+                ],
+                "answer": "tooth"
+              }
+            ]
+          }
+        },
+        {
+          "id": "th_voiced",
+          "name": "TH القوي (ذ)",
+          "icon": "🔊",
+          "learn_info": "نفس وضعية اللسان لكن مع اهتزاز في الحلق: TH → <b>/ð/</b> (مثل <span class='english-font'>this</span>).<br>كلمات مهمة جداً: <span class='english-font'>the, this, that, then, they, there</span>.",
+          "examples": [
+            {
+              "before": "the",
+              "after": "the"
+            },
+            {
+              "before": "this",
+              "after": "this"
+            },
+            {
+              "before": "that",
+              "after": "that"
+            },
+            {
+              "before": "then",
+              "after": "then"
+            },
+            {
+              "before": "mother",
+              "after": "mother"
+            },
+            {
+              "before": "brother",
+              "after": "brother"
+            }
+          ],
+          "drill": {
+            "type": "sort",
+            "instruction": "هل تسمع صوت TH القوي (ذ) في هذه الكلمة؟",
+            "correct": [
+              "the",
+              "this",
+              "that",
+              "then",
+              "they",
+              "there",
+              "mother",
+              "brother"
+            ],
+            "incorrect": [
+              "ten",
+              "day",
+              "bat",
+              "miss",
+              "den"
+            ]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              {
+                "audio": "this",
+                "options": [
+                  "this",
+                  "miss"
+                ],
+                "answer": "this"
+              },
+              {
+                "audio": "that",
+                "options": [
+                  "that",
+                  "bat"
+                ],
+                "answer": "that"
+              },
+              {
+                "audio": "they",
+                "options": [
+                  "they",
+                  "day"
+                ],
+                "answer": "they"
+              },
+              {
+                "audio": "then",
+                "options": [
+                  "then",
+                  "ten"
+                ],
+                "answer": "then"
+              },
+              {
+                "audio": "mother",
+                "options": [
+                  "mother",
+                  "mutter"
+                ],
+                "answer": "mother"
+              }
+            ]
+          }
+        },
+        {
+          "id": "wh",
+          "name": "WH (واو تقريباً)",
+          "icon": "❓",
+          "learn_info": "WH عادة يُنطق مثل <b>/w/</b> في كلمات الأسئلة: <span class='english-font'>what, when, where, why</span>.<br><b>استثناء مهم:</b> <span class='english-font'>who, whole</span> (الـ W لا تُنطق).",
+          "examples": [
+            {
+              "before": "what",
+              "after": "what"
+            },
+            {
+              "before": "when",
+              "after": "when"
+            },
+            {
+              "before": "where",
+              "after": "where"
+            },
+            {
+              "before": "why",
+              "after": "why"
+            },
+            {
+              "before": "white",
+              "after": "white"
+            },
+            {
+              "before": "whale",
+              "after": "whale"
+            }
+          ],
+          "drill": {
+            "type": "odd_one_out",
+            "instruction": "ابحث عن الكلمة ذات النطق المختلف",
+            "questions": [
+              {
+                "options": [
+                  "what",
+                  "when",
+                  "hit",
+                  "where"
+                ],
+                "answer": "hit"
+              },
+              {
+                "options": [
+                  "white",
+                  "when",
+                  "where",
+                  "hole"
+                ],
+                "answer": "hole"
+              },
+              {
+                "options": [
+                  "why",
+                  "what",
+                  "when",
+                  "how"
+                ],
+                "answer": "how"
+              }
+            ]
+          },
+          "quiz": {
+            "instruction": "استمع واختر الكلمة الصحيحة",
+            "questions": [
+              {
+                "audio": "what",
+                "options": [
+                  "what",
+                  "want"
+                ],
+                "answer": "what"
+              },
+              {
+                "audio": "when",
+                "options": [
+                  "when",
+                  "then"
+                ],
+                "answer": "when"
+              },
+              {
+                "audio": "where",
+                "options": [
+                  "where",
+                  "there"
+                ],
+                "answer": "where"
+              },
+              {
+                "audio": "why",
+                "options": [
+                  "why",
+                  "way"
+                ],
+                "answer": "why"
+              },
+              {
+                "audio": "who",
+                "options": [
+                  "who",
+                  "woo"
+                ],
+                "answer": "who"
+              }
+            ]
+          }
+        },
+        {
+          "id": "ph",
+          "name": "صوت PH (ف)",
+          "icon": "🐘",
+          "learn_info": "PH يكتب لكنه يُنطق <b>/f/</b> في كلمات كثيرة ذات أصل يوناني: <span class='english-font'>phone, photo, elephant</span>.",
+          "examples": [
+            {
+              "before": "phone",
+              "after": "phone"
+            },
+            {
+              "before": "photo",
+              "after": "photo"
+            },
+            {
+              "before": "elephant",
+              "after": "elephant"
+            },
+            {
+              "before": "alphabet",
+              "after": "alphabet"
+            },
+            {
+              "before": "dolphin",
+              "after": "dolphin"
+            },
+            {
+              "before": "graph",
+              "after": "graph"
+            }
           ],
           "drill": {
             "type": "odd_one_out",
             "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
             "questions": [
-              { "options": ["back", "pack", "sack", "bank"], "answer": "bank" },
-              { "options": ["ring", "king", "sing", "rink"], "answer": "rink" },
-              { "options": ["phone", "graph", "photo", "pony"], "answer": "pony" }
+              {
+                "options": [
+                  "phone",
+                  "photo",
+                  "elephant",
+                  "pen"
+                ],
+                "answer": "pen"
+              },
+              {
+                "options": [
+                  "photo",
+                  "phonics",
+                  "alphabet",
+                  "pan"
+                ],
+                "answer": "pan"
+              },
+              {
+                "options": [
+                  "graph",
+                  "elephant",
+                  "photo",
+                  "pace"
+                ],
+                "answer": "pace"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "duck", "options": ["duck", "dug"], "answer": "duck" },
-              { "audio": "ring", "options": ["ring", "rink"], "answer": "ring" },
-              { "audio": "phone", "options": ["phone", "fone"], "answer": "phone" },
-              { "audio": "king", "options": ["king", "kid"], "answer": "king" }
+              {
+                "audio": "phone",
+                "options": [
+                  "phone",
+                  "fine"
+                ],
+                "answer": "phone"
+              },
+              {
+                "audio": "photo",
+                "options": [
+                  "photo",
+                  "poto"
+                ],
+                "answer": "photo"
+              },
+              {
+                "audio": "elephant",
+                "options": [
+                  "elephant",
+                  "elegant"
+                ],
+                "answer": "elephant"
+              },
+              {
+                "audio": "alphabet",
+                "options": [
+                  "alphabet",
+                  "alfabet"
+                ],
+                "answer": "alphabet"
+              },
+              {
+                "audio": "graph",
+                "options": [
+                  "graph",
+                  "giraffe"
+                ],
+                "answer": "graph"
+              }
             ]
           }
         }
@@ -403,25 +1584,86 @@
           "icon": "👀",
           "learn_info": "<b>صوتان مختلفان:</b> OO يمكن أن يصدر صوتاً قصيراً مثل 'book' أو صوتاً طويلاً مثل 'moon'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='book'>🔊</button><span class='english-font'>book</span></span><div class='mt-2 text-gray-700'>هنا صوت قصير (مثل /ʊ/).</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='moon'>🔊</button><span class='english-font'>moon</span></span><div class='mt-2 text-gray-700'>وهنا صوت طويل (مثل /uː/). انتبه للفرق.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "cook", "after": "cook" },
-            { "before": "cool", "after": "cool" },
-            { "before": "good", "after": "good" },
-            { "before": "food", "after": "food" }
+            {
+              "before": "cook",
+              "after": "cook"
+            },
+            {
+              "before": "cool",
+              "after": "cool"
+            },
+            {
+              "before": "good",
+              "after": "good"
+            },
+            {
+              "before": "food",
+              "after": "food"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل هذه الكلمة بها صوت OO الطويل، مثل كلمة moon؟",
-            "correct": ["soon", "zoom", "pool", "tool", "school", "spoon"],
-            "incorrect": ["look", "took", "hook", "wood", "stood", "foot"]
+            "correct": [
+              "soon",
+              "zoom",
+              "pool",
+              "tool",
+              "school",
+              "spoon"
+            ],
+            "incorrect": [
+              "look",
+              "took",
+              "hook",
+              "wood",
+              "stood",
+              "foot"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "book", "options": ["book", "boot"], "answer": "book" },
-              { "audio": "moon", "options": ["moon", "moan"], "answer": "moon" },
-              { "audio": "cook", "options": ["cook", "cool"], "answer": "cook" },
-              { "audio": "pool", "options": ["pool", "pull"], "answer": "pool" },
-              { "audio": "good", "options": ["good", "goose"], "answer": "good" }
+              {
+                "audio": "book",
+                "options": [
+                  "book",
+                  "boot"
+                ],
+                "answer": "book"
+              },
+              {
+                "audio": "moon",
+                "options": [
+                  "moon",
+                  "moan"
+                ],
+                "answer": "moon"
+              },
+              {
+                "audio": "cook",
+                "options": [
+                  "cook",
+                  "cool"
+                ],
+                "answer": "cook"
+              },
+              {
+                "audio": "pool",
+                "options": [
+                  "pool",
+                  "pull"
+                ],
+                "answer": "pool"
+              },
+              {
+                "audio": "good",
+                "options": [
+                  "good",
+                  "goose"
+                ],
+                "answer": "good"
+              }
             ]
           }
         },
@@ -431,27 +1673,91 @@
           "icon": "🎢",
           "learn_info": "<b>الأصوات المنزلقة:</b> تبدأ بصوت وتنتهي بصوت آخر!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='boy'>🔊</button><span class='english-font'>boy</span></span><div class='mt-2 text-gray-700'>هذا صوت <span class='english-font'>oy</span> المنزلق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='coin'>🔊</button><span class='english-font'>coin</span></span><div class='mt-2 text-gray-700'>وهذا <span class='english-font'>oi</span> بصوت مشابه.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "cow", "after": "cow" },
-            { "before": "house", "after": "house" },
-            { "before": "joy", "after": "joy" },
-            { "before": "mouse", "after": "mouse" }
+            {
+              "before": "cow",
+              "after": "cow"
+            },
+            {
+              "before": "house",
+              "after": "house"
+            },
+            {
+              "before": "joy",
+              "after": "joy"
+            },
+            {
+              "before": "mouse",
+              "after": "mouse"
+            }
           ],
           "drill": {
             "type": "odd_one_out",
             "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
             "questions": [
-              { "options": ["boy", "toy", "joy", "bay"], "answer": "bay" },
-              { "options": ["cow", "how", "now", "row"], "answer": "row" },
-              { "options": ["coin", "join", "point", "cone"], "answer": "cone" }
+              {
+                "options": [
+                  "boy",
+                  "toy",
+                  "joy",
+                  "bay"
+                ],
+                "answer": "bay"
+              },
+              {
+                "options": [
+                  "cow",
+                  "how",
+                  "now",
+                  "row"
+                ],
+                "answer": "row"
+              },
+              {
+                "options": [
+                  "coin",
+                  "join",
+                  "point",
+                  "cone"
+                ],
+                "answer": "cone"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "boy", "options": ["boy", "buy"], "answer": "boy" },
-              { "audio": "coin", "options": ["coin", "cone"], "answer": "coin" },
-              { "audio": "cow", "options": ["cow", "coo"], "answer": "cow" },
-              { "audio": "house", "options": ["house", "horse"], "answer": "house" }
+              {
+                "audio": "boy",
+                "options": [
+                  "boy",
+                  "buy"
+                ],
+                "answer": "boy"
+              },
+              {
+                "audio": "coin",
+                "options": [
+                  "coin",
+                  "cone"
+                ],
+                "answer": "coin"
+              },
+              {
+                "audio": "cow",
+                "options": [
+                  "cow",
+                  "coo"
+                ],
+                "answer": "cow"
+              },
+              {
+                "audio": "house",
+                "options": [
+                  "house",
+                  "horse"
+                ],
+                "answer": "house"
+              }
             ]
           }
         },
@@ -461,24 +1767,78 @@
           "icon": "🦖",
           "learn_info": "<b>الصوت العميق:</b> AU و AW ينتجان نفس الصوت العميق مثل 'saw' و 'auto'.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='saw'>🔊</button><span class='english-font'>saw</span></span><div class='mt-2 text-gray-700'>صوت <span class='english-font'>aw</span> العميق.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='auto'>🔊</button><span class='english-font'>auto</span></span><div class='mt-2 text-gray-700'>وهنا <span class='english-font'>au</span> بنفس الجودة الصوتية تقريباً.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "claw", "after": "claw" },
-            { "before": "pause", "after": "pause" },
-            { "before": "draw", "after": "draw" },
-            { "before": "launch", "after": "launch" }
+            {
+              "before": "claw",
+              "after": "claw"
+            },
+            {
+              "before": "pause",
+              "after": "pause"
+            },
+            {
+              "before": "draw",
+              "after": "draw"
+            },
+            {
+              "before": "launch",
+              "after": "launch"
+            }
           ],
           "drill": {
             "type": "sort",
             "instruction": "هل تسمع صوت AU/AW في هذه الكلمة، مثل كلمة saw؟",
-            "correct": ["law", "raw", "cause", "taught", "hawk", "crawl"],
-            "incorrect": ["low", "row", "come", "tight", "hack", "call"]
+            "correct": [
+              "law",
+              "raw",
+              "cause",
+              "taught",
+              "hawk",
+              "crawl"
+            ],
+            "incorrect": [
+              "low",
+              "row",
+              "come",
+              "tight",
+              "hack",
+              "call"
+            ]
           },
           "quiz": {
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
-              { "audio": "saw", "options": ["saw", "so"], "answer": "saw" },
-              { "audio": "claw", "options": ["claw", "clay"], "answer": "claw" },
-              { "audio": "auto", "options": ["auto", "otto"], "answer": "auto" },
-              { "audio": "draw", "options": ["draw", "dry"], "answer": "draw" }
+              {
+                "audio": "saw",
+                "options": [
+                  "saw",
+                  "so"
+                ],
+                "answer": "saw"
+              },
+              {
+                "audio": "claw",
+                "options": [
+                  "claw",
+                  "clay"
+                ],
+                "answer": "claw"
+              },
+              {
+                "audio": "auto",
+                "options": [
+                  "auto",
+                  "otto"
+                ],
+                "answer": "auto"
+              },
+              {
+                "audio": "draw",
+                "options": [
+                  "draw",
+                  "dry"
+                ],
+                "answer": "draw"
+              }
             ]
           }
         }
@@ -500,23 +1860,75 @@
             "type": "build_the_word",
             "instruction": "استمع، ثم قم ببناء الكلمة",
             "questions": [
-              { "word": "cat", "image": "🐈" },
-              { "word": "sun", "image": "☀️" },
-              { "word": "dog", "image": "🐕" },
-              { "word": "hat", "image": "👒" },
-              { "word": "bed", "image": "🛏️" },
-              { "word": "cup", "image": "☕" },
-              { "word": "pen", "image": "🖊️" },
-              { "word": "box", "image": "📦" }
+              {
+                "word": "cat",
+                "image": "🐈"
+              },
+              {
+                "word": "sun",
+                "image": "☀️"
+              },
+              {
+                "word": "dog",
+                "image": "🐕"
+              },
+              {
+                "word": "hat",
+                "image": "👒"
+              },
+              {
+                "word": "bed",
+                "image": "🛏️"
+              },
+              {
+                "word": "cup",
+                "image": "☕"
+              },
+              {
+                "word": "pen",
+                "image": "🖊️"
+              },
+              {
+                "word": "box",
+                "image": "📦"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع، ثم اختر الإملاء الصحيح",
             "questions": [
-              { "audio": "cup", "options": ["cup", "cap"], "answer": "cup" },
-              { "audio": "pin", "options": ["pin", "pen"], "answer": "pin" },
-              { "audio": "hot", "options": ["hot", "hat"], "answer": "hot" },
-              { "audio": "big", "options": ["big", "bag"], "answer": "big" }
+              {
+                "audio": "cup",
+                "options": [
+                  "cup",
+                  "cap"
+                ],
+                "answer": "cup"
+              },
+              {
+                "audio": "pin",
+                "options": [
+                  "pin",
+                  "pen"
+                ],
+                "answer": "pin"
+              },
+              {
+                "audio": "hot",
+                "options": [
+                  "hot",
+                  "hat"
+                ],
+                "answer": "hot"
+              },
+              {
+                "audio": "big",
+                "options": [
+                  "big",
+                  "bag"
+                ],
+                "answer": "big"
+              }
             ]
           }
         },
@@ -529,23 +1941,75 @@
             "type": "build_the_word",
             "instruction": "استمع، ثم قم ببناء الكلمة",
             "questions": [
-              { "word": "fish", "image": "🐟" },
-              { "word": "cake", "image": "🍰" },
-              { "word": "boat", "image": "⛵" },
-              { "word": "feet", "image": "👣" },
-              { "word": "rain", "image": "🌧️" },
-              { "word": "kite", "image": "🪁" },
-              { "word": "moon", "image": "🌕" },
-              { "word": "star", "image": "⭐" }
+              {
+                "word": "fish",
+                "image": "🐟"
+              },
+              {
+                "word": "cake",
+                "image": "🍰"
+              },
+              {
+                "word": "boat",
+                "image": "⛵"
+              },
+              {
+                "word": "feet",
+                "image": "👣"
+              },
+              {
+                "word": "rain",
+                "image": "🌧️"
+              },
+              {
+                "word": "kite",
+                "image": "🪁"
+              },
+              {
+                "word": "moon",
+                "image": "🌕"
+              },
+              {
+                "word": "star",
+                "image": "⭐"
+              }
             ]
           },
           "quiz": {
             "instruction": "استمع، ثم اختر الإملاء الصحيح",
             "questions": [
-              { "audio": "ship", "options": ["ship", "shop"], "answer": "ship" },
-              { "audio": "kite", "options": ["kite", "kit"], "answer": "kite" },
-              { "audio": "seal", "options": ["seal", "sail"], "answer": "seal" },
-              { "audio": "moon", "options": ["moon", "moan"], "answer": "moon" }
+              {
+                "audio": "ship",
+                "options": [
+                  "ship",
+                  "shop"
+                ],
+                "answer": "ship"
+              },
+              {
+                "audio": "kite",
+                "options": [
+                  "kite",
+                  "kit"
+                ],
+                "answer": "kite"
+              },
+              {
+                "audio": "seal",
+                "options": [
+                  "seal",
+                  "sail"
+                ],
+                "answer": "seal"
+              },
+              {
+                "audio": "moon",
+                "options": [
+                  "moon",
+                  "moan"
+                ],
+                "answer": "moon"
+              }
             ]
           }
         }
@@ -561,4 +2025,3 @@
     "عمل رائع! ✨"
   ]
 }
-
