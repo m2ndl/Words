@@ -265,8 +265,7 @@
           "icon": "🦢",
           "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يسيطر على الحرف المتحرك الذي قبله! المجموعات <b>er</b>, <b>ir</b>, و <b>ur</b> غالباً ما تصدر نفس الصوت.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='her'>🔊</button><span class='english-font'>her</span></span><div class='mt-2 text-gray-700'>استمع لصوت /er/ الواضح.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bird'>🔊</button><span class='english-font'>bird</span></span><div class='mt-2 text-gray-700'>نفس النمط يظهر مع <span class='english-font'>ir</span>.</div><br><b>أمثلة أخرى:</b>",
           "examples": [
-            { "before": "turn", "after": "her" }
-            { "before": "server", "after": "server" }
+            { "before": "turn", "after": "turn" }
           ],
           "drill": {
             "type": "sort",
@@ -278,7 +277,7 @@
             "instruction": "استمع واختر الكلمة الصحيحة",
             "questions": [
               { "audio": "bird", "options": ["bird", "beard"], "answer": "bird" },
-              { "audio": "torn", "options": ["turn", "torn"], "answer": "torn" },
+              { "audio": "turn", "options": ["turn", "torn"], "answer": "turn" },
               { "audio": "her", "options": ["her", "here"], "answer": "her" },
               { "audio": "girl", "options": ["girl", "goal"], "answer": "girl" }
             ]
@@ -552,7 +551,4 @@
     "عمل رائع! ✨"
   ]
 }
-
-
-
 
