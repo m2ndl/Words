@@ -20,7 +20,7 @@
           ],
           "drill": {
             "type": "morph",
-            "instruction": "اضغط على الزر السحري لإضافة 'e' وشاهد التحول!",
+            "instruction": "أضف حرف e وشاهد التحول!",
             "pairs": [
               ["pan", "pane"],
               ["plan", "plane"],
@@ -35,7 +35,7 @@
             "questions": [
               { "audio": "cane", "options": ["can", "cane"], "answer": "cane" },
               { "audio": "made", "options": ["mad", "made"], "answer": "made" },
-              { "audio": "tape", "options": ["tap", "tape"], "answer": "tape" },
+              { "audio": "tap", "options": ["tap", "tape"], "answer": "tap" },
               { "audio": "plane", "options": ["plan", "plane"], "answer": "plane" },
               { "audio": "cape", "options": ["cap", "cape"], "answer": "cape" }
             ]
@@ -548,3 +548,4 @@
     "عمل رائع! ✨"
   ]
 }
+
