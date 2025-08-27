@@ -975,9 +975,9 @@
                   "ship",
                   "wish",
                   "shop",
-                  "chip"
+                  "hip"
                 ],
-                "answer": "chip"
+                "answer": "hip"
               },
               {
                 "options": [
@@ -1015,7 +1015,7 @@
                 "audio": "ship",
                 "options": [
                   "ship",
-                  "chip"
+                  "hip"
                 ],
                 "answer": "ship"
               },
@@ -1031,7 +1031,7 @@
                 "audio": "sheep",
                 "options": [
                   "sheep",
-                  "cheap"
+                  "weep"
                 ],
                 "answer": "sheep"
               },
@@ -1047,7 +1047,7 @@
                 "audio": "shop",
                 "options": [
                   "shop",
-                  "chop"
+                  "job"
                 ],
                 "answer": "shop"
               }
@@ -1156,7 +1156,7 @@
           "id": "th_voiceless",
           "name": "TH الخفيف (ث)",
           "icon": "🌬️",
-          "learn_info": "ضع لسانك بين الأسنان وادفع الهواء بدون اهتزاز: TH → <b>/θ/</b> (مثل <span class='english-font'>think</span>).<br>أمثلة: <span class='english-font'>think, three, thin, tooth, bath, both</span>.",
+          "learn_info": "في الإنجليزية لا يوجد حرف مستقل ينطلق (ث) لذا حتى يكونوا هذا الصوت يجمعوا بين حرفي T + H (مثل <span class='english-font'>think</span>).<br>أمثلة: <span class='english-font'>think, three, thin, tooth, bath, both</span>.",
           "examples": [
             {
               "before": "thin",
@@ -1255,7 +1255,7 @@
           "id": "th_voiced",
           "name": "TH القوي (ذ)",
           "icon": "🔊",
-          "learn_info": "نفس وضعية اللسان لكن مع اهتزاز في الحلق: TH → <b>/ð/</b> (مثل <span class='english-font'>this</span>).<br>كلمات مهمة جداً: <span class='english-font'>the, this, that, then, they, there</span>.",
+          "learn_info": "في الإنجليزية أيضا لا يوجد حرف مستقل لـ (ذ) لذا يستعملون أيضا T + H معا لصنع هذا الحرف (مثل <span class='english-font'>this</span>).<br>كلمات مهمة : <span class='english-font'>the, this, that, then, they, there</span>.",
           "examples": [
             {
               "before": "the",
@@ -1351,9 +1351,9 @@
         },
         {
           "id": "wh",
-          "name": "WH (واو تقريباً)",
+          "name": "WH (واو)",
           "icon": "❓",
-          "learn_info": "WH عادة يُنطق مثل <b>/w/</b> في كلمات الأسئلة: <span class='english-font'>what, when, where, why</span>.<br><b>استثناء مهم:</b> <span class='english-font'>who, whole</span> (الـ W لا تُنطق).",
+          "learn_info": "WH عادة -وليس دائما- يُنطق مثل <b>/w/</b> في كلمات الأسئلة: <span class='english-font'>what, when, where, why</span>.<br><b>استثناء مهم:</b> <span class='english-font'>who</span> (الـ W لا تُنطق).",
           "examples": [
             {
               "before": "what",
@@ -1582,7 +1582,7 @@
       "id": "oo_sounds",
       "name": "أصوات OO (قصير وطويل)",
       "icon": "👀",
-      "learn_info": "<b>OO له صوتان شائعان:</b> /ʊ/ كما في <span class='english-font'>book</span>، و/uː/ كما في <span class='english-font'>moon</span>. تعلّم أيّهما يظهر بالنظر إلى الكلمة كاملة.",
+      "learn_info": "<b>OO له صوتان شائعان:</b> قصير كما في <span class='english-font'>book</span>، وطويل كما في <span class='english-font'>moon</span>. تعلّم أيّهما يظهر بالنظر إلى الكلمة كاملة.",
       "examples": [
         { "before": "book", "after": "book" },
         { "before": "cook", "after": "cook" },
@@ -1619,7 +1619,7 @@
       "id": "diphthongs",
       "name": "الأصوات المنزلقة: OI/OY و OW/OU",
       "icon": "🌀",
-      "learn_info": "<b>منزلقتان شائعتان:</b> OI/OY = /ɔɪ/ كما في <span class='english-font'>boy</span>، وOW/OU = /aʊ/ كما في <span class='english-font'>cow</span>.",
+      "learn_info": "<b>منزلقتان شائعتان:</b> OI/OY = كما في <span class='english-font'>boy</span>، وOW/OU = كما في <span class='english-font'>cow</span>.",
       "examples": [
         { "before": "boy", "after": "boy" },
         { "before": "toy", "after": "toy" },
@@ -1655,7 +1655,7 @@
       "id": "au_aw",
       "name": "أصوات AU و AW",
       "icon": "🦖",
-      "learn_info": "<b>تهجيتان لصوت واحد غالبًا:</b> AU و AW غالبًا ما ينطقان /ɔː/ كما في <span class='english-font'>saw</span>.",
+      "learn_info": "<b>تهجئتان لصوت واحد غالبًا:</b> AU و AW غالبًا ما ينطقان كما في <span class='english-font'>saw</span>.",
       "examples": [
         { "before": "claw", "after": "claw" },
         { "before": "draw", "after": "draw" },
@@ -1666,9 +1666,9 @@
       ],
       "drill": {
         "type": "sort",
-        "instruction": "هل الكلمة مكتوبة بـ AU/AW (مع صوت /ɔː/ مثل saw)؟",
+        "instruction": "هل الكلمة مكتوبة بـ AU/AW (مثل saw)؟",
         "correct": ["saw", "paws", "cause", "taught", "hawk", "crawl", "August", "author", "sauce"],
-        "incorrect": ["low", "row", "come", "tight", "hack", "call", "cough"]
+        "incorrect": ["low", "row", "come", "tight", "hack", "jewel", "cool"]
       },
       "quiz": {
         "instruction": "استمع واختر الإملاء الصحيح (ركز على AU/AW).",
@@ -1676,7 +1676,7 @@
           { "audio": "author", "options": ["author", "other"], "answer": "author" },
           { "audio": "August", "options": ["August", "against"], "answer": "August" },
           { "audio": "sauce", "options": ["sauce", "socks"], "answer": "sauce" },
-          { "audio": "claw", "options": ["claw", "cloud"], "answer": "claw" },
+          { "audio": "law", "options": ["law", "low"], "answer": "law" },
           { "audio": "draw", "options": ["draw", "dry"], "answer": "draw" }
         ]
       }
