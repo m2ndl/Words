@@ -62,7 +62,7 @@ export class TeacherDashboard {
             <div class="setting-item">
               <label class="inline-flex items-center gap-2">
                 <input id="input-auto" type="checkbox" ${this.state.difficultySettings.autoAdvance ? 'checked' : ''}>
-                التقدم التلقائي للسؤال التالي
+                تفعيل الانتقال التلقائي للسؤال التالي (بدلاً من الضغط على زر "التالي")
               </label>
             </div>
           </div>
