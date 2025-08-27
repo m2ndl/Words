@@ -41,9 +41,9 @@ export class EffectsManager {
     element.style.left = `${x || Math.random() * window.innerWidth}px`;
     element.style.top = `${y || window.innerHeight - 100}px`;
     document.body.appendChild(element);
-    // faster cleanup: match CSS 1.2s
-    setTimeout(() => element.remove(), 1200);
-  }
+    // FIXED: Reduced cleanup time to match gentler animation (1s)
+    setTimeout(() => element.remove(), 1000);
+}
 
   createCelebrationBurst() {
     const emojis = ['🎉', '⭐', '✨', '🌟'];
@@ -61,18 +61,15 @@ export class EffectsManager {
   }
 
   createQuickCelebration() {
+    // FIXED: Reduced to just 1 subtle emoji instead of 3
     const emojis = ['⭐', '✨'];
-    for (let i = 0; i < 3; i++) {
-      setTimeout(() => {
-        this.createFloatingEmoji(
-          emojis[Math.floor(Math.random() * emojis.length)],
-          window.innerWidth / 2 + (Math.random() - 0.5) * 200,
-          window.innerHeight / 2
-        );
-      }, i * 80);
-    }
+    this.createFloatingEmoji(
+      emojis[Math.floor(Math.random() * emojis.length)],
+      window.innerWidth / 2 + (Math.random() - 0.5) * 100,
+      window.innerHeight / 2
+    );
     this.soundManager.playCorrectAnswer();
-  }
+}
 
   createSuccessRipple(element) {
     const ripple = document.createElement('div');
