@@ -12,7 +12,7 @@ export class StateManager {
     this.activitySession = {};
     this.sessionStartTime = null;
 
-    this.difficultySettings = { questionsPerSession: 5, passingScore: 0.8, enableHints: true, autoAdvance: true };
+    this.difficultySettings = { questionsPerSession: 5, passingScore: 0.8, enableHints: true, autoAdvance: false };
     // NEW: global unlock flag (navigation only)
     this.unlockAll = false;
 
