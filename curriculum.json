@@ -721,17 +721,19 @@
         { "before": "back", "after": "bark" },
         { "before": "pack", "after": "park" }
       ],
+      
       "drill": {
-        "type": "morph",
-        "instruction": "شاهد كيف يغير حرف R صوت A!",
-        "pairs": [
-          ["cat", "car"],
-          ["hat", "hard"],
-          ["back", "bark"],
-          ["pack", "park"],
-          ["stat", "star"],
-          ["fat", "far"]
-        ]
+    "type": "morph",
+    "instruction": "شاهد كيف يغير حرف R صوت A!",
+    "buttonText": "أضف R",
+    "pairs": [
+      ["cat", "car"],
+      ["hat", "hard"],
+      ["back", "bark"],
+      ["pack", "park"],
+      ["stat", "star"],
+      ["fat", "far"]
+    ]
       },
       "quiz": {
         "instruction": "استمع واختر الكلمة الصحيحة",
