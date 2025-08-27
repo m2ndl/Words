@@ -704,230 +704,110 @@
       ]
     },
     {
-      "id": "r_controlled",
-      "name": "R-Controlled Vowels",
-      "name_ar": "حروف العلة مع R",
-      "icon": "🚗",
-      "color": "from-orange-400 to-red-400",
-      "subSkills": [
-        {
-          "id": "er_ir_ur",
-          "name": "صوت /er/ (er, ir, ur)",
-          "icon": "🦢",
-          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يسيطر على الحرف المتحرك الذي قبله! المجموعات <b>er</b>, <b>ir</b>, و <b>ur</b> كلها تصدر نفس الصوت تقريباً.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='her'>🔊</button><span class='english-font'>her</span></span><div class='mt-2 text-gray-700'>استمع لصوت /er/.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='bird'>🔊</button><span class='english-font'>bird</span></span><div class='mt-2 text-gray-700'>نفس الصوت مع <span class='english-font'>ir</span>.</div><br><b>مثال ثالث:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='turn'>🔊</button><span class='english-font'>turn</span></span><div class='mt-2 text-gray-700'>ونفس الصوت مع <span class='english-font'>ur</span>.</div><br><b>أمثلة أخرى:</b>",
-          "examples": [
-            {
-              "before": "term",
-              "after": "term"
-            },
-            {
-              "before": "first",
-              "after": "first"
-            },
-            {
-              "before": "burn",
-              "after": "burn"
-            },
-            {
-              "before": "serve",
-              "after": "serve"
-            },
-            {
-              "before": "girl",
-              "after": "girl"
-            },
-            {
-              "before": "nurse",
-              "after": "nurse"
-            }
-          ],
-          "drill": {
-            "type": "sort",
-            "instruction": "هل هذه الكلمة بها صوت /er/، مثل كلمة her؟",
-            "correct": [
-              "first",
-              "burn",
-              "serve",
-              "girl",
-              "nurse",
-              "third",
-              "verb",
-              "church",
-              "shirt",
-              "hurt"
-            ],
-            "incorrect": [
-              "fire",
-              "farm",
-              "for",
-              "four",
-              "far",
-              "fork",
-              "hear",
-              "bear",
-              "care",
-              "more"
-            ]
-          },
-          "quiz": {
-            "instruction": "استمع واختر الكلمة الصحيحة",
-            "questions": [
-              {
-                "audio": "bird",
-                "options": [
-                  "bird",
-                  "bad"
-                ],
-                "answer": "bird"
-              },
-              {
-                "audio": "turn",
-                "options": [
-                  "turn",
-                  "torn"
-                ],
-                "answer": "turn"
-              },
-              {
-                "audio": "her",
-                "options": [
-                  "her",
-                  "hair"
-                ],
-                "answer": "her"
-              },
-              {
-                "audio": "girl",
-                "options": [
-                  "girl",
-                  "grill"
-                ],
-                "answer": "girl"
-              },
-              {
-                "audio": "first",
-                "options": [
-                  "fast",
-                  "first"
-                ],
-                "answer": "first"
-              }
-            ]
-          }
-        },
-        {
-          "id": "ar_or",
-          "name": "أصوات /ar/ و /or/",
-          "icon": "🌽",
-          "learn_info": "<b>القاعدة القوية:</b> حرف 'r' يغير أيضاً أصوات 'a' و 'o'. استمع للفرق بين /ar/ و /or/.<br><br><b>مثال /ar/:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span></span><div class='mt-2 text-gray-700'>هنا نسمع /ar/ العميق.</div><br><b>مثال /or/:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='fork'>🔊</button><span class='english-font'>fork</span></span><div class='mt-2 text-gray-700'>وهنا نسمع /or/.</div><br><b>ملاحظة:</b> بعض الكلمات مثل 'word' و 'work' تُكتب بـ 'or' لكنها تُنطق مثل /er/ - هذه استثناءات!<br><b>أمثلة أخرى:</b>",
-          "examples": [
-            {
-              "before": "star",
-              "after": "star"
-            },
-            {
-              "before": "park",
-              "after": "park"
-            },
-            {
-              "before": "corn",
-              "after": "corn"
-            },
-            {
-              "before": "sport",
-              "after": "sport"
-            }
-          ],
-          "drill": {
-            "type": "odd_one_out",
-            "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
-            "questions": [
-              {
-                "options": [
-                  "car",
-                  "star",
-                  "park",
-                  "fork"
-                ],
-                "answer": "fork"
-              },
-              {
-                "options": [
-                  "corn",
-                  "born",
-                  "torn",
-                  "barn"
-                ],
-                "answer": "barn"
-              },
-              {
-                "options": [
-                  "short",
-                  "sport",
-                  "start",
-                  "fort"
-                ],
-                "answer": "start"
-              },
-              {
-                "options": [
-                  "more",
-                  "store",
-                  "mark",
-                  "before"
-                ],
-                "answer": "mark"
-              }
-            ]
-          },
-          "quiz": {
-            "instruction": "استمع واختر الكلمة الصحيحة",
-            "questions": [
-              {
-                "audio": "car",
-                "options": [
-                  "car",
-                  "core"
-                ],
-                "answer": "car"
-              },
-              {
-                "audio": "fork",
-                "options": [
-                  "fork",
-                  "dark"
-                ],
-                "answer": "fork"
-              },
-              {
-                "audio": "star",
-                "options": [
-                  "star",
-                  "store"
-                ],
-                "answer": "star"
-              },
-              {
-                "audio": "corn",
-                "options": [
-                  "corn",
-                  "barn"
-                ],
-                "answer": "corn"
-              },
-              {
-                "audio": "park",
-                "options": [
-                  "park",
-                  "pork"
-                ],
-                "answer": "park"
-              }
-            ]
-          }
-        }
-      ]
+  "id": "r_controlled",
+  "name": "R-Controlled Vowels",
+  "name_ar": "حروف العلة مع R",
+  "icon": "🚗",
+  "color": "from-orange-400 to-red-400",
+  "subSkills": [
+    {
+      "id": "a_with_r",
+      "name": "تحويل صوت A مع R",
+      "icon": "🌟",
+      "learn_info": "<b>القاعدة:</b> حرف 'R' يغير صوت 'A' تماماً! استمع للفرق.<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cat'>🔊</button><span class='english-font'>cat</span><span>➜</span><button class='speaker-btn' data-speak='car'>🔊</button><span class='english-font'>car</span></span><div class='mt-2 text-gray-700'>لاحظ كيف تغير صوت <span class='english-font'>a</span> بسبب <span class='english-font'>r</span>.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hat'>🔊</button><span class='english-font'>hat</span><span>➜</span><button class='speaker-btn' data-speak='hard'>🔊</button><span class='english-font'>hard</span></span><div class='mt-2 text-gray-700'>مرة أخرى، <span class='english-font'>r</span> يغير نطق <span class='english-font'>a</span> تماماً.</div><br><b>أمثلة أخرى:</b>",
+      "examples": [
+        { "before": "mat", "after": "mar" },
+        { "before": "pat", "after": "part" },
+        { "before": "back", "after": "bark" },
+        { "before": "pack", "after": "park" }
+      ],
+      "drill": {
+        "type": "morph",
+        "instruction": "شاهد كيف يغير حرف R صوت A!",
+        "pairs": [
+          ["cat", "car"],
+          ["hat", "hard"],
+          ["back", "bark"],
+          ["pack", "park"],
+          ["stat", "star"],
+          ["fat", "far"]
+        ]
+      },
+      "quiz": {
+        "instruction": "استمع واختر الكلمة الصحيحة",
+        "questions": [
+          { "audio": "car", "options": ["cat", "car"], "answer": "car" },
+          { "audio": "hat", "options": ["hat", "hard"], "answer": "hat" },
+          { "audio": "star", "options": ["stat", "star"], "answer": "star" },
+          { "audio": "park", "options": ["pack", "park"], "answer": "park" },
+          { "audio": "far", "options": ["fat", "far"], "answer": "far" }
+        ]
+      }
     },
+    {
+      "id": "o_with_r",
+      "name": "تحويل صوت O مع R",
+      "icon": "🌽",
+      "learn_info": "<b>القاعدة:</b> حرف 'R' يغير صوت 'O' الطويل أيضاً!<br><br><b>مثال:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='hope'>🔊</button><span class='english-font'>hope</span><span>➜</span><button class='speaker-btn' data-speak='horse'>🔊</button><span class='english-font'>horse</span></span><div class='mt-2 text-gray-700'>استمع كيف يتحول صوت <span class='english-font'>o</span> الطويل.</div><br><b>مثال آخر:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='note'>🔊</button><span class='english-font'>note</span><span>➜</span><button class='speaker-btn' data-speak='north'>🔊</button><span class='english-font'>north</span></span><br><b>أمثلة أخرى:</b>",
+      "examples": [
+        { "before": "home", "after": "horn" },
+        { "before": "rose", "after": "more" },
+        { "before": "pole", "after": "porch" },
+        { "before": "bone", "after": "born" }
+      ],
+      "drill": {
+        "type": "sort",
+        "instruction": "هل هذه الكلمة بها صوت OR (مثل كلمة horse)؟",
+        "correct": ["horse", "fork", "corn", "sport", "more", "north", "born", "short"],
+        "incorrect": ["hope", "home", "note", "bone", "rose", "pole", "cone", "vote"]
+      },
+      "quiz": {
+        "instruction": "استمع واختر الكلمة الصحيحة",
+        "questions": [
+          { "audio": "horn", "options": ["home", "horn"], "answer": "horn" },
+          { "audio": "more", "options": ["rose", "more"], "answer": "more" },
+          { "audio": "fork", "options": ["folk", "fork"], "answer": "fork" },
+          { "audio": "sport", "options": ["spot", "sport"], "answer": "sport" },
+          { "audio": "north", "options": ["note", "north"], "answer": "north" }
+        ]
+      }
+    },
+    {
+      "id": "eiu_with_r",
+      "name": "تحويل E وI وU مع R",
+      "icon": "🦢",
+      "learn_info": "<b>القاعدة المذهلة:</b> الحروف 'E' و 'I' و 'U' كلها تصدر <b>نفس الصوت</b> عندما يتبعها 'R'!<br><br><b>مثال E:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='pet'>🔊</button><span class='english-font'>pet</span><span>➜</span><button class='speaker-btn' data-speak='her'>🔊</button><span class='english-font'>her</span></span><br><b>مثال I:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='sit'>🔊</button><span class='english-font'>sit</span><span>➜</span><button class='speaker-btn' data-speak='sir'>🔊</button><span class='english-font'>sir</span></span><br><b>مثال U:</b> <span dir='ltr' class='inline-flex items-center gap-2'><button class='speaker-btn' data-speak='cut'>🔊</button><span class='english-font'>cut</span><span>➜</span><button class='speaker-btn' data-speak='curl'>🔊</button><span class='english-font'>curl</span></span><div class='mt-2 text-gray-700'>لاحظ أن <span class='english-font'>her</span> و <span class='english-font'>sir</span> و <span class='english-font'>curl</span> لها نفس صوت العلة!</div><br><b>أمثلة أخرى:</b>",
+      "examples": [
+        { "before": "term", "after": "term" },
+        { "before": "bird", "after": "bird" },
+        { "before": "turn", "after": "turn" },
+        { "before": "fern", "after": "fern" },
+        { "before": "girl", "after": "girl" },
+        { "before": "burn", "after": "burn" }
+      ],
+      "drill": {
+        "type": "odd_one_out",
+        "instruction": "ابحث عن الكلمة ذات الصوت المختلف",
+        "questions": [
+          { "options": ["her", "bird", "turn", "car"], "answer": "car" },
+          { "options": ["fern", "girl", "burn", "horn"], "answer": "horn" },
+          { "options": ["sir", "fur", "verb", "star"], "answer": "star" },
+          { "options": ["nurse", "first", "hurt", "fork"], "answer": "fork" }
+        ]
+      },
+      "quiz": {
+        "instruction": "استمع واختر الكلمة الصحيحة",
+        "questions": [
+          { "audio": "her", "options": ["her", "hair"], "answer": "her" },
+          { "audio": "bird", "options": ["bid", "bird"], "answer": "bird" },
+          { "audio": "turn", "options": ["tun", "turn"], "answer": "turn" },
+          { "audio": "girl", "options": ["gill", "girl"], "answer": "girl" },
+          { "audio": "fur", "options": ["fun", "fur"], "answer": "fur" }
+        ]
+      }
+    }
+  ]
+},
     {
       "id": "consonant_digraphs",
       "name": "Consonant Digraphs",
