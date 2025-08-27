@@ -102,10 +102,15 @@ export class GameEngine {
         return data.questions || data.pairs?.map(p => ({ pair: p })) || [];
     }
 
-    // REPLACE the old function with this new one
 async renderCurrentQuestion() {
     const questionContainer = this.ui.elements.modal_body;
 
+    // Remove pulse animation from button
+    this.ui.elements.modal_action_btn.classList.remove('pulse');
+    
+    // Continue with existing fade-out logic...
+    questionContainer.classList.add('fade-out');
+    
     // 1. Fade out the current question by adding the CSS class
     questionContainer.classList.add('fade-out');
     await new Promise(resolve => setTimeout(resolve, 300)); // Wait for the fade-out animation to finish
