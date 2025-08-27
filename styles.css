@@ -258,8 +258,8 @@ body {
 .step-button:hover:not(:disabled)::before { left: 0; }
 .step-button:hover:not(:disabled) { color: white; border-color: transparent; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3); }
 .step-button:disabled { opacity: 0.4; cursor: not-allowed; }
-.step-button.completed { background: var(--gradient-success); color: white; border-color: transparent; animation: completed-bounce 0.6s ease-out; }
-@keyframes completed-bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.step-button.completed { background: var(--gradient-success); color: white; border-color: transparent; animation: gentle-bounce 0.4s ease-out; }
+@keyframes gentle-bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
 /* ==============================
    Effects (faster, auto-clean)
@@ -267,16 +267,14 @@ body {
 .floating-emoji {
     position: fixed;
     font-size: 2.5rem;
-    animation: float-up-enhanced 1.2s ease-out forwards;
+    animation: float-up-gentle 1s ease-out forwards;
     pointer-events: none;
     z-index: 1000;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
-@keyframes float-up-enhanced {
-    0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(0.5); }
-    10% { transform: translateY(-20px) rotate(10deg) scale(1); }
-    90% { opacity: 1; transform: translateY(-180px) rotate(350deg) scale(1.2); }
-    100% { opacity: 0; transform: translateY(-220px) rotate(360deg) scale(0.8); }
+@keyframes float-up-gentle {
+    0% { opacity: 1; transform: translateY(0) scale(0.8); }
+    100% { opacity: 0; transform: translateY(-150px) scale(1); }
 }
 
 .celebration-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
@@ -289,12 +287,10 @@ body {
     100% { opacity: 0; transform: scale(2) rotate(720deg) translate(var(--dx), var(--dy)); }
 }
 
-.celebration { animation: mega-celebrate 0.8s ease-out; }
-@keyframes mega-celebrate {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    25% { transform: scale(1.15) rotate(5deg); }
-    50% { transform: scale(1.2) rotate(-3deg); }
-    75% { transform: scale(1.15) rotate(5deg); }
+.celebration { animation: subtle-celebrate 0.4s ease-out; }
+@keyframes subtle-celebrate {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 .pulse { animation: enhanced-pulse 2s infinite; }
@@ -355,17 +351,28 @@ body {
     transform: scale(1.05) translateY(-2px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
 }
-.option-button.correct { background: var(--gradient-success); color: white; border-color: transparent; animation: mega-correct-bounce 0.6s ease-out; }
-@keyframes mega-correct-bounce {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.1) rotate(2deg); }
-    75% { transform: scale(1.1) rotate(-2deg); }
+/* FIXED: Gentle success animation without rotation */
+.option-button.correct { 
+    background: var(--gradient-success); 
+    color: white; 
+    border-color: transparent; 
+    animation: gentle-success 0.4s ease-out; 
 }
-.option-button.incorrect { background: linear-gradient(135deg, #FC8181 0%, #F56565 100%); color: white; border-color: transparent; animation: enhanced-shake 0.6s; }
-@keyframes enhanced-shake {
+@keyframes gentle-success {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+/* FIXED: Simpler error animation */
+.option-button.incorrect { 
+    background: linear-gradient(135deg, #FC8181 0%, #F56565 100%); 
+    color: white; 
+    border-color: transparent; 
+    animation: gentle-wrong 0.4s ease-out; 
+}
+@keyframes gentle-wrong {
     0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px) rotate(-1deg); }
-    20%, 40%, 60%, 80% { transform: translateX(8px) rotate(1deg); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
 /* ==============================
