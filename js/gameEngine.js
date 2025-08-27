@@ -136,11 +136,11 @@ async renderCurrentQuestion() {
 }
 
     handleAnswer(isCorrect, element) {
-        this.ui.showFeedback(isCorrect);
-        if (element) {
-            element.classList.add(isCorrect ? 'correct' : 'incorrect');
-            if (isCorrect) this.effects.createSuccessRipple(element);
-        }
+    this.ui.showFeedback(isCorrect);
+    if (element) {
+        element.classList.add(isCorrect ? 'correct' : 'incorrect');
+        // FIXED: Removed ripple effect to reduce screen shake
+    }
         if (isCorrect) {
             document.querySelectorAll('.option-button, #action-btn, .letter-choice').forEach(b => b.style.pointerEvents = 'none');
             this.state.activitySession.correctAnswers++;
