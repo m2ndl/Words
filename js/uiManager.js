@@ -27,6 +27,13 @@ export class UIManager {
     this.updateHeader();
   }
 
+  // NEW HELPER FUNCTION: Calculate correct step count for each subskill
+  getSubSkillStepCount(subSkill) {
+    // Direct drill lessons have 2 steps (drill + quiz)
+    // Regular lessons have 3 steps (learn + drill + quiz)
+    return subSkill.isDirectDrill ? 2 : 3;
+  }
+
   updateHeader() {
     this.elements.points_display.textContent = `${this.state.userProgress.points} نقطة ⭐`;
     this.elements.streak_count.textContent = this.state.userProgress.streak;
@@ -67,7 +74,12 @@ export class UIManager {
         const isMastered = techProgress.mastered;
         const isUnlocked = this.state.isTechniqueUnlocked(techniqueIndex, techniques);
         const completedSteps = Object.values(techProgress.subSkills).flat().length;
-        const totalSteps = tech.subSkills.length * 3;
+        
+        // FIXED: Calculate actual total steps based on subskill types
+        const totalSteps = tech.subSkills.reduce((total, subSkill) => 
+          total + this.getSubSkillStepCount(subSkill), 0
+        );
+        
         const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 
         const card = document.createElement('div');
