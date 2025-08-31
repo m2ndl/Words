@@ -70,11 +70,16 @@ export class TeacherDashboard {
           <div class="glass-card p-6">
             <h3 class="font-bold mb-4">التقدم حسب المهارة</h3>
             <div class="space-y-2">
-              ${this.data.getTechniques().map(t => {
-                const p = this.state.getTechniqueProgress(t.id);
-                const steps = Object.values(p.subSkills).flat().length;
-                const total = t.subSkills.length * 3;
-                const pct = total ? Math.round(steps/total*100) : 0;
+              // NEW CODE
+                ${this.data.getTechniques().map(t => {
+                  const p = this.state.getTechniqueProgress(t.id);
+                  const steps = Object.values(p.subSkills).flat().length;
+                  // FIXED: Calculate actual total based on subskill types
+                  const total = t.subSkills.reduce((sum, ss) => 
+                    sum + (ss.isDirectDrill ? 2 : 3), 0
+  );
+                  const pct = total ? Math.round(steps/total*100) : 0;
+                  // ...
                 return `<div class="flex items-center justify-between">
                   <div class="flex items-center gap-2"><span>${t.icon}</span><span>${t.name_ar}</span></div>
                   <div class="text-sm text-gray-600">${steps}/${total} (${pct}%)</div>
