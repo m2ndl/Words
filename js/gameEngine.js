@@ -188,7 +188,13 @@ async renderCurrentQuestion() {
         if (pass) {
             const techProgress = this.state.markStepComplete(techniqueId, subSkillId, step);
             const technique = this.data.getTechnique(techniqueId);
-            const allSubSkillsMastered = technique.subSkills.every(ss => (this.state.getTechniqueProgress(techniqueId).subSkills[ss.id] || []).length === 3);
+            
+            // FIXED: Check mastery based on actual required steps for each subskill
+            const allSubSkillsMastered = technique.subSkills.every(ss => {
+                const completedSteps = (this.state.getTechniqueProgress(techniqueId).subSkills[ss.id] || []).length;
+                const requiredSteps = ss.isDirectDrill ? 2 : 3;
+                return completedSteps === requiredSteps;
+            });
 
             if (allSubSkillsMastered && !techProgress.mastered) {
                 this.state.markTechniqueMastered(techniqueId);
