@@ -3,11 +3,15 @@
 // Holds the curriculum data once loaded.
 let curriculumData = null;
 
+// VERSION: Update this whenever you change curriculum.json
+const CURRICULUM_VERSION = '1.0.1'; // Change this to force refresh
+
 // Loads curriculum data from the JSON file.
 async function loadCurriculum() {
     if (curriculumData) return curriculumData; // Return cached data if available
     try {
-        const response = await fetch('curriculum.json');
+        // Add cache-busting parameter to URL
+        const response = await fetch(`curriculum.json?v=${CURRICULUM_VERSION}`);
         curriculumData = await response.json();
         console.log('Curriculum loaded successfully!', curriculumData);
         return curriculumData;
