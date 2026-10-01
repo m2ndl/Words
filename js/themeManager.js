@@ -3,7 +3,10 @@
 // Manages UI themes and the theme selector buttons.
 export class ThemeManager {
     constructor() {
-        this.currentTheme = localStorage.getItem('phonics-theme') || 'default';
+        // localStorage throws when the browser blocks site data; fall back to the default theme
+        let savedTheme = null;
+        try { savedTheme = localStorage.getItem('phonics-theme'); } catch {}
+        this.currentTheme = savedTheme || 'default';
         this.applyTheme(this.currentTheme);
         this.initThemeSelector();
     }
@@ -11,7 +14,7 @@ export class ThemeManager {
     applyTheme(themeName) {
         document.documentElement.setAttribute('data-theme', themeName);
         this.currentTheme = themeName;
-        localStorage.setItem('phonics-theme', themeName);
+        try { localStorage.setItem('phonics-theme', themeName); } catch {}
         
         document.querySelectorAll('.theme-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.theme === themeName);
