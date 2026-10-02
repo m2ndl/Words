@@ -1,154 +1,213 @@
 'use strict';
+import { escapeHtml, highlightFocus } from './textUtils.js';
 
-// Renders the HTML for different types of questions within the activity modal.
+// Default instructions for each activity type (a question can override them with `prompt`).
+const PROMPTS = {
+    say: 'اقرأ الكلمة بصوت عالٍ، ثم اضغط 🔊 لتتحقّق.',
+    listen: 'استمع، ثم اختر الكلمة التي سمعتها.',
+    read: 'اقرأ الكلمة، ثم اختر معناها.',
+    sort: 'اختر الإجابة الصحيحة.',
+    odd: 'اقرأ الكلمات، ثم اختر الكلمة التي صوتها مختلف.',
+    fill: 'استمع، ثم اختر الحرف الناقص.',
+    build: 'استمع، ثم ابنِ الكلمة.',
+    chain: 'غيّر حرفاً واحداً لتكتب الكلمة التي تسمعها.',
+    sentence: 'اقرأ الجملة، ثم اختر معناها.'
+};
+
+const SPEAKER_SVG = '<svg class="w-10 h-10 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>';
+
+// Renders one activity item inside the activity modal and reports the learner's answer to the game engine.
+// Decoding items (read, sort, odd, say, sentence) show print only; the audio comes after the answer.
 export class QuestionRenderer {
-    constructor(uiManager, audioManager, gameEngine, effectsManager) {
+    constructor(uiManager, audioManager, gameEngine, dataManager) {
         this.ui = uiManager;
         this.audio = audioManager;
         this.game = gameEngine;
-        this.effects = effectsManager;
+        this.data = dataManager;
     }
 
-    render(type, question, data, subSkill) {
+    render(question, subSkill) {
+        this.q = question;
+        this.sub = subSkill || {};
         const renderers = {
-            'morph': () => this.renderMorph(question, data),
-            'sort': () => this.renderSort(question, data),
-            'fill_in_blank': () => this.renderFillInBlank(question, data),
-            'odd_one_out': () => this.renderOddOneOut(question, data),
-            'build_the_word': () => this.renderBuildTheWord(question, data),
-            'quiz': () => this.renderQuiz(question, data)
+            say: () => this.renderSay(),
+            listen: () => this.renderListen(),
+            read: () => this.renderRead(),
+            sort: () => this.renderSort(),
+            odd: () => this.renderOdd(),
+            fill: () => this.renderFill(),
+            build: () => this.renderBuild(),
+            sentence: () => this.renderSentence()
         };
-        (renderers[type] || renderers['quiz'])();
+        (renderers[question.type] || renderers.listen)();
     }
 
-    renderMorph(q, data) {
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div dir="ltr" class="text-6xl english-font font-bold mb-8">
-                <span class="text-gray-800">${q.pair[0]}</span><span class="mx-4">➡️</span>
-                <span id="target-word" class="text-gray-400">${q.pair[0]}_</span>
-            </div>
-            <button id="action-btn" class="btn-primary text-3xl">✨ أضف E السحري</button>`;
-        document.getElementById('action-btn').onclick = e => {
-            const target = document.getElementById('target-word');
-            target.textContent = q.pair[1];
-            target.classList.add('text-purple-600', 'celebration');
-            this.audio.speak(q.pair[1]);
-            this.game.handleAnswer(true, e.target);
-        };
+    get body() { return this.ui.elements.modal_body; }
+
+    prompt(type) {
+        const text = this.q.prompt || PROMPTS[type];
+        return `<p class="q-prompt">${escapeHtml(text)}</p>`;
     }
 
-    renderSort(q, data) {
-        const { word, isCorrect } = q;
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div class="flex flex-col items-center mb-8">
-                <div class="text-5xl english-font font-bold mb-4">${word}</div>
-                <button class="speaker-btn" data-speak="${word}" aria-label="Listen to ${word}">
-                    <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
-                </button>
-            </div>
-            <div class="flex justify-center gap-4">
-                <button class="option-button" data-correct="${isCorrect}">✅ نعم</button>
-                <button class="option-button" data-correct="${!isCorrect}">❌ لا</button>
+    word(w) {
+        return `<div class="q-word english-font" dir="ltr">${highlightFocus(w, [])}</div>`;
+    }
+
+    bigSpeaker(id) {
+        return `<button id="${id}" class="speaker-btn q-speaker" aria-label="استمع">${SPEAKER_SVG}</button>`;
+    }
+
+    // Shuffled option buttons; `label` turns an option into its visible text.
+    optionButtons(options, label, extraClass = '') {
+        return this.game.shuffleArray(options).map(o =>
+            `<button class="option-button q-option ${extraClass}" data-value="${escapeHtml(o)}">${label(o)}</button>`).join('');
+    }
+
+    bindOptions(onPick) {
+        this.body.querySelectorAll('.q-option').forEach(btn => {
+            btn.onclick = () => onPick(btn.dataset.value, btn);
+        });
+    }
+
+    // --- read aloud, then check (self-assessed practice) ---
+    renderSay() {
+        const { word } = this.q;
+        this.body.innerHTML = `
+            ${this.prompt('say')}
+            ${this.word(word)}
+            ${this.bigSpeaker('say-check')}
+            <div id="say-gloss" class="q-gloss hidden">${escapeHtml(this.data.getGloss(word))}</div>
+            <div id="say-self" class="q-options-row hidden">
+                <button class="option-button q-self" data-self="yes">✅ قرأتها صحيحة</button>
+                <button class="option-button q-self" data-self="no">🔁 ليس بعد</button>
             </div>`;
-        this.audio.speak(word);
-        document.querySelectorAll('.option-button').forEach(btn => {
-            btn.onclick = () => this.game.handleAnswer(btn.dataset.correct === 'true', btn);
-        });
-    }
-
-    renderFillInBlank(q, data) {
-    const { partial, options, answer, correct } = q;
-    this.ui.elements.modal_body.innerHTML = `
-        <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-        <div dir="ltr" class="text-6xl english-font font-bold mb-4">${partial.replace('__', '<span id="blank" class="text-purple-400">__</span>')}</div>
-        <button class="speaker-btn mb-8" data-speak="${answer}" aria-label="Listen to ${answer}">
-            <svg class="w-8 h-8 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
-        </button>
-        <div class="flex justify-center gap-4">${options.map(opt => `<button class="option-button english-font" data-option="${opt}">${opt}</button>`).join('')}</div>`;
-    
-    // Auto-play the word when the question appears
-    this.audio.speak(answer);
-    
-    document.querySelectorAll('.option-button').forEach(btn => {
-        btn.onclick = () => {
-            const isCorrect = btn.dataset.option === correct;
-            if (isCorrect) {
-                document.getElementById('blank').textContent = correct;
-                this.audio.speak(answer);
-            }
-            this.game.handleAnswer(isCorrect, btn);
+        this.body.querySelector('#say-check').onclick = () => {
+            this.audio.speak(word);
+            this.body.querySelector('#say-gloss').classList.remove('hidden');
+            this.body.querySelector('#say-self').classList.remove('hidden');
         };
-    });
-}
-
-    renderOddOneOut(q, data) {
-        const { options, answer } = q;
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div class="grid grid-cols-2 gap-4">${options.map(opt => `<button class="option-button english-font" data-word="${opt}">${opt}</button>`).join('')}</div>`;
-        document.querySelectorAll('.option-button').forEach(btn => {
-            btn.onclick = () => {
-                this.audio.speak(btn.dataset.word);
-                this.game.handleAnswer(btn.dataset.word === answer, btn);
-            };
+        this.body.querySelectorAll('.q-self').forEach(btn => {
+            btn.onclick = () => this.game.handleAnswer({ correct: btn.dataset.self === 'yes', chosen: btn.dataset.self, target: word, el: btn, selfCheck: true });
         });
     }
 
-    renderQuiz(q, data) {
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <button data-speak="${q.audio}" class="speaker-btn mb-8" aria-label="Listen to the word for this question">
-                <svg class="w-12 h-12 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
-            </button>
-            <div class="flex flex-col items-center gap-4">${q.options.map(opt => `<button class="option-button english-font w-48" data-word="${opt}">${opt}</button>`).join('')}</div>`;
-        document.querySelectorAll('.option-button').forEach(btn => {
-            btn.onclick = () => this.game.handleAnswer(btn.dataset.word === q.answer, btn);
+    // --- hear a word, choose the written word ---
+    renderListen() {
+        const { audio, options, answer } = this.q;
+        this.body.innerHTML = `
+            ${this.prompt('listen')}
+            ${this.bigSpeaker('listen-play')}
+            <div class="q-options-col">${this.optionButtons(options, o => `<span class="english-font" dir="ltr">${escapeHtml(o)}</span>`)}</div>`;
+        const play = () => this.audio.speak(audio, { variety: true });
+        this.body.querySelector('#listen-play').onclick = play;
+        setTimeout(play, 350);
+        this.bindOptions((value, btn) => this.game.handleAnswer({ correct: value === answer, chosen: value, target: answer, el: btn }));
+    }
+
+    // --- read a word, choose its meaning (no audio before answering) ---
+    renderRead() {
+        const { word, options, answer } = this.q;
+        this.body.innerHTML = `
+            ${this.prompt('read')}
+            ${this.word(word)}
+            <div class="q-options-col">${this.optionButtons(options, o => escapeHtml(this.data.getGloss(o) || o), 'q-arabic')}</div>`;
+        this.bindOptions((value, btn) => this.game.handleAnswer({ correct: value === answer, chosen: value, target: answer, el: btn }));
+    }
+
+    // --- read a word, choose how a part of it sounds ---
+    renderSort() {
+        const { word, labels, answer } = this.q;
+        this.body.innerHTML = `
+            ${this.prompt('sort')}
+            ${this.word(word)}
+            <div class="q-options-row">${labels.map((l, i) => `<button class="option-button q-option q-label" data-value="${i}">${escapeHtml(l)}</button>`).join('')}</div>`;
+        this.bindOptions((value, btn) => this.game.handleAnswer({
+            correct: Number(value) === answer, chosen: labels[Number(value)], target: word, correctLabel: labels[answer], el: btn
+        }));
+    }
+
+    // --- read four words, choose the one whose sound is different ---
+    renderOdd() {
+        const { options, answer } = this.q;
+        this.body.innerHTML = `
+            ${this.prompt('odd')}
+            <div class="q-options-grid">${this.optionButtons(options, o => `<span class="english-font" dir="ltr">${escapeHtml(o)}</span>`)}</div>`;
+        this.bindOptions((value, btn) => this.game.handleAnswer({ correct: value === answer, chosen: value, target: answer, el: btn }));
+    }
+
+    // --- hear a word, choose the missing letters (spelling) ---
+    renderFill() {
+        const { partial, options, correct, answer } = this.q;
+        const shown = escapeHtml(partial).replace('_', '<span id="blank" class="q-blank">__</span>');
+        this.body.innerHTML = `
+            ${this.prompt('fill')}
+            ${this.bigSpeaker('fill-play')}
+            <div class="q-word english-font" dir="ltr">${shown}</div>
+            <div class="q-options-row">${this.optionButtons(options, o => `<span class="english-font" dir="ltr">${escapeHtml(o)}</span>`)}</div>`;
+        const play = () => this.audio.speak(answer);
+        this.body.querySelector('#fill-play').onclick = play;
+        setTimeout(play, 350);
+        this.bindOptions((value, btn) => {
+            const ok = value === correct;
+            if (ok) this.body.querySelector('#blank').textContent = correct;
+            this.game.handleAnswer({ correct: ok, chosen: partial.replace('_', value), target: answer, el: btn });
         });
     }
 
-    renderBuildTheWord(q, data) {
-        const shuffledLetters = this.game.shuffleArray(q.word.split('')).join('');
-        this.ui.elements.modal_body.innerHTML = `
-            <p class="text-xl text-gray-600 mb-8">${data.instruction}</p>
-            <div class="text-6xl mb-6">${q.image}</div>
-            <button data-speak="${q.word}" class="speaker-btn mb-8" aria-label="Listen to the word">
-                <svg class="w-10 h-10 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-4-4v8a4 4 0 004-4z"/></svg>
-            </button>
-            <div id="letter-boxes" class="mb-8" dir="ltr">${q.word.split('').map(() => `<div class="letter-box"></div>`).join('')}</div>
-            <div id="letter-choices" dir="ltr">${shuffledLetters.split('').map(letter => `<div class="letter-choice">${letter}</div>`).join('')}</div>`;
-        this.audio.speak(q.word);
-        const choices = document.querySelectorAll('.letter-choice');
-        const boxes = document.querySelectorAll('.letter-box');
-        choices.forEach(choice => {
-            choice.addEventListener('click', () => {
-                const firstEmptyBox = Array.from(boxes).find(box => !box.textContent);
-                if (firstEmptyBox) {
-                    firstEmptyBox.textContent = choice.textContent;
-                    choice.style.visibility = 'hidden';
-                    this.checkWord(q.word);
+    // --- hear a word, build it from sound tiles (or change one tile of the previous word) ---
+    renderBuild() {
+        const { word, tiles, extra = [], start } = this.q;
+        const isChain = Array.isArray(start);
+        const boxes = isChain ? start.slice() : tiles.map(() => '');
+        // Tiles still needed in the bank: for a chain only the ones that differ from the start word.
+        const needed = isChain ? tiles.filter((t, i) => start[i] !== t) : tiles.slice();
+        const bank = this.game.shuffleArray([...needed, ...extra]);
+        this.body.innerHTML = `
+            ${this.prompt(isChain ? 'chain' : 'build')}
+            ${this.bigSpeaker('build-play')}
+            <div class="q-gloss">${escapeHtml(this.data.getGloss(word))}</div>
+            <div id="letter-boxes" class="q-boxes" dir="ltr"></div>
+            <div id="letter-choices" class="q-tiles" dir="ltr"></div>`;
+        const play = () => this.audio.speak(word);
+        this.body.querySelector('#build-play').onclick = play;
+        setTimeout(play, 350);
+
+        const boxesEl = this.body.querySelector('#letter-boxes');
+        const bankEl = this.body.querySelector('#letter-choices');
+        let touched = false;
+        const draw = () => {
+            boxesEl.innerHTML = boxes.map((b, i) => `<button class="letter-box ${b ? 'filled' : ''}" data-i="${i}">${escapeHtml(b)}</button>`).join('');
+            bankEl.innerHTML = bank.map((t, i) => `<button class="letter-choice" data-i="${i}">${escapeHtml(t)}</button>`).join('');
+            boxesEl.querySelectorAll('.letter-box').forEach(el => el.onclick = () => {
+                if (this.game.isLocked()) return;
+                const i = Number(el.dataset.i);
+                if (!boxes[i]) return;
+                bank.push(boxes[i]); boxes[i] = ''; touched = true; draw();
+            });
+            bankEl.querySelectorAll('.letter-choice').forEach(el => el.onclick = () => {
+                if (this.game.isLocked()) return;
+                const empty = boxes.indexOf('');
+                if (empty === -1) return;
+                boxes[empty] = bank.splice(Number(el.dataset.i), 1)[0]; touched = true; draw();
+                if (!boxes.includes('')) {
+                    const built = boxes.join('');
+                    this.game.handleAnswer({ correct: built === word, chosen: built, target: word, el: boxesEl });
                 }
             });
-        });
-        boxes.forEach(box => {
-            box.addEventListener('click', () => {
-                if (box.textContent) {
-                    const letterToReturn = box.textContent;
-                    box.textContent = '';
-                    const choiceToRestore = Array.from(choices).find(c => c.textContent === letterToReturn && c.style.visibility === 'hidden');
-                    if (choiceToRestore) choiceToRestore.style.visibility = 'visible';
-                }
-            });
-        });
+        };
+        draw();
+        this.redrawBuild = draw;
+        this.isBuildTouched = () => touched;
     }
 
-    checkWord(correctWord) {
-        const boxes = document.querySelectorAll('.letter-box');
-        let currentWord = Array.from(boxes).map(box => box.textContent).join('');
-        if (currentWord.length === correctWord.length) {
-            const isCorrect = currentWord === correctWord;
-            this.game.handleAnswer(isCorrect, document.getElementById('letter-boxes'));
-        }
+    // --- read a sentence, choose its meaning (Arabic) ---
+    renderSentence() {
+        const { text, options, answer } = this.q;
+        const correctText = options[answer];
+        this.body.innerHTML = `
+            ${this.prompt('sentence')}
+            <div class="q-sentence english-font" dir="ltr">${escapeHtml(text)}</div>
+            <div class="q-options-col">${this.optionButtons(options, o => escapeHtml(o), 'q-arabic')}</div>`;
+        this.bindOptions((value, btn) => this.game.handleAnswer({ correct: value === correctText, chosen: value, target: text, correctMeaning: correctText, el: btn }));
     }
 }

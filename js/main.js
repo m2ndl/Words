@@ -18,7 +18,7 @@ class ModernPhonicsApp {
     this.uiManager = null;
     this.gameEngine = null;
     this.teacherDashboard = null;
-    
+
     // FIXED: Wait for everything to load before setting up buttons
     this.init().catch(console.error);
   }
@@ -27,62 +27,73 @@ class ModernPhonicsApp {
     try {
       // Wait for data to load first
       await this.dataManager.init();
-      
+
       // Then create all the managers
       this.uiManager = new UIManager(this.dataManager, this.stateManager, this.audioManager, this.effectsManager);
       this.gameEngine = new GameEngine(this.dataManager, this.stateManager, this.uiManager, this.audioManager, this.effectsManager);
       this.teacherDashboard = new TeacherDashboard(this.dataManager, this.stateManager);
-      
+
       // Finally set up all the button listeners
       this.initEventListeners();
-      
+
       console.log('App initialized successfully');
     } catch (error) {
       console.error('Failed to initialize app:', error);
     }
   }
 
+  refreshView() {
+    if (this.stateManager.currentTechniqueId && !this.uiManager.elements.technique_view.classList.contains('hidden')) {
+      this.uiManager.renderTechniqueView(this.stateManager.currentTechniqueId);
+    } else {
+      this.uiManager.renderSkillsGrid();
+    }
+  }
+
   initEventListeners() {
     const { elements } = this.uiManager;
 
-    // Start button and navigation buttons
-    elements.start_btn.addEventListener('click', () => { 
-      this.effectsManager.soundManager.resumeAudioContext(); 
-      this.start(); 
+    // Start buttons and navigation buttons
+    elements.start_btn.addEventListener('click', () => {
+      this.effectsManager.soundManager.resumeAudioContext();
+      this.start();
     });
-    
-    elements.back_btn.addEventListener('click', () => this.uiManager.renderSkillsGrid());
-    elements.note_back_btn.addEventListener('click', () => this.uiManager.renderSkillsGrid());
-    
-    elements.success_close_btn.addEventListener('click', () => {
-      this.uiManager.hideSuccessModal();
-      if (this.stateManager.currentTechniqueId) {
-        this.uiManager.renderTechniqueView(this.stateManager.currentTechniqueId);
-      } else {
-        this.uiManager.renderSkillsGrid();
-      }
+    document.getElementById('placement-start-btn')?.addEventListener('click', () => {
+      this.effectsManager.soundManager.resumeAudioContext();
+      this.start();
+      this.gameEngine.startPlacement();
     });
 
-    // Activity modal buttons
-    elements.modal_exit_btn.addEventListener('click', () => this.uiManager.hideModal());
-    elements.modal_action_btn.addEventListener('click', () => {
-      if (this.stateManager.activitySession.step === 'learn') {
-        this.gameEngine.endSession();
-      }
+    elements.back_btn.addEventListener('click', () => {
+      this.stateManager.currentTechniqueId = null;
+      this.uiManager.renderSkillsGrid();
+    });
+    elements.note_back_btn.addEventListener('click', () => this.uiManager.renderSkillsGrid());
+
+    elements.success_close_btn.addEventListener('click', () => {
+      this.uiManager.hideSuccessModal();
+      this.refreshView();
+    });
+
+    // Activity modal: leaving a session keeps nothing from it
+    elements.modal_exit_btn.addEventListener('click', () => {
+      this.uiManager.hideModal();
+      this.stateManager.activitySession = {};
+      this.refreshView();
     });
 
     // Burger menu setup
     const sideMenu = document.getElementById('side-menu');
     const overlay = document.getElementById('side-menu-overlay');
-    
-    const openMenu = () => { 
-      sideMenu.classList.remove('translate-x-full'); 
-      overlay.classList.remove('hidden'); 
+
+    const openMenu = () => {
+      sideMenu.classList.remove('translate-x-full');
+      overlay.classList.remove('hidden');
     };
-    
-    const closeMenu = () => { 
-      sideMenu.classList.add('translate-x-full'); 
-      overlay.classList.add('hidden'); 
+
+    const closeMenu = () => {
+      sideMenu.classList.add('translate-x-full');
+      overlay.classList.add('hidden');
     };
 
     document.getElementById('menu-btn').addEventListener('click', openMenu);
@@ -90,27 +101,35 @@ class ModernPhonicsApp {
     overlay.addEventListener('click', closeMenu);
 
     // Menu items
-    document.getElementById('menu-dashboard').addEventListener('click', () => { 
-      closeMenu(); 
-      this.teacherDashboard.toggle(); 
+    document.getElementById('menu-dashboard').addEventListener('click', () => {
+      closeMenu();
+      this.teacherDashboard.toggle();
     });
-    
+    document.getElementById('menu-review')?.addEventListener('click', () => {
+      closeMenu();
+      this.gameEngine.startReview();
+    });
+    document.getElementById('menu-placement')?.addEventListener('click', () => {
+      closeMenu();
+      this.gameEngine.startPlacement();
+    });
+
     document.getElementById('menu-website').addEventListener('click', () => closeMenu());
 
     // Unlock all button
     const unlockBtn = document.getElementById('menu-unlock');
     const refreshUnlockBtnText = () => {
-      unlockBtn.textContent = this.stateManager.unlockAll ? 
-        '🔒 إلغاء فتح جميع الوحدات' : 
+      unlockBtn.textContent = this.stateManager.unlockAll ?
+        '🔒 إلغاء فتح جميع الوحدات' :
         '🔓 فتح جميع الوحدات';
     };
-    
+
     refreshUnlockBtnText();
-    
+
     document.getElementById('menu-unlock').addEventListener('click', () => {
       this.stateManager.toggleUnlockAll();
       refreshUnlockBtnText();
-      
+
       // Refresh the current view to show the unlocked state
       if (this.stateManager.currentTechniqueId) {
         this.uiManager.renderTechniqueView(this.stateManager.currentTechniqueId);
@@ -142,10 +161,14 @@ class ModernPhonicsApp {
     document.addEventListener('click', (e) => {
       // Handle speaker buttons (audio)
       const speakerButton = e.target.closest('[data-speak]');
-      if (speakerButton) { 
-        this.audioManager.speak(speakerButton.dataset.speak); 
-        return; 
+      if (speakerButton) {
+        this.audioManager.speak(speakerButton.dataset.speak);
+        return;
       }
+
+      // Home banner: review and placement
+      if (e.target.closest('#review-btn')) { this.gameEngine.startReview(); return; }
+      if (e.target.closest('#placement-btn')) { this.gameEngine.startPlacement(); return; }
 
       // Handle skill card clicks (to open technique view)
       const skillCard = e.target.closest('#skills-tree .skill-card:not(.locked)');
@@ -178,6 +201,6 @@ class ModernPhonicsApp {
 }
 
 // Start the app when the page loads
-document.addEventListener('DOMContentLoaded', () => { 
-  new ModernPhonicsApp(); 
+document.addEventListener('DOMContentLoaded', () => {
+  new ModernPhonicsApp();
 });

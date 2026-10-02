@@ -4,6 +4,11 @@
 **Scope:** the Words app only: `curriculum.json` and the activity engine in `js/` that presents it
 **Reviewed:** 1 October 2026, `main` at `3794fc4`
 
+> **Update, 2 October 2026: the recommendations below have now been implemented.**
+> This document still describes the version reviewed (`3794fc4`). See
+> [Section 0](#0-implementation-status) for what changed and what is still open.
+
+
 ---
 
 ## How this review was done
@@ -16,6 +21,74 @@
   - spelling patterns each unit uses before, or without, teaching them.
 - **Ran the app** in Chromium at phone size, with the speech engine instrumented. This showed exactly what a learner sees and hears, and how answers are scored.
 - **Benchmarked** against reading research and against published courses and frameworks for adult and Arabic-speaking beginning readers (Section 6 and References).
+
+---
+
+## 0. Implementation status
+
+What was changed after this review, and what still needs work.
+
+### Errors (Section 3)
+
+All of E1–E10 are fixed:
+- The old items were rewritten.
+- The morph drills were removed.
+- Options are shuffled.
+- Scoring uses first attempts only.
+- The dashboard text is cleaned.
+
+`npm run validate` now rejects a reversed answer key or an answer missing from its options.
+
+### Recommendations (Section 5)
+
+| Recommendation | Status | Where |
+|---|---|---|
+| First-attempt scoring; tests without retries; a pass mark that works | Done | `js/gameEngine.js` |
+| Shuffle options in every item | Done | `js/questionRenderer.js` |
+| No audio before the learner answers a decoding item | Done. Read, sort, odd-one-out, sentence and read-aloud items show print only; the audio follows the answer | `js/questionRenderer.js` |
+| Log every first attempt | Done | `js/stateManager.js` |
+| Rewrite the Learn texts | Done. Each text covers: the vowel says its name, the e is silent, position rules, exception words; it uses no IPA and no Arabic letters for vowels | `curriculum.json` |
+| A1–A2 words, each with a meaning | Done. All 823 words have an Arabic gloss; only one target word is rarer than Zipf 3.3 (*napkin*, which CEFR-J lists as A2) | `curriculum.json` |
+| Distractors that test the target | Done. 611 of 636 option pairs are at most two sounds apart; the rest are exception words or longer words | `curriculum.json` |
+| Real tests: 8–10 items, 3 options, at least half new words, pass at 80% | Done for every lesson. A failed test offers "📖 راجع الدرس" | `curriculum.json`, `js/gameEngine.js` |
+| Feedback that teaches | Done. It replays both words, highlights the letters that differ and shows the lesson's rule | `js/gameEngine.js` |
+| Recorded audio | **Partly.** See "Audio" below | `js/audioManager.js`, `audio/` |
+| Dashboard: accuracy per lesson and most-confused words | Done | `js/teacherDashboard.js` |
+| New scope and sequence | Done. Ten units, 0–9 as in 5.4, with 37 lessons and 727 items (previously at most ~200 responses per pass) | `curriculum.json` |
+| Spelling in every unit | Done. Build-the-word with sound tiles and extra tiles, word chains, fill-the-letters | `curriculum.json` |
+| Heart words and sentences in every unit | Done. 63 heart words and 86 sentences, each read and checked for meaning | `curriculum.json` |
+| Read aloud, then check | Done. 105 self-check items, retried at the end of the practice set if missed | `curriculum.json` |
+| Spaced review | Done. Passed test items come back after 1, 3, 7, 14 and 30 days | `js/stateManager.js` |
+| Placement check | Done. It unlocks the units a learner already reads | `js/gameEngine.js` |
+| p/b, f/v, e/i and consonant clusters | Done. Unit 0 covers the contrasts; Unit 3 covers clusters | `curriculum.json` |
+| Adult framing | Done. "Silent E" replaces "Magic E", and key-word pictures replace decorative icons | `curriculum.json` |
+
+**Audio.** What is done:
+- The app now plays a recording whenever a word or sentence is listed in `audio/manifest.json`.
+- It no longer picks novelty voices.
+- It rotates up to three US voices in listening items.
+
+What is still needed:
+- Recordings, especially of sounded-out words.
+- Device speech is still the fallback.
+
+### Still open
+
+- **Sounded-out audio** ("sh–i–p … ship") needs recordings.
+- **Speech recognition.** Reading aloud is self-checked.
+- **Outcome data from a pilot with real learners.** Measure:
+  - reading of untrained words;
+  - vowel contrasts;
+  - spelling;
+  - reading of sentences.
+
+**Validation used while writing the new content.** Every word was checked against:
+- the CMU Pronouncing Dictionary, so it is decodable with the patterns taught by that point (plus taught heart words);
+- word frequency;
+- CEFR-J level.
+
+Every item was also checked for answer-key consistency and distractor closeness.
+
 
 ---
 
@@ -577,7 +650,7 @@ These are in addition to E1–E10.
 | Sub-skill | Problems | Suggested change |
 |---|---|---|
 | a_e | Rare models: *mat→mate, can→cane, cap→cape, pan→pane, fat→fate* | *hat→hate, plan→plane, mad→made, tap→tape, at→ate, rat→rate*; new quiz words *snack/snake, back/bake* |
-| i_e | *dim→dime* (both rare), *pin→pine*, *fin→fine* | *kit→kite, bit→bite, hid→hide, win→wine*; in the sort, *five* or *bike* for *dime* |
+| i_e | *dim→dime* (both rare), *pin→pine*, *fin→fine* | *kit→kite, bit→bite, hid→hide, rid→ride*; in the sort, *five* or *bike* for *dime* |
 | o_e | *rob→robe, cod→code, glob→globe, rod→rode* | Keep *hop→hope, not→note*; add reading items *home, nose, close, joke, stone* |
 | u_e | E1; *cub→cube*; mixes /juː/ and /uː/ under "like *cute*" | Teach both sounds; *cut→cute, us→use*; /uː/: *June, rule, flute* |
 | ee_ea | Quiz options *tim* (a name) and *try* (y not taught) | *seat/sit, eat/it, sleep/slip* |
