@@ -43,6 +43,35 @@ If no voice gets a word right as it is, the generator tries saying it in other w
 
 A voiced "uh" after a final stop is also cut off.
 
+## Sound it out
+
+The 🐢 button plays a word sound by sound while its letters light up, then says the whole word
+(*c – a – t … cat*). It appears on the Learn page and in feedback. It also plays by itself:
+- after a wrong answer;
+- after "ليس بعد" (not yet) in read-aloud items.
+
+How the audio is made:
+- **Single sounds.** These are `f/ph/*.mp3`, listed under `sounds` in the manifest.
+  - A voice model cannot say a lone consonant, so `tools/audio/sounds.py` cuts each sound out of whole words.
+  - Long vowels, vowel teams and r-vowels are also tried said whole (*ay, oh, ar*).
+  - A cut is kept only if it passes the **blend test**: gluing the cut sounds back together (*c + a + t*) must
+    give simple words the recogniser hears correctly. A failing sound is retested on words whose other sounds
+    all passed, so one bad sound cannot sink another.
+- **Word parts.** These are listed under `segments` in the manifest and come from `tools/audio/wordparts.py`.
+  They show how each word splits into letters and sounds, e.g. `"cake": [["c","k"],["a_e","A"],["k","k"]]`,
+  where a_e is a split digraph.
+- **Not sounded out:**
+  - irregular words that cannot be split with regular spellings (*said, was, come*);
+  - one-sound words (*I*);
+  - words with an unstressed vowel (*basket*);
+  - words with more than six sounds;
+  - words with a sound that failed the blend test (see `sounds` in `qa-report.json`).
+- **Current status:** 40 of 44 sounds pass, and 600 words can be sounded out (78% of the words the lessons use).
+  - Four sounds failed: *v* (heard as *th*), *aw*, *r* and *th*. Words with them (*van, saw, red, thin*) have no 🐢 button.
+  - Recordings of these four by a person would fill the gap. Put them in `f/ph/` and list them under `sounds`.
+  - Single sounds are quieter than words where that is natural (*f, th, v, h*). Raised to vowel loudness, they
+    hiss like *s* or *sh*.
+
 Needs Python 3.11, ffmpeg and about 1.7 GB of models (GitHub release assets):
 
 ```bash

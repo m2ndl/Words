@@ -5,6 +5,8 @@ Reads curriculum.json and writes:
   audio/<voice>/<kind>/<slug>.mp3   MP3, mono, 24 kHz, 48 kbps (plays on iPhone and Android)
   audio/manifest.json               {"clips": {"<text, lower case>": {"f": "f/w/cat.mp3?v=<hash>", ...}}}
   tools/audio/qa-report.json        the voice used and what Whisper heard for every clip
+  audio/f/ph/<sound>.mp3            single speech sounds, and in the manifest "segments": how each
+                                    word splits into them (for the sound-it-out button: c – a – t … cat)
 
 Clips: every glossary word (w) and every sentence (s), in two slots:
   f = the main clip, used everywhere;
@@ -35,6 +37,9 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
+import wordparts
+import sounds
+
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'audio'
 REPORT = ROOT / 'tools' / 'audio' / 'qa-report.json'
@@ -52,7 +57,9 @@ STOPS = set('ptkbdɡ')
 # (fork, born and short must not turn into fark, barn and shart).
 SHORT_O = re.compile('ɔ(?!ɹ)')
 # Pronunciations to force (misaki US phonemes): heteronyms and words the lexicon gets wrong.
-PHONEME_OVERRIDES = {'live': 'lˈɪv', 'use': 'jˈuz'}  # live: the heart word (to live); use: the verb
+PHONEME_OVERRIDES = {'live': 'lˈɪv', 'use': 'jˈuz',  # live: the heart word (to live); use: the verb
+                     'catch': 'kˈæʧ'}  # the lexicon has the "ketch" variant; the course teaches short a
+SOUND_VOICES = ['af_sarah', 'af_heart', 'am_adam']  # single sounds: the main voice (voiceless ones: any)
 
 
 def sha(text):
@@ -273,7 +280,8 @@ def main():
 
     checker = Checker(args.models)
     manifest_path = OUT / 'manifest.json'
-    old = json.loads(manifest_path.read_text()).get('clips', {}) if manifest_path.exists() else {}
+    old_manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    old = old_manifest.get('clips', {})
     old_report = json.loads(REPORT.read_text()) if REPORT.exists() else {}
     manifest = {'version': 2, 'voices': VOICE_ORDER, 'clips': {}}
     report = {'clips': {}}
@@ -336,6 +344,35 @@ def main():
             print(f'{rkey:44s} {"ok" if ok else "??"}  {voice:10s} {tried[-1] if ok else "; ".join(tried)}', flush=True)
         manifest['clips'][key] = entry
 
+    # Sound it out: how each decodable word splits into sounds, and a clip for every sound.
+    # Irregular words (said, was, come…) cannot be split with regular spellings, so they are not
+    # sounded out; early heart words that later lessons decode (go, she, my) are.
+    parts = {}
+    for kind, text, _ in clips:
+        if kind == 'w':
+            seg = wordparts.segment(text, synth.phonemes(text))
+            if seg and len(seg) > 1:
+                parts[text.lower()] = seg
+    needed = sorted({u for seg in parts.values() for _, u in seg})
+    settings = [PIPELINE_VERSION, sounds.CANDIDATES, sounds.CHECKS, sounds.BLEND_WORDS, sounds.SAID_AS, sounds.LOUDNESS,
+                sounds.PASS_SCORE, SOUND_VOICES]
+    sh = sha(json.dumps(settings, sort_keys=True, ensure_ascii=False, default=sorted))  # sets sorted: same key every run
+    old_sounds = old_manifest.get('sounds', {})
+    if (not args.force and old_report.get('sounds_hash') == sh
+            and all((OUT / p.split('?')[0]).exists() for p in old_sounds.values())):
+        manifest['sounds'], report['sounds'] = old_sounds, old_report.get('sounds', {})
+    else:
+        built, report['sounds'] = sounds.build(sys.modules[__name__], synth, checker, needed, SOUND_VOICES)
+        manifest['sounds'] = {}
+        for ph, a in built.items():
+            rel = f'f/ph/{sounds.NAMES[ph]}.mp3'
+            encode_mp3(a, OUT / rel)
+            manifest['sounds'][ph] = f'{rel}?v={sha(sh + ph)}'
+    report['sounds_hash'] = sh
+    keep.update(p.split('?')[0] for p in manifest['sounds'].values())
+    manifest['segments'] = {w: [list(x) for x in seg] for w, seg in parts.items()
+                            if all(u in manifest['sounds'] for _, u in seg)}
+
     # Remove clips that are no longer in the course.
     for f in OUT.glob('*/*/*.mp3'):
         if str(f.relative_to(OUT)) not in keep:
@@ -351,6 +388,9 @@ def main():
     files = sum(len(e) for e in manifest['clips'].values())
     print(f"\n{len(manifest['clips'])} clips, {files} files, voices {report['voices_used']}; "
           f"no voice recognised for {len(report['flagged'])} (listen to those)")
+    print(f"sounds: {len(manifest['sounds'])} of {len(needed)} pass the blend test "
+          f"({', '.join(sorted(set(needed) - set(manifest['sounds']))) or 'all'} missing); "
+          f"{len(manifest['segments'])} words can be sounded out")
     return 0
 
 

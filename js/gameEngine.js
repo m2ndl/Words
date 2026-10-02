@@ -1,6 +1,7 @@
 'use strict';
 import { QuestionRenderer } from './questionRenderer.js';
 import { escapeHtml, expandLearnMarkup, highlightFocus, highlightPart, diffHighlight, speakerButton } from './textUtils.js';
+import { soundOutButton, soundOut } from './soundOut.js';
 
 const STEP_TITLES = { drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة', placement: '🧭 تحديد المستوى' };
 // Placement: per unit, 4 items from its quizzes; 3 or more correct moves on to the next unit.
@@ -64,8 +65,8 @@ export class GameEngine {
             // Show the lesson's pattern when the word has it (hate: a…e); otherwise the letters that differ (pin / bin).
             const withFocus = highlightFocus(w, focus);
             const shown = other && !withFocus.includes('<mark') ? diffHighlight(w, other) : withFocus;
-            return `<div class="example-word" dir="ltr">${speakerButton(w, 'md')}<span class="english-font">${shown}</span></div>
-                    <div class="example-gloss">${escapeHtml(this.data.getGloss(w))}</div>`;
+            return `<div class="example-word" dir="ltr">${speakerButton(w, 'md')}<span class="english-font" data-word="${escapeHtml(w)}">${shown}</span></div>
+                    <div class="example-gloss">${escapeHtml(this.data.getGloss(w))} ${soundOutButton(this.audio, w)}</div>`;
         };
         const examplesHTML = (subSkill.examples || []).map(ex => {
             if (ex.mark) {
@@ -83,7 +84,8 @@ export class GameEngine {
 
         this.ui.elements.modal_body.innerHTML = `
             ${explanationHTML}
-            <h3 class="examples-title">${subSkill.kind === 'heart' ? 'كلمات هذا الدرس — الجزء الملوّن هو الصعب:' : 'أمثلة — اضغط 🔊 لتسمع:'}</h3>
+            <h3 class="examples-title">${subSkill.kind === 'heart' ? 'كلمات هذا الدرس — الجزء الملوّن هو الصعب:'
+                : examplesHTML.includes('data-soundout') ? 'أمثلة — اضغط 🔊 لتسمع الكلمة، و🐢 لتسمعها صوتاً صوتاً:' : 'أمثلة — اضغط 🔊 لتسمع:'}</h3>
             <div class="examples-grid">${examplesHTML}</div>
             ${subSkill.tip ? `<div class="learn-tip">💡 ${escapeHtml(subSkill.tip)}</div>` : ''}
         `;
@@ -226,7 +228,7 @@ export class GameEngine {
     showFeedback(q, sub, result) {
         const gloss = w => escapeHtml(this.data.getGloss(w));
         const wordLine = (w, other) =>
-            `<span class="fb-word english-font" dir="ltr">${other ? diffHighlight(w, other) : highlightFocus(w, sub.focus || [])}</span>${speakerButton(w)}<span class="fb-gloss">${gloss(w)}</span>`;
+            `<span class="fb-word english-font" dir="ltr" data-word="${escapeHtml(w)}">${other ? diffHighlight(w, other) : highlightFocus(w, sub.focus || [])}</span>${speakerButton(w)}${soundOutButton(this.audio, w)}<span class="fb-gloss">${gloss(w)}</span>`;
         let html;
 
         if (result.selfCheck) {
@@ -257,11 +259,18 @@ export class GameEngine {
                 if (q.type !== 'listen') this.audio.speak(target);
                 html = `<div class="feedback ok"><div class="fb-title">${this.data.getRandomEncouragement()}</div><div class="fb-row">${wordLine(target)}</div></div>`;
             } else {
-                // Replay the learner's choice only when it is a real word (not a half-built word).
-                this.audio.speakSequence([q.type !== 'build' && this.data.getGloss(chosen) ? chosen : null, target]);
+                // Replay the learner's choice only when it is a real word (not a half-built word),
+                // then sound the right word out (c – a – t … cat) while its letters light up.
+                const chosenWord = q.type !== 'build' && this.data.getGloss(chosen) ? chosen : null;
+                const sayTarget = () => {
+                    const el = this.ui.elements.modal_feedback.querySelector('.fb-row.fb-target [data-word]');
+                    if (!soundOut(this.audio, target, el)) this.audio.speak(target);
+                };
+                if (chosenWord) this.audio.speak(chosenWord, { onend: () => setTimeout(sayTarget, 350) });
+                else setTimeout(sayTarget, 0);
                 html = `<div class="feedback bad"><div class="fb-title">ليس هذا — قارِن:</div>
                           <div class="fb-row"><span class="fb-label">اخترتَ:</span>${wordLine(chosen, target)}</div>
-                          <div class="fb-row"><span class="fb-label">الصحيح:</span>${wordLine(target, chosen)}</div>
+                          <div class="fb-row fb-target"><span class="fb-label">الصحيح:</span>${wordLine(target, chosen)}</div>
                           ${sub.tip ? `<div class="fb-tip">💡 ${escapeHtml(sub.tip)}</div>` : ''}</div>`;
             }
         }

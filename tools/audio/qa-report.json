@@ -1354,19 +1354,19 @@
    "voice": "af_sarah"
   },
   "catch@f": {
-   "h": "9026515c18",
+   "h": "594fc9072a",
    "ok": true,
-   "phonemes": "kˈɛʧ",
+   "phonemes": "kˈæʧ",
    "tried": [
-    "af_sarah/0: Catch!"
+    "af_sarah/0: catch"
    ],
    "variant": 0,
    "voice": "af_sarah"
   },
   "catch@m": {
-   "h": "f4ed2cec71",
+   "h": "732d7b83ac",
    "ok": true,
-   "phonemes": "kˈɛʧ",
+   "phonemes": "kˈæʧ",
    "tried": [
     "am_michael/0: catch"
    ],
@@ -11978,6 +11978,578 @@
   "than@f",
   "wool@f"
  ],
+ "sounds": {
+  "A": {
+   "accepted": true,
+   "score": 0.8,
+   "source": "af_sarah:tˈAk:vowel",
+   "tests": [
+    "make: m-a-k ✗",
+    "cake: Cake",
+    "name: name",
+    "tape: Today",
+    "same: Same"
+   ]
+  },
+  "I": {
+   "accepted": true,
+   "score": 0.83,
+   "source": "af_sarah:kˈIt:vowel",
+   "tests": [
+    "bike: Bye-",
+    "time: Time",
+    "kite: Kaita",
+    "night: night",
+    "bite: Bye time ✗",
+    "pie: Hi"
+   ]
+  },
+  "O": {
+   "accepted": true,
+   "score": 0.75,
+   "source": "af_sarah:ˈOk:vowel",
+   "tests": [
+    "home: Home",
+    "note: No time. ✗",
+    "boat: Boat",
+    "soap: Soo-"
+   ]
+  },
+  "W": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ˈW:whole",
+   "tests": [
+    "out: Out",
+    "down: Downton",
+    "town: Town",
+    "loud: LOUD"
+   ]
+  },
+  "Y": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ˈY:whole",
+   "tests": [
+    "boy: boy",
+    "coin: coin",
+    "join: Joy.",
+    "toy: toy"
+   ]
+  },
+  "b": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:bˈʌs:voiced-stop",
+   "tests": [
+    "bad: bad",
+    "box: box",
+    "big: BEGG",
+    "bed: bad",
+    "bus: bus",
+    "but: But",
+    "job: job",
+    "bank: bang"
+   ]
+  },
+  "d": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_heart:dˈɑt:voiced-stop",
+   "tests": [
+    "bad: bad",
+    "dad: DADADADADADADAD",
+    "dog: DOG",
+    "bed: bad",
+    "mad: m-a-d",
+    "seed: Seed.",
+    "food: F-dude ✗",
+    "down: Downton"
+   ]
+  },
+  "f": {
+   "accepted": true,
+   "score": 0.62,
+   "source": "af_sarah:ˈɪf:final",
+   "tests": [
+    "fish: Fff-ish",
+    "fan: FAN",
+    "fat: F-A-T",
+    "feet: feet",
+    "food: F-dude ✗",
+    "farm: arm ✗",
+    "for: short ✗",
+    "fork: F-Or-K"
+   ]
+  },
+  "h": {
+   "accepted": true,
+   "score": 0.75,
+   "source": "af_heart:hˈɪt:initial-weak",
+   "tests": [
+    "hat: HAT",
+    "hot: Hot.",
+    "hut: HUH?",
+    "home: Home",
+    "huge: You ✗",
+    "her: Her",
+    "hair: Hair",
+    "hear: year ✗"
+   ]
+  },
+  "i": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:fˈit:vowel",
+   "tests": [
+    "feet: feet",
+    "seed: Seed.",
+    "team: stream",
+    "keep: KEEP",
+    "sheep: She"
+   ]
+  },
+  "j": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:jˈɛt:glide",
+   "tests": [
+    "yes: Yes!",
+    "yet: yet"
+   ]
+  },
+  "ju": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:jˈu:whole",
+   "tests": [
+    "cute: You",
+    "huge: You",
+    "mule: you"
+   ]
+  },
+  "k": {
+   "accepted": true,
+   "score": 0.62,
+   "source": "af_sarah:kˈæt:stop",
+   "tests": [
+    "cat: cat",
+    "kit: KIT",
+    "cup: KAPA",
+    "cut: Cut.",
+    "pink: Ping ✗",
+    "bank: bang ✗",
+    "make: m-a-k ✗",
+    "cake: Cake"
+   ]
+  },
+  "ks": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:bˈɑks:final",
+   "tests": [
+    "box: box",
+    "six: 6"
+   ]
+  },
+  "l": {
+   "accepted": true,
+   "score": 0.75,
+   "source": "af_sarah:lˈɪp:initial-nasal",
+   "tests": [
+    "lap: LAP",
+    "lot: Lotta",
+    "long: Lying",
+    "cool: KIDO L- ✗",
+    "mule: you ✗",
+    "loud: LOUD",
+    "girl: girl",
+    "look: Look"
+   ]
+  },
+  "m": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_heart:sˈʌm:final-drop",
+   "tests": [
+    "map: m-a-p",
+    "mad: m-a-d",
+    "make: m-a-k ✗",
+    "name: name",
+    "same: Same",
+    "time: Time",
+    "home: Home",
+    "team: stream"
+   ]
+  },
+  "n": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_heart:nˈæp:initial-nasal",
+   "tests": [
+    "pan: pen",
+    "not: not",
+    "pin: pin",
+    "pen: pen",
+    "ten: 10",
+    "net: net",
+    "sun: Sun",
+    "fan: FAN"
+   ]
+  },
+  "p": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:pˈæn:stop",
+   "tests": [
+    "pan: pen",
+    "map: m-a-p",
+    "tap: TAP",
+    "pot: PUT",
+    "top: top",
+    "pin: pin",
+    "tip: (Tupa) ✗",
+    "pen: pen"
+   ]
+  },
+  "s": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:sˈæt:frication",
+   "tests": [
+    "sat: Sata",
+    "sit: SIT",
+    "set: Set",
+    "bus: bus",
+    "sun: Sun",
+    "gas: Guess.",
+    "yes: Yes!",
+    "six: 6"
+   ]
+  },
+  "t": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:tˈɑp:stop",
+   "tests": [
+    "cat: cat",
+    "hat: HAT",
+    "sat: Sata",
+    "tap: TAP",
+    "hot: Hot.",
+    "pot: PUT",
+    "top: top",
+    "not: not"
+   ]
+  },
+  "u": {
+   "accepted": true,
+   "score": 0.6,
+   "source": "af_sarah:ʃˈut:vowel",
+   "tests": [
+    "moon: doon",
+    "food: F-dude ✗",
+    "boot: But",
+    "soon: soon",
+    "cool: KIDO L- ✗"
+   ]
+  },
+  "v": {
+   "accepted": false,
+   "score": 0.4,
+   "source": "af_sarah:vˈæn:initial-weak",
+   "tests": [
+    "van: then ✗",
+    "vet: that ✗",
+    "vest: VEST",
+    "have: Have",
+    "five: FINE ✗"
+   ]
+  },
+  "w": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:wˈɛt:glide",
+   "tests": [
+    "wet: WET",
+    "win: win"
+   ]
+  },
+  "z": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:zˈɪp:initial-voiced-fricative",
+   "tests": [
+    "zip: Zip"
+   ]
+  },
+  "æ": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:ˈæt:vowel",
+   "tests": [
+    "pan: pen ✗",
+    "cat: cat",
+    "hat: HAT",
+    "sat: Sata",
+    "bad: bad",
+    "map: m-a-p",
+    "tap: TAP",
+    "dad: DADADADADADADAD"
+   ]
+  },
+  "ð": {
+   "accepted": true,
+   "score": 0.67,
+   "source": "af_sarah:ðˈɛn:initial-weak",
+   "tests": [
+    "then: then",
+    "that: That's how you do it. ✗",
+    "this: This"
+   ]
+  },
+  "ŋ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:sˈɪŋ:final-drop",
+   "tests": [
+    "sing: sing",
+    "long: Lying",
+    "pink: Ping",
+    "bank: bang"
+   ]
+  },
+  "ɑ": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:ˈɑks:vowel",
+   "tests": [
+    "hot: Hot.",
+    "pot: PUT ✗",
+    "top: top",
+    "box: box",
+    "dog: DOG",
+    "not: not",
+    "shop: Shoppe",
+    "chop: Chop"
+   ]
+  },
+  "ɑɹ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ˈɑɹ:whole",
+   "tests": [
+    "car: Car",
+    "park: Par",
+    "farm: arm",
+    "star: Star",
+    "dark: dark"
+   ]
+  },
+  "ɔ": {
+   "accepted": false,
+   "score": 0.29,
+   "source": "af_sarah:tˈɔk:vowel",
+   "tests": [
+    "saw: So ✗",
+    "law: luh ✗",
+    "paw: Ha!",
+    "ball: Bully ✗",
+    "talk: TALK",
+    "caught: Cut! ✗",
+    "dawn: done ✗",
+    "said whole, heard as \"Uh?\" ✗"
+   ]
+  },
+  "ɔɹ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ʃˈɔɹt:vowel",
+   "tests": [
+    "for: short",
+    "fork: F-Or-K",
+    "corn: Jordan",
+    "short: Short",
+    "born: Dorn",
+    "sort: Sorta",
+    "port: short"
+   ]
+  },
+  "ɛ": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:ˈɛʧ:vowel",
+   "tests": [
+    "pen: pen",
+    "ten: 10",
+    "bed: bad ✗",
+    "net: net",
+    "get: get",
+    "set: Set",
+    "jet: Jet.",
+    "wet: WET"
+   ]
+  },
+  "ɛɹ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ˈɛɹ:whole",
+   "tests": [
+    "hair: Hair",
+    "chair: Chair",
+    "pair: pair",
+    "care: Care",
+    "bear: bear"
+   ]
+  },
+  "ɜɹ": {
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:ʃˈɜɹt:vowel",
+   "tests": [
+    "her: Her",
+    "bird: bird",
+    "girl: girl",
+    "turn: Turn",
+    "fur: F-F-F-F- ✗",
+    "hurt: HURT",
+    "shirt: shirt",
+    "burn: burn"
+   ]
+  },
+  "ɡ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_heart:ɡˈæs:voiced-stop",
+   "tests": [
+    "dog: DOG",
+    "big: BEGG",
+    "get: get",
+    "gas: Guess.",
+    "got: got",
+    "girl: girl",
+    "good: good",
+    "keg: KEGG"
+   ]
+  },
+  "ɪ": {
+   "accepted": true,
+   "score": 0.75,
+   "source": "af_sarah:ˈɪt:vowel",
+   "tests": [
+    "pin: pin",
+    "sit: SIT",
+    "tip: (Tupa) ✗",
+    "big: BEGG ✗",
+    "kit: KIT",
+    "fish: Fff-ish",
+    "ship: Shit",
+    "chip: Chip"
+   ]
+  },
+  "ɪɹ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ˈɪɹ:whole",
+   "tests": [
+    "ear: year",
+    "near: near",
+    "hear: year",
+    "dear: year",
+    "fear: year"
+   ]
+  },
+  "ɹ": {
+   "accepted": false,
+   "score": 0.25,
+   "source": "af_sarah:ɹˈɪp:initial-weak-4",
+   "tests": [
+    "red: red",
+    "rat: that ✗",
+    "ride: RIDE",
+    "road: mowed ✗",
+    "run: then ✗",
+    "rock: muck ✗",
+    "rip: Nip ✗",
+    "rug: O- ✗"
+   ]
+  },
+  "ʃ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ʃˈɑp:frication",
+   "tests": [
+    "fish: Fff-ish",
+    "ship: Shit",
+    "shop: Shoppe",
+    "sheep: She",
+    "short: Short",
+    "shirt: shirt"
+   ]
+  },
+  "ʊ": {
+   "accepted": true,
+   "score": 0.86,
+   "source": "af_sarah:pˈʊt:vowel",
+   "tests": [
+    "book: book",
+    "foot: F- What? ✗",
+    "look: Look",
+    "cook: Look",
+    "good: good",
+    "put: PUT",
+    "took: Took."
+   ]
+  },
+  "ʌ": {
+   "accepted": true,
+   "score": 0.86,
+   "source": "af_sarah:ˈʌp:vowel",
+   "tests": [
+    "cup: KAPA ✗",
+    "bus: bus",
+    "sun: Sun",
+    "cut: Cut.",
+    "hut: HUH?",
+    "but: But",
+    "gum: gum"
+   ]
+  },
+  "ʤ": {
+   "accepted": true,
+   "score": 0.75,
+   "source": "af_sarah:ʤˈɑb:voiced-stop",
+   "tests": [
+    "jet: Jet.",
+    "job: job",
+    "huge: You ✗",
+    "join: Joy."
+   ]
+  },
+  "ʧ": {
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ʧˈɪp:frication",
+   "tests": [
+    "chip: Chip",
+    "chop: Chop",
+    "chair: Chair"
+   ]
+  },
+  "θ": {
+   "accepted": false,
+   "score": 0.2,
+   "source": "af_heart:θˈɪk:frication",
+   "tests": [
+    "thin: in ✗",
+    "thick: *sad trombone* ✗",
+    "bath: Beth",
+    "math: Mm-hmm ✗",
+    "thank: SANK ✗"
+   ]
+  }
+ },
+ "sounds_hash": "e5c4dcc03d",
  "voices_used": {
   "af_heart": 51,
   "af_sarah": 853,

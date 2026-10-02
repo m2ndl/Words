@@ -7,6 +7,7 @@ import { AudioManager } from './audioManager.js';
 import { UIManager } from './uiManager.js';
 import { TeacherDashboard } from './teacherDashboard.js';
 import { GameEngine } from './gameEngine.js';
+import { soundOut, wordElementFor } from './soundOut.js';
 
 class ModernPhonicsApp {
   constructor() {
@@ -160,6 +161,12 @@ class ModernPhonicsApp {
     // Handle clicks on the entire page (for skill cards and activity buttons)
     document.addEventListener('click', (e) => {
       // Handle speaker buttons (audio)
+      const soundOutBtn = e.target.closest('[data-soundout]');
+      if (soundOutBtn) {
+        soundOut(this.audioManager, soundOutBtn.dataset.soundout, wordElementFor(soundOutBtn));
+        return;
+      }
+
       const speakerButton = e.target.closest('[data-speak]');
       if (speakerButton) {
         this.audioManager.speak(speakerButton.dataset.speak);

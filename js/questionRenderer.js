@@ -1,5 +1,6 @@
 'use strict';
 import { escapeHtml, highlightFocus } from './textUtils.js';
+import { soundOutButton, soundOut } from './soundOut.js';
 
 // Default instructions for each activity type (a question can override them with `prompt`).
 const PROMPTS = {
@@ -50,7 +51,7 @@ export class QuestionRenderer {
     }
 
     word(w) {
-        return `<div class="q-word english-font" dir="ltr">${highlightFocus(w, [])}</div>`;
+        return `<div class="q-word english-font" dir="ltr" data-word="${escapeHtml(w)}">${highlightFocus(w, [])}</div>`;
     }
 
     bigSpeaker(id) {
@@ -76,7 +77,7 @@ export class QuestionRenderer {
             ${this.prompt('say')}
             ${this.word(word)}
             ${this.bigSpeaker('say-check')}
-            <div id="say-gloss" class="q-gloss hidden">${escapeHtml(this.data.getGloss(word))}</div>
+            <div id="say-gloss" class="q-gloss hidden">${escapeHtml(this.data.getGloss(word))} ${soundOutButton(this.audio, word)}</div>
             <div id="say-self" class="q-options-row hidden">
                 <button class="option-button q-self" data-self="yes">✅ قرأتها صحيحة</button>
                 <button class="option-button q-self" data-self="no">🔁 ليس بعد</button>
@@ -87,7 +88,12 @@ export class QuestionRenderer {
             this.body.querySelector('#say-self').classList.remove('hidden');
         };
         this.body.querySelectorAll('.q-self').forEach(btn => {
-            btn.onclick = () => this.game.handleAnswer({ correct: btn.dataset.self === 'yes', chosen: btn.dataset.self, target: word, el: btn, selfCheck: true });
+            btn.onclick = () => {
+                const correct = btn.dataset.self === 'yes';
+                this.game.handleAnswer({ correct, chosen: btn.dataset.self, target: word, el: btn, selfCheck: true });
+                // Not yet: hear it sound by sound while the letters light up.
+                if (!correct) soundOut(this.audio, word, this.body.querySelector('.q-word'));
+            };
         });
     }
 

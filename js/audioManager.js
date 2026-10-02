@@ -7,6 +7,8 @@
 // Text-to-speech: a good US-English voice, never one of the novelty voices some devices ship.
 const BASE = 'audio/';
 const MAX_BUFFERS = 150; // decoded clips kept in memory
+const SOUND_GAP = 0.3;    // sound it out: silence between the sounds (s)
+const WORD_PAUSE = 0.45;  // …and before the whole word
 const NOVELTY_VOICES = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|ralph|kathy|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley/i;
 const PREFERRED_VOICES = [
     /natural|neural/i,
@@ -20,6 +22,9 @@ export class AudioManager {
         this.voice = null;
         this.voices = [];
         this.clips = {};
+        this.sounds = {};   // single speech sounds, for sounding words out
+        this.segments = {}; // word -> [[letters, sound], ...]
+        this.onCancel = null;
         this.buffers = new Map(); // url -> AudioBuffer, oldest first
         this.ctx = null;
         this.sources = [];
@@ -43,7 +48,12 @@ export class AudioManager {
     async loadManifest() {
         try {
             const response = await fetch(`${BASE}manifest.json`);
-            if (response.ok) this.clips = (await response.json()).clips || {};
+            if (response.ok) {
+                const m = await response.json();
+                this.clips = m.clips || {};
+                this.sounds = m.sounds || {};
+                this.segments = m.segments || {};
+            }
         } catch {}
     }
 
@@ -109,6 +119,9 @@ export class AudioManager {
 
     stop() {
         this.token++;
+        const cancel = this.onCancel;
+        this.onCancel = null;
+        if (cancel) cancel();
         this.sources.forEach(s => { try { s.onended = null; s.stop(); } catch {} });
         this.sources = [];
         try { window.speechSynthesis?.cancel(); } catch {}
@@ -143,6 +156,58 @@ export class AudioManager {
         }).catch(() => {
             if (token === this.token) this.speakTTS(text, { variety, onend });
         });
+    }
+
+    // Sound it out: the word's sounds one by one (c – a – t), then the whole word.
+    // Only for words with recorded sounds; returns false otherwise.
+    canSoundOut(word) {
+        const key = String(word).toLowerCase();
+        const parts = this.segments[key];
+        return !!(parts && this.clips[key] && parts.every(([, sound]) => this.sounds[sound]) && (window.AudioContext || window.webkitAudioContext));
+    }
+
+    partsOf(word) {
+        return this.segments[String(word).toLowerCase()] || null;
+    }
+
+    // onStep(i): sound i starts (-1: the whole word). oncancel: stopped before the end.
+    soundOut(word, { onStep = null, onend = null, oncancel = null } = {}) {
+        if (!this.canSoundOut(word)) return false;
+        this.stop();
+        const token = this.token;
+        this.onCancel = oncancel;
+        const ctx = this.getContext();
+        this.unlock();
+        const urls = this.partsOf(word).map(([, sound]) => BASE + this.sounds[sound]);
+        urls.push(this.clipUrl(word));
+        Promise.all(urls.map(u => this.loadBuffer(u))).then(buffers => {
+            if (token !== this.token) return;
+            const at = (time, fn) => setTimeout(() => { if (token === this.token) fn(); }, Math.max(0, (time - ctx.currentTime) * 1000));
+            let t = ctx.currentTime + 0.05;
+            buffers.forEach((buffer, i) => {
+                const whole = i === buffers.length - 1;
+                if (whole) t += WORD_PAUSE - SOUND_GAP;
+                const source = ctx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(ctx.destination);
+                source.start(t);
+                this.sources.push(source);
+                const start = t;
+                if (onStep) at(start, () => onStep(whole ? -1 : i));
+                t += buffer.duration + SOUND_GAP;
+            });
+            at(t, () => {
+                this.sources = [];
+                this.onCancel = null;
+                if (onend) onend();
+            });
+        }).catch(() => {
+            if (token !== this.token) return;
+            this.onCancel = null;
+            if (oncancel) oncancel();
+            this.speak(word, { onend });
+        });
+        return true;
     }
 
     speakTTS(text, { variety = false, onend = null } = {}) {

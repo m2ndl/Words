@@ -571,6 +571,14 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .speaker-btn.speaker-sm { width: 34px; height: 34px; min-width: 34px; font-size: 15px; box-shadow: 0 3px 10px rgba(245, 87, 108, 0.35); }
 .speaker-btn.speaker-md { width: 42px; height: 42px; min-width: 42px; font-size: 18px; }
 .speaker-btn.speaker-sm:hover, .speaker-btn.speaker-md:hover { transform: scale(1.1); }
+/* Sound it out (c – a – t … cat): the button, and the letters lighting up as each sound plays */
+.soundout-btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid #81E6D9; background: #E6FFFA; cursor: pointer; transition: transform 0.15s ease; vertical-align: middle; }
+.soundout-btn:hover { transform: scale(1.1); }
+.soundout-btn:active { transform: scale(0.95); }
+.soundout-sm { width: 34px; height: 34px; min-width: 34px; font-size: 17px; margin-inline: 4px; }
+.soundout-md { width: 42px; height: 42px; min-width: 42px; font-size: 21px; margin-inline: 4px; }
+.so-active .so-l { opacity: 0.3; transition: opacity 0.12s ease, color 0.12s ease; }
+.so-active .so-l.so-on { opacity: 1; color: #D53F8C; }
 .learn-text { font-size: 1.1rem; line-height: 2.1; color: var(--text-secondary); text-align: right; margin-bottom: 1.25rem; }
 .learn-word { display: inline-flex; align-items: center; gap: 6px; margin: 2px 4px; direction: ltr; vertical-align: middle; }
 .learn-word .english-font { font-size: 1.35rem; font-weight: 600; color: var(--text-primary); }

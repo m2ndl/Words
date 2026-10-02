@@ -52,7 +52,7 @@ All of E1–E10 are fixed:
 | Distractors that test the target | Done. 611 of 636 option pairs are at most two sounds apart; the rest are exception words or longer words | `curriculum.json` |
 | Real tests: 8–10 items, 3 options, at least half new words, pass at 80% | Done for every lesson. A failed test offers "📖 راجع الدرس" | `curriculum.json`, `js/gameEngine.js` |
 | Feedback that teaches | Done. It replays both words, highlights the letters that differ and shows the lesson's rule | `js/gameEngine.js` |
-| Recorded audio | Done for whole words and sentences. See "Audio" below | `audio/`, `tools/audio/`, `js/audioManager.js` |
+| Recorded audio | Done for whole words and sentences; sounding out for 600 words. See "Audio" below | `audio/`, `tools/audio/`, `js/audioManager.js` |
 | Dashboard: accuracy per lesson and most-confused words | Done | `js/teacherDashboard.js` |
 | New scope and sequence | Done. Ten units, 0–9 as in 5.4, with 37 lessons and 727 items (previously at most ~200 responses per pass) | `curriculum.json` |
 | Spelling in every unit | Done. Build-the-word with sound tiles and extra tiles, word chains, fill-the-letters | `curriculum.json` |
@@ -72,14 +72,19 @@ All of E1–E10 are fixed:
   - an /f/ that sounds like /v/ (*fat*, *fix*), which would undermine the f/v lesson;
   - an "uh" after a final /p/ (*cup*);
   - a dropped final /dʒ/ (*page*, *change*), which would undermine the soft-g lesson.
+- **Sound it out.** A 🐢 button plays a word sound by sound while its letters light up, then says the whole word (*sh – i – p … ship*).
+  - It is on the Learn page and in feedback. It also plays by itself after a wrong answer and after "ليس بعد" in read-aloud items.
+  - The 40 single sounds are cut out of whole words. Each was kept only if words glued back together from the cut sounds were recognised (the blend test).
+  - 600 words can be sounded out (78% of the words the lessons use).
+  - Four sounds failed the blend test (*v, aw, r, th*), so words with them (*van, saw, red, thin*) have no button yet. The aw/al lesson is the one most affected.
 - **Not recognised in any voice: 10 clips.** These are *a, bin, cot, knee, lifted, moss, muddle, should, than, wool*.
   - Isolated short words are hard for recognisers. Whisper hears *bin* as "Ben", yet a vowel measurement puts it with *bit*, not *bet*. So these clips may well be fine.
   - A person should still listen to them. The list is in `tools/audio/qa-report.json`.
 
 ### Still open
 
-- **Sounded-out audio** ("sh–i–p … ship"). The clips are whole words only.
-- **A listening check by a person** of the generated clips, starting with the 10 above.
+- **Four single sounds** (*v, aw, r, th*) for sounding out. The voice model's versions failed the blend test; recordings by a person would complete it.
+- **A listening check by a person** of the generated clips, starting with the 10 above and the 40 single sounds.
 - **Speech recognition.** Reading aloud is self-checked.
 - **Outcome data from a pilot with real learners.** Measure:
   - reading of untrained words;
