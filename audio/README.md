@@ -6,7 +6,6 @@ device's text-to-speech for anything else.
 ```json
 {
   "version": 2,
-  "voices": { "f": "af_heart", "m": "am_michael" },
   "clips": {
     "cat": { "f": "f/w/cat.mp3?v=3f2a91c0d4" },
     "not": { "f": "f/w/not.mp3?v=8b1e04a7c2", "m": "m/w/not.mp3?v=51d9e2b6aa" },
@@ -16,15 +15,33 @@ device's text-to-speech for anything else.
 ```
 
 - **Keys** are the exact text the app speaks, in lowercase (a word, or a whole sentence).
-- **Voices:** `f` is the main voice. Listening items alternate between all the voices a word has,
-  so learners hear more than one speaker.
+- **`f`** is the main clip. **`m`** is a second talker for the words in listening items: listening
+  items alternate between the two, so learners hear more than one speaker.
 - **`?v=`** is a content hash, so browsers fetch a clip again when it changes.
 
 ## Generating the clips
 
 `tools/audio/generate.py` makes every clip with **Kokoro-82M** (Apache-2.0), an American-English
-voice model, and transcribes each one with Whisper so odd clips can be found and listened to.
-The same method was used on the literacy app.
+voice model, and checks each one with the Whisper speech recogniser.
+
+**Voices.** No single Kokoro voice says every word cleanly on its own. On 64 test words (f/v,
+final stops, short-vowel pairs):
+- The female voices voice an initial /f/, so *fat* sounds like *vat*.
+- af_heart adds a voiced "uh" after a final /p/ (*cup* sounds like *cup-uh*).
+- am_adam has the clearest /f/.
+
+So the generator tries the voices in order and keeps the first one Whisper recognises:
+- **Main clip:** af_sarah, af_heart, am_michael, am_adam.
+- **Second talker:** am_michael, am_adam, am_fenrir, af_heart. This must be a different voice from
+  the main clip, and it is only added when that voice is recognised.
+
+If no voice gets a word right as it is, the generator tries saying it in other ways:
+- **After a short pause.** This fixes many words (*fix, fish, change, page, trip*), but the model then
+  says "uh" first. That vowel is cut off, and the clip must then be heard as the bare word.
+- **With a full stop after it.**
+- **Slower.**
+
+A voiced "uh" after a final stop is also cut off.
 
 Needs Python 3.11, ffmpeg and about 1.7 GB of models (GitHub release assets):
 
@@ -41,11 +58,12 @@ python tools/audio/generate.py --models models --phonemes   # review pronunciati
 python tools/audio/generate.py --models models              # only new or changed clips
 ```
 
-Re-run it after changing `curriculum.json`. Fix a wrong pronunciation in `PHONEME_OVERRIDES`
-in the script. The clips Whisper did not recognise are listed under `flagged` in
-`tools/audio/qa-report.json`; listen to those before committing.
+Re-run it after changing `curriculum.json`; only new or changed clips are made. Fix a wrong
+pronunciation in `PHONEME_OVERRIDES` in the script. `tools/audio/qa-report.json` records the voice
+used for each clip and what Whisper heard. Main clips that no voice got right are listed under
+`flagged`; listen to those. Whisper often mishears isolated short words (*bin* as "Ben"), so a flagged
+clip may well be fine.
 
-**Licences:** kokoro-onnx (MIT), the Kokoro model and voices (Apache-2.0), misaki (Apache-2.0),
-sherpa-onnx (Apache-2.0), Whisper (MIT). None of these are shipped with the app; only the MP3s are.
-
-**Status:** no clips have been generated yet, so the app still uses text-to-speech everywhere.
+**Credits and licences:** the speech was generated with Kokoro-82M v1.0 (hexgrad), Apache-2.0,
+using the voices named above. Tools: kokoro-onnx (MIT), misaki (Apache-2.0), sherpa-onnx
+(Apache-2.0), Whisper (MIT). Only the MP3s are shipped with the app.

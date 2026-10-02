@@ -1,1 +1,2932 @@
-{}
+{
+"clips": {
+"a": {
+"f": "f/w/a.mp3?v=702f70c64b"
+},
+"able": {
+"f": "f/w/able.mp3?v=d6add42765"
+},
+"actor": {
+"f": "f/w/actor.mp3?v=5ba00d96a0"
+},
+"again": {
+"f": "f/w/again.mp3?v=d96cf6de67",
+"m": "m/w/again.mp3?v=350e6700b2"
+},
+"age": {
+"f": "f/w/age.mp3?v=d9a9fc635a"
+},
+"am": {
+"f": "f/w/am.mp3?v=48174f9076"
+},
+"and": {
+"f": "f/w/and.mp3?v=d8d54a8494"
+},
+"ankle": {
+"f": "f/w/ankle.mp3?v=2e91cee0b2"
+},
+"any": {
+"f": "f/w/any.mp3?v=f95a684d65",
+"m": "m/w/any.mp3?v=f2a29b63bc"
+},
+"apple": {
+"f": "f/w/apple.mp3?v=9e9cdc556e"
+},
+"are": {
+"f": "f/w/are.mp3?v=6973fadb5c",
+"m": "m/w/are.mp3?v=e7f03b2600"
+},
+"are you sick?": {
+"f": "f/s/are-you-sick.mp3?v=83ab2a69d9"
+},
+"arm": {
+"f": "f/w/arm.mp3?v=cccfcf8c10",
+"m": "m/w/arm.mp3?v=9e217f5cac"
+},
+"ask": {
+"f": "f/w/ask.mp3?v=9c99c8e840"
+},
+"asked": {
+"f": "f/w/asked.mp3?v=d02512bc3a",
+"m": "m/w/asked.mp3?v=57ca04c585"
+},
+"asking": {
+"f": "f/w/asking.mp3?v=af1175ad5f"
+},
+"baby": {
+"f": "f/w/baby.mp3?v=7af0be035b",
+"m": "m/w/baby.mp3?v=ca64b50ce3"
+},
+"back": {
+"f": "f/w/back.mp3?v=98c767d19a"
+},
+"backs": {
+"f": "f/w/backs.mp3?v=fb15b39aeb"
+},
+"bad": {
+"f": "f/w/bad.mp3?v=b439a70e85",
+"m": "m/w/bad.mp3?v=777010195a"
+},
+"bag": {
+"f": "f/w/bag.mp3?v=436f1380c9",
+"m": "m/w/bag.mp3?v=024e563f06"
+},
+"bags": {
+"f": "f/w/bags.mp3?v=789457587a",
+"m": "m/w/bags.mp3?v=8dd70cc01e"
+},
+"ball": {
+"f": "f/w/ball.mp3?v=7869b05a96"
+},
+"bank": {
+"f": "f/w/bank.mp3?v=08a01c9f82"
+},
+"barn": {
+"f": "f/w/barn.mp3?v=b4f12ea481"
+},
+"basket": {
+"f": "f/w/basket.mp3?v=e7d61ac166"
+},
+"bat": {
+"f": "f/w/bat.mp3?v=0733e2d627"
+},
+"batch": {
+"f": "f/w/batch.mp3?v=3c29bdfa4d"
+},
+"bath": {
+"f": "f/w/bath.mp3?v=33efef597e"
+},
+"be": {
+"f": "f/w/be.mp3?v=77307ee227"
+},
+"beach": {
+"f": "f/w/beach.mp3?v=699e77f0e2"
+},
+"bead": {
+"f": "f/w/bead.mp3?v=f46cc29a0a"
+},
+"bear": {
+"f": "f/w/bear.mp3?v=ffdc062a97"
+},
+"beard": {
+"f": "f/w/beard.mp3?v=5ccc0aa668"
+},
+"because": {
+"f": "f/w/because.mp3?v=e00926cab0",
+"m": "m/w/because.mp3?v=be49829763"
+},
+"bed": {
+"f": "f/w/bed.mp3?v=606fe4c510"
+},
+"beds": {
+"f": "f/w/beds.mp3?v=4e4ed2c184"
+},
+"beg": {
+"f": "f/w/beg.mp3?v=6f612b8d7b"
+},
+"begged": {
+"f": "f/w/begged.mp3?v=b9f8da37df"
+},
+"bell": {
+"f": "f/w/bell.mp3?v=be12bde9de"
+},
+"bells": {
+"f": "f/w/bells.mp3?v=671a55f24d"
+},
+"belly": {
+"f": "f/w/belly.mp3?v=4cc1ae4c7f"
+},
+"belt": {
+"f": "f/w/belt.mp3?v=18c14010cd"
+},
+"belts": {
+"f": "f/w/belts.mp3?v=fa57bb1d61"
+},
+"bench": {
+"f": "f/w/bench.mp3?v=75cbf14281"
+},
+"benches": {
+"f": "f/w/benches.mp3?v=e87ea5826b",
+"m": "m/w/benches.mp3?v=6af32464e6"
+},
+"bent": {
+"f": "f/w/bent.mp3?v=0008722604"
+},
+"best": {
+"f": "f/w/best.mp3?v=c237e0f311",
+"m": "m/w/best.mp3?v=41150cea13"
+},
+"bid": {
+"f": "f/w/bid.mp3?v=67013971ab"
+},
+"big": {
+"f": "f/w/big.mp3?v=36fc386d23"
+},
+"bin": {
+"f": "f/w/bin.mp3?v=2943613f9e"
+},
+"bird": {
+"f": "f/w/bird.mp3?v=156c5d3dea"
+},
+"bit": {
+"f": "f/w/bit.mp3?v=aea73a1753",
+"m": "m/w/bit.mp3?v=d9c91cdc1f"
+},
+"bite": {
+"f": "f/w/bite.mp3?v=c747f6ff3a",
+"m": "m/w/bite.mp3?v=565343c573"
+},
+"black": {
+"f": "f/w/black.mp3?v=e85a9dedf4",
+"m": "m/w/black.mp3?v=56416081a4"
+},
+"block": {
+"f": "f/w/block.mp3?v=3fb7ac5b25"
+},
+"blow": {
+"f": "f/w/blow.mp3?v=e285f92d63"
+},
+"blue": {
+"f": "f/w/blue.mp3?v=155144c2df",
+"m": "m/w/blue.mp3?v=ded9bc62b1"
+},
+"blush": {
+"f": "f/w/blush.mp3?v=ff205b2bd7"
+},
+"boat": {
+"f": "f/w/boat.mp3?v=ea6aee4479"
+},
+"body": {
+"f": "f/w/body.mp3?v=96ccff5abf"
+},
+"boil": {
+"f": "f/w/boil.mp3?v=739c0dd7a6"
+},
+"bone": {
+"f": "f/w/bone.mp3?v=e9560dbe63",
+"m": "m/w/bone.mp3?v=e8000ade56"
+},
+"book": {
+"f": "f/w/book.mp3?v=6a062d3aa6"
+},
+"boot": {
+"f": "f/w/boot.mp3?v=e173c7de89"
+},
+"born": {
+"f": "f/w/born.mp3?v=cffbd93a9e"
+},
+"bosses": {
+"f": "f/w/bosses.mp3?v=236b1b0311"
+},
+"bother": {
+"f": "f/w/bother.mp3?v=4e6b56a614"
+},
+"bowl": {
+"f": "f/w/bowl.mp3?v=d327ddce67"
+},
+"box": {
+"f": "f/w/box.mp3?v=e4418e908a"
+},
+"boxes": {
+"f": "f/w/boxes.mp3?v=e8e2fc56e8",
+"m": "m/w/boxes.mp3?v=e36f903625"
+},
+"boy": {
+"f": "f/w/boy.mp3?v=106e2ff163"
+},
+"bread": {
+"f": "f/w/bread.mp3?v=f8f540509b"
+},
+"brick": {
+"f": "f/w/brick.mp3?v=41d233aaa4"
+},
+"bridge": {
+"f": "f/w/bridge.mp3?v=c1fcea00b0"
+},
+"bright": {
+"f": "f/w/bright.mp3?v=b7fa069aee",
+"m": "m/w/bright.mp3?v=487200f0c6"
+},
+"bring": {
+"f": "f/w/bring.mp3?v=86cc41825d"
+},
+"brother": {
+"f": "f/w/brother.mp3?v=aafef54a45",
+"m": "m/w/brother.mp3?v=b91b4af5f9"
+},
+"brown": {
+"f": "f/w/brown.mp3?v=4df2691879"
+},
+"bug": {
+"f": "f/w/bug.mp3?v=5f29b93dba",
+"m": "m/w/bug.mp3?v=4db982d286"
+},
+"bun": {
+"f": "f/w/bun.mp3?v=8a17077775"
+},
+"bunches": {
+"f": "f/w/bunches.mp3?v=1c787e43d2"
+},
+"burn": {
+"f": "f/w/burn.mp3?v=87c9c4ba90"
+},
+"bus": {
+"f": "f/w/bus.mp3?v=9eb66bca2c"
+},
+"buses": {
+"f": "f/w/buses.mp3?v=3d96173589"
+},
+"but": {
+"f": "f/w/but.mp3?v=3b752eb9f4"
+},
+"by": {
+"f": "f/w/by.mp3?v=5f07751156",
+"m": "m/w/by.mp3?v=23bc0061fd"
+},
+"cab": {
+"f": "f/w/cab.mp3?v=2b42b868e6"
+},
+"cage": {
+"f": "f/w/cage.mp3?v=176cb7c427"
+},
+"cake": {
+"f": "f/w/cake.mp3?v=e6d6f1ed5b"
+},
+"call": {
+"f": "f/w/call.mp3?v=29df7a7542"
+},
+"camp": {
+"f": "f/w/camp.mp3?v=1f42bac58a",
+"m": "m/w/camp.mp3?v=c4dbac1ca0"
+},
+"can": {
+"f": "f/w/can.mp3?v=c822e0c773"
+},
+"cap": {
+"f": "f/w/cap.mp3?v=9049d5a62f",
+"m": "m/w/cap.mp3?v=4c048f8699"
+},
+"car": {
+"f": "f/w/car.mp3?v=a26ac354c1"
+},
+"card": {
+"f": "f/w/card.mp3?v=f4720c7b7f"
+},
+"care": {
+"f": "f/w/care.mp3?v=409605ee28"
+},
+"cart": {
+"f": "f/w/cart.mp3?v=edf94523b4"
+},
+"cash": {
+"f": "f/w/cash.mp3?v=0485b196fc"
+},
+"cat": {
+"f": "f/w/cat.mp3?v=f25660423e"
+},
+"catch": {
+"f": "f/w/catch.mp3?v=9026515c18",
+"m": "m/w/catch.mp3?v=f4ed2cec71"
+},
+"cats": {
+"f": "f/w/cats.mp3?v=3981dd4ba5"
+},
+"cause": {
+"f": "f/w/cause.mp3?v=0530223304"
+},
+"cave": {
+"f": "f/w/cave.mp3?v=7a3445ac5c"
+},
+"cell": {
+"f": "f/w/cell.mp3?v=2524f157e7"
+},
+"chain": {
+"f": "f/w/chain.mp3?v=4d3b294da4"
+},
+"chair": {
+"f": "f/w/chair.mp3?v=4d3363a8b1"
+},
+"chalk": {
+"f": "f/w/chalk.mp3?v=9f23910980",
+"m": "m/w/chalk.mp3?v=bcdebe0501"
+},
+"chance": {
+"f": "f/w/chance.mp3?v=c132895426"
+},
+"change": {
+"f": "f/w/change.mp3?v=84342f65cd",
+"m": "m/w/change.mp3?v=6f3aa69daf"
+},
+"charge": {
+"f": "f/w/charge.mp3?v=73f9209633"
+},
+"chat": {
+"f": "f/w/chat.mp3?v=e5727d2ae9"
+},
+"cheap": {
+"f": "f/w/cheap.mp3?v=df514fd6fb"
+},
+"cheat": {
+"f": "f/w/cheat.mp3?v=2c7304f96c"
+},
+"check": {
+"f": "f/w/check.mp3?v=91662a279d"
+},
+"cheer": {
+"f": "f/w/cheer.mp3?v=b00c78dc3b",
+"m": "m/w/cheer.mp3?v=eedb851d52"
+},
+"chess": {
+"f": "f/w/chess.mp3?v=f35c14da97"
+},
+"chew": {
+"f": "f/w/chew.mp3?v=6ffc9ec290",
+"m": "m/w/chew.mp3?v=e01166e840"
+},
+"chick": {
+"f": "f/w/chick.mp3?v=c6312e5cf0"
+},
+"chill": {
+"f": "f/w/chill.mp3?v=a36f66023a"
+},
+"chin": {
+"f": "f/w/chin.mp3?v=4947610188"
+},
+"chip": {
+"f": "f/w/chip.mp3?v=57f042e03a"
+},
+"choke": {
+"f": "f/w/choke.mp3?v=c02dc26138"
+},
+"chop": {
+"f": "f/w/chop.mp3?v=dabfa3fe30",
+"m": "m/w/chop.mp3?v=a825f41384"
+},
+"chore": {
+"f": "f/w/chore.mp3?v=3d112489ae"
+},
+"city": {
+"f": "f/w/city.mp3?v=9ce78d4eba"
+},
+"class": {
+"f": "f/w/class.mp3?v=ba098fd151",
+"m": "m/w/class.mp3?v=86b3ce1af4"
+},
+"classes": {
+"f": "f/w/classes.mp3?v=7132284e3b"
+},
+"clear": {
+"f": "f/w/clear.mp3?v=16eae91061"
+},
+"clerk": {
+"f": "f/w/clerk.mp3?v=996ef27517"
+},
+"click": {
+"f": "f/w/click.mp3?v=4a0a4306df"
+},
+"climb": {
+"f": "f/w/climb.mp3?v=5518e1fea4"
+},
+"clock": {
+"f": "f/w/clock.mp3?v=5c47432ed7"
+},
+"cloud": {
+"f": "f/w/cloud.mp3?v=d741ad77a8"
+},
+"coal": {
+"f": "f/w/coal.mp3?v=9a8d9f0264"
+},
+"coat": {
+"f": "f/w/coat.mp3?v=24fbc9e860",
+"m": "m/w/coat.mp3?v=6df22d756f"
+},
+"cod": {
+"f": "f/w/cod.mp3?v=1212fb7c97"
+},
+"coin": {
+"f": "f/w/coin.mp3?v=82dd4e8c27",
+"m": "m/w/coin.mp3?v=622509ff64"
+},
+"comb": {
+"f": "f/w/comb.mp3?v=a22cf1acb1"
+},
+"come": {
+"f": "f/w/come.mp3?v=038b17add5"
+},
+"come and help us!": {
+"f": "f/s/come-and-help-us.mp3?v=3fd46daa24"
+},
+"cone": {
+"f": "f/w/cone.mp3?v=d954e3122d"
+},
+"cook": {
+"f": "f/w/cook.mp3?v=82185a7663"
+},
+"cool": {
+"f": "f/w/cool.mp3?v=63ea2bb9f1"
+},
+"cop": {
+"f": "f/w/cop.mp3?v=092ab6095b"
+},
+"cord": {
+"f": "f/w/cord.mp3?v=23c53ec6eb"
+},
+"core": {
+"f": "f/w/core.mp3?v=3069dfa5d9"
+},
+"corn": {
+"f": "f/w/corn.mp3?v=a95b676aa3"
+},
+"cot": {
+"f": "f/w/cot.mp3?v=505a631ef2"
+},
+"could": {
+"f": "f/w/could.mp3?v=18e40bb82b",
+"m": "m/w/could.mp3?v=3cd432133c"
+},
+"could you call me at noon?": {
+"f": "f/s/could-you-call-me-at-noon.mp3?v=9161ca3cdf"
+},
+"cow": {
+"f": "f/w/cow.mp3?v=42c193e13d"
+},
+"crab": {
+"f": "f/w/crab.mp3?v=3b1ab75f3c"
+},
+"crew": {
+"f": "f/w/crew.mp3?v=f8a9b27e3b",
+"m": "m/w/crew.mp3?v=4e1498f10e"
+},
+"crib": {
+"f": "f/w/crib.mp3?v=3bcc258251"
+},
+"crow": {
+"f": "f/w/crow.mp3?v=347a9bab82"
+},
+"crowd": {
+"f": "f/w/crowd.mp3?v=0b10ccd3d5"
+},
+"cry": {
+"f": "f/w/cry.mp3?v=b150454f75"
+},
+"cub": {
+"f": "f/w/cub.mp3?v=1eb12bdf99"
+},
+"cube": {
+"f": "f/w/cube.mp3?v=b9ad579d92",
+"m": "m/w/cube.mp3?v=6a4582e9f0"
+},
+"cup": {
+"f": "f/w/cup.mp3?v=e51c56ba99",
+"m": "m/w/cup.mp3?v=badf510fa6"
+},
+"cups": {
+"f": "f/w/cups.mp3?v=0eda27752b"
+},
+"cut": {
+"f": "f/w/cut.mp3?v=24124bc5b4"
+},
+"cute": {
+"f": "f/w/cute.mp3?v=a079ed1ed4",
+"m": "m/w/cute.mp3?v=6cb9c5428f"
+},
+"dad": {
+"f": "f/w/dad.mp3?v=a79522dbdb"
+},
+"dare": {
+"f": "f/w/dare.mp3?v=ca7ba05388"
+},
+"dark": {
+"f": "f/w/dark.mp3?v=426f952f5d"
+},
+"dart": {
+"f": "f/w/dart.mp3?v=aecae4670b"
+},
+"date": {
+"f": "f/w/date.mp3?v=e9aca025a1"
+},
+"daughter": {
+"f": "f/w/daughter.mp3?v=d92e7dad8a"
+},
+"dawn": {
+"f": "f/w/dawn.mp3?v=6eac1b5187"
+},
+"day": {
+"f": "f/w/day.mp3?v=2c92ce1e9d"
+},
+"dear": {
+"f": "f/w/dear.mp3?v=6dd342fbd9",
+"m": "m/w/dear.mp3?v=6f11104a4a"
+},
+"desk": {
+"f": "f/w/desk.mp3?v=b54ad0ed7e"
+},
+"desks": {
+"f": "f/w/desks.mp3?v=b94f5bbb81"
+},
+"did you ask him?": {
+"f": "f/s/did-you-ask-him.mp3?v=3d1cda7b5c"
+},
+"dirt": {
+"f": "f/w/dirt.mp3?v=04aafae630",
+"m": "m/w/dirt.mp3?v=ceadd37f26"
+},
+"dish": {
+"f": "f/w/dish.mp3?v=c35531f58c",
+"m": "m/w/dish.mp3?v=3d6796eaef"
+},
+"dishes": {
+"f": "f/w/dishes.mp3?v=822f5db461"
+},
+"ditch": {
+"f": "f/w/ditch.mp3?v=ea801a3cef"
+},
+"do": {
+"f": "f/w/do.mp3?v=c97597685d",
+"m": "m/w/do.mp3?v=0072a723e7"
+},
+"do not drink this milk.": {
+"f": "f/s/do-not-drink-this-milk.mp3?v=4b54672a17"
+},
+"do you have a stamp?": {
+"f": "f/s/do-you-have-a-stamp.mp3?v=9a7466efd9"
+},
+"do you have any tea?": {
+"f": "f/s/do-you-have-any-tea.mp3?v=29cb3dda39"
+},
+"do you know the price?": {
+"f": "f/s/do-you-know-the-price.mp3?v=905319df23"
+},
+"do you need any help?": {
+"f": "f/s/do-you-need-any-help.mp3?v=31cdeb0a74"
+},
+"doctor": {
+"f": "f/w/doctor.mp3?v=b3a2b16d02",
+"m": "m/w/doctor.mp3?v=aa715d6bdc"
+},
+"does": {
+"f": "f/w/does.mp3?v=1fb313532c"
+},
+"does she sell hats?": {
+"f": "f/s/does-she-sell-hats.mp3?v=e3d41d19e7"
+},
+"dolphin": {
+"f": "f/w/dolphin.mp3?v=30f7af2d05"
+},
+"done": {
+"f": "f/w/done.mp3?v=8394abe85c"
+},
+"door": {
+"f": "f/w/door.mp3?v=6383173408",
+"m": "m/w/door.mp3?v=880cc4e79d"
+},
+"dot": {
+"f": "f/w/dot.mp3?v=86c01b5d79"
+},
+"down": {
+"f": "f/w/down.mp3?v=fc756ac098"
+},
+"draw": {
+"f": "f/w/draw.mp3?v=0d14a027ac",
+"m": "m/w/draw.mp3?v=fa399c5629"
+},
+"drew": {
+"f": "f/w/drew.mp3?v=f35a92f785"
+},
+"drip": {
+"f": "f/w/drip.mp3?v=234ad06d53"
+},
+"drive": {
+"f": "f/w/drive.mp3?v=dd5c7ec5f5"
+},
+"drop": {
+"f": "f/w/drop.mp3?v=a5fceebc47"
+},
+"dropped": {
+"f": "f/w/dropped.mp3?v=d8a88c23a3"
+},
+"drum": {
+"f": "f/w/drum.mp3?v=d06bf5e5bf"
+},
+"dry": {
+"f": "f/w/dry.mp3?v=d819282709"
+},
+"duck": {
+"f": "f/w/duck.mp3?v=30512c461a"
+},
+"ear": {
+"f": "f/w/ear.mp3?v=730b85d814"
+},
+"eat": {
+"f": "f/w/eat.mp3?v=e5b9bc3f49"
+},
+"edge": {
+"f": "f/w/edge.mp3?v=dcee6242c4",
+"m": "m/w/edge.mp3?v=bb2564f82d"
+},
+"egg": {
+"f": "f/w/egg.mp3?v=db5bca86d7"
+},
+"element": {
+"f": "f/w/element.mp3?v=2618b64c9a"
+},
+"elephant": {
+"f": "f/w/elephant.mp3?v=ac9b16139e"
+},
+"eleven": {
+"f": "f/w/eleven.mp3?v=d39515f374"
+},
+"end": {
+"f": "f/w/end.mp3?v=0eb526f9b8"
+},
+"ended": {
+"f": "f/w/ended.mp3?v=73ac4b8c0d"
+},
+"eye": {
+"f": "f/w/eye.mp3?v=905a0f519f",
+"m": "m/w/eye.mp3?v=0b4e2e9a12"
+},
+"eyes": {
+"f": "f/w/eyes.mp3?v=5235ef9ef7"
+},
+"face": {
+"f": "f/w/face.mp3?v=19ab5133f3",
+"m": "m/w/face.mp3?v=858c8cdbcc"
+},
+"fact": {
+"f": "f/w/fact.mp3?v=20ab7b7e67"
+},
+"factory": {
+"f": "f/w/factory.mp3?v=69622cd25c"
+},
+"fair": {
+"f": "f/w/fair.mp3?v=e999d97282"
+},
+"fake": {
+"f": "f/w/fake.mp3?v=9cfc561d82"
+},
+"fall": {
+"f": "f/w/fall.mp3?v=f0203f1591"
+},
+"fan": {
+"f": "f/w/fan.mp3?v=05057040aa",
+"m": "m/w/fan.mp3?v=bd3082bdaf"
+},
+"far": {
+"f": "f/w/far.mp3?v=84e33ef5d8"
+},
+"farm": {
+"f": "f/w/farm.mp3?v=bfb3887b6c",
+"m": "m/w/farm.mp3?v=c62bb37467"
+},
+"farmer": {
+"f": "f/w/farmer.mp3?v=9c61c25a8e"
+},
+"fast": {
+"f": "f/w/fast.mp3?v=afd51689e8",
+"m": "m/w/fast.mp3?v=8a5bef80f2"
+},
+"fat": {
+"f": "f/w/fat.mp3?v=8e093dfbe4",
+"m": "m/w/fat.mp3?v=a587dd49c5"
+},
+"fax": {
+"f": "f/w/fax.mp3?v=9127b619e7"
+},
+"fear": {
+"f": "f/w/fear.mp3?v=884e1d4838"
+},
+"fed": {
+"f": "f/w/fed.mp3?v=60f2386ce2"
+},
+"fee": {
+"f": "f/w/fee.mp3?v=8516f9ffe8"
+},
+"feed": {
+"f": "f/w/feed.mp3?v=9217e7e03a"
+},
+"feet": {
+"f": "f/w/feet.mp3?v=45d7cd1c44",
+"m": "m/w/feet.mp3?v=c848825e31"
+},
+"few": {
+"f": "f/w/few.mp3?v=2bbbfcfb61"
+},
+"fight": {
+"f": "f/w/fight.mp3?v=cd005cc3df"
+},
+"fill": {
+"f": "f/w/fill.mp3?v=3c3be73168"
+},
+"filled": {
+"f": "f/w/filled.mp3?v=eab7a16411"
+},
+"fin": {
+"f": "f/w/fin.mp3?v=0c03ce319f"
+},
+"firm": {
+"f": "f/w/firm.mp3?v=97148c68df"
+},
+"first": {
+"f": "f/w/first.mp3?v=bad40c2e36"
+},
+"fish": {
+"f": "f/w/fish.mp3?v=6ba0a629ac"
+},
+"fishing": {
+"f": "f/w/fishing.mp3?v=6fe434e08c"
+},
+"fist": {
+"f": "f/w/fist.mp3?v=488c00ea84"
+},
+"fit": {
+"f": "f/w/fit.mp3?v=f4628c59af"
+},
+"five": {
+"f": "f/w/five.mp3?v=2937c857e8"
+},
+"fix": {
+"f": "f/w/fix.mp3?v=ad5f2c0cad",
+"m": "m/w/fix.mp3?v=c85c7f5b80"
+},
+"fixed": {
+"f": "f/w/fixed.mp3?v=7bce7cfc89"
+},
+"flag": {
+"f": "f/w/flag.mp3?v=7e133fadfd"
+},
+"flat": {
+"f": "f/w/flat.mp3?v=130540d0ee"
+},
+"flight": {
+"f": "f/w/flight.mp3?v=40d5382053"
+},
+"flip": {
+"f": "f/w/flip.mp3?v=5e8feb8de3"
+},
+"float": {
+"f": "f/w/float.mp3?v=b1ba7d55ff"
+},
+"flute": {
+"f": "f/w/flute.mp3?v=eeb871ed3b"
+},
+"fly": {
+"f": "f/w/fly.mp3?v=1419ec690a",
+"m": "m/w/fly.mp3?v=821f228b27"
+},
+"food": {
+"f": "f/w/food.mp3?v=60b327b92a"
+},
+"foot": {
+"f": "f/w/foot.mp3?v=4140f78d54"
+},
+"for": {
+"f": "f/w/for.mp3?v=497a4a1d5b"
+},
+"fork": {
+"f": "f/w/fork.mp3?v=0114a3ef78"
+},
+"form": {
+"f": "f/w/form.mp3?v=2d644bdca6"
+},
+"fort": {
+"f": "f/w/fort.mp3?v=5bd2773f5b"
+},
+"four": {
+"f": "f/w/four.mp3?v=0e5239b170",
+"m": "m/w/four.mp3?v=3798da5016"
+},
+"fox": {
+"f": "f/w/fox.mp3?v=4506720473"
+},
+"free": {
+"f": "f/w/free.mp3?v=509906126f"
+},
+"fried": {
+"f": "f/w/fried.mp3?v=0fef3eceb9"
+},
+"friend": {
+"f": "f/w/friend.mp3?v=4f342781a9",
+"m": "m/w/friend.mp3?v=eedceb4ff3"
+},
+"from": {
+"f": "f/w/from.mp3?v=2b24910bea"
+},
+"fry": {
+"f": "f/w/fry.mp3?v=603454765e"
+},
+"fun": {
+"f": "f/w/fun.mp3?v=3464fc007c"
+},
+"funny": {
+"f": "f/w/funny.mp3?v=7cd147b686"
+},
+"fur": {
+"f": "f/w/fur.mp3?v=711c049a18"
+},
+"game": {
+"f": "f/w/game.mp3?v=7e16c28773",
+"m": "m/w/game.mp3?v=461128fec8"
+},
+"gap": {
+"f": "f/w/gap.mp3?v=b1e35dd4ea"
+},
+"gas": {
+"f": "f/w/gas.mp3?v=2c35de73f2"
+},
+"gate": {
+"f": "f/w/gate.mp3?v=afbd57e4b6"
+},
+"gave": {
+"f": "f/w/gave.mp3?v=ca26517b6b"
+},
+"get": {
+"f": "f/w/get.mp3?v=ab279631f2"
+},
+"gift": {
+"f": "f/w/gift.mp3?v=6b7a2ae4e9"
+},
+"gifts": {
+"f": "f/w/gifts.mp3?v=7d45f0e7ee"
+},
+"girl": {
+"f": "f/w/girl.mp3?v=1a6b3e3447"
+},
+"give": {
+"f": "f/w/give.mp3?v=0a63715a51",
+"m": "m/w/give.mp3?v=1adbcac670"
+},
+"give me the note.": {
+"f": "f/s/give-me-the-note.mp3?v=8cc56987d3"
+},
+"glad": {
+"f": "f/w/glad.mp3?v=ab6d4021d9"
+},
+"glass": {
+"f": "f/w/glass.mp3?v=60f1c51d50"
+},
+"glue": {
+"f": "f/w/glue.mp3?v=e6221131af"
+},
+"go": {
+"f": "f/w/go.mp3?v=b4bbbb2d74",
+"m": "m/w/go.mp3?v=23958f52d1"
+},
+"goat": {
+"f": "f/w/goat.mp3?v=aaa8c3050c"
+},
+"good": {
+"f": "f/w/good.mp3?v=5fbdac13b8"
+},
+"got": {
+"f": "f/w/got.mp3?v=cba795c744"
+},
+"grab": {
+"f": "f/w/grab.mp3?v=8635ccd59e"
+},
+"graph": {
+"f": "f/w/graph.mp3?v=0aa3f1fd3b"
+},
+"grass": {
+"f": "f/w/grass.mp3?v=c0e6f16d81"
+},
+"green": {
+"f": "f/w/green.mp3?v=d45c44ff00"
+},
+"grew": {
+"f": "f/w/grew.mp3?v=c4d633974e"
+},
+"grin": {
+"f": "f/w/grin.mp3?v=271fcb2928"
+},
+"grow": {
+"f": "f/w/grow.mp3?v=6e1094d0ca",
+"m": "m/w/grow.mp3?v=a28c5c85a2"
+},
+"gum": {
+"f": "f/w/gum.mp3?v=d6b2c90057"
+},
+"hack": {
+"f": "f/w/hack.mp3?v=7b0ff3ae56"
+},
+"had": {
+"f": "f/w/had.mp3?v=699a7bc7f0"
+},
+"hair": {
+"f": "f/w/hair.mp3?v=514787774d",
+"m": "m/w/hair.mp3?v=ac7202d1cf"
+},
+"hand": {
+"f": "f/w/hand.mp3?v=731e1dde56"
+},
+"hang": {
+"f": "f/w/hang.mp3?v=15e2499d36"
+},
+"happy": {
+"f": "f/w/happy.mp3?v=e77c4f85e4",
+"m": "m/w/happy.mp3?v=edd786f8d5"
+},
+"hard": {
+"f": "f/w/hard.mp3?v=c98fecea6c"
+},
+"harm": {
+"f": "f/w/harm.mp3?v=97832c2ced"
+},
+"has": {
+"f": "f/w/has.mp3?v=49a6302477",
+"m": "m/w/has.mp3?v=549763693e"
+},
+"hat": {
+"f": "f/w/hat.mp3?v=938bc0731a",
+"m": "m/w/hat.mp3?v=d43a718007"
+},
+"hate": {
+"f": "f/w/hate.mp3?v=3c0e8ee15d"
+},
+"hats": {
+"f": "f/w/hats.mp3?v=41d2e95a99"
+},
+"have": {
+"f": "f/w/have.mp3?v=ba78c7395e"
+},
+"he": {
+"f": "f/w/he.mp3?v=ce59aef5cd",
+"m": "m/w/he.mp3?v=44cabf355e"
+},
+"he is fixing the sink.": {
+"f": "f/s/he-is-fixing-the-sink.mp3?v=1f99d5e60e"
+},
+"he is resting on the bed.": {
+"f": "f/s/he-is-resting-on-the-bed.mp3?v=c18235420c"
+},
+"he is sick in bed.": {
+"f": "f/s/he-is-sick-in-bed.mp3?v=20204b96ca"
+},
+"head": {
+"f": "f/w/head.mp3?v=3f27c6ebeb"
+},
+"hear": {
+"f": "f/w/hear.mp3?v=73458bcb59"
+},
+"heat": {
+"f": "f/w/heat.mp3?v=4ba82573d4"
+},
+"help": {
+"f": "f/w/help.mp3?v=a4c34c666b"
+},
+"help me with this list.": {
+"f": "f/s/help-me-with-this-list.mp3?v=47af3ba429"
+},
+"helped": {
+"f": "f/w/helped.mp3?v=7a2be57cfe"
+},
+"helping": {
+"f": "f/w/helping.mp3?v=482deef947"
+},
+"hen": {
+"f": "f/w/hen.mp3?v=f0e3f2233e"
+},
+"her": {
+"f": "f/w/her.mp3?v=77cae3374a"
+},
+"her hair is short.": {
+"f": "f/s/her-hair-is-short.mp3?v=f264179194"
+},
+"hers": {
+"f": "f/w/hers.mp3?v=77703db0bb"
+},
+"hi": {
+"f": "f/w/hi.mp3?v=938b94d80d",
+"m": "m/w/hi.mp3?v=4656c0ed7d"
+},
+"hid": {
+"f": "f/w/hid.mp3?v=ff29d94c80"
+},
+"hide": {
+"f": "f/w/hide.mp3?v=5908e7cb05"
+},
+"high": {
+"f": "f/w/high.mp3?v=57d89e4663"
+},
+"hike": {
+"f": "f/w/hike.mp3?v=8e10cba953"
+},
+"him": {
+"f": "f/w/him.mp3?v=9de9abf998"
+},
+"hip": {
+"f": "f/w/hip.mp3?v=249b1f5d32"
+},
+"hippo": {
+"f": "f/w/hippo.mp3?v=214a98da8d"
+},
+"his": {
+"f": "f/w/his.mp3?v=9c94e0d6be",
+"m": "m/w/his.mp3?v=1bfa293c25"
+},
+"his dad has a cab.": {
+"f": "f/s/his-dad-has-a-cab.mp3?v=f894d60dc4"
+},
+"his son is seven.": {
+"f": "f/s/his-son-is-seven.mp3?v=4d4040a6ac"
+},
+"hit": {
+"f": "f/w/hit.mp3?v=5ddd513e19",
+"m": "m/w/hit.mp3?v=aa6be22336"
+},
+"hobby": {
+"f": "f/w/hobby.mp3?v=feb7b6d49a"
+},
+"hole": {
+"f": "f/w/hole.mp3?v=30000e520a"
+},
+"home": {
+"f": "f/w/home.mp3?v=364418e763"
+},
+"hook": {
+"f": "f/w/hook.mp3?v=7997cbfbd1"
+},
+"hop": {
+"f": "f/w/hop.mp3?v=fb902ef4b3"
+},
+"hope": {
+"f": "f/w/hope.mp3?v=aa0a945103",
+"m": "m/w/hope.mp3?v=42d834413b"
+},
+"horse": {
+"f": "f/w/horse.mp3?v=8d6cef31c0",
+"m": "m/w/horse.mp3?v=fb1d1c49be"
+},
+"hose": {
+"f": "f/w/hose.mp3?v=bd2b4d9ba5"
+},
+"hot": {
+"f": "f/w/hot.mp3?v=46a747bfeb"
+},
+"house": {
+"f": "f/w/house.mp3?v=9fcb9a2f56"
+},
+"how": {
+"f": "f/w/how.mp3?v=9d6c69eeec"
+},
+"how much money do you need?": {
+"f": "f/s/how-much-money-do-you-need.mp3?v=e0572bded8"
+},
+"huge": {
+"f": "f/w/huge.mp3?v=69be8f9ecc"
+},
+"hugged": {
+"f": "f/w/hugged.mp3?v=adadf08d90"
+},
+"hurt": {
+"f": "f/w/hurt.mp3?v=b45dab2eab"
+},
+"hut": {
+"f": "f/w/hut.mp3?v=649330656f",
+"m": "m/w/hut.mp3?v=ec1ed928ee"
+},
+"i": {
+"f": "f/w/i.mp3?v=cbf42c9f4d"
+},
+"i asked her to stop.": {
+"f": "f/s/i-asked-her-to-stop.mp3?v=10b2e467c5"
+},
+"i can fix it.": {
+"f": "f/s/i-can-fix-it.mp3?v=0d22665ff3"
+},
+"i have one big desk.": {
+"f": "f/s/i-have-one-big-desk.mp3?v=a2717609ca"
+},
+"i hope it is not late.": {
+"f": "f/s/i-hope-it-is-not-late.mp3?v=932d465109"
+},
+"i love this cake.": {
+"f": "f/s/i-love-this-cake.mp3?v=3f20d8e03b"
+},
+"i see many boats on the sea.": {
+"f": "f/s/i-see-many-boats-on-the-sea.mp3?v=01c387803f"
+},
+"i start work at four.": {
+"f": "f/s/i-start-work-at-four.mp3?v=f09282ab99"
+},
+"i walk to school with my kids.": {
+"f": "f/s/i-walk-to-school-with-my-kids.mp3?v=ab78de9ea8"
+},
+"i would like some food.": {
+"f": "f/s/i-would-like-some-food.mp3?v=4ab39148ed"
+},
+"ice": {
+"f": "f/w/ice.mp3?v=51dbd8ca38",
+"m": "m/w/ice.mp3?v=ce2df42bab"
+},
+"in": {
+"f": "f/w/in.mp3?v=3ddf064167"
+},
+"is": {
+"f": "f/w/is.mp3?v=a19194b0d9"
+},
+"is the game at five?": {
+"f": "f/s/is-the-game-at-five.mp3?v=279779d703"
+},
+"it is a big job.": {
+"f": "f/s/it-is-a-big-job.mp3?v=6e54b66f5e"
+},
+"jar": {
+"f": "f/w/jar.mp3?v=96539277f0"
+},
+"jaw": {
+"f": "f/w/jaw.mp3?v=719ff1f0f9",
+"m": "m/w/jaw.mp3?v=d854f0087b"
+},
+"jet": {
+"f": "f/w/jet.mp3?v=0c79feb302"
+},
+"job": {
+"f": "f/w/job.mp3?v=a65011e5bc"
+},
+"jobs": {
+"f": "f/w/jobs.mp3?v=dd00eb4977"
+},
+"jog": {
+"f": "f/w/jog.mp3?v=3dfdaec547"
+},
+"join": {
+"f": "f/w/join.mp3?v=d7a2514096"
+},
+"joke": {
+"f": "f/w/joke.mp3?v=06a7df4ec6"
+},
+"joy": {
+"f": "f/w/joy.mp3?v=5bd1e70e04",
+"m": "m/w/joy.mp3?v=6be7793962"
+},
+"jug": {
+"f": "f/w/jug.mp3?v=20446f38fd"
+},
+"jump": {
+"f": "f/w/jump.mp3?v=fd200d609d"
+},
+"jumped": {
+"f": "f/w/jumped.mp3?v=4436a15c14"
+},
+"jumping": {
+"f": "f/w/jumping.mp3?v=bc229c220e"
+},
+"june": {
+"f": "f/w/june.mp3?v=b065564e2e"
+},
+"kick": {
+"f": "f/w/kick.mp3?v=4225533018",
+"m": "m/w/kick.mp3?v=392168100e"
+},
+"kicked": {
+"f": "f/w/kicked.mp3?v=b08ff8d492"
+},
+"king": {
+"f": "f/w/king.mp3?v=2474ba4d69"
+},
+"kit": {
+"f": "f/w/kit.mp3?v=22754a449f"
+},
+"kite": {
+"f": "f/w/kite.mp3?v=6bbdc60d8e"
+},
+"kitten": {
+"f": "f/w/kitten.mp3?v=8eca8d8233"
+},
+"knee": {
+"f": "f/w/knee.mp3?v=6e5ffa037b"
+},
+"knew": {
+"f": "f/w/knew.mp3?v=eda84fde0b"
+},
+"knife": {
+"f": "f/w/knife.mp3?v=54700c23d2"
+},
+"knit": {
+"f": "f/w/knit.mp3?v=f97427b2dd"
+},
+"knock": {
+"f": "f/w/knock.mp3?v=5bc47a5acd",
+"m": "m/w/knock.mp3?v=de42559977"
+},
+"know": {
+"f": "f/w/know.mp3?v=2889dc8723"
+},
+"lab": {
+"f": "f/w/lab.mp3?v=13ba516499"
+},
+"lack": {
+"f": "f/w/lack.mp3?v=5bd160fe59"
+},
+"lag": {
+"f": "f/w/lag.mp3?v=02fbf74332"
+},
+"lamb": {
+"f": "f/w/lamb.mp3?v=78b9f40c18"
+},
+"lamp": {
+"f": "f/w/lamp.mp3?v=c74fff0067",
+"m": "m/w/lamp.mp3?v=716a8978f2"
+},
+"lap": {
+"f": "f/w/lap.mp3?v=3d1830d9d7",
+"m": "m/w/lap.mp3?v=d2d9203dd0"
+},
+"large": {
+"f": "f/w/large.mp3?v=1df5e25af7"
+},
+"last": {
+"f": "f/w/last.mp3?v=3f3cb7c893",
+"m": "m/w/last.mp3?v=92b7a23d78"
+},
+"late": {
+"f": "f/w/late.mp3?v=eae68331d2"
+},
+"law": {
+"f": "f/w/law.mp3?v=50647c1793"
+},
+"lawn": {
+"f": "f/w/lawn.mp3?v=a73b6865c8"
+},
+"lay": {
+"f": "f/w/lay.mp3?v=1d19223401"
+},
+"leaf": {
+"f": "f/w/leaf.mp3?v=136b30b0f7"
+},
+"leg": {
+"f": "f/w/leg.mp3?v=620d762750"
+},
+"lemon": {
+"f": "f/w/lemon.mp3?v=e8f8734fb9"
+},
+"lesson": {
+"f": "f/w/lesson.mp3?v=c5d6a66af4"
+},
+"let": {
+"f": "f/w/let.mp3?v=67c187f1fa",
+"m": "m/w/let.mp3?v=7af85745e2"
+},
+"letter": {
+"f": "f/w/letter.mp3?v=13cd8e8f65"
+},
+"lick": {
+"f": "f/w/lick.mp3?v=fbe082643b"
+},
+"lid": {
+"f": "f/w/lid.mp3?v=16b41501ea"
+},
+"lie": {
+"f": "f/w/lie.mp3?v=11228f7905"
+},
+"life": {
+"f": "f/w/life.mp3?v=3aba0a9cc2"
+},
+"lift": {
+"f": "f/w/lift.mp3?v=7c1399d9d6"
+},
+"lifted": {
+"f": "f/w/lifted.mp3?v=903c7f0bb7"
+},
+"light": {
+"f": "f/w/light.mp3?v=b0626a1143",
+"m": "m/w/light.mp3?v=53b522ce9d"
+},
+"like": {
+"f": "f/w/like.mp3?v=fb50ba32ff"
+},
+"limp": {
+"f": "f/w/limp.mp3?v=a004c2abf9"
+},
+"line": {
+"f": "f/w/line.mp3?v=59054988db"
+},
+"lip": {
+"f": "f/w/lip.mp3?v=b24c3e8101"
+},
+"list": {
+"f": "f/w/list.mp3?v=414406735c"
+},
+"lit": {
+"f": "f/w/lit.mp3?v=23d7e420cd"
+},
+"litter": {
+"f": "f/w/litter.mp3?v=89285ea0d8"
+},
+"little": {
+"f": "f/w/little.mp3?v=f42410ac40"
+},
+"live": {
+"f": "f/w/live.mp3?v=f9ccd0f973",
+"m": "m/w/live.mp3?v=5e34aaf08c"
+},
+"load": {
+"f": "f/w/load.mp3?v=22cdff2650"
+},
+"lock": {
+"f": "f/w/lock.mp3?v=758a8cddc4"
+},
+"lock the shop at ten.": {
+"f": "f/s/lock-the-shop-at-ten.mp3?v=e96cc58027"
+},
+"log": {
+"f": "f/w/log.mp3?v=835b330e53"
+},
+"long": {
+"f": "f/w/long.mp3?v=3f6ca2839f",
+"m": "m/w/long.mp3?v=dcb8015395"
+},
+"look": {
+"f": "f/w/look.mp3?v=81bd7e1de7"
+},
+"look at the brown cow.": {
+"f": "f/s/look-at-the-brown-cow.mp3?v=4a4564ce7e"
+},
+"lost": {
+"f": "f/w/lost.mp3?v=f682c68301"
+},
+"lot": {
+"f": "f/w/lot.mp3?v=4edd8928eb",
+"m": "m/w/lot.mp3?v=929a33df09"
+},
+"loud": {
+"f": "f/w/loud.mp3?v=f963fcd190",
+"m": "m/w/loud.mp3?v=0213c9395e"
+},
+"love": {
+"f": "f/w/love.mp3?v=dca00a494c",
+"m": "m/w/love.mp3?v=759d0998a8"
+},
+"low": {
+"f": "f/w/low.mp3?v=207bdeb96f",
+"m": "m/w/low.mp3?v=406a0bacf0"
+},
+"luck": {
+"f": "f/w/luck.mp3?v=11a08f3986",
+"m": "m/w/luck.mp3?v=9fc27d0b7e"
+},
+"lunch": {
+"f": "f/w/lunch.mp3?v=c2f75cc52b"
+},
+"lunches": {
+"f": "f/w/lunches.mp3?v=c80c89a98a"
+},
+"lung": {
+"f": "f/w/lung.mp3?v=d485b5f3f6"
+},
+"mad": {
+"f": "f/w/mad.mp3?v=4fa64352e6"
+},
+"made": {
+"f": "f/w/made.mp3?v=1770a15eda",
+"m": "m/w/made.mp3?v=bddd772112"
+},
+"magic": {
+"f": "f/w/magic.mp3?v=70f727b716"
+},
+"mail": {
+"f": "f/w/mail.mp3?v=5de0a4be71"
+},
+"make": {
+"f": "f/w/make.mp3?v=dd9da89ceb"
+},
+"man": {
+"f": "f/w/man.mp3?v=100f71bf14"
+},
+"many": {
+"f": "f/w/many.mp3?v=c44bf3c9b3",
+"m": "m/w/many.mp3?v=00aee3782c"
+},
+"map": {
+"f": "f/w/map.mp3?v=5e72ed888e"
+},
+"maps": {
+"f": "f/w/maps.mp3?v=a72ecece02",
+"m": "m/w/maps.mp3?v=7ae6d0c80f"
+},
+"mask": {
+"f": "f/w/mask.mp3?v=c93a080989"
+},
+"mat": {
+"f": "f/w/mat.mp3?v=ca3ad21d23"
+},
+"match": {
+"f": "f/w/match.mp3?v=c95eb034a3"
+},
+"math": {
+"f": "f/w/math.mp3?v=7cc4e72253"
+},
+"me": {
+"f": "f/w/me.mp3?v=f9874e8f55"
+},
+"meal": {
+"f": "f/w/meal.mp3?v=bf7fed1fe9"
+},
+"meat": {
+"f": "f/w/meat.mp3?v=a78c20d0f1",
+"m": "m/w/meat.mp3?v=d5167fa602"
+},
+"meet": {
+"f": "f/w/meet.mp3?v=c40a8ce10d"
+},
+"melon": {
+"f": "f/w/melon.mp3?v=a93f290a22"
+},
+"men": {
+"f": "f/w/men.mp3?v=89ca58d3af",
+"m": "m/w/men.mp3?v=4584fc21ec"
+},
+"mess": {
+"f": "f/w/mess.mp3?v=fbf440e8d7"
+},
+"met": {
+"f": "f/w/met.mp3?v=fad316dd83"
+},
+"mid": {
+"f": "f/w/mid.mp3?v=e1ee203013"
+},
+"midday": {
+"f": "f/w/midday.mp3?v=59a74764de"
+},
+"middle": {
+"f": "f/w/middle.mp3?v=c6de3fed90",
+"m": "m/w/middle.mp3?v=cf81aca449"
+},
+"milk": {
+"f": "f/w/milk.mp3?v=f141928603"
+},
+"mill": {
+"f": "f/w/mill.mp3?v=0d48ed0c78"
+},
+"mine": {
+"f": "f/w/mine.mp3?v=a4930f7edb"
+},
+"miss": {
+"f": "f/w/miss.mp3?v=96e8265fab"
+},
+"mix": {
+"f": "f/w/mix.mp3?v=aee79bd76b"
+},
+"money": {
+"f": "f/w/money.mp3?v=77b9ebcda7",
+"m": "m/w/money.mp3?v=6b17ce0b6c"
+},
+"moon": {
+"f": "f/w/moon.mp3?v=0b765e3fba"
+},
+"mops": {
+"f": "f/w/mops.mp3?v=b26ff5cd93"
+},
+"more": {
+"f": "f/w/more.mp3?v=e91627b053"
+},
+"moss": {
+"f": "f/w/moss.mp3?v=fffbb3c850"
+},
+"mother": {
+"f": "f/w/mother.mp3?v=597a3983eb",
+"m": "m/w/mother.mp3?v=c89eda814b"
+},
+"mouth": {
+"f": "f/w/mouth.mp3?v=0238b51cef"
+},
+"much": {
+"f": "f/w/much.mp3?v=d8ce295551"
+},
+"mud": {
+"f": "f/w/mud.mp3?v=16c5e48c43"
+},
+"muddle": {
+"f": "f/w/muddle.mp3?v=9e20924dad"
+},
+"my": {
+"f": "f/w/my.mp3?v=dbeac2fa48",
+"m": "m/w/my.mp3?v=6d26c26959"
+},
+"my brother is a doctor in the city.": {
+"f": "f/s/my-brother-is-a-doctor-in-the-city.mp3?v=1555adcd15"
+},
+"my cat is big.": {
+"f": "f/s/my-cat-is-big.mp3?v=0fa326d9a6"
+},
+"my friend paid for the meal.": {
+"f": "f/s/my-friend-paid-for-the-meal.mp3?v=b3c39cb7b9"
+},
+"my mother has a little garden.": {
+"f": "f/s/my-mother-has-a-little-garden.mp3?v=a35a708a8f"
+},
+"my wife likes to ride a bike.": {
+"f": "f/s/my-wife-likes-to-ride-a-bike.mp3?v=0062be5abe"
+},
+"name": {
+"f": "f/w/name.mp3?v=32521db291"
+},
+"napkin": {
+"f": "f/w/napkin.mp3?v=2f9e1df1bc"
+},
+"near": {
+"f": "f/w/near.mp3?v=a3db620dc1",
+"m": "m/w/near.mp3?v=bbc34d29ba"
+},
+"neat": {
+"f": "f/w/neat.mp3?v=9ee20a7377"
+},
+"neck": {
+"f": "f/w/neck.mp3?v=47dcff6684"
+},
+"need": {
+"f": "f/w/need.mp3?v=4fd30a3345",
+"m": "m/w/need.mp3?v=c13c9965de"
+},
+"nephew": {
+"f": "f/w/nephew.mp3?v=a9af6987fa",
+"m": "m/w/nephew.mp3?v=d4ae411c21"
+},
+"nest": {
+"f": "f/w/nest.mp3?v=9752bce37d"
+},
+"net": {
+"f": "f/w/net.mp3?v=47282bd3c3"
+},
+"new": {
+"f": "f/w/new.mp3?v=af446f3c89"
+},
+"news": {
+"f": "f/w/news.mp3?v=fcaa26ad07"
+},
+"next": {
+"f": "f/w/next.mp3?v=239e6ba0bb",
+"m": "m/w/next.mp3?v=5511810e35"
+},
+"nice": {
+"f": "f/w/nice.mp3?v=2511c7405d"
+},
+"night": {
+"f": "f/w/night.mp3?v=67c6897590"
+},
+"nine": {
+"f": "f/w/nine.mp3?v=c794a3fbdd"
+},
+"no": {
+"f": "f/w/no.mp3?v=48159e835b",
+"m": "m/w/no.mp3?v=a83f9b3474"
+},
+"no, i do not want it.": {
+"f": "f/s/no-i-do-not-want-it.mp3?v=219a8162d1"
+},
+"nod": {
+"f": "f/w/nod.mp3?v=19b3f70955"
+},
+"noise": {
+"f": "f/w/noise.mp3?v=1f01a7c0c2",
+"m": "m/w/noise.mp3?v=6ef65df664"
+},
+"noon": {
+"f": "f/w/noon.mp3?v=0eb1efd79b"
+},
+"north": {
+"f": "f/w/north.mp3?v=ba571caaa4"
+},
+"nose": {
+"f": "f/w/nose.mp3?v=6a4eaab472"
+},
+"not": {
+"f": "f/w/not.mp3?v=4676cb3ded",
+"m": "m/w/not.mp3?v=151cbc9d47"
+},
+"note": {
+"f": "f/w/note.mp3?v=e3d2f6c355"
+},
+"now": {
+"f": "f/w/now.mp3?v=c4145e0eae"
+},
+"number": {
+"f": "f/w/number.mp3?v=e5edb18975"
+},
+"nurse": {
+"f": "f/w/nurse.mp3?v=42e3383a2c"
+},
+"nut": {
+"f": "f/w/nut.mp3?v=a0e7ffa17f"
+},
+"of": {
+"f": "f/w/of.mp3?v=79aceca47f"
+},
+"off": {
+"f": "f/w/off.mp3?v=3c4ea27c2a"
+},
+"oil": {
+"f": "f/w/oil.mp3?v=6c813b3633"
+},
+"on": {
+"f": "f/w/on.mp3?v=a578e14bc4"
+},
+"one": {
+"f": "f/w/one.mp3?v=8fc3618b10",
+"m": "m/w/one.mp3?v=17288dfdb9"
+},
+"out": {
+"f": "f/w/out.mp3?v=b1f415fbb3"
+},
+"oven": {
+"f": "f/w/oven.mp3?v=53afc63676"
+},
+"pack": {
+"f": "f/w/pack.mp3?v=5c0a0de5ed",
+"m": "m/w/pack.mp3?v=b3562260a1"
+},
+"packet": {
+"f": "f/w/packet.mp3?v=90a7367623"
+},
+"pad": {
+"f": "f/w/pad.mp3?v=698eaeeeec"
+},
+"page": {
+"f": "f/w/page.mp3?v=5ec6d3ef56"
+},
+"paid": {
+"f": "f/w/paid.mp3?v=83ef3a1b31"
+},
+"pain": {
+"f": "f/w/pain.mp3?v=2e19384139"
+},
+"paint": {
+"f": "f/w/paint.mp3?v=340a512fe9"
+},
+"pair": {
+"f": "f/w/pair.mp3?v=1433091cdc"
+},
+"pan": {
+"f": "f/w/pan.mp3?v=e7fc23296f"
+},
+"park": {
+"f": "f/w/park.mp3?v=c938496b9e"
+},
+"part": {
+"f": "f/w/part.mp3?v=a344e01259"
+},
+"pass": {
+"f": "f/w/pass.mp3?v=774ebc60ea"
+},
+"pat": {
+"f": "f/w/pat.mp3?v=2dcc8c0d19"
+},
+"path": {
+"f": "f/w/path.mp3?v=a4cc6f2534"
+},
+"pause": {
+"f": "f/w/pause.mp3?v=d7616571ec",
+"m": "m/w/pause.mp3?v=1c715a0f22"
+},
+"paw": {
+"f": "f/w/paw.mp3?v=0ab4bcd226"
+},
+"pay": {
+"f": "f/w/pay.mp3?v=884b35e630"
+},
+"peach": {
+"f": "f/w/peach.mp3?v=864e59224a"
+},
+"pear": {
+"f": "f/w/pear.mp3?v=e82bc5a59c"
+},
+"peck": {
+"f": "f/w/peck.mp3?v=11393f2367"
+},
+"pen": {
+"f": "f/w/pen.mp3?v=20d6adec1a",
+"m": "m/w/pen.mp3?v=0d324e5d7a"
+},
+"pencil": {
+"f": "f/w/pencil.mp3?v=b81d6da13e"
+},
+"pens": {
+"f": "f/w/pens.mp3?v=b9d11f61ba"
+},
+"people": {
+"f": "f/w/people.mp3?v=e72d857630",
+"m": "m/w/people.mp3?v=2a3754ef33"
+},
+"pet": {
+"f": "f/w/pet.mp3?v=b4f1179f3e",
+"m": "m/w/pet.mp3?v=5db6a15184"
+},
+"pharmacy": {
+"f": "f/w/pharmacy.mp3?v=ade9b61801"
+},
+"phone": {
+"f": "f/w/phone.mp3?v=028a5c1887"
+},
+"photo": {
+"f": "f/w/photo.mp3?v=c982232309"
+},
+"pick": {
+"f": "f/w/pick.mp3?v=d48b0e6840"
+},
+"pie": {
+"f": "f/w/pie.mp3?v=517d345a02"
+},
+"pill": {
+"f": "f/w/pill.mp3?v=7bfeb51678"
+},
+"pin": {
+"f": "f/w/pin.mp3?v=ed0da5a10d",
+"m": "m/w/pin.mp3?v=2e13a4d7df"
+},
+"pink": {
+"f": "f/w/pink.mp3?v=501733a677"
+},
+"pit": {
+"f": "f/w/pit.mp3?v=6c5199d89a"
+},
+"place": {
+"f": "f/w/place.mp3?v=83ba0fc08a"
+},
+"plan": {
+"f": "f/w/plan.mp3?v=ee5807e8d8"
+},
+"plane": {
+"f": "f/w/plane.mp3?v=824503d2b2"
+},
+"planned": {
+"f": "f/w/planned.mp3?v=2865e0421e"
+},
+"planted": {
+"f": "f/w/planted.mp3?v=da906eb6b9"
+},
+"plate": {
+"f": "f/w/plate.mp3?v=e291112b62"
+},
+"play": {
+"f": "f/w/play.mp3?v=18491d7e13"
+},
+"pocket": {
+"f": "f/w/pocket.mp3?v=75583c3b5a"
+},
+"point": {
+"f": "f/w/point.mp3?v=6144b8ccc2"
+},
+"pole": {
+"f": "f/w/pole.mp3?v=d32dda274b"
+},
+"pond": {
+"f": "f/w/pond.mp3?v=4cb2e8c3fe"
+},
+"pool": {
+"f": "f/w/pool.mp3?v=30ea76db1b",
+"m": "m/w/pool.mp3?v=eeca711162"
+},
+"port": {
+"f": "f/w/port.mp3?v=c7b80217ad"
+},
+"pose": {
+"f": "f/w/pose.mp3?v=1821477ef4"
+},
+"pot": {
+"f": "f/w/pot.mp3?v=8b88547dfd"
+},
+"potato": {
+"f": "f/w/potato.mp3?v=d675cadc5f"
+},
+"price": {
+"f": "f/w/price.mp3?v=5eca584e80"
+},
+"pumpkin": {
+"f": "f/w/pumpkin.mp3?v=b46309bf20"
+},
+"purple": {
+"f": "f/w/purple.mp3?v=84c31baf17"
+},
+"put": {
+"f": "f/w/put.mp3?v=9273236d09",
+"m": "m/w/put.mp3?v=d77ac85786"
+},
+"put the apples in the basket.": {
+"f": "f/s/put-the-apples-in-the-basket.mp3?v=487034bead"
+},
+"put the dishes in the sink.": {
+"f": "f/s/put-the-dishes-in-the-sink.mp3?v=b65299c803"
+},
+"rabbit": {
+"f": "f/w/rabbit.mp3?v=40a2144e22",
+"m": "m/w/rabbit.mp3?v=da7b31c885"
+},
+"race": {
+"f": "f/w/race.mp3?v=392b4ccaad"
+},
+"rack": {
+"f": "f/w/rack.mp3?v=7a77e683ca"
+},
+"rain": {
+"f": "f/w/rain.mp3?v=88ee594e01"
+},
+"rake": {
+"f": "f/w/rake.mp3?v=adde449653"
+},
+"ran": {
+"f": "f/w/ran.mp3?v=7fefc4c197"
+},
+"rang": {
+"f": "f/w/rang.mp3?v=2081a03abb"
+},
+"rare": {
+"f": "f/w/rare.mp3?v=c0b83323c9"
+},
+"rat": {
+"f": "f/w/rat.mp3?v=a3a0ae8df7"
+},
+"raw": {
+"f": "f/w/raw.mp3?v=01dab2e2e8"
+},
+"ray": {
+"f": "f/w/ray.mp3?v=96ece0d5f9"
+},
+"read this word.": {
+"f": "f/s/read-this-word.mp3?v=8fe42414f1"
+},
+"rear": {
+"f": "f/w/rear.mp3?v=edc118be30"
+},
+"red": {
+"f": "f/w/red.mp3?v=a062df1a2e"
+},
+"rent": {
+"f": "f/w/rent.mp3?v=ef7d517bd2"
+},
+"rest": {
+"f": "f/w/rest.mp3?v=8be707eaa8"
+},
+"rested": {
+"f": "f/w/rested.mp3?v=e2f3310046"
+},
+"ribbon": {
+"f": "f/w/ribbon.mp3?v=3e1effa4cc"
+},
+"rice": {
+"f": "f/w/rice.mp3?v=4662760160"
+},
+"rich": {
+"f": "f/w/rich.mp3?v=9fd57c6085"
+},
+"rid": {
+"f": "f/w/rid.mp3?v=b01bae2330"
+},
+"ride": {
+"f": "f/w/ride.mp3?v=99439fa743"
+},
+"right": {
+"f": "f/w/right.mp3?v=d5f9a55332"
+},
+"ring": {
+"f": "f/w/ring.mp3?v=fc51afa7ff"
+},
+"rip": {
+"f": "f/w/rip.mp3?v=ecd44977ac"
+},
+"ripe": {
+"f": "f/w/ripe.mp3?v=085543f06e"
+},
+"rise": {
+"f": "f/w/rise.mp3?v=677ce910de"
+},
+"road": {
+"f": "f/w/road.mp3?v=00ac5ce0fb"
+},
+"rob": {
+"f": "f/w/rob.mp3?v=5611f1549f"
+},
+"robot": {
+"f": "f/w/robot.mp3?v=9369cea282"
+},
+"rock": {
+"f": "f/w/rock.mp3?v=5c72522e50"
+},
+"rocket": {
+"f": "f/w/rocket.mp3?v=6ed26c93c0"
+},
+"rod": {
+"f": "f/w/rod.mp3?v=7b80c09b9b"
+},
+"roof": {
+"f": "f/w/roof.mp3?v=7e3395c5e5"
+},
+"room": {
+"f": "f/w/room.mp3?v=352980152d"
+},
+"rope": {
+"f": "f/w/rope.mp3?v=6066bac5f5"
+},
+"rose": {
+"f": "f/w/rose.mp3?v=9f09176e0e",
+"m": "m/w/rose.mp3?v=120a89fcd8"
+},
+"rot": {
+"f": "f/w/rot.mp3?v=b98fae1a24"
+},
+"row": {
+"f": "f/w/row.mp3?v=2a076c6682"
+},
+"rub": {
+"f": "f/w/rub.mp3?v=0b8234ab6d"
+},
+"rude": {
+"f": "f/w/rude.mp3?v=510337fc3b"
+},
+"rule": {
+"f": "f/w/rule.mp3?v=bda299991a"
+},
+"run": {
+"f": "f/w/run.mp3?v=14fe1182bf"
+},
+"running": {
+"f": "f/w/running.mp3?v=59be2efb74",
+"m": "m/w/running.mp3?v=f84cafd993"
+},
+"runs": {
+"f": "f/w/runs.mp3?v=81a37cbe7b"
+},
+"rush": {
+"f": "f/w/rush.mp3?v=a9630e785f"
+},
+"sack": {
+"f": "f/w/sack.mp3?v=adff838cc9"
+},
+"sad": {
+"f": "f/w/sad.mp3?v=c93730e25b"
+},
+"safe": {
+"f": "f/w/safe.mp3?v=3c63eeaa14"
+},
+"said": {
+"f": "f/w/said.mp3?v=25a5a758de",
+"m": "m/w/said.mp3?v=ad0aa51a41"
+},
+"sale": {
+"f": "f/w/sale.mp3?v=c2262ac3b1"
+},
+"sam has a red van.": {
+"f": "f/s/sam-has-a-red-van.mp3?v=3d8cb8739f"
+},
+"sample": {
+"f": "f/w/sample.mp3?v=ee3063c7dc"
+},
+"sand": {
+"f": "f/w/sand.mp3?v=606389afce"
+},
+"sang": {
+"f": "f/w/sang.mp3?v=1c6e1cd15b"
+},
+"sat": {
+"f": "f/w/sat.mp3?v=e8f79a5e2c"
+},
+"saw": {
+"f": "f/w/saw.mp3?v=2516c2d92e"
+},
+"say": {
+"f": "f/w/say.mp3?v=90fb719b35",
+"m": "m/w/say.mp3?v=da3126a6b4"
+},
+"scar": {
+"f": "f/w/scar.mp3?v=e40f0523fb"
+},
+"scare": {
+"f": "f/w/scare.mp3?v=10c650f116",
+"m": "m/w/scare.mp3?v=7c3f8a0c9b"
+},
+"school": {
+"f": "f/w/school.mp3?v=7d7e395be1",
+"m": "m/w/school.mp3?v=54a9028a77"
+},
+"score": {
+"f": "f/w/score.mp3?v=e37086b945"
+},
+"seat": {
+"f": "f/w/seat.mp3?v=0fa8a35058"
+},
+"see": {
+"f": "f/w/see.mp3?v=b494a28739"
+},
+"sell": {
+"f": "f/w/sell.mp3?v=fa13262dd5"
+},
+"send": {
+"f": "f/w/send.mp3?v=08e321395e"
+},
+"set": {
+"f": "f/w/set.mp3?v=30bbadfd60",
+"m": "m/w/set.mp3?v=fac761c42a"
+},
+"seven": {
+"f": "f/w/seven.mp3?v=5f395ee58a",
+"m": "m/w/seven.mp3?v=beb310fdc4"
+},
+"several": {
+"f": "f/w/several.mp3?v=f58a534bba"
+},
+"shake": {
+"f": "f/w/shake.mp3?v=a5f9b3ebc8"
+},
+"share": {
+"f": "f/w/share.mp3?v=464289923c"
+},
+"shark": {
+"f": "f/w/shark.mp3?v=7e837ff8b4",
+"m": "m/w/shark.mp3?v=e8cb881091"
+},
+"she": {
+"f": "f/w/she.mp3?v=54566157e6",
+"m": "m/w/she.mp3?v=895819943e"
+},
+"she has a shop.": {
+"f": "f/s/she-has-a-shop.mp3?v=bf42dd081c"
+},
+"she is late because of the rain.": {
+"f": "f/s/she-is-late-because-of-the-rain.mp3?v=2ff6fd6462"
+},
+"she wants some milk.": {
+"f": "f/s/she-wants-some-milk.mp3?v=8ab3957aeb"
+},
+"shed": {
+"f": "f/w/shed.mp3?v=9b95e52019"
+},
+"shell": {
+"f": "f/w/shell.mp3?v=b4ce28c414",
+"m": "m/w/shell.mp3?v=ef62a17173"
+},
+"ship": {
+"f": "f/w/ship.mp3?v=29a5d8404b",
+"m": "m/w/ship.mp3?v=8eb58cd700"
+},
+"shirt": {
+"f": "f/w/shirt.mp3?v=6a6634c277",
+"m": "m/w/shirt.mp3?v=0e686d38fc"
+},
+"shock": {
+"f": "f/w/shock.mp3?v=ca6693e9fc"
+},
+"shoot": {
+"f": "f/w/shoot.mp3?v=78f6a0ea6b"
+},
+"shop": {
+"f": "f/w/shop.mp3?v=d1888e5d67"
+},
+"shops": {
+"f": "f/w/shops.mp3?v=30a3998c23"
+},
+"short": {
+"f": "f/w/short.mp3?v=456ead6b1d"
+},
+"shot": {
+"f": "f/w/shot.mp3?v=b7244dce7d"
+},
+"should": {
+"f": "f/w/should.mp3?v=834c49a982",
+"m": "m/w/should.mp3?v=84c1fd1938"
+},
+"should i call him now?": {
+"f": "f/s/should-i-call-him-now.mp3?v=3d41891439"
+},
+"shout": {
+"f": "f/w/shout.mp3?v=dbe2f4dba9",
+"m": "m/w/shout.mp3?v=01eb82f1cd"
+},
+"show": {
+"f": "f/w/show.mp3?v=2da2f82f5b"
+},
+"shut": {
+"f": "f/w/shut.mp3?v=f324bebfa1"
+},
+"shy": {
+"f": "f/w/shy.mp3?v=e9a47457d0"
+},
+"sick": {
+"f": "f/w/sick.mp3?v=c78fd4b023",
+"m": "m/w/sick.mp3?v=c0155ab9ad"
+},
+"sight": {
+"f": "f/w/sight.mp3?v=8e2b952b71"
+},
+"silk": {
+"f": "f/w/silk.mp3?v=be97554a43"
+},
+"simple": {
+"f": "f/w/simple.mp3?v=dd947335de"
+},
+"sing": {
+"f": "f/w/sing.mp3?v=53681c25fb"
+},
+"singing": {
+"f": "f/w/singing.mp3?v=7804008d7d",
+"m": "m/w/singing.mp3?v=dd83e3e744"
+},
+"single": {
+"f": "f/w/single.mp3?v=2adad1c28b"
+},
+"sink": {
+"f": "f/w/sink.mp3?v=1af45c87ab"
+},
+"sip": {
+"f": "f/w/sip.mp3?v=9588b7aafe"
+},
+"sir": {
+"f": "f/w/sir.mp3?v=304040c480"
+},
+"sister": {
+"f": "f/w/sister.mp3?v=cf9fee34ba"
+},
+"sit": {
+"f": "f/w/sit.mp3?v=026b6514c2"
+},
+"six": {
+"f": "f/w/six.mp3?v=49bb87f4df"
+},
+"skin": {
+"f": "f/w/skin.mp3?v=09c69a336e",
+"m": "m/w/skin.mp3?v=e87f303f31"
+},
+"skip": {
+"f": "f/w/skip.mp3?v=b773f58601"
+},
+"skirt": {
+"f": "f/w/skirt.mp3?v=410358af1b"
+},
+"sky": {
+"f": "f/w/sky.mp3?v=37bc90b5bd"
+},
+"slap": {
+"f": "f/w/slap.mp3?v=ea3aee3fd4"
+},
+"sleep": {
+"f": "f/w/sleep.mp3?v=2c60539fb7"
+},
+"slim": {
+"f": "f/w/slim.mp3?v=bbb66684d6",
+"m": "m/w/slim.mp3?v=cb7cf000cd"
+},
+"slip": {
+"f": "f/w/slip.mp3?v=f9491850a0"
+},
+"slow": {
+"f": "f/w/slow.mp3?v=241abbc616"
+},
+"small": {
+"f": "f/w/small.mp3?v=5dffc7a86a"
+},
+"smell": {
+"f": "f/w/smell.mp3?v=68e4792b5e",
+"m": "m/w/smell.mp3?v=a4e991494f"
+},
+"smelled": {
+"f": "f/w/smelled.mp3?v=1ea4df2fc4",
+"m": "m/w/smelled.mp3?v=bcfc764391"
+},
+"smelling": {
+"f": "f/w/smelling.mp3?v=b48b84c19b"
+},
+"smile": {
+"f": "f/w/smile.mp3?v=de30a3fdef",
+"m": "m/w/smile.mp3?v=991742eef8"
+},
+"snack": {
+"f": "f/w/snack.mp3?v=b7887e3675"
+},
+"snail": {
+"f": "f/w/snail.mp3?v=438e246eb1"
+},
+"snow": {
+"f": "f/w/snow.mp3?v=a60137b5e7"
+},
+"so": {
+"f": "f/w/so.mp3?v=8cff05d93f"
+},
+"soap": {
+"f": "f/w/soap.mp3?v=3a881655a8"
+},
+"sock": {
+"f": "f/w/sock.mp3?v=ccfa353058"
+},
+"some": {
+"f": "f/w/some.mp3?v=bd13acf402",
+"m": "m/w/some.mp3?v=032195c531"
+},
+"some people drink water with lemon.": {
+"f": "f/s/some-people-drink-water-with-lemon.mp3?v=f1d658ca57"
+},
+"son": {
+"f": "f/w/son.mp3?v=666a315a0c"
+},
+"song": {
+"f": "f/w/song.mp3?v=999e5eafb7"
+},
+"soon": {
+"f": "f/w/soon.mp3?v=497c8e63b9"
+},
+"sound": {
+"f": "f/w/sound.mp3?v=fcfc62f7c3"
+},
+"speak": {
+"f": "f/w/speak.mp3?v=72e079cb19",
+"m": "m/w/speak.mp3?v=068441882f"
+},
+"spell": {
+"f": "f/w/spell.mp3?v=7743d4807e"
+},
+"spike": {
+"f": "f/w/spike.mp3?v=74cd383c0a"
+},
+"spin": {
+"f": "f/w/spin.mp3?v=fedb5a1c8b"
+},
+"spit": {
+"f": "f/w/spit.mp3?v=2ad5ef8f5a"
+},
+"spoke": {
+"f": "f/w/spoke.mp3?v=1de8cf358b"
+},
+"spoon": {
+"f": "f/w/spoon.mp3?v=ba8a730599"
+},
+"sport": {
+"f": "f/w/sport.mp3?v=8e77094bcb",
+"m": "m/w/sport.mp3?v=77aad88be3"
+},
+"spot": {
+"f": "f/w/spot.mp3?v=383dbc4d76",
+"m": "m/w/spot.mp3?v=bb45079ad5"
+},
+"spy": {
+"f": "f/w/spy.mp3?v=3d17fe2760"
+},
+"stack": {
+"f": "f/w/stack.mp3?v=e4d9b3e4f7"
+},
+"stairs": {
+"f": "f/w/stairs.mp3?v=61dc8bc7a3"
+},
+"stamp": {
+"f": "f/w/stamp.mp3?v=141e0fb7f8"
+},
+"star": {
+"f": "f/w/star.mp3?v=ad59e1d6e0"
+},
+"stare": {
+"f": "f/w/stare.mp3?v=d83ca054d8"
+},
+"stars": {
+"f": "f/w/stars.mp3?v=44d0394612"
+},
+"start": {
+"f": "f/w/start.mp3?v=39cd8948c4"
+},
+"stay": {
+"f": "f/w/stay.mp3?v=ce0092b0ad"
+},
+"stay in bed and sleep.": {
+"f": "f/s/stay-in-bed-and-sleep.mp3?v=baec3f88a3"
+},
+"step": {
+"f": "f/w/step.mp3?v=aefda65cb7"
+},
+"stir": {
+"f": "f/w/stir.mp3?v=9324e9edf3",
+"m": "m/w/stir.mp3?v=ca2c33d711"
+},
+"stirs": {
+"f": "f/w/stirs.mp3?v=a2696f99c6"
+},
+"stone": {
+"f": "f/w/stone.mp3?v=20a8b5a9ed"
+},
+"stood": {
+"f": "f/w/stood.mp3?v=65b116f1c3",
+"m": "m/w/stood.mp3?v=0bb4ed7704"
+},
+"stool": {
+"f": "f/w/stool.mp3?v=7fdb1d5ec3"
+},
+"stop": {
+"f": "f/w/stop.mp3?v=3714240727"
+},
+"stop at the next bank.": {
+"f": "f/s/stop-at-the-next-bank.mp3?v=08eaeffa59"
+},
+"stopped": {
+"f": "f/w/stopped.mp3?v=7247e5a66b"
+},
+"store": {
+"f": "f/w/store.mp3?v=4e1d4affa2"
+},
+"storm": {
+"f": "f/w/storm.mp3?v=b88c5f33e1",
+"m": "m/w/storm.mp3?v=15714390fd"
+},
+"straw": {
+"f": "f/w/straw.mp3?v=2afeff185b"
+},
+"stray": {
+"f": "f/w/stray.mp3?v=114d82e576"
+},
+"street": {
+"f": "f/w/street.mp3?v=fe333c2920"
+},
+"strip": {
+"f": "f/w/strip.mp3?v=31d0a9fbdc"
+},
+"stuck": {
+"f": "f/w/stuck.mp3?v=ed3c4a8c6f"
+},
+"such": {
+"f": "f/w/such.mp3?v=1b54710944",
+"m": "m/w/such.mp3?v=b5ccb266d6"
+},
+"sun": {
+"f": "f/w/sun.mp3?v=10685e9961"
+},
+"sunny": {
+"f": "f/w/sunny.mp3?v=e4cca17f7d"
+},
+"surf": {
+"f": "f/w/surf.mp3?v=7a2f71f5c9"
+},
+"swim": {
+"f": "f/w/swim.mp3?v=57631196da"
+},
+"table": {
+"f": "f/w/table.mp3?v=e6cbd9bff6"
+},
+"take the bus at nine.": {
+"f": "f/s/take-the-bus-at-nine.mp3?v=2f23aa898d"
+},
+"talk": {
+"f": "f/w/talk.mp3?v=b312e911fc"
+},
+"tall": {
+"f": "f/w/tall.mp3?v=c4b8f81cab",
+"m": "m/w/tall.mp3?v=59938e6ee6"
+},
+"tan": {
+"f": "f/w/tan.mp3?v=17df22d490"
+},
+"tap": {
+"f": "f/w/tap.mp3?v=e130adc926"
+},
+"tape": {
+"f": "f/w/tape.mp3?v=73cf92fac2"
+},
+"task": {
+"f": "f/w/task.mp3?v=417fe57c5c"
+},
+"tea": {
+"f": "f/w/tea.mp3?v=229a7fd667"
+},
+"teach": {
+"f": "f/w/teach.mp3?v=dd807bf2e0",
+"m": "m/w/teach.mp3?v=ee296d0691"
+},
+"team": {
+"f": "f/w/team.mp3?v=4c9e597932"
+},
+"tell": {
+"f": "f/w/tell.mp3?v=8a422c003e"
+},
+"ten": {
+"f": "f/w/ten.mp3?v=4842e806df"
+},
+"ten men get on the bus.": {
+"f": "f/s/ten-men-get-on-the-bus.mp3?v=2379fd9a3e"
+},
+"tent": {
+"f": "f/w/tent.mp3?v=886622e0b3"
+},
+"test": {
+"f": "f/w/test.mp3?v=1ef08f3982"
+},
+"tested": {
+"f": "f/w/tested.mp3?v=52039bb205",
+"m": "m/w/tested.mp3?v=dd3a316058"
+},
+"testing": {
+"f": "f/w/testing.mp3?v=1569e528cf"
+},
+"than": {
+"f": "f/w/than.mp3?v=cbaab0a49d"
+},
+"thank": {
+"f": "f/w/thank.mp3?v=00fe98f444"
+},
+"that": {
+"f": "f/w/that.mp3?v=a3c2c80908"
+},
+"that is a big ship.": {
+"f": "f/s/that-is-a-big-ship.mp3?v=2473424674"
+},
+"the": {
+"f": "f/w/the.mp3?v=5baf99d836",
+"m": "m/w/the.mp3?v=2c872e26c8"
+},
+"the baby is happy.": {
+"f": "f/s/the-baby-is-happy.mp3?v=ad89417301"
+},
+"the boys are out in the town.": {
+"f": "f/s/the-boys-are-out-in-the-town.mp3?v=4d1a47f2de"
+},
+"the bus is hot.": {
+"f": "f/s/the-bus-is-hot.mp3?v=be596921ac"
+},
+"the fish is in the dish.": {
+"f": "f/s/the-fish-is-in-the-dish.mp3?v=032924d1f4"
+},
+"the kids are singing a song.": {
+"f": "f/s/the-kids-are-singing-a-song.mp3?v=d912fc3d60"
+},
+"the nurse is near the door.": {
+"f": "f/s/the-nurse-is-near-the-door.mp3?v=9ea94d80bf"
+},
+"the pen is in my bag.": {
+"f": "f/s/the-pen-is-in-my-bag.mp3?v=2396244f74"
+},
+"the street light is green.": {
+"f": "f/s/the-street-light-is-green.mp3?v=7112bff421"
+},
+"the train is late again.": {
+"f": "f/s/the-train-is-late-again.mp3?v=658e3034f0"
+},
+"them": {
+"f": "f/w/them.mp3?v=537300ee8f"
+},
+"then": {
+"f": "f/w/then.mp3?v=423bf32bdb",
+"m": "m/w/then.mp3?v=5f910f9d9b"
+},
+"there": {
+"f": "f/w/there.mp3?v=a15ccbe094",
+"m": "m/w/there.mp3?v=fd86ec83ee"
+},
+"there are four birds in the yard.": {
+"f": "f/s/there-are-four-birds-in-the-yard.mp3?v=f7ab193c19"
+},
+"these": {
+"f": "f/w/these.mp3?v=58f48f0b4b"
+},
+"they": {
+"f": "f/w/they.mp3?v=d3c9959ab7",
+"m": "m/w/they.mp3?v=40f73b3866"
+},
+"they have a black van.": {
+"f": "f/s/they-have-a-black-van.mp3?v=6850f12c5f"
+},
+"they said it is a gift for you.": {
+"f": "f/s/they-said-it-is-a-gift-for-you.mp3?v=d2765cd178"
+},
+"thick": {
+"f": "f/w/thick.mp3?v=9b0fe160af"
+},
+"thin": {
+"f": "f/w/thin.mp3?v=5564d5c681",
+"m": "m/w/thin.mp3?v=d7b3157954"
+},
+"thing": {
+"f": "f/w/thing.mp3?v=762e75636d"
+},
+"think": {
+"f": "f/w/think.mp3?v=065f47c584",
+"m": "m/w/think.mp3?v=ad0e2e3148"
+},
+"third": {
+"f": "f/w/third.mp3?v=0b506fba10",
+"m": "m/w/third.mp3?v=8cac417543"
+},
+"this": {
+"f": "f/w/this.mp3?v=d2acad9489"
+},
+"this bag is pink.": {
+"f": "f/s/this-bag-is-pink.mp3?v=225fa5a318"
+},
+"those": {
+"f": "f/w/those.mp3?v=43335f20c6",
+"m": "m/w/those.mp3?v=d0b9634906"
+},
+"three": {
+"f": "f/w/three.mp3?v=7db669c7a6"
+},
+"thumb": {
+"f": "f/w/thumb.mp3?v=4f016bb00b"
+},
+"tick": {
+"f": "f/w/tick.mp3?v=2ab6a20a0f"
+},
+"tie": {
+"f": "f/w/tie.mp3?v=0ebf4f452f"
+},
+"tight": {
+"f": "f/w/tight.mp3?v=838de9f71b",
+"m": "m/w/tight.mp3?v=c7d930af85"
+},
+"till": {
+"f": "f/w/till.mp3?v=8570e8cadd"
+},
+"time": {
+"f": "f/w/time.mp3?v=6794c84e8d"
+},
+"tin": {
+"f": "f/w/tin.mp3?v=940fee5d28",
+"m": "m/w/tin.mp3?v=ff260661f7"
+},
+"tip": {
+"f": "f/w/tip.mp3?v=71d5375a5e"
+},
+"to": {
+"f": "f/w/to.mp3?v=120d987edb"
+},
+"toast": {
+"f": "f/w/toast.mp3?v=a949895754"
+},
+"took": {
+"f": "f/w/took.mp3?v=6027e66a8b"
+},
+"tooth": {
+"f": "f/w/tooth.mp3?v=94b69f239e"
+},
+"top": {
+"f": "f/w/top.mp3?v=05073b7b93"
+},
+"torn": {
+"f": "f/w/torn.mp3?v=600d10f3d8"
+},
+"toss": {
+"f": "f/w/toss.mp3?v=02e0bd0f1b"
+},
+"town": {
+"f": "f/w/town.mp3?v=cac3bf2737"
+},
+"toy": {
+"f": "f/w/toy.mp3?v=084513ae2c"
+},
+"train": {
+"f": "f/w/train.mp3?v=9dddcb2a97"
+},
+"tree": {
+"f": "f/w/tree.mp3?v=7534c8f861"
+},
+"trip": {
+"f": "f/w/trip.mp3?v=8a23827c82"
+},
+"true": {
+"f": "f/w/true.mp3?v=a665de637a"
+},
+"try": {
+"f": "f/w/try.mp3?v=1ef9d0b82b"
+},
+"tube": {
+"f": "f/w/tube.mp3?v=19b5cb9b64"
+},
+"tune": {
+"f": "f/w/tune.mp3?v=4388874442"
+},
+"turn": {
+"f": "f/w/turn.mp3?v=3430c1a8d2",
+"m": "m/w/turn.mp3?v=5581211f15"
+},
+"turn left at the store.": {
+"f": "f/s/turn-left-at-the-store.mp3?v=3ce0f0ac74"
+},
+"two": {
+"f": "f/w/two.mp3?v=017fda4f9b",
+"m": "m/w/two.mp3?v=820deece24"
+},
+"two of them swim in the pond.": {
+"f": "f/s/two-of-them-swim-in-the-pond.mp3?v=bc3fed7bed"
+},
+"us": {
+"f": "f/w/us.mp3?v=bd0b4d810b"
+},
+"use": {
+"f": "f/w/use.mp3?v=664af51b17"
+},
+"use the same pen.": {
+"f": "f/s/use-the-same-pen.mp3?v=3d6de72566"
+},
+"van": {
+"f": "f/w/van.mp3?v=4849896ebd",
+"m": "m/w/van.mp3?v=373edc5e1b"
+},
+"verb": {
+"f": "f/w/verb.mp3?v=23e7c938a2"
+},
+"very": {
+"f": "f/w/very.mp3?v=d251683b2b"
+},
+"vest": {
+"f": "f/w/vest.mp3?v=6b75cd21c0",
+"m": "m/w/vest.mp3?v=bf039b8036"
+},
+"vet": {
+"f": "f/w/vet.mp3?v=20e453f3dd"
+},
+"visit": {
+"f": "f/w/visit.mp3?v=fd0d97729a"
+},
+"vote": {
+"f": "f/w/vote.mp3?v=196a8deac4"
+},
+"wait": {
+"f": "f/w/wait.mp3?v=84e4aed007",
+"m": "m/w/wait.mp3?v=bbbf1557bc"
+},
+"wait for me at the beach.": {
+"f": "f/s/wait-for-me-at-the-beach.mp3?v=fa1d2a3df8"
+},
+"waiter": {
+"f": "f/w/waiter.mp3?v=ba95078b03"
+},
+"wake": {
+"f": "f/w/wake.mp3?v=09a5bb62c9"
+},
+"walk": {
+"f": "f/w/walk.mp3?v=7379175f5a",
+"m": "m/w/walk.mp3?v=bcaf91364c"
+},
+"wall": {
+"f": "f/w/wall.mp3?v=784eaf7566"
+},
+"want": {
+"f": "f/w/want.mp3?v=dd5b477cd9",
+"m": "m/w/want.mp3?v=a1a40af85c"
+},
+"was": {
+"f": "f/w/was.mp3?v=2ed512d795",
+"m": "m/w/was.mp3?v=c819637129"
+},
+"water": {
+"f": "f/w/water.mp3?v=1da8464ae1",
+"m": "m/w/water.mp3?v=29d6ecab21"
+},
+"way": {
+"f": "f/w/way.mp3?v=aaf5236f76"
+},
+"we": {
+"f": "f/w/we.mp3?v=4c34d5c95e"
+},
+"we camped in the hills.": {
+"f": "f/s/we-camped-in-the-hills.mp3?v=d8a30732da"
+},
+"we live in a big home.": {
+"f": "f/s/we-live-in-a-big-home.mp3?v=28d49a7ff1"
+},
+"we need a new coat.": {
+"f": "f/s/we-need-a-new-coat.mp3?v=10866845d5"
+},
+"we need a table and a lamp.": {
+"f": "f/s/we-need-a-table-and-a-lamp.mp3?v=a6bad51eb9"
+},
+"we saw a small cat in the hall.": {
+"f": "f/s/we-saw-a-small-cat-in-the-hall.mp3?v=d72b967027"
+},
+"we should not shout in the room.": {
+"f": "f/s/we-should-not-shout-in-the-room.mp3?v=e1a6d17ed6"
+},
+"we sing a song.": {
+"f": "f/s/we-sing-a-song.mp3?v=b9c6042b65"
+},
+"we went to the class at six.": {
+"f": "f/s/we-went-to-the-class-at-six.mp3?v=b868066899"
+},
+"we were late.": {
+"f": "f/s/we-were-late.mp3?v=7ccc817fe8"
+},
+"wear": {
+"f": "f/w/wear.mp3?v=f8620bb13d"
+},
+"web": {
+"f": "f/w/web.mp3?v=ceca4d13f0"
+},
+"week": {
+"f": "f/w/week.mp3?v=c692f3f6a3"
+},
+"well": {
+"f": "f/w/well.mp3?v=80f73a5288",
+"m": "m/w/well.mp3?v=3d7bea1bc5"
+},
+"went": {
+"f": "f/w/went.mp3?v=aaed51f92f"
+},
+"were": {
+"f": "f/w/were.mp3?v=023b80097b",
+"m": "m/w/were.mp3?v=eb1316788f"
+},
+"west": {
+"f": "f/w/west.mp3?v=3e39c9ab72"
+},
+"wet": {
+"f": "f/w/wet.mp3?v=5b2f27cfe8",
+"m": "m/w/wet.mp3?v=2f5e2740e8"
+},
+"what": {
+"f": "f/w/what.mp3?v=1a59f4af95"
+},
+"what is in the box?": {
+"f": "f/s/what-is-in-the-box.mp3?v=05ec36f32c"
+},
+"when": {
+"f": "f/w/when.mp3?v=8cb1ff25e3",
+"m": "m/w/when.mp3?v=2285964fcc"
+},
+"where": {
+"f": "f/w/where.mp3?v=5daaa3f4a4"
+},
+"where do you work?": {
+"f": "f/s/where-do-you-work.mp3?v=fecf8883c2"
+},
+"where is the car park?": {
+"f": "f/s/where-is-the-car-park.mp3?v=2f1ba1357e"
+},
+"which": {
+"f": "f/w/which.mp3?v=fb8c612ff1",
+"m": "m/w/which.mp3?v=2f3d75db94"
+},
+"white": {
+"f": "f/w/white.mp3?v=05bede0aa0",
+"m": "m/w/white.mp3?v=6762ad9f15"
+},
+"who": {
+"f": "f/w/who.mp3?v=f6cd1d97f4",
+"m": "m/w/who.mp3?v=6e07e76b79"
+},
+"who was at the bank?": {
+"f": "f/s/who-was-at-the-bank.mp3?v=9ae1ff3e0a"
+},
+"why": {
+"f": "f/w/why.mp3?v=8129bb3969",
+"m": "m/w/why.mp3?v=867f63d6a8"
+},
+"wide": {
+"f": "f/w/wide.mp3?v=871d84d51b"
+},
+"wife": {
+"f": "f/w/wife.mp3?v=f7807850b2",
+"m": "m/w/wife.mp3?v=2e672e9034"
+},
+"will": {
+"f": "f/w/will.mp3?v=2b30fdb1ba"
+},
+"win": {
+"f": "f/w/win.mp3?v=401a3af6ff"
+},
+"window": {
+"f": "f/w/window.mp3?v=a464725123"
+},
+"wing": {
+"f": "f/w/wing.mp3?v=ab642f84af",
+"m": "m/w/wing.mp3?v=b5c7f484b7"
+},
+"wink": {
+"f": "f/w/wink.mp3?v=6832a6fb08"
+},
+"winter": {
+"f": "f/w/winter.mp3?v=bdc8ffa587"
+},
+"wipe": {
+"f": "f/w/wipe.mp3?v=c43ab6ac93"
+},
+"wish": {
+"f": "f/w/wish.mp3?v=acf4e6126e",
+"m": "m/w/wish.mp3?v=569e592154"
+},
+"wished": {
+"f": "f/w/wished.mp3?v=9cb3dfc711"
+},
+"wishes": {
+"f": "f/w/wishes.mp3?v=4531fd57cb",
+"m": "m/w/wishes.mp3?v=6ab597e4ef"
+},
+"wit": {
+"f": "f/w/wit.mp3?v=96dc232a64"
+},
+"with": {
+"f": "f/w/with.mp3?v=7fe7664ef8"
+},
+"wood": {
+"f": "f/w/wood.mp3?v=057e0ef97d"
+},
+"wool": {
+"f": "f/w/wool.mp3?v=38c44d31f6"
+},
+"word": {
+"f": "f/w/word.mp3?v=e428d02239",
+"m": "m/w/word.mp3?v=a244e9e4bd"
+},
+"work": {
+"f": "f/w/work.mp3?v=0fd22a60a0"
+},
+"would": {
+"f": "f/w/would.mp3?v=76baacc262",
+"m": "m/w/would.mp3?v=cab9a75986"
+},
+"wrap": {
+"f": "f/w/wrap.mp3?v=14212555ff",
+"m": "m/w/wrap.mp3?v=43901d7ddf"
+},
+"wrist": {
+"f": "f/w/wrist.mp3?v=b9df6d0c4b"
+},
+"write": {
+"f": "f/w/write.mp3?v=00c7a5162b"
+},
+"write your phone number on the page.": {
+"f": "f/s/write-your-phone-number-on-the-page.mp3?v=03561d6627"
+},
+"wrong": {
+"f": "f/w/wrong.mp3?v=b039d5e3fa",
+"m": "m/w/wrong.mp3?v=83ca68d87c"
+},
+"wrote": {
+"f": "f/w/wrote.mp3?v=31da86f044"
+},
+"year": {
+"f": "f/w/year.mp3?v=8589ebeeba"
+},
+"yes": {
+"f": "f/w/yes.mp3?v=f885508d83"
+},
+"you": {
+"f": "f/w/you.mp3?v=5e1fff4891",
+"m": "m/w/you.mp3?v=c9eca56d7f"
+},
+"you and i sit in the sun.": {
+"f": "f/s/you-and-i-sit-in-the-sun.mp3?v=47e45ecea9"
+},
+"you sit on the bed.": {
+"f": "f/s/you-sit-on-the-bed.mp3?v=610957b899"
+},
+"your": {
+"f": "f/w/your.mp3?v=6c2fb23c77",
+"m": "m/w/your.mp3?v=8327b29112"
+},
+"your shirt is on the chair.": {
+"f": "f/s/your-shirt-is-on-the-chair.mp3?v=4110d176a2"
+},
+"zip": {
+"f": "f/w/zip.mp3?v=5c630ec163"
+},
+"zoo": {
+"f": "f/w/zoo.mp3?v=adb7a7d219",
+"m": "m/w/zoo.mp3?v=1bd6914e19"
+}
+},
+"version": 2,
+"voices": {
+"f": [
+"af_sarah",
+"af_heart",
+"am_michael",
+"am_adam"
+],
+"m": [
+"am_michael",
+"am_adam",
+"am_fenrir",
+"af_heart"
+]
+}
+}

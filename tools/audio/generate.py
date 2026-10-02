@@ -4,11 +4,21 @@
 Reads curriculum.json and writes:
   audio/<voice>/<kind>/<slug>.mp3   MP3, mono, 24 kHz, 48 kbps (plays on iPhone and Android)
   audio/manifest.json               {"clips": {"<text, lower case>": {"f": "f/w/cat.mp3?v=<hash>", ...}}}
-  tools/audio/qa-report.json        what Whisper heard for every clip
+  tools/audio/qa-report.json        the voice used and what Whisper heard for every clip
 
-Clips: every glossary word (w) and every sentence (s).
-Voices: f = af_heart (main voice), m = am_michael (second talker, for the words in listening items,
-so learners hear more than one speaker).
+Clips: every glossary word (w) and every sentence (s), in two slots:
+  f = the main clip, used everywhere;
+  m = a second talker for the words in listening items, so learners hear more than one speaker.
+
+Voice choice. No single Kokoro voice says every word cleanly in isolation. Compared on 64 test words
+(f/v, final stops, short-vowel pairs): the female voices voice an initial /f/ so it sounds like [v]
+(fat -> "vat"), and af_heart adds a voiced "uh" after a final /p/ (cup -> "cup-uh"); am_adam has the
+clearest /f/. A short pause before the word or a full stop after it often fixes a word (fix, fish,
+change, page, trip), but the pause (and the slow speed) make the model say "uh" first, so that vowel
+is cut off and the clip must then be heard as the bare word. Each clip is made with the first voice
+in VOICE_ORDER, and the first way of saying it in VARIANTS, that Whisper recognises.
+A main clip that no voice gets right uses the first voice and is listed under "flagged" in the
+report; a second-talker clip is only added when a different voice gets it right.
 
 Usage: see audio/README.md
 """
@@ -29,14 +39,20 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'audio'
 REPORT = ROOT / 'tools' / 'audio' / 'qa-report.json'
 SR = 24000
-VOICES = {'f': 'af_heart', 'm': 'am_michael'}
-PIPELINE_VERSION = '1'  # bump to regenerate everything
+VOICE_ORDER = {'f': ['af_sarah', 'af_heart', 'am_michael', 'am_adam'],
+               'm': ['am_michael', 'am_adam', 'am_fenrir', 'af_heart']}
+# Ways of saying a word, tried in this order for each voice: (before, after, speed).
+VARIANTS = [('', '', 1.0), (', ', '', 1.0), ('… ', '', 1.0), ('', '.', 1.0), ('', '', 0.85)]
+ADDS_UH = {1, 2, 4}  # variants that put an "uh" before the word
+PIPELINE_VERSION = '4'  # bump to regenerate everything
+STOPS = set('ptkbdɡ')
 
-# The course teaches short o as in "hot" (/ɑ/, a common American accent), so words spelled with a
-# single o between consonants (dog, long, off) use /ɑ/ too, not the lexicon's /ɔ/.
-SHORT_O = re.compile(r'^[b-df-hj-np-tv-z]*o[b-df-hj-np-tv-z]+$')
+# The course teaches short o as in "hot" (/ɑ/, a common American accent), so words spelled with o
+# (and no a) use /ɑ/ for the lexicon's /ɔ/: long, off, bosses. Not before r: "or" stays /ɔɹ/
+# (fork, born and short must not turn into fark, barn and shart).
+SHORT_O = re.compile('ɔ(?!ɹ)')
 # Pronunciations to force (misaki US phonemes): heteronyms and words the lexicon gets wrong.
-PHONEME_OVERRIDES = {}
+PHONEME_OVERRIDES = {'live': 'lˈɪv', 'use': 'jˈuz'}  # live: the heart word (to live); use: the verb
 
 
 def sha(text):
@@ -88,6 +104,50 @@ def normalise(a, target_rms_db=-20.0, peak_db=-1.0):
     return b.astype(np.float32)
 
 
+def trim_release(a):
+    """After a final stop (cup, bed): keep the closure and the burst, cut a voiced "uh" after it."""
+    hop = int(SR * 0.005)
+    db = np.array([20 * np.log10(np.sqrt(np.mean(a[i:i + hop] ** 2)) + 1e-9) for i in range(0, len(a) - hop, hop)])
+    top, end = db.max(), int(np.argmax(db))
+    while end + 1 < len(db) and db[end + 1] > top - 25:  # end of the vowel
+        end += 1
+    i = end + 1
+    while i < len(db) and db[i] > top - 38:  # into the closure
+        i += 1
+    if i >= len(db) or i - end > 60:
+        return a
+    j = i
+    while j < len(db) and db[j] <= top - 38:  # the closure ends at the burst
+        j += 1
+    cut = j * hop + int(SR * 0.06)
+    if j >= len(db) or j - i < 4 or cut >= len(a) - 2 * hop:  # no clear closure, or nothing after the burst
+        return a
+    b = a[:cut].copy()
+    n = int(SR * 0.015)
+    b[-n:] *= np.linspace(1, 0, n)
+    return b
+
+
+def trim_lead(a):
+    """Cut a short vowel ("uh") said before the word: a loud stretch under 160 ms, then a dip, then the word."""
+    hop = int(SR * 0.005)
+    db = np.array([20 * np.log10(np.sqrt(np.mean(a[i:i + hop] ** 2)) + 1e-9) for i in range(0, len(a) - hop, hop)])
+    loud = db > db.max() - 20
+    if not loud.any():
+        return a
+    i = int(np.argmax(loud))
+    j = i
+    while j < len(db) and loud[j]:
+        j += 1
+    k = j
+    while k < len(db) and not loud[k]:
+        k += 1
+    if k >= len(db) or j - i > 32 or k - j < 3:  # one loud stretch only, or too long to be an "uh"
+        return a
+    cut = (j + int(np.argmin(db[j:k]))) * hop
+    return fade(a[cut:], 0.005, 0.03)
+
+
 def encode_mp3(a, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as d:
@@ -114,13 +174,13 @@ class Synth:
             word = t.text.lower()
             if word in PHONEME_OVERRIDES:
                 ph = PHONEME_OVERRIDES[word]
-            elif SHORT_O.match(word):
-                ph = ph.replace('ɔ', 'ɑ')
+            elif 'o' in word and 'a' not in word:
+                ph = SHORT_O.sub('ɑ', ph)
             out.append(ph + (' ' if t.whitespace else ''))
         return ''.join(out).strip()
 
-    def say(self, phonemes, voice):
-        a, sr = self.k.create(phonemes, voice=voice, speed=1.0, is_phonemes=True)
+    def say(self, phonemes, voice, speed=1.0):
+        a, sr = self.k.create(phonemes, voice=voice, speed=speed, is_phonemes=True)
         assert sr == SR, sr
         return np.asarray(a, dtype=np.float32)
 
@@ -142,24 +202,42 @@ class Checker:
         return s.result.text.strip()
 
 
-# An isolated word often comes back with a filler ("A cat.") or as a homophone ("knot" for "not").
+# An isolated word often comes back with a filler ("A cat."), as digits ("4") or as a word that
+# sounds the same ("deer" for "dear", the letter "C" for "see"). Those count as heard right.
 FILLERS = {'a', 'an', 'the', 'and', 'uh', 'um', 'oh'}
-HOMOPHONES = {'i': {'i', 'eye', 'aye'}, 'a': {'a', 'uh'}, 'to': {'to', 'too', 'two'}, 'not': {'not', 'knot'},
-              'be': {'be', 'bee'}, 'see': {'see', 'sea'}, 'sun': {'sun', 'son'}, 'no': {'no', 'know'},
-              'by': {'by', 'buy', 'bye'}, 'for': {'for', 'four'}, 'one': {'one', 'won'}, 'you': {'you', 'u'}}
+DIGITS = {'1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five', '6': 'six', '7': 'seven', '8': 'eight',
+          '9': 'nine', '10': 'ten', '11': 'eleven', '12': 'twelve', '3rd': 'third'}
+SAME_SOUND = [
+    'i eye aye', 'a uh', 'to too two', 'not knot', 'be bee b', 'see sea c', 'sun son', 'no know', 'by buy bye',
+    'for four', 'one won', 'you u', 'are r', 'am m', 'tea t', 'why y', 'eye i', 'dear deer', 'hear here',
+    'high hi', 'hole whole', 'made maid', 'mail male', 'meat meet', 'need knead', 'pear pair', 'pole poll',
+    'rose rows', 'sell cell', 'stare stair', 'tie thai', 'wear where', 'which witch', 'wood would', 'write right',
+    'few phew', 'knew new', 'knight night', 'mat matt', 'fin finn', 'cord chord', 'peck pec', 'sack sac',
+    'chew choo', 'glad glaad', 'fill phil', 'their there', 'hour our', 'week weak', 'sail sale', 'tail tale',
+    'road rode', 'blue blew', 'flower flour', 'son sun', 'bear bare', 'plane plain', 'whole hole',
+]
+HOMOPHONES = {}
+for group in SAME_SOUND:
+    for w in group.split():
+        HOMOPHONES.setdefault(w, {w}).update(group.split())
 
 
 def words_of(t):
-    return re.sub(r"[^a-z' ]", ' ', t.lower().replace('-', ' ')).replace("'", '').split()
+    t = re.sub(r'\d+(rd|th|st|nd)?', lambda m: ' ' + DIGITS.get(m.group(0), m.group(0)) + ' ', t.lower())
+    return re.sub(r"[^a-z' ]", ' ', t.replace('-', ' ')).replace("'", '').split()
 
 
-def heard_ok(expected, heard):
+def heard_ok(expected, heard, strict=False):
+    """strict: the bare word only (no "a" in front), for clips whose "uh" was cut off."""
     want, got = words_of(expected), words_of(heard)
     if len(want) > 1:
         return got == want
-    if len(got) > 1 and want[0] not in FILLERS:
+    w = want[0]
+    if len(got) > 1 and w not in FILLERS and not strict:
         got = [g for g in got if g not in FILLERS] or got
-    return len(got) == 1 and got[0] in HOMOPHONES.get(want[0], {want[0]})
+    if len(set(got)) == 1 and len(got) <= 2:  # "knock knock"
+        got = got[:1]
+    return len(got) == 1 and got[0] in HOMOPHONES.get(w, {w})
 
 
 def clip_list():
@@ -197,31 +275,65 @@ def main():
     manifest_path = OUT / 'manifest.json'
     old = json.loads(manifest_path.read_text()).get('clips', {}) if manifest_path.exists() else {}
     old_report = json.loads(REPORT.read_text()) if REPORT.exists() else {}
-    manifest = {'version': 2, 'voices': VOICES, 'clips': {}}
-    report = {'heard': {}}
+    manifest = {'version': 2, 'voices': VOICE_ORDER, 'clips': {}}
+    report = {'clips': {}}
     keep = set()
 
-    for kind, text, voices in clips:
+    def make(kind, text, source, voice, n):
+        before, after, speed = VARIANTS[n]
+        a = fade(trim_silence(synth.say(before + source + after, voice, speed)))
+        strict = n in ADDS_UH
+        if strict:
+            if source.lstrip('ˈˌ')[:1] in 'aeiouæɑɐɔəɛɜɪʊʌAIOWYᵻ':
+                return a, '(starts with a vowel: the "uh" cannot be cut off)', False
+            a = trim_lead(a)
+        if kind == 'w' and source.rstrip('ˈˌ')[-1:] in STOPS:
+            a = trim_release(a)
+        heard = checker.text(a)
+        return a, heard, heard_ok(text, heard, strict)
+
+    for kind, text, slots in clips:
         key = text.lower()
         entry = {}
         source = synth.phonemes(text)
-        for v in voices:
-            h = sha('|'.join([PIPELINE_VERSION, key, VOICES[v], source]))
-            rel = f'{v}/{kind}/{slug(text)}.mp3'
-            keep.add(rel)
-            prev = old.get(key, {}).get(v)
-            rkey = f'{key}@{v}'
-            if prev == f'{rel}?v={h}' and (OUT / rel).exists() and not args.force:
-                entry[v] = prev
-                if rkey in old_report.get('heard', {}):
-                    report['heard'][rkey] = old_report['heard'][rkey]
+        used = None
+        for slot in slots:
+            order = [v for v in VOICE_ORDER[slot] if v != used]
+            h = sha('|'.join([PIPELINE_VERSION, key, slot, source, ','.join(order), repr(VARIANTS)]))
+            rel = f'{slot}/{kind}/{slug(text)}.mp3'
+            rkey = f'{key}@{slot}'
+            prev = old_report.get('clips', {}).get(rkey)
+            if not args.force and prev and prev.get('h') == h and (prev.get('voice') is None or (OUT / rel).exists()):
+                report['clips'][rkey] = prev
+                if prev.get('voice'):
+                    entry[slot] = f'{rel}?v={h}'
+                    keep.add(rel)
+                    used = used or prev['voice']
                 continue
-            a = fade(trim_silence(synth.say(source, VOICES[v])))
-            heard = checker.text(a)
-            report['heard'][rkey] = {'heard': heard, 'ok': heard_ok(text, heard), 'phonemes': source}
+            tried, chosen = [], None
+            for voice in order:
+                for n in range(len(VARIANTS) if kind == 'w' else 1):
+                    a, heard, ok = make(kind, text, source, voice, n)
+                    tried.append(f'{voice}/{n}: {heard}')
+                    if ok:
+                        chosen = (voice, a, True)
+                        break
+                    if chosen is None and slot == 'f':
+                        chosen = (voice, a, False)  # nothing is recognised: keep the first, flagged
+                if chosen and chosen[2]:
+                    break
+            if chosen is None:  # second talker: only added when a different voice is recognised
+                report['clips'][rkey] = {'h': h, 'voice': None, 'ok': False, 'tried': tried}
+                print(f'{rkey:44s} --  no second voice ({"; ".join(tried)})', flush=True)
+                continue
+            voice, a, ok = chosen
             encode_mp3(normalise(a), OUT / rel)
-            entry[v] = f'{rel}?v={h}'
-            print(f'{rkey:48s} {"ok " if report["heard"][rkey]["ok"] else "?? "} {heard}', flush=True)
+            keep.add(rel)
+            entry[slot] = f'{rel}?v={h}'
+            used = used or voice
+            report['clips'][rkey] = {'h': h, 'voice': voice, 'variant': int(tried[-1].split(':')[0].split('/')[1]) if ok else 0,
+                                     'ok': ok, 'tried': tried, 'phonemes': source}
+            print(f'{rkey:44s} {"ok" if ok else "??"}  {voice:10s} {tried[-1] if ok else "; ".join(tried)}', flush=True)
         manifest['clips'][key] = entry
 
     # Remove clips that are no longer in the course.
@@ -229,11 +341,16 @@ def main():
         if str(f.relative_to(OUT)) not in keep:
             f.unlink()
 
-    report['flagged'] = sorted(k for k, r in report['heard'].items() if not r['ok'])
+    report['flagged'] = sorted(k for k, r in report['clips'].items() if r['voice'] and not r['ok'])
+    report['voices_used'] = {}
+    for r in report['clips'].values():
+        if r['voice']:
+            report['voices_used'][r['voice']] = report['voices_used'].get(r['voice'], 0) + 1
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=0) + '\n', encoding='utf-8')
     REPORT.write_text(json.dumps(report, ensure_ascii=False, sort_keys=True, indent=1) + '\n', encoding='utf-8')
     files = sum(len(e) for e in manifest['clips'].values())
-    print(f"\n{len(manifest['clips'])} clips, {files} files; Whisper flagged {len(report['flagged'])} (listen to those)")
+    print(f"\n{len(manifest['clips'])} clips, {files} files, voices {report['voices_used']}; "
+          f"no voice recognised for {len(report['flagged'])} (listen to those)")
     return 0
 
 

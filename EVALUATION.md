@@ -52,7 +52,7 @@ All of E1–E10 are fixed:
 | Distractors that test the target | Done. 611 of 636 option pairs are at most two sounds apart; the rest are exception words or longer words | `curriculum.json` |
 | Real tests: 8–10 items, 3 options, at least half new words, pass at 80% | Done for every lesson. A failed test offers "📖 راجع الدرس" | `curriculum.json`, `js/gameEngine.js` |
 | Feedback that teaches | Done. It replays both words, highlights the letters that differ and shows the lesson's rule | `js/gameEngine.js` |
-| Recorded audio | **Partly.** See "Audio" below | `js/audioManager.js`, `audio/` |
+| Recorded audio | Done for whole words and sentences. See "Audio" below | `audio/`, `tools/audio/`, `js/audioManager.js` |
 | Dashboard: accuracy per lesson and most-confused words | Done | `js/teacherDashboard.js` |
 | New scope and sequence | Done. Ten units, 0–9 as in 5.4, with 37 lessons and 727 items (previously at most ~200 responses per pass) | `curriculum.json` |
 | Spelling in every unit | Done. Build-the-word with sound tiles and extra tiles, word chains, fill-the-letters | `curriculum.json` |
@@ -63,18 +63,23 @@ All of E1–E10 are fixed:
 | p/b, f/v, e/i and consonant clusters | Done. Unit 0 covers the contrasts; Unit 3 covers clusters | `curriculum.json` |
 | Adult framing | Done. "Silent E" replaces "Magic E", and key-word pictures replace decorative icons | `curriculum.json` |
 
-**Audio.** What is done:
-- The app now plays a recording whenever a word or sentence is listed in `audio/manifest.json`.
-- It no longer picks novelty voices.
-- It rotates up to three US voices in listening items.
-
-What is still needed:
-- Recordings, especially of sounded-out words.
-- Device speech is still the fallback.
+**Audio.**
+- **Coverage.** Every word (823) and every sentence (86) has a clip: 1,095 MP3 files, 6.2 MB.
+  - They were generated with the open Kokoro-82M voice model (`tools/audio/generate.py`).
+  - The words in listening items also have a second talker, and listening items alternate between the two.
+- **Playback.** Clips play through Web Audio, which works on iPhone and Android. Device speech is now only a fallback, and it never uses novelty voices.
+- **Voice choice.** No single voice said every word cleanly on its own. Each clip therefore uses the first voice, and the first way of saying the word, that the Whisper speech recogniser hears correctly. This avoided three faults the model makes on isolated words:
+  - an /f/ that sounds like /v/ (*fat*, *fix*), which would undermine the f/v lesson;
+  - an "uh" after a final /p/ (*cup*);
+  - a dropped final /dʒ/ (*page*, *change*), which would undermine the soft-g lesson.
+- **Not recognised in any voice: 10 clips.** These are *a, bin, cot, knee, lifted, moss, muddle, should, than, wool*.
+  - Isolated short words are hard for recognisers. Whisper hears *bin* as "Ben", yet a vowel measurement puts it with *bit*, not *bet*. So these clips may well be fine.
+  - A person should still listen to them. The list is in `tools/audio/qa-report.json`.
 
 ### Still open
 
-- **Sounded-out audio** ("sh–i–p … ship") needs recordings.
+- **Sounded-out audio** ("sh–i–p … ship"). The clips are whole words only.
+- **A listening check by a person** of the generated clips, starting with the 10 above.
 - **Speech recognition.** Reading aloud is self-checked.
 - **Outcome data from a pilot with real learners.** Measure:
   - reading of untrained words;
