@@ -66,9 +66,15 @@ How the audio is made:
   - words with an unstressed vowel (*basket*);
   - words with more than six sounds;
   - words with a sound that failed the blend test (see `sounds` in `qa-report.json`).
-- **Current status:** 40 of 44 sounds pass, and 600 words can be sounded out (78% of the words the lessons use).
-  - Four sounds failed: *v* (heard as *th*), *aw*, *r* and *th*. Words with them (*van, saw, red, thin*) have no 🐢 button.
-  - Recordings of these four by a person would fill the gap. Put them in `f/ph/` and list them under `sounds`.
+- **Current status:** all 44 sounds pass, and 732 words can be sounded out (95% of the words the lessons use).
+  The rest are by design: unstressed vowels (*seven, buses, basket*), long words, and one-sound words.
+- **Hard sounds and how they were solved:**
+  - **r** and **v** run into the vowel with no clear boundary, so they are a fixed 120 ms / 110 ms from the
+    start of *red* / *van*.
+  - **th** on its own sounds like *f* or *s*; listeners tell them apart by the start of the next vowel. The first
+    110 ms of *thank* (voice af_nicole, not stretched) is heard as th in 7 of 8 words and contains no vowel.
+  - **aw** said alone is unusable in every voice. The steady middle of *saw* (af_heart) is heard as "ah". That is
+    the aw of the American accent the course uses, where the short o in *hot* is "ah" too.
   - Single sounds are quieter than words where that is natural (*f, th, v, h*). Raised to vowel loudness, they
     hiss like *s* or *sh*.
 

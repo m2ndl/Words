@@ -11981,38 +11981,44 @@
  "sounds": {
   "A": {
    "accepted": true,
-   "score": 0.8,
+   "score": 0.71,
    "source": "af_sarah:tˈAk:vowel",
    "tests": [
     "make: m-a-k ✗",
     "cake: Cake",
     "name: name",
     "tape: Today",
-    "same: Same"
+    "same: Same",
+    "cave: KV ✗",
+    "gave: Gave"
    ]
   },
   "I": {
    "accepted": true,
-   "score": 0.83,
+   "score": 0.88,
    "source": "af_sarah:kˈIt:vowel",
    "tests": [
     "bike: Bye-",
     "time: Time",
     "kite: Kaita",
+    "ride: right",
     "night: night",
     "bite: Bye time ✗",
-    "pie: Hi"
+    "pie: Hi",
+    "five: FIVE"
    ]
   },
   "O": {
    "accepted": true,
-   "score": 0.75,
+   "score": 0.83,
    "source": "af_sarah:ˈOk:vowel",
    "tests": [
     "home: Home",
     "note: No time. ✗",
     "boat: Boat",
-    "soap: Soo-"
+    "soap: Soo-",
+    "road: Rode",
+    "vote: Vote."
    ]
   },
   "W": {
@@ -12055,16 +12061,16 @@
   "d": {
    "accepted": true,
    "score": 0.88,
-   "source": "af_heart:dˈɑt:voiced-stop",
+   "source": "af_sarah:dˈæd:voiced-stop",
    "tests": [
     "bad: bad",
-    "dad: DADADADADADADAD",
-    "dog: DOG",
+    "dad: dad",
+    "dog: dog",
     "bed: bad",
     "mad: m-a-d",
-    "seed: Seed.",
-    "food: F-dude ✗",
-    "down: Downton"
+    "red: Red",
+    "ride: right ✗",
+    "road: Rode"
    ]
   },
   "f": {
@@ -12076,7 +12082,7 @@
     "fan: FAN",
     "fat: F-A-T",
     "feet: feet",
-    "food: F-dude ✗",
+    "food: F-nude ✗",
     "farm: arm ✗",
     "for: short ✗",
     "fork: F-Or-K"
@@ -12099,11 +12105,11 @@
   },
   "i": {
    "accepted": true,
-   "score": 1.0,
+   "score": 0.8,
    "source": "af_sarah:fˈit:vowel",
    "tests": [
     "feet: feet",
-    "seed: Seed.",
+    "seed: C D ✗",
     "team: stream",
     "keep: KEEP",
     "sheep: She"
@@ -12137,10 +12143,10 @@
     "kit: KIT",
     "cup: KAPA",
     "cut: Cut.",
+    "thick: thicc",
     "pink: Ping ✗",
     "bank: bang ✗",
-    "make: m-a-k ✗",
-    "cake: Cake"
+    "make: m-a-k ✗"
    ]
   },
   "ks": {
@@ -12163,8 +12169,8 @@
     "cool: KIDO L- ✗",
     "mule: you ✗",
     "loud: LOUD",
-    "girl: girl",
-    "look: Look"
+    "law: la",
+    "ball: Bala"
    ]
   },
   "m": {
@@ -12248,22 +12254,25 @@
    "source": "af_sarah:ʃˈut:vowel",
    "tests": [
     "moon: doon",
-    "food: F-dude ✗",
+    "food: F-nude ✗",
     "boot: But",
     "soon: soon",
     "cool: KIDO L- ✗"
    ]
   },
   "v": {
-   "accepted": false,
-   "score": 0.4,
-   "source": "af_sarah:vˈæn:initial-weak",
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_sarah:vˈæn:onset-110",
    "tests": [
     "van: then ✗",
-    "vet: that ✗",
+    "vet: VET",
     "vest: VEST",
     "have: Have",
-    "five: FINE ✗"
+    "five: FIVE",
+    "cave: KV",
+    "gave: Gave",
+    "vote: Vote."
    ]
   },
   "w": {
@@ -12272,7 +12281,8 @@
    "source": "af_sarah:wˈɛt:glide",
    "tests": [
     "wet: WET",
-    "win: win"
+    "win: win",
+    "walk: Waka"
    ]
   },
   "z": {
@@ -12295,7 +12305,7 @@
     "bad: bad",
     "map: m-a-p",
     "tap: TAP",
-    "dad: DADADADADADADAD"
+    "dad: dad"
    ]
   },
   "ð": {
@@ -12316,7 +12326,9 @@
     "sing: sing",
     "long: Lying",
     "pink: Ping",
-    "bank: bang"
+    "bank: bang",
+    "thank: thang",
+    "think: thing"
    ]
   },
   "ɑ": {
@@ -12328,7 +12340,7 @@
     "pot: PUT ✗",
     "top: top",
     "box: box",
-    "dog: DOG",
+    "dog: dog",
     "not: not",
     "shop: Shoppe",
     "chop: Chop"
@@ -12347,18 +12359,18 @@
    ]
   },
   "ɔ": {
-   "accepted": false,
-   "score": 0.29,
-   "source": "af_sarah:tˈɔk:vowel",
+   "accepted": true,
+   "score": 0.62,
+   "source": "af_heart:sˈɔ:vowel-tight",
    "tests": [
-    "saw: So ✗",
-    "law: luh ✗",
-    "paw: Ha!",
-    "ball: Bully ✗",
-    "talk: TALK",
-    "caught: Cut! ✗",
-    "dawn: done ✗",
-    "said whole, heard as \"Uh?\" ✗"
+    "saw: S.A. ✗",
+    "law: la",
+    "paw: pa",
+    "ball: Bala",
+    "talk: talk",
+    "caught: cut ✗",
+    "dawn: Done. ✗",
+    "jaw: Ja"
    ]
   },
   "ɔɹ": {
@@ -12387,7 +12399,7 @@
     "get: get",
     "set: Set",
     "jet: Jet.",
-    "wet: WET"
+    "red: Red"
    ]
   },
   "ɛɹ": {
@@ -12422,7 +12434,7 @@
    "score": 1.0,
    "source": "af_heart:ɡˈæs:voiced-stop",
    "tests": [
-    "dog: DOG",
+    "dog: dog",
     "big: BEGG",
     "get: get",
     "gas: Guess.",
@@ -12444,7 +12456,7 @@
     "kit: KIT",
     "fish: Fff-ish",
     "ship: Shit",
-    "chip: Chip"
+    "thin: thin"
    ]
   },
   "ɪɹ": {
@@ -12455,23 +12467,23 @@
     "ear: year",
     "near: near",
     "hear: year",
-    "dear: year",
+    "dear: Dear",
     "fear: year"
    ]
   },
   "ɹ": {
-   "accepted": false,
-   "score": 0.25,
-   "source": "af_sarah:ɹˈɪp:initial-weak-4",
+   "accepted": true,
+   "score": 1.0,
+   "source": "af_sarah:ɹˈɛd:onset-120",
    "tests": [
-    "red: red",
-    "rat: that ✗",
-    "ride: RIDE",
-    "road: mowed ✗",
-    "run: then ✗",
-    "rock: muck ✗",
-    "rip: Nip ✗",
-    "rug: O- ✗"
+    "red: Red",
+    "rat: RAT",
+    "ride: right",
+    "road: Rode",
+    "run: Run",
+    "rock: ROC",
+    "rip: RIP",
+    "rug: RUGGING"
    ]
   },
   "ʃ": {
@@ -12503,7 +12515,7 @@
   },
   "ʌ": {
    "accepted": true,
-   "score": 0.86,
+   "score": 0.88,
    "source": "af_sarah:ˈʌp:vowel",
    "tests": [
     "cup: KAPA ✗",
@@ -12512,18 +12524,20 @@
     "cut: Cut.",
     "hut: HUH?",
     "but: But",
+    "run: Run",
     "gum: gum"
    ]
   },
   "ʤ": {
    "accepted": true,
-   "score": 0.75,
+   "score": 0.8,
    "source": "af_sarah:ʤˈɑb:voiced-stop",
    "tests": [
     "jet: Jet.",
     "job: job",
     "huge: You ✗",
-    "join: Joy."
+    "join: Joy.",
+    "jaw: Ja"
    ]
   },
   "ʧ": {
@@ -12537,19 +12551,22 @@
    ]
   },
   "θ": {
-   "accepted": false,
-   "score": 0.2,
-   "source": "af_heart:θˈɪk:frication",
+   "accepted": true,
+   "score": 0.88,
+   "source": "af_nicole:θˈæŋk:onset-110",
    "tests": [
-    "thin: in ✗",
-    "thick: *sad trombone* ✗",
-    "bath: Beth",
-    "math: Mm-hmm ✗",
-    "thank: SANK ✗"
+    "thin: thin",
+    "thick: thicc",
+    "bath: bath",
+    "math: M-A-TH",
+    "thank: thang",
+    "path: path",
+    "moth: Mm-oh ✗",
+    "think: thing"
    ]
   }
  },
- "sounds_hash": "e5c4dcc03d",
+ "sounds_hash": "ec76f58300",
  "voices_used": {
   "af_heart": 51,
   "af_sarah": 853,

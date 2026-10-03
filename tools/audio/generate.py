@@ -59,7 +59,7 @@ SHORT_O = re.compile('ɔ(?!ɹ)')
 # Pronunciations to force (misaki US phonemes): heteronyms and words the lexicon gets wrong.
 PHONEME_OVERRIDES = {'live': 'lˈɪv', 'use': 'jˈuz',  # live: the heart word (to live); use: the verb
                      'catch': 'kˈæʧ'}  # the lexicon has the "ketch" variant; the course teaches short a
-SOUND_VOICES = ['af_sarah', 'af_heart', 'am_adam']  # single sounds: the main voice (voiceless ones: any)
+SOUND_VOICES = ['af_sarah', 'af_heart', 'am_adam']  # single sounds: vowels in the first, consonants in any (see sounds.VOICE_OVERRIDES)
 
 
 def sha(text):
@@ -355,7 +355,7 @@ def main():
                 parts[text.lower()] = seg
     needed = sorted({u for seg in parts.values() for _, u in seg})
     settings = [PIPELINE_VERSION, sounds.CANDIDATES, sounds.CHECKS, sounds.BLEND_WORDS, sounds.SAID_AS, sounds.LOUDNESS,
-                sounds.PASS_SCORE, SOUND_VOICES]
+                sounds.PASS_SCORE, sounds.VOICE_OVERRIDES, SOUND_VOICES]
     sh = sha(json.dumps(settings, sort_keys=True, ensure_ascii=False, default=sorted))  # sets sorted: same key every run
     old_sounds = old_manifest.get('sounds', {})
     if (not args.force and old_report.get('sounds_hash') == sh
@@ -389,7 +389,7 @@ def main():
     print(f"\n{len(manifest['clips'])} clips, {files} files, voices {report['voices_used']}; "
           f"no voice recognised for {len(report['flagged'])} (listen to those)")
     print(f"sounds: {len(manifest['sounds'])} of {len(needed)} pass the blend test "
-          f"({', '.join(sorted(set(needed) - set(manifest['sounds']))) or 'all'} missing); "
+          f"({', '.join(sorted(set(needed) - set(manifest['sounds']))) or 'none'} missing); "
           f"{len(manifest['segments'])} words can be sounded out")
     return 0
 

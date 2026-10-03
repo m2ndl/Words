@@ -30,7 +30,8 @@ CANDIDATES = {
     's': [('sˈʌn', 'frication'), ('sˈæt', 'frication'), ('sˈɪt', 'frication')],
     'f': [('fˈæn', 'frication'), ('fˈɪt', 'frication'), ('fˈʌn', 'frication'), ('ˈɪf', 'final'), ('ˈɑf', 'final'), ('kˈʌf', 'final')],
     'ʃ': [('ʃˈɪp', 'frication'), ('ʃˈɑp', 'frication')],
-    'θ': [('θˈɪn', 'frication'), ('θˈɪk', 'frication'), ('θˈæŋk', 'frication'), ('bˈæθ', 'final'), ('mˈæθ', 'final')],
+    # th alone sounds like f or s; the first 110 ms of "thank" (af_nicole), not stretched, is heard as th.
+    'θ': [('θˈæŋk', 'onset-110'), ('θˈɪn', 'onset-120'), ('θˈɪn', 'frication'), ('bˈæθ', 'final')],
     'ʧ': [('ʧˈɪp', 'frication'), ('ʧˈɑp', 'frication')],
     'h': [('hˈæt', 'initial-weak'), ('hˈɑt', 'initial-weak'), ('hˈɪt', 'initial-weak'), ('hˈɑp', 'initial-weak')],
     'p': [('pˈæn', 'stop'), ('pˈɪn', 'stop'), ('pˈɑt', 'stop')],
@@ -46,10 +47,10 @@ CANDIDATES = {
     'n': [('nˈæp', 'initial-nasal'), ('nˈɛt', 'initial-nasal')],
     'ŋ': [('sˈɪŋ', 'final-drop'), ('lˈɑŋ', 'final-drop')],
     'l': [('lˈæp', 'initial-weak-4'), ('lˈɪp', 'initial-nasal'), ('ˈɪl', 'final-drop')],
-    'ɹ': [('ɹˈɛd', 'initial-weak-4'), ('ɹˈæt', 'initial-weak-4'), ('ɹˈʌn', 'initial-weak-4'), ('ɹˈɑk', 'initial-weak'),
-          ('ɹˈɪp', 'initial-weak-4'), ('ɹˈʌɡ', 'initial-weak')],
+    # r runs into the vowel with no clear boundary: a fixed 80-120 ms from its start works best.
+    'ɹ': [('ɹˈɛd', 'onset-80'), ('ɹˈɛd', 'onset-120'), ('ɹˈæt', 'onset-100'), ('ɹˈɪp', 'onset-100'), ('ɹˈɛd', 'initial-weak-4')],
     'z': [('zˈɪp', 'initial-voiced-fricative'), ('zˈæp', 'initial-voiced-fricative')],
-    'v': [('vˈæn', 'initial-weak'), ('vˈɛt', 'initial-weak'), ('vˈæn', 'initial-voiced-fricative'), ('vˈɛt', 'initial-voiced-fricative'),
+    'v': [('vˈæn', 'onset-110'), ('vˈæn', 'initial-weak'), ('vˈɛt', 'initial-weak'), ('vˈɛt', 'initial-voiced-fricative'),
           ('hˈæv', 'final-drop'), ('ɡˈɪv', 'final-drop')],
     'ð': [('ðˈæt', 'initial-voiced-fricative'), ('ðˈɛn', 'initial-weak')],
     'w': [('wˈɛt', 'glide'), ('wˈɪn', 'glide')],
@@ -68,7 +69,9 @@ CANDIDATES = {
     'ju': [('jˈu', 'whole'), ('kjˈut', 'vowel')],
     'W': [('ˈW', 'whole'), ('ˈWt', 'vowel'), ('kˈW', 'vowel'), ('ʃˈWt', 'vowel')],
     'Y': [('ˈY', 'whole'), ('tˈY', 'vowel'), ('sˈY', 'vowel')],
-    'ɔ': [('ˈɔ', 'whole'), ('sˈɔ', 'vowel'), ('tˈɔk', 'vowel'), ('pˈɔ', 'vowel'), ('kˈɔt', 'vowel')],
+    # aw said alone is unusable in every voice; the steady middle of "saw" (af_heart) is heard as "ah",
+    # the aw of the American accent the course uses (where short o in "hot" is "ah" too).
+    'ɔ': [('sˈɔ', 'vowel-tight'), ('tˈɔk', 'vowel-tight'), ('sˈɔ', 'vowel'), ('kˈɔt', 'vowel-tight')],
     'ɑɹ': [('ˈɑɹ', 'whole'), ('kˈɑɹ', 'vowel'), ('pˈɑɹk', 'vowel')],
     'ɔɹ': [('ˈɔɹ', 'whole'), ('fˈɔɹ', 'vowel'), ('ʃˈɔɹt', 'vowel'), ('pˈɔɹt', 'vowel')],
     'ɜɹ': [('ˈɜɹ', 'whole'), ('hˈɜɹt', 'vowel'), ('ʃˈɜɹt', 'vowel'), ('hˈɜɹ', 'vowel')],
@@ -95,6 +98,8 @@ quit kw ɪ t|quick kw ɪ k|born b ɔɹ n|sort s ɔɹ t|port p ɔɹ t|hurt h ɜɹ
 night n I t|bite b I t|pie p I|put p ʊ t|took t ʊ k|caught k ɔ t|dawn d ɔ n|man m æ n|met m ɛ t|ham h æ m
 run ɹ ʌ n|rock ɹ ɑ k|vest v ɛ s t|have h æ v|kick k ɪ k|keg k ɛ ɡ|gum ɡ ʌ m|hop h ɑ p|hit h ɪ t
 gap ɡ æ p|bag b æ ɡ|pig p ɪ ɡ|leg l ɛ ɡ|rip ɹ ɪ p|rug ɹ ʌ ɡ|five f I v|bath b æ θ|math m æ θ|thank θ æ ŋ k
+cave k A v|gave ɡ A v|vote v O t|ran ɹ æ n|rest ɹ ɛ s t|path p æ θ|moth m ɑ θ|think θ ɪ ŋ k|jaw ʤ ɔ|walk w ɔ k
+tall t ɔ l
 '''
 BLEND_WORDS = {w: parts.split() for w, parts in (x.strip().split(' ', 1) for x in _B.replace('\n', '|').split('|') if x.strip())}
 # Vowels said whole, as phonics names them; one of these passes if the recogniser hears the syllable.
@@ -104,9 +109,11 @@ SAID_AS = {'A': {'a', 'eh', 'hey', 'ay', 'aye'}, 'I': {'i', 'eye', 'aye', 'ai'},
            'ɑɹ': {'are', 'r', 'ar'}, 'ɔɹ': {'or', 'oar', 'ore'}, 'ɜɹ': {'er', 'err', 'her'},
            'ɛɹ': {'air', 'heir'}, 'ɪɹ': {'ear', 'year', 'here'}}
 
+# Voices to try for a sound instead of the usual ones (vowels: the main voice; consonants: all).
+VOICE_OVERRIDES = {'ɔ': ['af_heart', 'af_bella', 'af_sarah'], 'θ': ['af_nicole', 'af_sarah', 'af_heart', 'am_adam']}
 SHORT_VOWELS = {'æ', 'ɪ', 'ɛ', 'ʌ', 'ɑ', 'ʊ'}
 VOWELS = {'æ', 'ɪ', 'ɛ', 'ʌ', 'ɑ', 'ʊ', 'A', 'I', 'O', 'i', 'u', 'ju', 'W', 'Y', 'ɔ', 'ɑɹ', 'ɔɹ', 'ɜɹ', 'ɛɹ', 'ɪɹ'}
-CONTINUANTS = {'s', 'f', 'ʃ', 'θ', 'ð', 'm', 'n', 'l', 'ɹ', 'z', 'v', 'ŋ'}
+CONTINUANTS = {'s', 'f', 'ʃ', 'ð', 'm', 'n', 'l', 'ɹ', 'z', 'v', 'ŋ'}  # lengthened to 0.3 s (not th: stretched, it turns to s)
 PASS_SCORE = {'vowel': 0.6, 'consonant': 0.6}
 # Loudness (RMS dB) of each kind of sound. f, th, v and h are naturally weak; raised to vowel loudness
 # they hiss like s or sh ("for" glued from the cuts was heard as "short").
@@ -170,6 +177,10 @@ def cut_sound(a, method, sr, trim_silence):
     a = trim_silence(a, -45, 0.0)
     if method == 'whole':
         return a
+    if method.startswith('onset-'):  # the first N ms (a sound that runs into the vowel, like r)
+        return a[:int(sr * int(method[6:]) / 1000)]
+    if method.startswith('tail-'):  # drop the first N ms ("er" said whole, minus its vowel onset: "rrr")
+        return a[int(sr * int(method[5:]) / 1000):]
     s = Signal(a, sr)
     peak = s.db.max()
     if method in ('frication', 'stop'):
@@ -193,11 +204,12 @@ def cut_sound(a, method, sr, trim_silence):
         r = runs(s.hi > 0.25)
         return s.cut(0, s.t(r[0][1]) + 0.01) if r else None
     vr = runs(s.voiced)
-    if method == 'vowel':
+    if method in ('vowel', 'vowel-tight'):
         if not vr:
             return None
         st, en = max(vr, key=lambda x: x[1] - x[0])
-        return s.cut(s.t(st) + 0.01, s.t(en) - 0.015)
+        edge = 0.035 if method == 'vowel-tight' else 0.0  # tight: only the steady middle of the vowel
+        return s.cut(s.t(st) + 0.01 + edge, s.t(en) - 0.015 - edge)
     if method == 'glide':
         on = s.t(vr[0][0]) if vr else 0.0
         return s.cut(0, on + 0.11)
@@ -264,7 +276,7 @@ def build(g, synth, checker, needed, voices, blend_words=BLEND_WORDS, log=print)
         candidates[ph] = []
         # Consonants carry little of the speaker's voice, so other voices may supply them (the female
         # voices' /f/ is partly voiced); vowels use the main voice.
-        for voice in (voices[:1] if ph in VOWELS else voices):
+        for voice in VOICE_OVERRIDES.get(ph, voices[:1] if ph in VOWELS else voices):
             for src, method in CANDIDATES.get(ph, []):
                 seg = cut_sound(synth.say(src, voice), method, sr, g.trim_silence)
                 if seg is None or len(seg) < sr * 0.04:
