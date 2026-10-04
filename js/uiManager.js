@@ -1,214 +1,279 @@
 'use strict';
-import { escapeHtml } from './textUtils.js';
+import { escapeHtml, ar, en, highlightFocus, wordButton } from './textUtils.js';
+import { openDialog, closeDialog, isDialogOpen } from './dialogs.js';
+import { routes } from './router.js';
 
-// Manages the main UI, including rendering views and modals.
+const STEP_INFO = {
+  learn: { icon: '📖', label: 'تعلّم', start: 'ابدأ التعلّم' },
+  drill: { icon: '🎯', label: 'تمرين', start: 'ابدأ التمرين' },
+  quiz: { icon: '🏆', label: 'اختبار', start: 'ابدأ الاختبار' }
+};
+const STEPS = ['learn', 'drill', 'quiz'];
+const LOCK_REASON = { drill: 'بعد التعلّم', quiz: 'بعد التمرين' };
+const pct = score => Math.round(score * 100);
+
+// Renders the pages (home, unit), the header, short messages and confirmations.
 export class UIManager {
-  constructor(dataManager, stateManager, audioManager, effectsManager) {
+  constructor(dataManager, stateManager, audioManager) {
     this.data = dataManager;
     this.state = stateManager;
     this.audio = audioManager;
-    this.effects = effectsManager;
     this.elements = {};
+    this.toastTimer = null;
     this.initElements();
   }
 
   initElements() {
     const ids = [
-      'splash-screen', 'start-btn', 'app', 'main-title', 'skills-view', 'technique-view',
-      'skills-tree', 'back-btn', 'subskills-container', 'activity-modal', 'modal-title',
-      'modal-progress', 'modal-body', 'modal-feedback', 'modal-action-btn', 'modal-exit-btn',
-      'success-modal', 'success-message', 'success-reward', 'success-close-btn', 'success-secondary-btn',
-      'success-emoji', 'success-title',
-      'points-display', 'streak-count', 'home-banner',
-      // NEW:
-      'note-page','note-back-btn'
+      'boot', 'boot-loading', 'boot-error', 'boot-actions', 'boot-retry', 'start-btn', 'placement-start-btn',
+      'app', 'nav-btn', 'nav-icon', 'main-title', 'words-chip', 'words-count', 'streak-chip', 'streak-count',
+      'home-view', 'unit-view', 'progress-view', 'note-view',
+      'activity-modal', 'modal-title', 'modal-close-btn', 'modal-progress', 'modal-scroll', 'modal-body', 'modal-feedback',
+      'modal-footer', 'modal-action-btn', 'modal-secondary-btn',
+      'confirm-dialog', 'confirm-title', 'confirm-text', 'confirm-ok', 'confirm-cancel',
+      'side-menu', 'menu-unlock', 'toast'
     ];
     ids.forEach(id => {
       this.elements[id.replace(/-/g, '_')] = document.getElementById(id);
     });
-    this.updateHeader();
   }
 
-  // Lessons have 3 steps: learn + drill + quiz
-  getSubSkillStepCount() {
-    return 3;
+  // ---------------- frame ----------------
+  // The page title, and the navigation button: ☰ (menu) on home, → (back) everywhere else.
+  setHeader(titleHtml, isHome) {
+    const { main_title, nav_btn, nav_icon } = this.elements;
+    main_title.innerHTML = titleHtml;
+    nav_icon.textContent = isHome ? '☰' : '→';
+    nav_btn.dataset.mode = isHome ? 'menu' : 'back';
+    nav_btn.setAttribute('aria-label', isHome ? 'القائمة' : 'رجوع');
+    if (isHome) nav_btn.setAttribute('aria-controls', 'side-menu');
+    else { nav_btn.removeAttribute('aria-controls'); nav_btn.removeAttribute('aria-expanded'); }
+    this.updateChips();
   }
 
-  updateHeader() {
-    this.elements.points_display.textContent = `${this.state.userProgress.points} نقطة ⭐`;
-    this.elements.streak_count.textContent = this.state.userProgress.streak;
-    this.elements.points_display.classList.add('celebration');
-    setTimeout(() => this.elements.points_display.classList.remove('celebration'), 600);
+  // "Words you can read" is the headline measure of progress; the streak shows from two days on.
+  updateChips() {
+    const words = this.state.countWordsLearned(this.data.getTechniques());
+    this.elements.words_count.textContent = words;
+    this.elements.words_chip.classList.toggle('hidden', words === 0);
+    const streak = this.state.userProgress.streak || 0;
+    this.elements.streak_count.textContent = streak;
+    this.elements.streak_chip.classList.toggle('hidden', streak < 2);
   }
 
-  showView(viewName) {
-    // hide main views
-    [this.elements.skills_view, this.elements.technique_view, this.elements.note_page].forEach(v => v.classList.add('hidden'));
-    if (viewName === 'skills') {
-      this.elements.main_title.textContent = "اختر وحدة";
-      this.elements.skills_view.classList.remove('hidden');
-    } else if (viewName === 'technique') {
-      this.elements.technique_view.classList.remove('hidden');
-    } else if (viewName === 'note') {
-      this.elements.main_title.textContent = "ملاحظة مهمة";
-      this.elements.note_page.classList.remove('hidden');
-    }
+  showView(name) {
+    ['home', 'unit', 'progress', 'note'].forEach(v => this.elements[`${v}_view`].classList.toggle('hidden', v !== name));
   }
 
-  renderHomeBanner() {
-    const el = this.elements.home_banner;
-    if (!el) return;
+  unitPicture(tech, size = '') {
+    return `<img class="unit-pic ${size}" src="${escapeHtml(this.data.unitPicture(tech))}" alt="" data-emoji="${escapeHtml(tech.icon || '')}">`;
+  }
+
+  // A picture that fails to load is replaced by the unit's emoji.
+  fallbackPictures(container) {
+    container.querySelectorAll('img.unit-pic').forEach(img => img.addEventListener('error', () => {
+      const span = document.createElement('span');
+      span.className = `${img.className} unit-pic-emoji`;
+      span.setAttribute('aria-hidden', 'true');
+      span.textContent = img.dataset.emoji;
+      img.replaceWith(span);
+    }, { once: true }));
+  }
+
+  // The unit's keyword ("ship" for sh), with its pattern highlighted; tap to hear it.
+  keywordButton(tech) {
+    if (!tech.keyword) return '';
+    return wordButton(tech.keyword, highlightFocus(tech.keyword, tech.keywordFocus || []), 'keyword');
+  }
+
+  // ---------------- home ----------------
+  renderHome() {
+    const techniques = this.data.getTechniques();
+    const next = this.state.nextStep(techniques);
     const due = this.state.getDueReviewKeys(99).length;
-    const learned = this.state.countWordsLearned(this.data.getTechniques());
-    const notice = this.state.migratedFromV1 && !this.state.userProgress.placementDone
-      ? `<div class="home-notice">تمّ تحديث الدورة وتوسيعها. حدّد مستواك لتبدأ من الوحدة المناسبة لك.</div>` : '';
+    const passedAny = techniques.some(t => t.subSkills.some(s => this.state.isStepComplete(t.id, s.id, 'quiz')));
+    const notice = this.state.showUpdateNotice() ? `
+      <div class="home-notice" role="note">
+        <p>تمّ تحديث الدورة: أُعيد ترتيبها لتبدأ بأصوات الحروف والكلمات القصيرة، وأُضيفت الجمل والكلمات الشائعة والمراجعة. حدّد مستواك لتبدأ من الوحدة المناسبة لك.</p>
+        <button class="icon-btn" data-dismiss-notice aria-label="إغلاق التنبيه"><span aria-hidden="true">✕</span></button>
+      </div>` : '';
+    const review = due ? `
+      <button class="review-row" data-go="${routes.review()}">
+        <span>🔁 مراجعة اليوم</span><span class="review-count">${due} ${due === 1 ? 'سؤال' : due === 2 ? 'سؤالان' : due <= 10 ? 'أسئلة' : 'سؤالاً'} ⬅</span>
+      </button>` : '';
+    const placement = !this.state.userProgress.placementDone && !passedAny
+      ? `<div class="home-links"><button class="link-btn" data-go="${routes.placement()}">🧭 أعرف بعض القراءة — حدّد مستواي</button></div>` : '';
+
+    const el = this.elements.home_view;
     el.innerHTML = `
       ${notice}
-      <div class="home-stat">📚 تستطيع الآن قراءة <b>${learned}</b> كلمة</div>
-      <div class="home-actions">
-        <button id="review-btn" class="${due ? 'btn-primary' : 'btn-secondary'}" ${due ? '' : 'disabled'}>🔁 ${due ? `مراجعة اليوم (${due})` : 'لا مراجعة اليوم'}</button>
-        <button id="placement-btn" class="btn-secondary">🧭 حدّد مستواي</button>
-      </div>`;
+      ${this.continueCard(next)}
+      ${review}
+      ${placement}
+      <h2 class="section-title">الوحدات</h2>
+      <ol class="unit-list">${this.unitRows(techniques, next)}</ol>`;
+    this.fallbackPictures(el);
+    this.setHeader('دورة قراءة الكلمات', true);
+    this.showView('home');
   }
 
-  renderSkillsGrid() {
-    const skillsTree = this.elements.skills_tree;
-    skillsTree.innerHTML = '';
-    const techniques = this.data.getTechniques();
-    // First unit alone, then pairs, last one alone if left over.
-    const rows = [techniques.slice(0, 1)];
-    for (let i = 1; i < techniques.length; i += 2) rows.push(techniques.slice(i, i + 2));
-
-    rows.forEach((row) => {
-      const skillRow = document.createElement('div');
-      skillRow.className = 'skill-row';
-      row.forEach((tech, techIndex) => {
-        if (!tech) return;
-        const techniqueIndex = techniques.indexOf(tech);
-        const techProgress = this.state.getTechniqueProgress(tech.id);
-        const isMastered = techProgress.mastered;
-        const isUnlocked = this.state.isTechniqueUnlocked(techniqueIndex, techniques);
-        const completedSteps = tech.subSkills.reduce((n, s) => n + (techProgress.subSkills[s.id] || []).length, 0);
-        const totalSteps = tech.subSkills.length * this.getSubSkillStepCount();
-        const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
-
-        const card = document.createElement('div');
-        card.className = `skill-card ${isMastered ? 'mastered' : ''} ${!isUnlocked ? 'locked' : ''}`;
-        card.dataset.techniqueId = tech.id;
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-4">
-            <div class="text-4xl">${tech.icon}</div>
-            ${isMastered ? '<span class="achievement-badge">متقن!</span>' : `<span class="unit-number">الوحدة ${techniqueIndex}</span>`}
-          </div>
-          <h3 class="text-xl font-bold text-gray-800 mb-2 english-font">${escapeHtml(tech.name)}</h3>
-          <p class="text-gray-600 mb-4">${escapeHtml(tech.name_ar)}</p>
-          <div class="progress-bar mb-2">
-            <div class="progress-fill" style="width: ${progressPercentage}%"></div>
-          </div>
-          <div class="text-sm text-gray-500">${completedSteps} / ${totalSteps} خطوة</div>`;
-        skillRow.appendChild(card);
-
-        if (techIndex < row.length - 1) {
-          const connector = document.createElement('div');
-          connector.className = 'skill-connector';
-          skillRow.appendChild(connector);
-        }
-      });
-      skillsTree.appendChild(skillRow);
-    });
-    this.renderHomeBanner();
-    this.showView('skills');
-    this.updateHeader();
-  }
-
-  scoreBadge(score) {
-    if (score === undefined) return '';
-    return `<span class="score-badge">${Math.round(score * 100)}%</span>`;
-  }
-
-  renderTechniqueView(techniqueId) {
-    const { main_title, subskills_container } = this.elements;
-    const tech = this.data.getTechnique(techniqueId);
-    const techProgress = this.state.getTechniqueProgress(techniqueId);
-
-    main_title.textContent = tech.name_ar;
-    subskills_container.innerHTML = tech.intro ? `<p class="unit-intro">${escapeHtml(tech.intro)}</p>` : '';
-
-    tech.subSkills.forEach(subSkill => {
-      const subSkillProgress = techProgress.subSkills[subSkill.id] || [];
-      const card = document.createElement('div');
-      card.className = 'skill-card p-4';
-      const drillScore = this.state.getScore(subSkill.id, 'drill');
-      const quizScore = this.state.getScore(subSkill.id, 'quiz');
-
-      const buttonsHTML = `
-          <div class="w-full mt-4">
-            <div class="flex flex-col sm:flex-row gap-2 w-full">
-              <button class="step-button flex-1 ${subSkillProgress.includes('learn') ? 'completed' : ''}"
-                      data-step="learn"
-                      data-subskill-id="${subSkill.id}">
-                📖 تعلّم
-              </button>
-              <button class="step-button flex-1 ${subSkillProgress.includes('drill') ? 'completed' : ''}"
-                      data-step="drill"
-                      data-subskill-id="${subSkill.id}"
-                      ${!subSkillProgress.includes('learn') ? 'disabled' : ''}>
-                🎯 تمرين ${this.scoreBadge(drillScore)}
-              </button>
-              <button class="step-button flex-1 ${subSkillProgress.includes('quiz') ? 'completed' : ''}"
-                      data-step="quiz"
-                      data-subskill-id="${subSkill.id}"
-                      ${!subSkillProgress.includes('drill') ? 'disabled' : ''}>
-                🏆 اختبار ${this.scoreBadge(quizScore)}
-              </button>
-            </div>
-          </div>`;
-
-      card.innerHTML = `
-        <div class="flex flex-col">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="text-3xl">${subSkill.icon}</span>
-            <h3 class="text-xl font-bold text-gray-800">${escapeHtml(subSkill.name)}</h3>
-          </div>
-          ${buttonsHTML}
-        </div>`;
-
-      subskills_container.appendChild(card);
-    });
-    this.showView('technique');
-    this.updateHeader();
-  }
-
-  showModal() { this.elements.activity_modal.classList.remove('hidden'); }
-
-  hideModal() {
-    this.elements.activity_modal.classList.add('hidden');
-    this.audio.stop();
-    // Make sure no effects remain visible after closing modal
-    this.effects.clearEffects();
-  }
-
-  // secondary: optional { label, onClick } for a second button (e.g. "review the lesson").
-  // look: optional { emoji, title } — e.g. a failed test should not say "رائع جداً!".
-  showSuccessModal(message, reward, secondary = null, look = {}) {
-    this.elements.success_emoji.textContent = look.emoji || '🎉';
-    this.elements.success_title.textContent = look.title || 'رائع جداً!';
-    this.elements.success_message.textContent = message;
-    this.elements.success_reward.textContent = reward;
-    const btn = this.elements.success_secondary_btn;
-    if (btn) {
-      if (secondary) {
-        btn.textContent = secondary.label;
-        btn.onclick = () => { this.hideSuccessModal(); secondary.onClick(); };
-        btn.classList.remove('hidden');
-      } else {
-        btn.classList.add('hidden');
-        btn.onclick = null;
-      }
+  continueCard(next) {
+    if (!next) {
+      return `
+        <section class="continue-card" aria-labelledby="continue-title">
+          <h2 id="continue-title" class="continue-kicker">🎉 أنهيت الدورة!</h2>
+          <p class="continue-done">أتقنت كل الوحدات. راجع ما تعلّمته كل يوم، أو أعد أي درس تريده.</p>
+        </section>`;
     }
-    this.elements.success_modal.classList.remove('hidden');
-    this.updateHeader();
+    const { tech, sub, step, index } = next;
+    const fresh = !this.state.userProgress.lastLesson;
+    const quizTried = step === 'quiz' && this.state.getScore(sub.id, 'quiz') !== undefined;
+    const track = STEPS.map(st => {
+      const done = this.state.isStepComplete(tech.id, sub.id, st);
+      const cls = st === step ? 'is-next' : done ? 'is-done' : '';
+      return `<li class="${cls}"><span aria-hidden="true">${STEP_INFO[st].icon}</span> ${STEP_INFO[st].label}${done ? ' <span aria-hidden="true">✓</span><span class="sr-only">(تمّ)</span>' : ''}</li>`;
+    }).join('');
+    return `
+      <section class="continue-card" aria-labelledby="continue-title">
+        <h2 id="continue-title" class="continue-kicker">${fresh ? 'ابدأ من هنا' : 'تابع من حيث توقّفت'}</h2>
+        <div class="continue-unit">
+          ${this.unitPicture(tech)}
+          <div class="continue-meta">
+            <div class="continue-unit-name">الوحدة ${index + 1} · ${ar(tech.name_ar)}</div>
+            <div class="continue-lesson">${ar(sub.name)}</div>
+          </div>
+        </div>
+        <ol class="step-track" aria-label="خطوات الدرس">${track}</ol>
+        <button class="btn-primary btn-lg btn-block" data-go="${routes.step(tech.id, sub.id, step)}">${quizTried ? 'أعد الاختبار' : STEP_INFO[step].start} ⬅</button>
+      </section>`;
   }
 
-  hideSuccessModal() { this.elements.success_modal.classList.add('hidden'); }
+  // One line per unit: status, picture, name and progress. A locked unit explains itself when tapped.
+  unitRows(techniques, next) {
+    return techniques.map((tech, i) => {
+      const unlocked = this.state.isTechniqueUnlocked(i, techniques);
+      const progress = this.state.getTechniqueProgress(tech.id);
+      const done = tech.subSkills.reduce((n, s) => n + (progress.subSkills[s.id] || []).length, 0);
+      const total = tech.subSkills.length * STEPS.length;
+      const mastered = progress.mastered;
+      const current = !!next && next.index === i;
+      const status = mastered ? '✓' : !unlocked ? '🔒' : current ? '▸' : '';
+      const statusText = mastered ? 'أُتقنت' : !unlocked ? 'مقفلة' : current ? 'الوحدة الحالية' : '';
+      const cls = ['unit-row', mastered && 'is-mastered', !unlocked && 'is-locked', current && 'is-current'].filter(Boolean).join(' ');
+      const action = unlocked ? `data-go="${routes.unit(tech.id)}"` : `data-locked="${i}" aria-disabled="true"`;
+      const bar = unlocked && !mastered && done
+        ? `<span class="mini-bar" aria-hidden="true"><span style="width:${Math.round(done / total * 100)}%"></span></span>` : '';
+      return `
+        <li>
+          <button class="${cls}" ${action}>
+            <span class="unit-status" aria-hidden="true">${status}</span>
+            ${this.unitPicture(tech, 'sm')}
+            <span class="unit-text">
+              <span class="unit-num">الوحدة ${i + 1}${statusText ? `<span class="sr-only"> (${statusText})</span>` : ''}</span>
+              <span class="unit-name">${ar(tech.name_ar)}</span>
+              <span class="unit-en">${en(tech.name)}</span>
+              ${bar}
+            </span>
+            <span class="unit-count"><span class="sr-only">الخطوات المنجزة: </span>${done}/${total}</span>
+          </button>
+        </li>`;
+    }).join('');
+  }
+
+  // ---------------- unit page ----------------
+  // Returns false when the unit does not exist or is locked.
+  renderUnit(techId) {
+    const techniques = this.data.getTechniques();
+    const index = techniques.findIndex(t => t.id === techId);
+    const tech = techniques[index];
+    if (!tech || !this.state.isTechniqueUnlocked(index, techniques)) return false;
+    const next = this.state.nextStep(techniques);
+    const target = next && next.tech.id === tech.id ? next : this.firstOpenInUnit(tech, index, techniques);
+    const free = this.state.isUnitFree(index);
+
+    const el = this.elements.unit_view;
+    el.innerHTML = `
+      <div class="unit-head">
+        ${this.unitPicture(tech, 'lg')}
+        <div class="unit-head-text">
+          <p class="unit-num">الوحدة ${index + 1} · ${en(tech.name)}</p>
+          ${this.keywordButton(tech)}
+          ${tech.intro ? `<p class="unit-intro">${ar(tech.intro)}</p>` : ''}
+        </div>
+      </div>
+      ${free ? '<p class="unit-free-note">هذه الوحدة مفتوحة لك: إن كنت تعرفها فابدأ بالاختبار مباشرةً.</p>' : ''}
+      <ol class="lesson-list">${tech.subSkills.map(sub => this.lessonCard(tech, index, sub, target, techniques)).join('')}</ol>`;
+    this.fallbackPictures(el);
+    this.setHeader(ar(tech.name_ar), false);
+    this.showView('unit');
+    return true;
+  }
+
+  firstOpenInUnit(tech, index, techniques) {
+    for (const sub of tech.subSkills) {
+      const step = this.state.firstOpenStep(tech.id, sub.id);
+      if (step && this.state.isStepAvailable(index, techniques, sub.id, step)) return { tech, sub, step, index };
+    }
+    return null;
+  }
+
+  lessonCard(tech, index, sub, target, techniques) {
+    const isTarget = !!target && target.sub.id === sub.id;
+    const steps = STEPS.map(step => this.stepButton(tech, index, sub, step, isTarget && target.step === step, techniques)).join('');
+    return `
+      <li class="lesson-card${isTarget ? ' is-current' : ''}">
+        <h2 class="lesson-title"><span class="lesson-icon" aria-hidden="true">${sub.icon}</span><span>${ar(sub.name)}</span></h2>
+        <div class="steps" role="group" aria-label="خطوات الدرس">${steps}</div>
+      </li>`;
+  }
+
+  // The next step is the main button; done steps show ✓ (and the score); locked steps say why.
+  stepButton(tech, index, sub, step, isNext, techniques) {
+    const info = STEP_INFO[step];
+    const done = this.state.isStepComplete(tech.id, sub.id, step);
+    const available = this.state.isStepAvailable(index, techniques, sub.id, step);
+    const score = step === 'learn' ? undefined : this.state.getScore(sub.id, step);
+    let cls = 'step', state = '';
+    if (!available) state = `🔒 ${LOCK_REASON[step]}`;
+    else if (isNext) { cls += ' is-next'; state = score !== undefined ? `${pct(score)}% · أعد` : 'ابدأ'; }
+    else if (done) { cls += ' is-done'; state = score !== undefined ? `✓ ${pct(score)}%` : '✓ تمّ'; }
+    else if (score !== undefined) { cls += ' is-retry'; state = `${pct(score)}%`; }
+    const attrs = available ? `data-go="${routes.step(tech.id, sub.id, step)}"` : 'disabled';
+    return `<button class="${cls}" ${attrs}><span class="step-icon" aria-hidden="true">${info.icon}</span><span class="step-label">${info.label}</span><span class="step-state">${state}</span></button>`;
+  }
+
+  // ---------------- messages ----------------
+  toast(message, ms = 4000) {
+    const t = this.elements.toast;
+    clearTimeout(this.toastTimer);
+    t.classList.remove('show');
+    t.textContent = '';
+    // A new message in the live region is announced even when it repeats the last one.
+    requestAnimationFrame(() => {
+      t.innerHTML = ar(message);
+      t.classList.add('show');
+      this.toastTimer = setTimeout(() => t.classList.remove('show'), ms);
+    });
+  }
+
+  // Resolves true (ok) or false (cancel, Escape, or a tap outside).
+  confirm({ title, text, ok, cancel }) {
+    const el = this.elements;
+    if (isDialogOpen(el.confirm_dialog)) return Promise.resolve(false);
+    return new Promise(resolve => {
+      el.confirm_title.textContent = title;
+      el.confirm_text.textContent = text;
+      el.confirm_ok.textContent = ok;
+      el.confirm_cancel.textContent = cancel;
+      const done = value => {
+        el.confirm_ok.onclick = el.confirm_cancel.onclick = el.confirm_dialog.onclick = null;
+        closeDialog(el.confirm_dialog);
+        resolve(value);
+      };
+      el.confirm_ok.onclick = () => done(true);
+      el.confirm_cancel.onclick = () => done(false);
+      el.confirm_dialog.onclick = e => { if (e.target === el.confirm_dialog) done(false); };
+      openDialog(el.confirm_dialog, { onCancel: () => done(false), focus: el.confirm_cancel });
+    });
+  }
 }

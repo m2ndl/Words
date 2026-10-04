@@ -4,11 +4,18 @@ const PROGRESS_KEY = 'wordsProgressV2';
 const RESPONSES_KEY = 'wordsResponsesV2';
 const REVIEW_KEY = 'wordsReviewV2';
 const SETTINGS_KEY = 'wordsSettingsV2';
+const HINTS_KEY = 'wordsHintsV2';
+const UNLOCK_KEY = 'phonicsUnlockAll';
+const THEME_KEY = 'phonics-theme';
 const OLD_PROGRESS_KEY = 'phonicsProgressV1';
 const MAX_RESPONSES = 3000;
 // Days until an item comes back for review, by box (Leitner-style spacing).
 const REVIEW_INTERVALS = [1, 3, 7, 14, 30];
 const DAY = 24 * 60 * 60 * 1000;
+const STEPS = ['learn', 'drill', 'quiz'];
+// Progress files ("save a copy of your progress") carry this tag and format number.
+const EXPORT_APP = 'words';
+const EXPORT_FORMAT = 1;
 
 export class StateManager {
   constructor() {
@@ -26,17 +33,19 @@ export class StateManager {
     this.migratedFromV1 = false;
 
     this.difficultySettings = { questionsPerSession: 10, passingScore: 0.8, autoAdvance: false };
-    // NEW: global unlock flag (navigation only)
+    // Opens every unit (navigation only), e.g. after moving to a new device.
     this.unlockAll = false;
 
     this.responses = [];
     this.reviewDeck = {};
+    this.hints = {};
 
     this.loadProgress();
     this.loadDifficultySettings();
-    this.loadUnlockAll(); // NEW
+    this.loadUnlockAll();
     this.responses = this._loadJson(RESPONSES_KEY, []);
     this.reviewDeck = this._loadJson(REVIEW_KEY, {});
+    this.hints = this._loadJson(HINTS_KEY, {});
   }
 
   // ------------ persistence ------------
@@ -75,8 +84,32 @@ export class StateManager {
     this._saveJson(PROGRESS_KEY, this.userProgress);
   }
 
+  // Nothing done yet: the start screen offers "start" and "placement".
   isNewLearner() {
-    return Object.keys(this.userProgress.techniques).length === 0 && !this.userProgress.placementDone;
+    const p = this.userProgress;
+    const anyStep = Object.values(p.techniques || {}).some(t => Object.values(t.subSkills || {}).some(s => s.length));
+    return !p.started && !p.placementDone && !anyStep && !this.migratedFromV1;
+  }
+
+  markStarted() {
+    if (this.userProgress.started) return;
+    this.userProgress.started = true;
+    this.saveProgress();
+  }
+
+  // Shown once to learners who used the old version of the course.
+  showUpdateNotice() {
+    return this.migratedFromV1 && !this.userProgress.placementDone && !this.userProgress.noticeDismissed;
+  }
+
+  dismissUpdateNotice() {
+    this.userProgress.noticeDismissed = true;
+    this.saveProgress();
+  }
+
+  setLastLesson(techId, subId) {
+    this.userProgress.lastLesson = { tech: techId, sub: subId };
+    this.saveProgress();
   }
 
   loadDifficultySettings() {
@@ -87,20 +120,26 @@ export class StateManager {
     this._saveJson(SETTINGS_KEY, this.difficultySettings);
   }
 
-  // --- NEW: unlock-all persistence ---
   loadUnlockAll() {
     try {
-      const saved = localStorage.getItem('phonicsUnlockAll');
+      const saved = localStorage.getItem(UNLOCK_KEY);
       this.unlockAll = saved ? JSON.parse(saved) : false;
     } catch {}
   }
   saveUnlockAll() {
-    try { localStorage.setItem('phonicsUnlockAll', JSON.stringify(this.unlockAll)); } catch {}
+    try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(this.unlockAll)); } catch {}
   }
   setUnlockAll(value) { this.unlockAll = !!value; this.saveUnlockAll(); }
   toggleUnlockAll() { this.setUnlockAll(!this.unlockAll); }
 
-  // ------------ streak / points ------------
+  // Small "show this hint the first few times" counters.
+  hintCount(name) { return this.hints[name] || 0; }
+  bumpHint(name) {
+    this.hints[name] = this.hintCount(name) + 1;
+    this._saveJson(HINTS_KEY, this.hints);
+  }
+
+  // ------------ streak ------------
   _todayKey() {
     const d = new Date();
     const y = d.getFullYear();
@@ -124,11 +163,6 @@ export class StateManager {
       this.userProgress.lastActiveDate = today;
       this.saveProgress();
     }
-  }
-
-  addPoints(pts) {
-    this.userProgress.points += pts;
-    this.saveProgress();
   }
 
   // ------------ techniques & steps ------------
@@ -172,12 +206,67 @@ export class StateManager {
   }
 
   isTechniqueUnlocked(techniqueIndex, techniques) {
-    if (this.unlockAll) return true; // NEW: bypass gating
+    if (this.unlockAll) return true;
     if (techniqueIndex === 0) return true;
     if (techniqueIndex <= (this.userProgress.placementUnit || 0)) return true;
     const prevTechnique = techniques[techniqueIndex - 1];
     const prevProgress = this.getTechniqueProgress(prevTechnique.id);
     return prevProgress.mastered;
+  }
+
+  // Units the learner can test out of: opened by "unlock all", or before the unit placement suggested.
+  isUnitFree(techniqueIndex) {
+    return this.unlockAll || techniqueIndex < (this.userProgress.placementUnit || 0);
+  }
+
+  // Learn is always open; practice after Learn, the test after practice (any step in a free unit).
+  isStepAvailable(techniqueIndex, techniques, subSkillId, step) {
+    if (!this.isTechniqueUnlocked(techniqueIndex, techniques)) return false;
+    if (step === 'learn' || this.isUnitFree(techniqueIndex)) return true;
+    const techId = techniques[techniqueIndex].id;
+    return this.isStepComplete(techId, subSkillId, step === 'drill' ? 'learn' : 'drill');
+  }
+
+  // First step of a lesson that is not done yet (undefined when the lesson is complete).
+  firstOpenStep(techId, subSkillId) {
+    return STEPS.find(step => !this.isStepComplete(techId, subSkillId, step));
+  }
+
+  // The step to suggest next: the rest of the last lesson, then the rest of its unit,
+  // then the open units after it, then anything left before it. null when everything is done.
+  nextStep(techniques) {
+    const found = (index, sub) => {
+      const tech = techniques[index];
+      const step = this.firstOpenStep(tech.id, sub.id);
+      return step ? { tech, sub, step, index } : null;
+    };
+    const inUnit = index => {
+      for (const sub of techniques[index].subSkills) {
+        const hit = found(index, sub);
+        if (hit) return hit;
+      }
+      return null;
+    };
+    let start = Math.min(this.userProgress.placementUnit || 0, techniques.length - 1);
+    const last = this.userProgress.lastLesson;
+    const lastIndex = last ? techniques.findIndex(t => t.id === last.tech) : -1;
+    if (lastIndex !== -1) {
+      const sub = techniques[lastIndex].subSkills.find(s => s.id === last.sub);
+      const hit = sub && this.isTechniqueUnlocked(lastIndex, techniques) && found(lastIndex, sub);
+      if (hit) return hit;
+      start = lastIndex;
+    }
+    for (let i = start; i < techniques.length; i++) {
+      if (!this.isTechniqueUnlocked(i, techniques)) break;
+      const hit = inUnit(i);
+      if (hit) return hit;
+    }
+    for (let i = 0; i < start; i++) {
+      if (!this.isTechniqueUnlocked(i, techniques)) break;
+      const hit = inUnit(i);
+      if (hit) return hit;
+    }
+    return null;
   }
 
   setPlacement(unitIndex) {
@@ -237,5 +326,34 @@ export class StateManager {
   startSession() {
     this.sessionStartTime = Date.now();
     this._updateStreak();
+  }
+
+  // ------------ moving progress to another device ------------
+  exportData() {
+    let theme = null;
+    try { theme = localStorage.getItem(THEME_KEY); } catch {}
+    return {
+      app: EXPORT_APP,
+      format: EXPORT_FORMAT,
+      exported: new Date().toISOString(),
+      progress: this.userProgress,
+      review: this.reviewDeck,
+      responses: this.responses,
+      settings: this.difficultySettings,
+      unlockAll: this.unlockAll,
+      theme
+    };
+  }
+
+  // Replaces the saved progress with a file made by exportData(). Returns false if the file is not one.
+  importData(data) {
+    if (!data || data.app !== EXPORT_APP || typeof data.progress !== 'object' || typeof data.progress.techniques !== 'object') return false;
+    this._saveJson(PROGRESS_KEY, data.progress);
+    this._saveJson(REVIEW_KEY, data.review && typeof data.review === 'object' ? data.review : {});
+    this._saveJson(RESPONSES_KEY, Array.isArray(data.responses) ? data.responses.slice(-MAX_RESPONSES) : []);
+    if (data.settings && typeof data.settings === 'object') this._saveJson(SETTINGS_KEY, data.settings);
+    this._saveJson(UNLOCK_KEY, !!data.unlockAll);
+    try { if (typeof data.theme === 'string') localStorage.setItem(THEME_KEY, data.theme); } catch {}
+    return true;
   }
 }

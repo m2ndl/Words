@@ -8,6 +8,36 @@ export function escapeHtml(text) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+// English inside Arabic text: a run of words joined by spaces, commas, hyphens, middle dots, slashes,
+// "&", underscores or "…", with an optional leading hyphen (-ed). Each run is isolated so it keeps its
+// own direction: without this, "-ed" shows as "ed-" and "a e i o u" can be reordered.
+const LATIN_RUN = /-?[A-Za-z][A-Za-z'’]*(?:(?:\s*[·&]\s*|[-_…/]|,\s*|\s+)-?[A-Za-z][A-Za-z'’]*)*/g;
+
+// English text set apart from the Arabic around it (short runs don't break across lines).
+export function en(text) {
+  const nowrap = text.length <= 16 ? ' nw' : '';
+  return `<bdi class="en${nowrap}" dir="ltr" lang="en">${escapeHtml(text)}</bdi>`;
+}
+
+// Arabic text from the curriculum or the app, escaped, with its English runs isolated.
+export function ar(text) {
+  const s = String(text ?? '');
+  let html = '', last = 0;
+  for (const m of s.matchAll(LATIN_RUN)) {
+    html += escapeHtml(s.slice(last, m.index)) + en(m[0]);
+    last = m.index + m[0].length;
+  }
+  return html + escapeHtml(s.slice(last));
+}
+
+// The same for trusted curriculum HTML (Learn texts): tags, entities, {words} and `code` are left alone.
+export function arHtml(html) {
+  return String(html ?? '')
+    .split(/(<[^>]*>|&#?\w+;|\{[^{}]*\}|`[^`]*`)/)
+    .map((part, i) => (i % 2 ? part : part.replace(LATIN_RUN, m => en(m))))
+    .join('');
+}
+
 // Wraps the letters of `word` that belong to the focus patterns in <mark class="focus">.
 // Focus items: "sh", "ee" (anywhere), "a_e" (vowel + consonant(s) + final e),
 // "-ed" / "-s" (only at the end of the word).
@@ -75,23 +105,35 @@ function wrapMask(word, mask, cls) {
   return html;
 }
 
+// A small, neutral speaker icon (the colour comes from the button).
+export const SPEAKER_ICON = '<svg class="spk-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 3.5L6 7H3v6h3l4 3.5v-13z"/><path d="M14 10a4 4 0 00-2-3.46v6.92A4 4 0 0014 10z"/></svg>';
+
 export function speakerButton(text, size = 'sm') {
   const t = escapeHtml(text);
-  return `<button class="speaker-btn speaker-${size}" data-speak="${t}" aria-label="استمع إلى ${t}">🔊</button>`;
+  return `<button class="speaker-btn speaker-${size}" data-speak="${t}" aria-label="استمع: ${t}">${SPEAKER_ICON}</button>`;
+}
+
+// An English word that plays when tapped. `inner` is the word's (highlighted) HTML.
+export function wordButton(word, inner = escapeHtml(word), cls = '') {
+  const w = escapeHtml(word);
+  return `<button class="word-btn ${cls}" data-speak="${w}" lang="en" dir="ltr"><span class="word-text" data-word="${w}">${inner}</span>${SPEAKER_ICON}</button>`;
 }
 
 // Expands the Learn-page markup used in curriculum.json:
-//   {word}      word with a speaker button
+//   {word}      a word that plays when tapped
 //   {a > b}     a → b
 //   {a ≠ b}     a ≠ b
 //   `text`      inline English without audio
+// Words in a row ({a} · {b} · {c}) are set as a wrapping group, without the separators.
 export function expandLearnMarkup(html, focus = []) {
-  const word = w => `<span class="learn-word" dir="ltr">${speakerButton(w)}<span class="english-font">${highlightFocus(w, focus)}</span></span>`;
-  return String(html)
-    .replace(/\{([^{}]+?)\s*>\s*([^{}]+?)\}/g, (_, a, b) =>
-      `<span class="learn-pair" dir="ltr">${word(a.trim())}<span class="learn-arrow">→</span>${word(b.trim())}</span>`)
-    .replace(/\{([^{}]+?)\s*≠\s*([^{}]+?)\}/g, (_, a, b) =>
-      `<span class="learn-pair" dir="ltr">${word(a.trim())}<span class="learn-arrow">≠</span>${word(b.trim())}</span>`)
+  const word = w => wordButton(w, highlightFocus(w, focus), 'learn-word');
+  const pair = (a, b, sign, cls) =>
+    `<span class="learn-pair" dir="ltr">${word(a.trim())}<span class="learn-sign ${cls}" aria-hidden="true">${sign}</span>${word(b.trim())}</span>`;
+  return arHtml(html)
+    .replace(/\}\s*·\s*\{/g, '}{')
+    .replace(/(?:\{[^{}]+\}\s*){2,}/g, group => `<span class="learn-words">${group.trim()}</span>`)
+    .replace(/\{([^{}]+?)\s*>\s*([^{}]+?)\}/g, (_, a, b) => pair(a, b, '→', 'is-arrow'))
+    .replace(/\{([^{}]+?)\s*≠\s*([^{}]+?)\}/g, (_, a, b) => pair(a, b, '≠', 'is-ne'))
     .replace(/\{([^{}]+)\}/g, (_, a) => word(a.trim()))
-    .replace(/`([^`]+)`/g, (_, a) => `<span class="english-font en-inline" dir="ltr">${escapeHtml(a)}</span>`);
+    .replace(/`([^`]+)`/g, (_, a) => `<bdi class="en en-inline" dir="ltr" lang="en">${escapeHtml(a)}</bdi>`);
 }

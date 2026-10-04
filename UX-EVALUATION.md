@@ -4,6 +4,92 @@
 **Scope:** the interface and interaction design: screens, flows, activity UI, feedback, audio controls, visual design, Arabic/English text, accessibility and robustness. The teaching content is covered in [EVALUATION.md](EVALUATION.md).
 **Reviewed:** 4 October 2026, branch `claude/magical-brown-tswm5f` at `e8327d4`
 
+> **Update, 4 October 2026: the recommendations below have now been implemented.**
+> This document still describes the version reviewed (`e8327d4`). See
+> [Section 0](#0-implementation-status) for what changed and what is still open.
+
+---
+
+## 0. Implementation status
+
+What was changed after this review, how it was checked, and what is still open.
+Screenshots of the new version are in [`docs/ux-review/after/`](docs/ux-review/after/).
+
+### Fix now (Section 3)
+
+All of F1–F10 are fixed:
+
+| # | Fix | Where |
+|---|---|---|
+| F1 | Every English run inside Arabic text is isolated when it is shown (`ar()`, `arHtml()`), so "-ed" stays "-ed" in titles, prompts, tips and Learn texts, including any text added later. One tip whose arrows paired words across a "·" was reworded. | `js/textUtils.js`; `curriculum.json` (u5_a_i tip) |
+| F2 | One blank per missing letter. | `js/questionRenderer.js` |
+| F3 | The activity sheet has a fixed header and footer around a scrolling middle, so feedback scrolls into view above the footer. | `index.html`, `styles.css` |
+| F4 | Build items have «تحقّق» (enabled once the word is full), «ابدأ من جديد», and a hint that tapping a letter sends it back. Chain items say how to change a letter. | `js/questionRenderer.js` |
+| F5 | Every activity has ✕, Learn included; only «فهمت» completes Learn. | `index.html`, `js/gameEngine.js` |
+| F6 | Back is "→" in the header. The unit tree, with its arrows, is replaced by a list. | `index.html`, `js/uiManager.js` |
+| F7 | Hover styles apply only on devices that hover; touch gets press feedback. | `styles.css` |
+| F8 | New colour tokens; every text/background pair passes AA (white on green 4.5:1, on red 5.5:1; secondary-button text 6.5:1). The gold badge is gone. | `styles.css` |
+| F9 | ✓ and ✗ on options and on built words. | `styles.css` |
+| F10 | A spinner until the course has loaded; an error message with «أعد المحاولة» if it cannot load. | `index.html`, `js/main.js`, `js/dataManager.js` |
+
+### Recommendations (Section 5)
+
+| Recommendation | Status | Where |
+|---|---|---|
+| Units numbered from 1; review only when due; "4 من 10" beside the dots; no looping animations; `prefers-reduced-motion` | Done | `js/uiManager.js`, `js/gameEngine.js`, `styles.css` |
+| Home built on "continue" | Done. One main card for the next step (the rest of the last lesson, then its unit, then the next open unit); review when due; the placement link until a test is passed; one line per unit. A locked unit says how to open it. | `js/uiManager.js`, `js/stateManager.js` (`nextStep`) |
+| Steps that lead into one another | Done. «فهمت» starts practice. Practice leads to «ابدأ الاختبار» (or «راجع الدرس» under 60%). A passed test leads to the next lesson or unit; a failed one to «راجع الدرس» or «أعد الاختبار». Results show in the same sheet. | `js/gameEngine.js` |
+| Unit page | Done. The next step is the main button; done steps show ✓ and their score; locked steps say why. The three steps sit in one row on phones. | `js/uiManager.js` |
+| Hash routes | Done. Back closes the activity or the menu, or goes up a level. A reload returns to the page under the activity. Leaving a test, practice or placement with answers asks first. | `js/router.js`, `js/main.js` |
+| Accessibility basics | Done. Units and theme swatches are buttons. Dialogs have dialog roles; focus moves in and comes back, Tab stays inside, Escape closes, and the page behind is inert. English is marked `lang="en"`. | `js/dialogs.js`, `js/uiManager.js`, `index.html` |
+| Audio states and preloading | Done. The button shows loading and playing; the next item's clips are downloaded in advance. | `js/audioManager.js` |
+| One Latin font | Done. Andika for all English: I, l and 1 differ, and its single-storey a matches the old target-word font. | `index.html`, `styles.css` |
+| Learn pages | Done. Two panels (the rule, then the examples); tap a word to hear it; magenta only for the letters taught; no "·" separators; ≠ is never rotated. | `js/textUtils.js`, `js/gameEngine.js` |
+| Dashboard | Done. A page ("تقدّمي") with plain labels and a compact stats row; the settings show only in teacher mode. | `js/teacherDashboard.js` |
+| Installable and offline | Done. A web-app manifest and icons. A service worker keeps the app and the course (network first) and the audio clips (cache first). Opening a unit downloads its clips in the background, except on data-saving or 2G connections. | `manifest.webmanifest`, `sw.js`, `icons/` |
+| Moving progress to another device | Done, as a file. «احفظ نسخة من تقدّمك» downloads it (or shares it, where the phone can share files); «افتح نسخة محفوظة» restores it after a confirmation. | note page; `js/stateManager.js`, `js/main.js` |
+| Calmer rewards | Done. No points. "📚 N كلمة" in the header; the streak shows from two days on, without pulsing. Celebrations only for passing a test or finishing a unit. | `js/uiManager.js`, `js/gameEngine.js`, `js/effectsManager.js` |
+| Unit pictures with keywords | Done. Noto Emoji pictures (Apache 2.0) shipped in `img/units/`, each with its keyword ("ship", with sh highlighted), which plays when tapped. | `img/units/`, `curriculum.json` (`keyword`) |
+
+Other changes from Section 4:
+- Returning learners skip the start screen, and its button now says «ابدأ الدورة».
+- The placement check says how long it takes and shows which unit it is on.
+- Practice gives one attempt per item; missed items come back at the end.
+- Odd-one-out feedback highlights the sound pattern.
+- The 🐢 button is labelled «قطّع» for its first three uses.
+- The course-update notice is a banner that can be closed.
+- The note page is now about saving and moving progress.
+
+### Done differently from the recommendation
+
+- **Dialogs** use dialog roles and a small focus manager rather than `<dialog>`, which iPhones before iOS 15.4 don't support.
+- **F1** isolates English when the text is shown, rather than adding a check to `npm run validate`, so it covers every string, including future ones. The validator now checks the unit keywords.
+- **Progress** moves as a file, not a QR code: a learner's progress, with its review schedule and answers, is far too big for one.
+- **Teacher mode:** open `#/progress/teacher`, or press and hold the title of the "تقدّمي" page for a second.
+
+### How it was checked
+
+- **A scripted walkthrough in Chromium** at 390 × 844 (touch) and 1280 × 800: 75 checks at each size, all passing. It covers:
+  - routes, Back and reload;
+  - the leave confirmation;
+  - every item type;
+  - results and their next steps;
+  - placement and the dashboard;
+  - export and import;
+  - the keyboard;
+  - a slow and a failed load;
+  - offline use with the service worker.
+- **Further checks:** audio states, touch hover, reduced motion, the review flow, and tap targets.
+- **axe-core:** no violations on the start screen, home, unit, Learn, practice result, confirmation, menu, dashboard (with the teacher settings) or note page.
+- **Size:** every visible control is at least 44 × 44 px, and nothing scrolls sideways at 320 px.
+- **`npm run validate`:** 0 errors, 0 warnings.
+
+### Still open
+
+- The usability test in Section 6, with learners from the target group.
+- A check on real iPhones and Android phones, and a screen-reader session (VoiceOver, TalkBack).
+- Confirming the shape of "a" against the letter-recognition course. Andika's default is the single-storey a; if that course uses the double-storey a, change the font.
+
 ---
 
 ## How this review was done
@@ -20,7 +106,7 @@
 - **Read the code:** `index.html`, `styles.css` and everything in `js/`.
 - **Not covered:** real iOS and Android devices, a screen-reader session, and real learners. This is an expert review, not a usability test. Section 6 proposes the test.
 
-Screenshots are in [`docs/ux-review/`](docs/ux-review/). Most of them pair the "before" and "after" of one interaction.
+Screenshots of the version reviewed are in [`docs/ux-review/`](docs/ux-review/). Most of them pair two moments of one interaction, such as before and after an answer.
 
 ---
 

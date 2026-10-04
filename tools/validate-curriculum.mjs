@@ -18,6 +18,7 @@ const seenId = (id, where) => { if (ids.has(id)) err(`${where}: duplicate id "${
 for (const tech of data.techniques || []) {
   seenId(tech.id, 'unit');
   if (!tech.name_ar || !tech.subSkills?.length) err(`${tech.id}: missing name_ar or lessons`);
+  if (tech.keyword && !hasGloss(tech.keyword)) err(`${tech.id}: no gloss for keyword "${tech.keyword}"`);
   for (const sub of tech.subSkills || []) {
     const where = `${tech.id}/${sub.id}`;
     seenId(sub.id, where);
