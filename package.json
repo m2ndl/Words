@@ -2,7 +2,8 @@
   "name": "words",
   "private": true,
   "scripts": {
-    "build:css": "tailwindcss -c tailwind.config.js -i tailwind-input.css -o tailwind.css --minify"
+    "build:css": "tailwindcss -c tailwind.config.js -i tailwind-input.css -o tailwind.css --minify",
+    "validate": "node tools/validate-curriculum.mjs"
   },
   "devDependencies": {
     "tailwindcss": "3.4.17"

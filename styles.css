@@ -552,91 +552,6 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .modal .body [dir="ltr"] > * { min-width: 0; }
 .modal .body .english-font { max-width: 100%; overflow-wrap: anywhere; }
 
-/* Fix for learning modal examples on mobile */
-#modal-body .bg-white {
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-#modal-body .inline-flex {
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 100%;
-}
-
-/* Responsive adjustments for word transformation examples */
-@media (max-width: 640px) {
-  #modal-body [dir="ltr"] {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  #modal-body .inline-flex {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 8px;
-    max-width: 100%;
-  }
-  
-  #modal-body .text-3xl {
-    font-size: 1.5rem;
-  }
-  
-  /* Adjust speaker buttons in examples */
-  #modal-body .speaker-btn {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-  }
-  
-  #modal-body .english-font {
-    font-size: 1.25rem;
-  }
-  
-  /* Grid adjustment for examples */
-  #modal-body .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Tighten sizes slightly on very small phones */
-@media (max-width: 420px){
-  .speaker-btn, button[data-speak]{ width: 38px; height: 38px; background-size: 18px 18px; }
-  .modal .body .english-font{ font-size: clamp(16px, 5.2vw, 22px); }
-  
-  #modal-body .speaker-btn {
-    width: 35px;
-    height: 35px;
-    min-width: 35px;
-  }
-  
-  #modal-body .text-3xl {
-    font-size: 1.25rem;
-  }
-  
-  #modal-body .english-font {
-    font-size: 1.125rem;
-  }
-}
-/* ==============================
-   Arrow Transformation Fix (Stronger Version)
-   ============================== */
-.transformation-arrow {
-  /* Ensures the arrow smoothly rotates instead of snapping */
-  transition: transform 0.4s ease;
-}
-
-@media (max-width: 640px) {
-  /*
-   * On mobile screens, when the layout becomes a column,
-   * we rotate our arrow 90 degrees to point down.
-   */
-  .transformation-arrow {
-    transform: rotate(90deg) !important; /* <-- ADDED !important TO FORCE THE STYLE */
-  }
-}
 /* ==============================
    Question Transition Animation
    ============================== */
@@ -649,3 +564,108 @@ html, body { max-width: 100%; overflow-x: hidden; }
   /* This class will make the container invisible */
   opacity: 0;
 }
+
+/* ==============================
+   Learn page
+   ============================== */
+.speaker-btn.speaker-sm { width: 34px; height: 34px; min-width: 34px; font-size: 15px; box-shadow: 0 3px 10px rgba(245, 87, 108, 0.35); }
+.speaker-btn.speaker-md { width: 42px; height: 42px; min-width: 42px; font-size: 18px; }
+.speaker-btn.speaker-sm:hover, .speaker-btn.speaker-md:hover { transform: scale(1.1); }
+/* Sound it out (c – a – t … cat): the button, and the letters lighting up as each sound plays */
+.soundout-btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid #81E6D9; background: #E6FFFA; cursor: pointer; transition: transform 0.15s ease; vertical-align: middle; }
+.soundout-btn:hover { transform: scale(1.1); }
+.soundout-btn:active { transform: scale(0.95); }
+.soundout-sm { width: 34px; height: 34px; min-width: 34px; font-size: 17px; margin-inline: 4px; }
+.soundout-md { width: 42px; height: 42px; min-width: 42px; font-size: 21px; margin-inline: 4px; }
+.so-active .so-l { opacity: 0.3; transition: opacity 0.12s ease, color 0.12s ease; }
+.so-active .so-l.so-on { opacity: 1; color: #D53F8C; }
+.learn-text { font-size: 1.1rem; line-height: 2.1; color: var(--text-secondary); text-align: right; margin-bottom: 1.25rem; }
+.learn-word { display: inline-flex; align-items: center; gap: 6px; margin: 2px 4px; direction: ltr; vertical-align: middle; }
+.learn-word .english-font { font-size: 1.35rem; font-weight: 600; color: var(--text-primary); }
+.learn-pair { display: inline-flex; align-items: center; gap: 4px; margin: 2px 6px; direction: ltr; flex-wrap: wrap; vertical-align: middle; }
+.learn-arrow { font-size: 1.2rem; color: var(--primary); margin: 0 2px; }
+.learn-sep { color: #A0AEC0; }
+.learn-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.en-inline { font-weight: 700; direction: ltr; unicode-bidi: isolate; }
+.learn-tip { margin-top: 1rem; padding: 12px 14px; border-radius: 14px; background: rgba(246, 173, 85, 0.15); color: var(--text-primary); text-align: right; }
+.examples-title { font-weight: 700; color: var(--text-primary); margin: 0.5rem 0 0.75rem; text-align: right; }
+.examples-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.example-card { background: white; border-radius: 16px; padding: 12px 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.example-pair { grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.example-pair .example-sign, .example-pair .transformation-arrow { font-size: 1.4rem; color: var(--primary); }
+.example-word { display: flex; align-items: center; justify-content: center; gap: 8px; direction: ltr; }
+.example-word .english-font { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); }
+.example-gloss { font-size: 0.9rem; color: #718096; margin-top: 4px; }
+mark.focus { background: none; color: #D53F8C; font-weight: 800; }
+mark.tricky { background: rgba(236, 201, 75, 0.45); color: inherit; border-radius: 4px; padding: 0 1px; }
+mark.diff { background: rgba(102, 126, 234, 0.18); color: #5A67D8; font-weight: 800; border-radius: 4px; padding: 0 1px; }
+
+/* ==============================
+   Activities
+   ============================== */
+.q-prompt { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+.q-word { font-size: 3.2rem; font-weight: 700; color: var(--text-primary); margin: 0.5rem 0 1.25rem; direction: ltr; letter-spacing: 0.02em; }
+.q-sentence { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); margin: 0.5rem 0 1.5rem; direction: ltr; line-height: 1.6; }
+#modal-body .speaker-btn.q-speaker { width: 76px; height: 76px; margin-bottom: 1rem; }
+.q-gloss { color: #718096; margin-bottom: 1rem; min-height: 1.2em; }
+.q-options-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.q-options-col .option-button { width: min(100%, 340px); }
+.q-options-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.q-options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 420px; margin: 0 auto; }
+.q-options-grid .option-button { min-width: 0; }
+.option-button.q-arabic { font-size: 1.15rem; }
+.option-button.q-label { min-width: 120px; font-size: 1.2rem; }
+.option-button:disabled { cursor: default; }
+.option-button:disabled:not(.correct):not(.incorrect) { opacity: 0.6; }
+.q-blank { color: var(--primary-light); border-bottom: 3px solid var(--primary-light); padding: 0 4px; }
+.q-boxes, .q-tiles { display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; gap: 8px; direction: ltr; margin-bottom: 1.25rem; }
+.q-tiles { flex-wrap: wrap; }
+.q-boxes .letter-box, .q-tiles .letter-choice { margin: 0; min-width: 56px; width: auto; padding: 0 10px; }
+.q-boxes .letter-box { height: 64px; font-size: 1.9rem; }
+.q-boxes .letter-box.filled { border-color: var(--primary); }
+.q-boxes.correct .letter-box { border-color: var(--success); color: var(--success); }
+.q-boxes.incorrect .letter-box { border-color: var(--danger); }
+.q-tiles .letter-choice { height: 56px; font-size: 1.6rem; }
+@media (max-width: 420px) {
+  .q-word { font-size: 2.6rem; }
+  .q-sentence { font-size: 1.45rem; }
+  .q-boxes .letter-box { min-width: 46px; height: 54px; font-size: 1.6rem; padding: 0 6px; }
+  .q-tiles .letter-choice { min-width: 46px; height: 48px; font-size: 1.4rem; }
+  .example-pair { grid-column: span 1; flex-direction: column; }
+  .example-pair .example-sign, .example-pair .transformation-arrow { transform: rotate(90deg); }
+}
+
+/* Feedback after an answer */
+.feedback { border-radius: 16px; padding: 12px 14px; text-align: right; }
+.feedback.ok { background: rgba(72, 187, 120, 0.12); }
+.feedback.bad { background: rgba(252, 129, 129, 0.14); }
+.fb-title { font-weight: 700; font-size: 1.15rem; margin-bottom: 6px; color: var(--text-primary); }
+.fb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 4px 0; }
+.fb-label { color: #718096; min-width: 56px; }
+.fb-word { font-size: 1.5rem; font-weight: 700; direction: ltr; }
+.fb-gloss { color: #4A5568; }
+.fb-tip { margin-top: 8px; color: var(--text-secondary); font-size: 0.95rem; }
+
+/* Home banner, unit view, dashboard */
+.home-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: rgba(102, 126, 234, 0.08); border-radius: 18px; padding: 14px 16px; margin-bottom: 1.5rem; }
+.home-banner:empty { display: none; }
+.home-stat { font-size: 1.1rem; color: var(--text-primary); }
+.home-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.home-actions button { padding: 10px 18px; font-size: 1rem; }
+.home-actions button:disabled { opacity: 0.6; cursor: default; transform: none; }
+.home-notice { width: 100%; color: #975A16; background: rgba(246, 173, 85, 0.18); border-radius: 12px; padding: 8px 12px; }
+.unit-number { font-size: 0.85rem; color: #718096; }
+.unit-intro { color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.9; }
+.score-badge { display: inline-block; font-size: 0.75rem; background: rgba(255, 255, 255, 0.85); color: var(--text-primary); border-radius: 10px; padding: 1px 6px; margin-right: 4px; }
+.dash-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.95rem; padding: 2px 0; }
+.dash-pct { color: #2F855A; font-weight: 600; white-space: nowrap; }
+.dash-pct.low { color: #C53030; }
+
+/* Keep "Next" / "Exit" reachable while the activity card scrolls on small screens */
+#activity-modal > .glass-card { background: #fff; }
+#modal-footer { position: sticky; bottom: -1px; background: #fff; padding: 10px 0 2px; z-index: 2; }
+#modal-footer::before { content: ''; position: absolute; left: 0; right: 0; top: -18px; height: 18px; pointer-events: none; background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0)); }
+#modal-progress { flex: 0 0 auto; }
+.q-dots { display: flex; flex-wrap: nowrap; justify-content: center; gap: 4px; }
+.q-dots.many .progress-dot { width: 8px; height: 8px; margin: 0 1px; }
+.option-button.q-self { min-width: 150px; }

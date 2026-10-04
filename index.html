@@ -26,6 +26,7 @@
     <div class="space-y-4">
       <div class="text-6xl mb-6">📖</div>
       <button id="start-btn" class="btn-primary text-xl pulse">أسس صح!</button>
+      <div><button id="placement-start-btn" class="btn-secondary">🧭 أعرف بعض القراءة — حدّد مستواي</button></div>
     </div>
   </div>
 
@@ -36,7 +37,7 @@
       <div class="flex flex-wrap items-center justify-between gap-4">
         <!-- Title: full width on mobile, centered -->
         <h1 id="main-title" class="order-1 w-full text-center text-2xl sm:text-3xl font-bold text-gray-800">
-          اختر مهارة
+          اختر وحدة
         </h1>
 
         <!-- Controls group -->
@@ -54,9 +55,10 @@
 
     <!-- Skills view -->
     <main id="skills-view" class="glass-card p-4 sm:p-8">
+      <div id="home-banner" class="home-banner"></div>
       <div class="mb-8 text-center">
-        <p class="text-gray-600 text-lg">اختر مهارة لتبدأ التعلم</p>
-        <div class="mt-4 text-sm text-gray-500">✨ أكمل المهارات السابقة لفتح المهارات الجديدة</div>
+        <p class="text-gray-600 text-lg">اختر وحدة لتبدأ التعلّم</p>
+        <div class="mt-4 text-sm text-gray-500">✨ انجح في اختبارات الوحدة لتفتح الوحدة التالية</div>
       </div>
       <div id="skills-tree" class="skills-tree"></div>
     </main>
@@ -78,7 +80,12 @@
           عليك استخدام نفس المتصفح.
         </p>
         <p>
-          ويمكنك أيضاً اختيار <b>"فتح جميع الوحدات"</b> من القائمة الجانبية للانتقال مباشرةً لأي درس في حال بدأت من جهاز جديد.
+          ويمكنك أيضاً اختيار <b>"فتح جميع الوحدات"</b> من القائمة الجانبية للانتقال مباشرةً لأي درس في حال بدأت من جهاز جديد،
+          أو إجراء <b>"اختبار تحديد المستوى"</b> ليفتح لك البرنامج الوحدات التي تعرفها.
+        </p>
+        <p>
+          <b>تحديث الدورة:</b> أُعيد ترتيب الدورة لتبدأ بأصوات الحروف والكلمات القصيرة، وأُضيفت الجمل والكلمات الشائعة والمراجعة.
+          نقاطك محفوظة، أما الوحدات فقد تغيّرت؛ استخدم اختبار تحديد المستوى لتبدأ من المكان المناسب.
         </p>
         <p>
           إذا كان لديك أي ملاحظات أرحب بتواصلك معي عبر الإيميل
@@ -96,13 +103,13 @@
 
   <!-- Activity modal -->
   <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-4xl p-8 flex flex-col max-h-[90vh] modal-content">
-      <div class="flex justify-between items-center mb-6">
-        <h2 id="modal-title" class="text-3xl font-bold text-gray-800"></h2>
+    <div class="glass-card w-full max-w-4xl p-5 sm:p-8 flex flex-col max-h-[92vh] overflow-y-auto modal-content">
+      <div class="flex flex-wrap justify-between items-center gap-2 mb-4 sm:mb-6">
+        <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800"></h2>
         <div id="modal-progress" class="text-lg text-gray-600"></div>
       </div>
-      <div id="modal-body" class="flex-grow text-center overflow-y-auto"></div>
-      <div id="modal-feedback" class="h-12 mt-4 text-center text-xl font-bold"></div>
+      <div id="modal-body" class="flex-grow text-center"></div>
+      <div id="modal-feedback" class="mt-4 text-center" aria-live="polite"></div>
       <div id="modal-footer" class="mt-6 flex justify-center items-center gap-4">
         <button id="modal-exit-btn" class="btn-secondary">خروج</button>
         <button id="modal-action-btn" class="btn-primary">التالي</button>
@@ -113,11 +120,14 @@
   <!-- Success modal -->
   <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
     <div class="glass-card w-full max-w-md p-8 text-center modal-content">
-      <div class="text-6xl mb-4">🎉</div>
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
+      <div id="success-emoji" class="text-6xl mb-4">🎉</div>
+      <h2 id="success-title" class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
       <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
       <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
-      <button id="success-close-btn" class="btn-primary">استمر</button>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button id="success-close-btn" class="btn-primary">استمر</button>
+        <button id="success-secondary-btn" class="btn-secondary hidden"></button>
+      </div>
     </div>
   </div>
 
@@ -134,6 +144,8 @@
 
     <nav class="flex flex-col gap-3">
       <button id="menu-dashboard" class="step-button !justify-start">📊 لوحة التعلم</button>
+      <button id="menu-review" class="step-button !justify-start">🔁 المراجعة</button>
+      <button id="menu-placement" class="step-button !justify-start">🧭 اختبار تحديد المستوى</button>
       <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="step-button !justify-start">🌐 لغتي الثانية</a>
       <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
       <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
