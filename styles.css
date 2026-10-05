@@ -204,10 +204,12 @@ button { font: inherit; }
     margin-bottom: 14px;
     padding: 8px 10px;
 }
+/* Long unit names wrap to a second line rather than being cut. */
 .app-title {
     flex: 1; min-width: 0;
-    font-size: 1.2rem; font-weight: 700;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 1.2rem; font-weight: 700; line-height: 1.4;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+    overflow: hidden;
     -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
 .header-chips { display: flex; flex-shrink: 0; gap: 6px; }
@@ -219,6 +221,12 @@ button { font: inherit; }
     color: var(--primary-strong);
     font-size: 0.9rem; font-weight: 700;
     white-space: nowrap;
+}
+/* On phones the chips leave the header (home shows them instead), so the page title has room. */
+.home-stats { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+@media (max-width: 559px) {
+    .header-chips { display: none; }
+    .home-stats { display: flex; }
 }
 .main { padding: 18px 14px; }
 @media (min-width: 640px) { .main { padding: 28px; } }
@@ -394,6 +402,10 @@ button { font: inherit; }
     #activity-modal { padding: 0; align-items: stretch; }
     #activity-modal .sheet { max-width: none; max-height: none; height: 100%; border-radius: 0; }
 }
+/* Wider screens: a fixed height, so the sheet does not grow (and jump) when feedback appears. */
+@media (min-width: 521px) {
+    #activity-modal .sheet { height: min(760px, calc(100vh - 24px)); height: min(760px, calc(100dvh - 24px)); }
+}
 
 .overlay-center { z-index: 60; }
 .confirm-card { width: 100%; max-width: 420px; padding: 22px; text-align: center; }
@@ -495,7 +507,9 @@ button { font: inherit; }
 .option-button.q-label { min-width: 110px; font-size: 1.2rem; }
 .option-button.q-self { min-width: 150px; font-size: 1.2rem; }
 .option-button:disabled { cursor: default; }
-.option-button:disabled:not(.correct):not(.incorrect) { opacity: 0.55; }
+.option-button:disabled:not(.correct):not(.incorrect):not(.is-chosen) { opacity: 0.55; }
+/* The learner's own "ليس بعد": marked as chosen, without the colours of a wrong answer. */
+.option-button.is-chosen { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-strong); }
 .option-button.correct { border-color: transparent; background: linear-gradient(135deg, var(--right) 0%, var(--right-2) 100%); color: #fff; animation: gentle-success 0.4s ease-out; }
 .option-button.incorrect { border-color: transparent; background: linear-gradient(135deg, var(--wrong) 0%, var(--wrong-2) 100%); color: #fff; animation: gentle-wrong 0.4s ease-out; }
 /* Right and wrong are marked with ✓ and ✗ as well as colour. */
@@ -630,6 +644,7 @@ mark.diff { padding: 0 1px; border-radius: 4px; background: var(--pattern-soft);
 .feedback { padding: 12px 14px; border-radius: 16px; text-align: start; }
 .feedback.ok { background: var(--right-soft); }
 .feedback.bad { background: var(--wrong-soft); }
+.feedback.note { background: var(--note-bg); }
 .fb-title { margin-bottom: 6px; font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
 .fb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0; }
 .fb-label { min-width: 56px; color: var(--text-muted); }

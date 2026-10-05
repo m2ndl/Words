@@ -108,6 +108,7 @@ export class UIManager {
 
     const el = this.elements.home_view;
     el.innerHTML = `
+      ${this.homeStats()}
       ${notice}
       ${this.continueCard(next)}
       ${review}
@@ -117,6 +118,17 @@ export class UIManager {
     this.fallbackPictures(el);
     this.setHeader('دورة قراءة الكلمات', true);
     this.showView('home');
+  }
+
+  // On phones the header has no room for the chips, so home shows the same progress here, with labels (see styles.css).
+  homeStats() {
+    const words = this.state.countWordsLearned(this.data.getTechniques());
+    const streak = this.state.userProgress.streak || 0;
+    const items = [
+      words >= MIN_WORDS_SHOWN ? `<span class="chip"><span aria-hidden="true">📚</span> كلمات تستطيع قراءتها: ${words}</span>` : '',
+      streak >= 2 ? `<span class="chip"><span aria-hidden="true">🔥</span> أيام متتالية: ${streak}</span>` : ''
+    ].filter(Boolean);
+    return items.length ? `<div class="home-stats">${items.join('')}</div>` : '';
   }
 
   continueCard(next) {
