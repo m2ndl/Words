@@ -10,6 +10,8 @@ const STEP_INFO = {
 };
 const STEPS = ['learn', 'drill', 'quiz'];
 const LOCK_REASON = { drill: 'بعد التعلّم', quiz: 'بعد التمرين' };
+// The "words you can read" chip appears once the learner can read this many words.
+const MIN_WORDS_SHOWN = 5;
 const pct = score => Math.round(score * 100);
 
 // Renders the pages (home, unit), the header, short messages and confirmations.
@@ -51,11 +53,11 @@ export class UIManager {
     this.updateChips();
   }
 
-  // "Words you can read" is the headline measure of progress; the streak shows from two days on.
+  // "Words you can read" is the headline measure of progress (shown from 5 words); the streak shows from two days on.
   updateChips() {
     const words = this.state.countWordsLearned(this.data.getTechniques());
     this.elements.words_count.textContent = words;
-    this.elements.words_chip.classList.toggle('hidden', words === 0);
+    this.elements.words_chip.classList.toggle('hidden', words < MIN_WORDS_SHOWN);
     const streak = this.state.userProgress.streak || 0;
     this.elements.streak_count.textContent = streak;
     this.elements.streak_chip.classList.toggle('hidden', streak < 2);

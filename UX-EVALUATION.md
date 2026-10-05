@@ -48,7 +48,7 @@ All of F1–F10 are fixed:
 | Dashboard | Done. A page ("تقدّمي") with plain labels and a compact stats row; the settings show only in teacher mode. | `js/teacherDashboard.js` |
 | Installable and offline | Done. A web-app manifest and icons. A service worker keeps the app and the course (network first) and the audio clips (cache first). Opening a unit downloads its clips in the background, except on data-saving or 2G connections. | `manifest.webmanifest`, `sw.js`, `icons/` |
 | Moving progress to another device | Done, as a file. «احفظ نسخة من تقدّمك» downloads it (or shares it, where the phone can share files); «افتح نسخة محفوظة» restores it after a confirmation. | note page; `js/stateManager.js`, `js/main.js` |
-| Calmer rewards | Done. No points. "📚 N كلمة" in the header; the streak shows from two days on, without pulsing. Celebrations only for passing a test or finishing a unit. | `js/uiManager.js`, `js/gameEngine.js`, `js/effectsManager.js` |
+| Calmer rewards | Done. No points. "📚 N كلمة" in the header, once the learner can read 5 words; the streak shows from two days on, without pulsing. Celebrations only for passing a test or finishing a unit. | `js/uiManager.js`, `js/gameEngine.js`, `js/effectsManager.js` |
 | Unit pictures with keywords | Done. Noto Emoji pictures (Apache 2.0) shipped in `img/units/`, each with its keyword ("ship", with sh highlighted), which plays when tapped. | `img/units/`, `curriculum.json` (`keyword`) |
 
 Other changes from Section 4:
