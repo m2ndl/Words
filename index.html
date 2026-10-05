@@ -2,173 +2,158 @@
 <html lang="ar" dir="rtl" data-theme="default">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>دورة قراءة الكلمات</title>
+  <meta name="description" content="برنامج تأسيسي لقراءة الكلمات الإنجليزية للبالغين الناطقين بالعربية">
+  <meta name="theme-color" content="#5A67D8">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Google Fonts load without blocking the page (media="print" switches to "all" once loaded) -->
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css">
-  <!-- Tailwind, prebuilt (npm run build:css). Kept after styles.css to match the old CDN's order. -->
+  <!-- Google Fonts load without blocking the page (media="print" switches to "all" once loaded).
+       Andika (made for beginning readers: I, l and 1 all look different) sets every English letter; Rubik sets Arabic. -->
+  <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" crossorigin>
+  <!-- Tailwind's reset, prebuilt (npm run build:css), then the app's own styles. -->
   <link rel="stylesheet" href="tailwind.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
 
   <!-- celebration particles container -->
-  <div class="celebration-particles" id="particles-container"></div>
+  <div class="celebration-particles" id="particles-container" aria-hidden="true"></div>
 
-  <!-- Splash / Landing -->
-  <div id="splash-screen" class="glass-card p-12 max-w-lg text-center">
-    <div class="mb-8">
-      <h1 class="welcome-title mb-4">دورة قراءة الكلمات</h1>
-      <p class="text-xl text-gray-600">برنامج تأسيسي للقراءة والكتابة للبالغين</p>
+  <!-- Start screen: shown while the course loads; new learners choose where to start, returning learners skip it -->
+  <main id="boot" class="boot">
+    <div class="boot-card card">
+      <div class="boot-emoji" aria-hidden="true">📖</div>
+      <h1 class="boot-title">دورة قراءة الكلمات</h1>
+      <p class="boot-sub">برنامج تأسيسي للقراءة والكتابة للبالغين</p>
+      <p class="boot-slogan">أسس صح!</p>
+      <div id="boot-loading" class="boot-status" role="status">
+        <span class="spinner" aria-hidden="true"></span> جارٍ تحميل الدورة…
+      </div>
+      <div id="boot-error" class="boot-status hidden" role="alert">
+        <p>تعذّر تحميل الدورة. تحقّق من اتصالك بالإنترنت، ثم أعد المحاولة.</p>
+        <button id="boot-retry" class="btn-primary">🔄 أعد المحاولة</button>
+      </div>
+      <div id="boot-actions" class="boot-actions hidden">
+        <button id="start-btn" class="btn-primary btn-lg">ابدأ الدورة</button>
+        <button id="placement-start-btn" class="btn-secondary">🧭 أعرف بعض القراءة — حدّد مستواي</button>
+      </div>
+      <noscript><p class="boot-status">يحتاج البرنامج إلى تفعيل JavaScript في المتصفح.</p></noscript>
     </div>
-    <div class="space-y-4">
-      <div class="text-6xl mb-6">📖</div>
-      <button id="start-btn" class="btn-primary text-xl pulse">أسس صح!</button>
-      <div><button id="placement-start-btn" class="btn-secondary">🧭 أعرف بعض القراءة — حدّد مستواي</button></div>
-    </div>
-  </div>
+  </main>
 
   <!-- App -->
-  <div id="app" class="w-full max-w-7xl hidden">
-    <!-- Header (responsive: title on its own row on small screens) -->
-    <header class="glass-card p-4 sm:p-6 mb-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <!-- Title: full width on mobile, centered -->
-        <h1 id="main-title" class="order-1 w-full text-center text-2xl sm:text-3xl font-bold text-gray-800">
-          اختر وحدة
-        </h1>
-
-        <!-- Controls group -->
-        <div class="order-2 flex items-center gap-3">
-          <button id="menu-btn" class="btn-secondary !py-2 !px-3" aria-label="افتح القائمة">☰</button>
-          <div class="streak-counter">🔥 <span id="streak-count">0</span> يوم</div>
-        </div>
-
-        <!-- Points -->
-        <div class="order-2 text-sm text-gray-600">
-          <span id="points-display">0 نقطة ⭐</span>
-        </div>
+  <div id="app" class="app hidden">
+    <header class="app-header card">
+      <button id="nav-btn" class="icon-btn" aria-label="القائمة" aria-controls="side-menu" aria-expanded="false"><span id="nav-icon" aria-hidden="true">☰</span></button>
+      <h1 id="main-title" class="app-title" tabindex="-1">دورة قراءة الكلمات</h1>
+      <div class="header-chips">
+        <span id="words-chip" class="chip hidden" title="كلمات تستطيع قراءتها"><span aria-hidden="true">📚</span> <span id="words-count">0</span> كلمة</span>
+        <span id="streak-chip" class="chip hidden" title="أيام متتالية من التعلّم"><span aria-hidden="true">🔥</span> <span id="streak-count">0</span><span class="sr-only"> أيام متتالية</span></span>
       </div>
     </header>
 
-    <!-- Skills view -->
-    <main id="skills-view" class="glass-card p-4 sm:p-8">
-      <div id="home-banner" class="home-banner"></div>
-      <div class="mb-8 text-center">
-        <p class="text-gray-600 text-lg">اختر وحدة لتبدأ التعلّم</p>
-        <div class="mt-4 text-sm text-gray-500">✨ انجح في اختبارات الوحدة لتفتح الوحدة التالية</div>
-      </div>
-      <div id="skills-tree" class="skills-tree"></div>
-    </main>
+    <main id="main" class="main card">
+      <section id="home-view" class="view" aria-labelledby="main-title"></section>
+      <section id="unit-view" class="view hidden" aria-labelledby="main-title"></section>
+      <section id="progress-view" class="view hidden" aria-labelledby="main-title"></section>
 
-    <!-- Technique view -->
-    <main id="technique-view" class="glass-card p-4 sm:p-8 hidden">
-      <button id="back-btn" class="btn-secondary mb-6">← رجوع</button>
-      <div id="subskills-container" class="space-y-4"></div>
-    </main>
-
-    <!-- Important Note page -->
-    <main id="note-page" class="glass-card p-4 sm:p-8 hidden">
-      <button id="note-back-btn" class="btn-secondary mb-6">← رجوع</button>
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">ملاحظة مهمة</h2>
-      <div class="space-y-4 leading-8 text-gray-700">
-        <p>
-          البرنامج لا يتطلب تسجيل دخول، ويتم حفظ بيانات تقدمك عبر متصفح الجهاز الذي تستخدمه الآن.
-          في حال تغيير المتصفح أو الجهاز ستبدأ من جديد. إذا أردت متابعة التقدم نفسه،
-          عليك استخدام نفس المتصفح.
-        </p>
-        <p>
-          ويمكنك أيضاً اختيار <b>"فتح جميع الوحدات"</b> من القائمة الجانبية للانتقال مباشرةً لأي درس في حال بدأت من جهاز جديد،
-          أو إجراء <b>"اختبار تحديد المستوى"</b> ليفتح لك البرنامج الوحدات التي تعرفها.
-        </p>
-        <p>
-          <b>تحديث الدورة:</b> أُعيد ترتيب الدورة لتبدأ بأصوات الحروف والكلمات القصيرة، وأُضيفت الجمل والكلمات الشائعة والمراجعة.
-          نقاطك محفوظة، أما الوحدات فقد تغيّرت؛ استخدم اختبار تحديد المستوى لتبدأ من المكان المناسب.
-        </p>
-        <p>
-          إذا كان لديك أي ملاحظات أرحب بتواصلك معي عبر الإيميل
-          <span class="text-gray-500">—</span>
-          <span class="font-bold">hello@my2ndlang.com</span> :
-        </p>
-        <div class="flex items-center gap-3">
-          <input id="email-field" class="glass-card px-3 py-2 rounded-lg border border-gray-200 w-full sm:w-auto" value="hello@my2ndlang.com" readonly>
-          <button id="copy-email-btn" class="btn-primary">نسخ الإيميل</button>
+      <!-- Saving and moving progress; contact -->
+      <section id="note-view" class="view hidden" aria-labelledby="main-title">
+        <div class="panel">
+          <h2 class="panel-title">تقدّمك محفوظ في هذا المتصفح</h2>
+          <p>البرنامج لا يتطلب تسجيل دخول، ويُحفظ تقدّمك في متصفح هذا الجهاز فقط. إذا غيّرت المتصفح أو الجهاز تبدأ من جديد.</p>
+          <p><b>لتنقل تقدّمك إلى جهاز آخر:</b> احفظ نسخة من تقدّمك هنا، وأرسلها إلى نفسك (عبر واتساب أو البريد مثلاً)، ثم افتحها من هذه الصفحة على الجهاز الآخر.</p>
+          <div class="btn-row">
+            <button id="export-btn" class="btn-primary">⬇️ احفظ نسخة من تقدّمك</button>
+            <button id="share-btn" class="btn-secondary hidden">📤 أرسل النسخة</button>
+            <label class="btn-secondary file-btn">⬆️ افتح نسخة محفوظة<input id="import-input" class="sr-only" type="file" accept=".json,application/json"></label>
+          </div>
+          <p class="hint">بدأت من جهاز جديد بلا نسخة؟ يفتح لك <b>اختبار تحديد المستوى</b> الوحدات التي تعرفها، أو اختر <b>فتح جميع الوحدات</b> من القائمة.</p>
         </div>
-        <div id="copy-toast" class="text-green-600 text-sm hidden">✅ تم نسخ البريد إلى الحافظة</div>
-      </div>
+        <div class="panel">
+          <h2 class="panel-title">ملاحظاتك</h2>
+          <p>إذا كان لديك أي ملاحظات أرحب بتواصلك معي عبر الإيميل:</p>
+          <div class="email-row">
+            <input id="email-field" class="email-field" value="hello@my2ndlang.com" readonly dir="ltr" aria-label="البريد الإلكتروني">
+            <button id="copy-email-btn" class="btn-secondary">نسخ الإيميل</button>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
-  <!-- Activity modal -->
-  <div id="activity-modal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-4xl p-5 sm:p-8 flex flex-col max-h-[92vh] overflow-y-auto modal-content">
-      <div class="flex flex-wrap justify-between items-center gap-2 mb-4 sm:mb-6">
-        <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800"></h2>
-        <div id="modal-progress" class="text-lg text-gray-600"></div>
+  <!-- Activity dialog: lessons, practice, tests, review and placement -->
+  <div id="activity-modal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="sheet card">
+      <div class="sheet-head">
+        <div class="sheet-title-row">
+          <h2 id="modal-title" class="sheet-title" tabindex="-1"></h2>
+          <button id="modal-close-btn" class="icon-btn" aria-label="خروج"><span aria-hidden="true">✕</span></button>
+        </div>
+        <div id="modal-progress" class="sheet-progress"></div>
       </div>
-      <div id="modal-body" class="flex-grow text-center"></div>
-      <div id="modal-feedback" class="mt-4 text-center" aria-live="polite"></div>
-      <div id="modal-footer" class="mt-6 flex justify-center items-center gap-4">
-        <button id="modal-exit-btn" class="btn-secondary">خروج</button>
-        <button id="modal-action-btn" class="btn-primary">التالي</button>
+      <div id="modal-scroll" class="sheet-body">
+        <div id="modal-body" class="activity"></div>
+        <div id="modal-feedback" class="feedback-area" aria-live="polite"></div>
       </div>
-    </div>
-  </div>
-
-  <!-- Success modal -->
-  <div id="success-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-md p-8 text-center modal-content">
-      <div id="success-emoji" class="text-6xl mb-4">🎉</div>
-      <h2 id="success-title" class="text-3xl font-bold text-gray-800 mb-4">رائع جداً!</h2>
-      <p id="success-message" class="text-xl text-gray-600 mb-6"></p>
-      <div id="success-reward" class="achievement-badge text-xl mb-6"></div>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <button id="success-close-btn" class="btn-primary">استمر</button>
-        <button id="success-secondary-btn" class="btn-secondary hidden"></button>
+      <div id="modal-footer" class="sheet-foot hidden">
+        <button id="modal-secondary-btn" class="btn-secondary hidden"></button>
+        <button id="modal-action-btn" class="btn-primary hidden"></button>
       </div>
     </div>
   </div>
 
-  <!-- Learning Dashboard container -->
-  <div id="teacher-dashboard" class="hidden fixed inset-0 z-[70] modal-backdrop flex justify-center p-4 overflow-y-auto"></div>
-
-  <!-- Side Menu -->
-  <div id="side-menu-overlay" class="fixed inset-0 bg-black/40 hidden z-[65]"></div>
-  <aside id="side-menu" class="fixed inset-y-0 right-0 w-72 glass-card p-6 shadow-xl transform translate-x-full transition-transform z-[66]">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-lg font-bold">القائمة</h3>
-      <button id="menu-close" class="btn-secondary !py-1 !px-3">✕</button>
+  <!-- Confirmation (leaving a test, replacing saved progress) -->
+  <div id="confirm-dialog" class="overlay overlay-center hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text" tabindex="-1">
+    <div class="confirm-card card">
+      <h2 id="confirm-title" class="confirm-title"></h2>
+      <p id="confirm-text" class="confirm-text"></p>
+      <div class="confirm-actions">
+        <button id="confirm-cancel" class="btn-primary"></button>
+        <button id="confirm-ok" class="btn-secondary"></button>
+      </div>
     </div>
+  </div>
 
-    <nav class="flex flex-col gap-3">
-      <button id="menu-dashboard" class="step-button !justify-start">📊 لوحة التعلم</button>
-      <button id="menu-review" class="step-button !justify-start">🔁 المراجعة</button>
-      <button id="menu-placement" class="step-button !justify-start">🧭 اختبار تحديد المستوى</button>
-      <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="step-button !justify-start">🌐 لغتي الثانية</a>
-      <button id="menu-unlock" class="step-button !justify-start">🔓 فتح جميع الوحدات</button>
-      <button id="menu-note" class="step-button !justify-start">📌 ملاحظة مهمة</button>
+  <!-- Side menu -->
+  <div id="side-menu" class="drawer" role="dialog" aria-modal="true" aria-labelledby="menu-title" tabindex="-1">
+    <div class="drawer-backdrop" data-menu-close></div>
+    <aside class="drawer-panel card">
+      <div class="drawer-head">
+        <h2 id="menu-title" class="drawer-title">القائمة</h2>
+        <button id="menu-close" class="icon-btn" aria-label="إغلاق القائمة" data-menu-close><span aria-hidden="true">✕</span></button>
+      </div>
+      <nav class="drawer-nav" aria-label="القائمة">
+        <button id="menu-progress" class="menu-item">📊 تقدّمي</button>
+        <button id="menu-review" class="menu-item">🔁 المراجعة</button>
+        <button id="menu-placement" class="menu-item">🧭 اختبار تحديد المستوى</button>
+        <button id="menu-unlock" class="menu-item" aria-pressed="false">🔓 فتح جميع الوحدات</button>
+        <button id="menu-note" class="menu-item">💾 حفظ تقدّمك ونقله</button>
+        <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="menu-item">🌐 لغتي الثانية</a>
+      </nav>
 
       <!-- Theme picker in the menu -->
       <div class="menu-section">
-        <div class="menu-section-title">المظهر</div>
-        <div class="theme-selector in-menu">
-          <div class="theme-btn active" data-theme="default" title="افتراضي"></div>
-          <div class="theme-btn" data-theme="ocean" title="بحري"></div>
-          <div class="theme-btn" data-theme="forest" title="غابة"></div>
-          <div class="theme-btn" data-theme="sunset" title="غروب"></div>
+        <h3 id="theme-label" class="menu-section-title">المظهر</h3>
+        <div class="theme-selector" role="group" aria-labelledby="theme-label">
+          <button class="theme-btn" data-theme="default" aria-label="افتراضي" aria-pressed="true"><span></span></button>
+          <button class="theme-btn" data-theme="ocean" aria-label="بحري" aria-pressed="false"><span></span></button>
+          <button class="theme-btn" data-theme="forest" aria-label="غابة" aria-pressed="false"><span></span></button>
+          <button class="theme-btn" data-theme="sunset" aria-label="غروب" aria-pressed="false"><span></span></button>
         </div>
       </div>
-    </nav>
-  </aside>
+    </aside>
+  </div>
+
+  <!-- Short messages (a locked unit, nothing to review, saved progress…) -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <!-- load app -->
   <script type="module" src="./js/main.js"></script>
   <script async src="https://cdn.counter.dev/script.js" data-id="35518a59-3260-4067-a297-1de0e9870d4a" data-utcoffset="3"></script>
 </body>
 </html>
-
-
-
-

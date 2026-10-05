@@ -99,6 +99,11 @@ used for each clip and what Whisper heard. Main clips that no voice got right ar
 `flagged`; listen to those. Whisper often mishears isolated short words (*bin* as "Ben"), so a flagged
 clip may well be fine.
 
+**Offline use.** The service worker (`sw.js`) keeps every clip it has played or prefetched, and serves
+it from the cache first. A changed clip gets a new `?v=` hash, so it is fetched again. Opening a unit
+downloads that unit's clips (and the single sounds) in the background, except on data-saving or 2G
+connections (`prefetch` in `js/audioManager.js`).
+
 **Credits and licences:** the speech was generated with Kokoro-82M v1.0 (hexgrad), Apache-2.0,
 using the voices named above. Tools: kokoro-onnx (MIT), misaki (Apache-2.0), sherpa-onnx
 (Apache-2.0), Whisper (MIT). Only the MP3s are shipped with the app.

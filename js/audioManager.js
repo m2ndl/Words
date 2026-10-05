@@ -5,10 +5,12 @@
 // Clips play through Web Audio (fetch -> decode -> buffer source), which works on iPhone and Android
 // once the audio context has been resumed inside a tap; every tap does that.
 // Text-to-speech: a good US-English voice, never one of the novelty voices some devices ship.
+// The button that asked for a sound shows it: "is-loading" while the clip downloads, "is-playing" while it plays.
 const BASE = 'audio/';
 const MAX_BUFFERS = 150; // decoded clips kept in memory
 const SOUND_GAP = 0.3;    // sound it out: silence between the sounds (s)
 const WORD_PAUSE = 0.45;  // …and before the whole word
+const PREFETCH_WORKERS = 3;
 const NOVELTY_VOICES = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|ralph|kathy|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley/i;
 const PREFERRED_VOICES = [
     /natural|neural/i,
@@ -30,6 +32,9 @@ export class AudioManager {
         this.sources = [];
         this.token = 0;
         this.varietyIndex = 0;
+        this.indicator = null;    // the button showing the current sound
+        this.prefetched = new Set();
+        this.ready = Promise.resolve();
         this.init();
     }
 
@@ -37,7 +42,7 @@ export class AudioManager {
         try { if ('audioSession' in navigator) navigator.audioSession.type = 'playback'; } catch {}
         ['touchend', 'click', 'keydown'].forEach(ev =>
             document.addEventListener(ev, () => this.unlock(), { capture: true, passive: true }));
-        this.loadManifest();
+        this.ready = this.loadManifest();
         if (!('speechSynthesis' in window)) return;
         this.loadVoices();
         if (window.speechSynthesis.onvoiceschanged !== undefined) {
@@ -88,6 +93,17 @@ export class AudioManager {
         if (ctx && ctx.state !== 'running') ctx.resume?.().catch(() => {});
     }
 
+    // Shows which button the current sound belongs to (null clears it).
+    indicate(el, state) {
+        const prev = this.indicator;
+        if (prev && prev !== el) prev.classList.remove('is-loading', 'is-playing');
+        this.indicator = el || null;
+        if (el) {
+            el.classList.toggle('is-loading', state === 'loading');
+            el.classList.toggle('is-playing', state === 'playing');
+        }
+    }
+
     // Path of the recorded clip for this text, or null. variety: alternate between the recorded voices.
     clipUrl(text, variety = false) {
         const entry = this.clips[String(text).toLowerCase()];
@@ -95,6 +111,12 @@ export class AudioManager {
         const voices = Object.keys(entry).sort();
         const voice = variety && voices.length > 1 ? voices[this.varietyIndex++ % voices.length] : (entry.f ? 'f' : voices[0]);
         return BASE + entry[voice];
+    }
+
+    // Every recorded clip of this text (all voices).
+    clipUrls(text) {
+        const entry = this.clips[String(text).toLowerCase()];
+        return entry ? Object.values(entry).map(path => BASE + path) : [];
     }
 
     async loadBuffer(url) {
@@ -117,6 +139,33 @@ export class AudioManager {
         return buffer;
     }
 
+    // Downloads and decodes clips ahead of time (the next item's words), so they play at once.
+    preload(texts) {
+        if (!this.getContext()) return;
+        texts.filter(Boolean).forEach(t => this.clipUrls(t).forEach(url => this.loadBuffer(url).catch(() => {})));
+    }
+
+    // Downloads a unit's clips in the background, a few at a time, so the service worker keeps them for
+    // offline use. Skipped without a service worker, and on slow or data-saving connections.
+    async prefetch(texts) {
+        await this.ready;
+        if (!navigator.serviceWorker?.controller) return;
+        const c = navigator.connection;
+        if (c && (c.saveData || /2g/.test(c.effectiveType || ''))) return;
+        const urls = new Set();
+        texts.forEach(t => this.clipUrls(t).forEach(u => urls.add(u)));
+        Object.values(this.sounds).forEach(path => urls.add(BASE + path));
+        const queue = [...urls].filter(u => !this.prefetched.has(u));
+        queue.forEach(u => this.prefetched.add(u));
+        const worker = async () => {
+            while (queue.length) {
+                const url = queue.shift();
+                try { await fetch(url); } catch { this.prefetched.delete(url); }
+            }
+        };
+        for (let i = 0; i < PREFETCH_WORKERS; i++) worker();
+    }
+
     stop() {
         this.token++;
         const cancel = this.onCancel;
@@ -125,16 +174,18 @@ export class AudioManager {
         this.sources.forEach(s => { try { s.onended = null; s.stop(); } catch {} });
         this.sources = [];
         try { window.speechSynthesis?.cancel(); } catch {}
+        this.indicate(null);
     }
 
-    // options.variety: use more than one speaker (listening practice).
-    speak(text, { variety = false, onend = null } = {}) {
+    // options.variety: use more than one speaker (listening practice). options.el: the button to show it on.
+    speak(text, { variety = false, onend = null, el = null } = {}) {
         if (!text) return;
         this.stop();
         const token = this.token;
+        this.indicate(el, 'loading');
         const url = this.clipUrl(text, variety);
         const ctx = url ? this.getContext() : null;
-        if (!ctx) { this.speakTTS(text, { variety, onend }); return; }
+        if (!ctx) { this.speakTTS(text, { variety, onend, el, token }); return; }
         this.unlock();
         this.loadBuffer(url).then(buffer => {
             if (token !== this.token) return; // something else was played meanwhile
@@ -146,15 +197,18 @@ export class AudioManager {
                 if (done) return;
                 done = true;
                 this.sources = this.sources.filter(s => s !== source);
-                if (onend && token === this.token) onend();
+                if (token !== this.token) return;
+                this.indicate(null);
+                if (onend) onend();
             };
             source.onended = finish;
             // If the context is still suspended, onended never fires; don't let a sequence stall.
             setTimeout(finish, buffer.duration * 1000 + 600);
             this.sources.push(source);
             source.start();
+            this.indicate(el, 'playing');
         }).catch(() => {
-            if (token === this.token) this.speakTTS(text, { variety, onend });
+            if (token === this.token) this.speakTTS(text, { variety, onend, el, token });
         });
     }
 
@@ -170,18 +224,20 @@ export class AudioManager {
         return this.segments[String(word).toLowerCase()] || null;
     }
 
-    // onStep(i): sound i starts (-1: the whole word). oncancel: stopped before the end.
-    soundOut(word, { onStep = null, onend = null, oncancel = null } = {}) {
+    // onStep(i): sound i starts (-1: the whole word). oncancel: stopped before the end. el: the button to show it on.
+    soundOut(word, { onStep = null, onend = null, oncancel = null, el = null } = {}) {
         if (!this.canSoundOut(word)) return false;
         this.stop();
         const token = this.token;
         this.onCancel = oncancel;
+        this.indicate(el, 'loading');
         const ctx = this.getContext();
         this.unlock();
         const urls = this.partsOf(word).map(([, sound]) => BASE + this.sounds[sound]);
         urls.push(this.clipUrl(word));
         Promise.all(urls.map(u => this.loadBuffer(u))).then(buffers => {
             if (token !== this.token) return;
+            this.indicate(el, 'playing');
             const at = (time, fn) => setTimeout(() => { if (token === this.token) fn(); }, Math.max(0, (time - ctx.currentTime) * 1000));
             let t = ctx.currentTime + 0.05;
             buffers.forEach((buffer, i) => {
@@ -199,43 +255,43 @@ export class AudioManager {
             at(t, () => {
                 this.sources = [];
                 this.onCancel = null;
+                this.indicate(null);
                 if (onend) onend();
             });
         }).catch(() => {
             if (token !== this.token) return;
             this.onCancel = null;
             if (oncancel) oncancel();
-            this.speak(word, { onend });
+            this.speak(word, { onend, el });
         });
         return true;
     }
 
-    speakTTS(text, { variety = false, onend = null } = {}) {
+    speakTTS(text, { variety = false, onend = null, el = null, token = this.token } = {}) {
+        let done = false;
+        const finish = () => {
+            if (done) return;
+            done = true;
+            if (token !== this.token) return;
+            this.indicate(null);
+            if (onend) onend();
+        };
         try {
-            if (!('speechSynthesis' in window)) { if (onend) onend(); return; }
+            if (!('speechSynthesis' in window)) { finish(); return; }
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
             utterance.rate = 0.9;
             const voice = variety ? this.nextVarietyVoice() : this.voice;
             if (voice) utterance.voice = voice;
-            if (onend) {
-                // Some browsers never fire onend; fall back to a timer.
-                let done = false;
-                const finish = () => { if (!done) { done = true; onend(); } };
-                utterance.onend = finish;
-                setTimeout(finish, 900 + String(text).length * 90);
-            }
+            utterance.onstart = () => { if (token === this.token) this.indicate(el, 'playing'); };
+            // Some browsers never fire onend; fall back to a timer.
+            utterance.onend = finish;
+            setTimeout(finish, 900 + String(text).length * 90);
             window.speechSynthesis.speak(utterance);
         } catch (error) {
             console.error('Speech synthesis error:', error);
+            finish();
         }
-    }
-
-    // Plays several words one after another (used to compare the chosen and the correct word).
-    speakSequence(texts) {
-        const list = texts.filter(Boolean);
-        const next = i => { if (i < list.length) this.speak(list[i], { onend: () => setTimeout(() => next(i + 1), 350) }); };
-        next(0);
     }
 
     nextVarietyVoice() {
