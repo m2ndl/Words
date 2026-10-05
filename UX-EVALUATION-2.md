@@ -4,6 +4,19 @@
 **Scope:** the interface as it is now, after the round-1 recommendations were implemented. Round 1 is [UX-EVALUATION.md](UX-EVALUATION.md); the teaching content is covered in [EVALUATION.md](EVALUATION.md).
 **Reviewed:** 5 October 2026, `main` at `1cf47d2`
 
+> **Update, 5 October 2026: R1–R3 are fixed.** This document still describes the version reviewed (`1cf47d2`).
+> See [Section 0](#0-implementation-status) for what changed. The small items in R4 are still open.
+
+---
+
+## 0. Implementation status
+
+| # | Change | Checked | Where |
+|---|---|---|---|
+| R1 | "ليس بعد" is shown as the learner's choice, not as a mistake: no red, no ✗, no wrong-answer sound, and a neutral feedback panel. Read-aloud items are left out of the practice score. The practice result reports them on their own line ("القراءة بصوت عالٍ: 3 من 4 صحيحة بتقديرك"). A word marked "ليس بعد" still comes back at the end of the set. | Four "ليس بعد" answers and six right answers give "6 من 6 (100%)" and «ابدأ الاختبار». Leaving after a single read-aloud answer still asks first. axe-core: no violations | `js/gameEngine.js`, `styles.css` |
+| R2 | The header title wraps to a second line instead of being cut. Below 560 px the 📚 and 🔥 chips leave the header, and home shows them as labelled chips at the top of the page ("كلمات تستطيع قراءتها: 52", "أيام متتالية: 4"). | With both chips earned, no title is cut on any page at 320, 360, 390, 412, 600 or 768 px. The longest unit name takes two lines at 320 px and one line from 360 px | `styles.css`, `js/uiManager.js` |
+| R3 | Above 520 px the activity sheet has a fixed height (760 px, or the screen height if smaller), so it no longer grows when feedback appears. | The answer buttons and «التالي» stay put after an answer at 768 × 1024 and 1280 × 800 | `styles.css` |
+
 ---
 
 ## How this review was done
@@ -203,7 +216,7 @@ Phones are not affected, because there the sheet fills the screen.
 
 ## 5. Recommendations
 
-**Now (hours):**
+**Now (hours):** done (Section 0).
 - **R1:** a neutral "ليس بعد", left out of the practice score.
 - **R2:** a title that can wrap, or chips moved out of the header on narrow screens.
 - **R3:** a fixed-height activity sheet above 520 px.

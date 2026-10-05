@@ -78,7 +78,7 @@ export class GameEngine {
 
     needsLeaveConfirm() {
         const s = this.state.activitySession;
-        return !!LEAVE_MESSAGES[s.step] && !s.done && (s.results?.length || 0) > 0;
+        return !!LEAVE_MESSAGES[s.step] && !s.done && ((s.results?.length || 0) + (s.selfChecks?.length || 0)) > 0;
     }
 
     leaveMessage() {
@@ -215,6 +215,7 @@ export class GameEngine {
             currentIndex: 0,
             firstTryCorrect: 0,
             results: [],
+            selfChecks: [],
             locked: false,
             done: false,
             ...extra
@@ -281,8 +282,12 @@ export class GameEngine {
         const sub = this.data.getSubSkill(q.techniqueId, q.subSkillId) || {};
 
         if (!q._requeued) {
-            if (result.correct) session.firstTryCorrect++;
-            session.results.push({ q, correct: !!result.correct });
+            // Read-aloud items are judged by the learner: they are kept out of the score, so an honest "ليس بعد" costs nothing.
+            if (result.selfCheck) (session.selfChecks = session.selfChecks || []).push(!!result.correct);
+            else {
+                if (result.correct) session.firstTryCorrect++;
+                session.results.push({ q, correct: !!result.correct });
+            }
         }
         const target = ['sort', 'build', 'say'].includes(q.type) ? q.word : q.type === 'sentence' ? q.text : q.answer;
         this.state.logResponse({
@@ -298,12 +303,13 @@ export class GameEngine {
         }
 
         if (result.el && result.el.classList) {
-            result.el.classList.add(result.correct ? 'correct' : 'incorrect');
+            // "ليس بعد" is an honest self-report, not a mistake: no red, no ✗, no wrong-answer sound.
+            result.el.classList.add(result.correct ? 'correct' : result.selfCheck ? 'is-chosen' : 'incorrect');
         }
         if (!result.correct) this.revealCorrect(q);
         this.showFeedback(q, sub, result);
         if (result.correct) this.effects.playCorrectSound();
-        else this.effects.playWrongSound();
+        else if (!result.selfCheck) this.effects.playWrongSound();
         this.finishQuestion();
     }
 
@@ -358,7 +364,7 @@ export class GameEngine {
         if (result.selfCheck) {
             html = result.correct
                 ? `<div class="feedback ok"><div class="fb-title">✅ ممتاز!</div></div>`
-                : `<div class="feedback bad"><div class="fb-title">لا بأس — ستعود هذه الكلمة في آخر التمرين.</div>${tip}</div>`;
+                : `<div class="feedback note"><div class="fb-title">لا بأس — ستعود هذه الكلمة في آخر التمرين.</div>${tip}</div>`;
         } else if (q.type === 'sentence') {
             html = result.correct
                 ? `<div class="feedback ok"><div class="fb-title">${ar(this.data.getRandomEncouragement())}</div><div class="fb-row">${speakerButton(q.text)}<span>${ar(result.correctMeaning)}</span></div></div>`
@@ -402,7 +408,7 @@ export class GameEngine {
     }
 
     // Shows a result screen inside the dialog; its main button is the next step.
-    showResult({ emoji, title, score = '', advice = '', main = null, secondary = null }) {
+    showResult({ emoji, title, score = '', note = '', advice = '', main = null, secondary = null }) {
         const el = this.ui.elements;
         const session = this.state.activitySession;
         session.done = true;
@@ -415,6 +421,7 @@ export class GameEngine {
                 <div class="result-emoji" aria-hidden="true">${emoji}</div>
                 <h3 class="result-title">${ar(title)}</h3>
                 ${score ? `<p class="result-score">${ar(score)}</p>` : ''}
+                ${note ? `<p class="result-advice">${ar(note)}</p>` : ''}
                 ${advice ? `<p class="result-advice">${ar(advice)}</p>` : ''}
             </div>`;
         el.modal_scroll.scrollTop = 0;
@@ -556,11 +563,13 @@ export class GameEngine {
         if (step === 'drill') {
             this.state.markStepComplete(techniqueId, subSkillId, 'drill');
             const ready = pct >= 60;
+            const self = session.selfChecks || [];
             if (pct >= 80) this.effects.soundManager.playSuccessSound();
             this.showResult({
                 emoji: pct >= 80 ? '🎯' : '📖',
                 title: pct >= 80 ? 'أحسنت!' : 'أنهيت التمرين',
                 score: scoreLine,
+                note: self.length ? `القراءة بصوت عالٍ: ${self.filter(Boolean).length} من ${self.length} صحيحة بتقديرك.` : '',
                 advice: ready ? 'أنت جاهز للاختبار.' : 'راجع الدرس، ثم أعد التمرين قبل الاختبار.',
                 main: ready ? { label: 'ابدأ الاختبار ⬅', onClick: () => this.nav.replace(stepRoute('quiz')) }
                     : { label: '📖 راجع الدرس', onClick: () => this.nav.replace(stepRoute('learn')) },
