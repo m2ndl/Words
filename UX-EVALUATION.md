@@ -7,6 +7,8 @@
 > **Update, 4 October 2026: the recommendations below have now been implemented.**
 > This document still describes the version reviewed (`e8327d4`). See
 > [Section 0](#0-implementation-status) for what changed and what is still open.
+>
+> **Round 2, 5 October 2026:** a review of the implemented version is in [UX-EVALUATION-2.md](UX-EVALUATION-2.md).
 
 ---
 
