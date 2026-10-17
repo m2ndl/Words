@@ -4,7 +4,7 @@
 //   #/                                home
 //   #/u/<unit>                        a unit
 //   #/u/<unit>/<lesson>/<step>        a lesson step (learn, drill, quiz), shown over its unit
-//   #/review   #/placement            review and the placement check, shown over home
+//   #/review                          review, shown over home
 //   #/progress (#/progress/teacher)   the learning dashboard (with the teacher settings)
 //   #/note                            saving and moving progress; contact
 //   #/menu                            home with the menu open
@@ -17,7 +17,7 @@ export function parseRoute(hash = location.hash) {
     if (c && STEPS.includes(d)) return { view: 'unit', techId: b, activity: { kind: d, techId: b, subId: c } };
     return { view: 'unit', techId: b };
   }
-  if (a === 'review' || a === 'placement') return { view: 'home', activity: { kind: a } };
+  if (a === 'review') return { view: 'home', activity: { kind: a } };
   if (a === 'progress') return { view: 'progress', teacher: b === 'teacher' };
   if (a === 'note') return { view: 'note' };
   if (a === 'menu') return { view: 'home', menu: true };
@@ -30,7 +30,6 @@ export const routes = {
   note: () => '#/note',
   progress: () => '#/progress',
   review: () => '#/review',
-  placement: () => '#/placement',
   unit: techId => `#/u/${encodeURIComponent(techId)}`,
   step: (techId, subId, step) => `#/u/${encodeURIComponent(techId)}/${encodeURIComponent(subId)}/${step}`
 };

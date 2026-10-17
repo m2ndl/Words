@@ -27,7 +27,7 @@ export class UIManager {
 
   initElements() {
     const ids = [
-      'boot', 'boot-loading', 'boot-error', 'boot-actions', 'boot-retry', 'start-btn', 'placement-start-btn',
+      'boot', 'boot-loading', 'boot-error', 'boot-actions', 'boot-retry', 'start-btn',
       'app', 'nav-btn', 'nav-icon', 'main-title', 'words-chip', 'words-count', 'streak-chip', 'streak-count',
       'home-view', 'unit-view', 'progress-view', 'note-view',
       'activity-modal', 'modal-title', 'modal-close-btn', 'modal-progress', 'modal-scroll', 'modal-body', 'modal-feedback',
@@ -93,26 +93,16 @@ export class UIManager {
     const techniques = this.data.getTechniques();
     const next = this.state.nextStep(techniques);
     const due = this.state.getDueReviewKeys(99).length;
-    const passedAny = techniques.some(t => t.subSkills.some(s => this.state.isStepComplete(t.id, s.id, 'quiz')));
-    const notice = this.state.showUpdateNotice() ? `
-      <div class="home-notice" role="note">
-        <p>تمّ تحديث الدورة: أُعيد ترتيبها لتبدأ بأصوات الحروف والكلمات القصيرة، وأُضيفت الجمل والكلمات الشائعة والمراجعة. حدّد مستواك لتبدأ من الوحدة المناسبة لك.</p>
-        <button class="icon-btn" data-dismiss-notice aria-label="إغلاق التنبيه"><span aria-hidden="true">✕</span></button>
-      </div>` : '';
     const review = due ? `
       <button class="review-row" data-go="${routes.review()}">
         <span>🔁 مراجعة اليوم</span><span class="review-count">${due} ${due === 1 ? 'سؤال' : due === 2 ? 'سؤالان' : due <= 10 ? 'أسئلة' : 'سؤالاً'} ⬅</span>
       </button>` : '';
-    const placement = !this.state.userProgress.placementDone && !passedAny
-      ? `<div class="home-links"><button class="link-btn" data-go="${routes.placement()}">🧭 أعرف بعض القراءة — حدّد مستواي</button></div>` : '';
 
     const el = this.elements.home_view;
     el.innerHTML = `
       ${this.homeStats()}
-      ${notice}
       ${this.continueCard(next)}
       ${review}
-      ${placement}
       <h2 class="section-title">الوحدات</h2>
       <ol class="unit-list">${this.unitRows(techniques, next)}</ol>`;
     this.fallbackPictures(el);

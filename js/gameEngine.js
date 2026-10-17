@@ -5,18 +5,15 @@ import { soundOutButton, soundOut } from './soundOut.js';
 import { openDialog, closeDialog, isDialogOpen } from './dialogs.js';
 import { routes } from './router.js';
 
-const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة', placement: '🧭 تحديد المستوى' };
-// Placement: per unit, 4 items from its quizzes; 3 or more correct moves on to the next unit.
-const PLACEMENT_ITEMS = 4, PLACEMENT_PASS = 3;
+const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة' };
 // Leaving these before the end loses the result, so the learner is asked first.
 const LEAVE_MESSAGES = {
     drill: { title: 'تخرج من التمرين؟', text: 'لن تُحفظ نتيجة هذا التمرين.', cancel: 'تابع التمرين', ok: 'نعم، اخرج' },
-    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' },
-    placement: { title: 'توقف تحديد المستوى؟', text: 'لن يُحفظ ما أجبته، وتستطيع أن تبدأه من جديد من القائمة.', cancel: 'تابع', ok: 'نعم، توقّف' }
+    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' }
 };
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-// The core logic for running lessons, practice, tests, review and the placement check, inside the activity dialog.
+// The core logic for running lessons, practice, tests, and review, inside the activity dialog.
 // Every item gets one attempt. Scores count first attempts only; in practice a missed item comes back at the end.
 // Each result screen's main button leads to the next step. `nav` (set by the app) moves between routes.
 export class GameEngine {
@@ -43,7 +40,7 @@ export class GameEngine {
     isLocked() { return !!this.state.activitySession.locked; }
 
     // ---------------- the dialog ----------------
-    // activity: { kind: learn|drill|quiz|review|placement, techId, subId }. Returns false if it cannot start.
+    // activity: { kind: learn|drill|quiz|review, techId, subId }. Returns false if it cannot start.
     open(activity) {
         const el = this.ui.elements;
         this.audio.stop();
@@ -54,7 +51,6 @@ export class GameEngine {
         el.modal_body.classList.remove('fade-out');
         let started;
         if (activity.kind === 'review') started = this.startReview();
-        else if (activity.kind === 'placement') started = this.showPlacementIntro();
         else started = this.runActivity(activity.techId, activity.subId, activity.kind);
         if (!started) return false;
         if (!isDialogOpen(el.activity_modal)) openDialog(el.activity_modal, { onCancel: () => this.nav.requestExit(), focus: el.modal_title });
@@ -194,7 +190,7 @@ export class GameEngine {
     }
 
     // ---------------- sessions ----------------
-    // Generic session runner. Each question carries techniqueId/subSkillId so review and placement can mix lessons.
+    // Generic session runner. Each question carries techniqueId/subSkillId so review can mix lessons.
     startSession(step, questions, extra = {}) {
         const session = this.state.activitySession;
         const subSkill = session.subSkillId ? this.data.getSubSkill(session.techniqueId, session.subSkillId) : null;
@@ -203,7 +199,7 @@ export class GameEngine {
 
         const cap = Math.max(this.state.difficultySettings.questionsPerSession, 1);
         let list = questions;
-        if (step !== 'placement' && questions.length > cap) {
+        if (questions.length > cap) {
             // Practice keeps its authored order (read aloud → hear → build), so take a spread of items, not just the first ones.
             const keep = new Set(this.shuffleArray(questions.map((_, i) => i)).slice(0, cap));
             list = step === 'drill' ? questions.filter((_, i) => keep.has(i)) : questions.slice(0, cap);
@@ -251,18 +247,10 @@ export class GameEngine {
 
     renderProgress() {
         const s = this.state.activitySession;
-        let dots, count;
-        if (s.step === 'placement') {
-            // Placement shows the current unit's block and which unit it is on.
-            const blockSize = Math.min(PLACEMENT_ITEMS, s.questions.length - s.blockStart);
-            dots = this.dots(blockSize, s.currentIndex - s.blockStart);
-            count = `الوحدة ${s.placementUnit + 1} من ${this.data.getTechniques().length}`;
-        } else {
-            dots = this.dots(s.questions.length, s.currentIndex);
-            count = `${s.currentIndex + 1} من ${s.questions.length}`;
-        }
+        const dots = this.dots(s.questions.length, s.currentIndex);
+        const count = `${s.currentIndex + 1} من ${s.questions.length}`;
         this.ui.elements.modal_progress.innerHTML =
-            `<div class="q-dots ${s.questions.length > 12 && s.step !== 'placement' ? 'many' : ''}" aria-hidden="true">${dots}</div><span class="q-count">${count}</span>`;
+            `<div class="q-dots ${s.questions.length > 12 ? 'many' : ''}" aria-hidden="true">${dots}</div><span class="q-count">${count}</span>`;
     }
 
     // Downloads the clips of this item and the next one, so they play without a wait.
@@ -341,7 +329,6 @@ export class GameEngine {
     nextQuestion() {
         const session = this.state.activitySession;
         if (!session.questions || session.done) return;
-        if (session.step === 'placement' && this.placementCheckpoint()) return;
         session.currentIndex++;
         if (session.currentIndex < session.questions.length) this.renderCurrentQuestion();
         else this.endSession();
@@ -460,85 +447,10 @@ export class GameEngine {
         return true;
     }
 
-    // ---------------- placement check ----------------
-    showPlacementIntro() {
-        const el = this.ui.elements;
-        this.state.activitySession = { step: 'placement-intro' };
-        this.setTitle(STEP_TITLES.placement);
-        el.modal_body.innerHTML = `
-            <div class="result-panel" tabindex="-1">
-                <p><b>نعرف معاً من أين تبدأ.</b> نسألك عن الوحدات بالترتيب، من الأسهل إلى الأصعب: أربعة أسئلة لكل وحدة.</p>
-                <p>إذا أجبت ثلاثة منها صحيحاً ننتقل إلى الوحدة التالية، وإلا نقترح عليك أن تبدأ منها.</p>
-                <p>يستغرق ذلك عشر دقائق على الأكثر، وتستطيع أن تتوقّف متى شئت.</p>
-            </div>`;
-        el.modal_scroll.scrollTop = 0;
-        this.setFooter({ label: 'ابدأ ⬅', onClick: () => this.startPlacement() });
-        return true;
-    }
-
-    startPlacement() {
-        this.state.activitySession = { techniqueId: null, subSkillId: null };
-        this.startSession('placement', this.placementItems(1), { placementUnit: 1, blockStart: 0 });
-    }
-
-    placementItems(unitIndex) {
-        const tech = this.data.getTechniques()[unitIndex];
-        if (!tech) return [];
-        const pool = [];
-        tech.subSkills.filter(s => s.kind !== 'heart').forEach(s => {
-            s.quiz.questions.filter(q => q.type === 'read' || q.type === 'listen' || q.type === 'sentence')
-                .forEach(q => pool.push({ ...q, techniqueId: tech.id, subSkillId: s.id }));
-        });
-        return this.shuffleArray(pool).slice(0, PLACEMENT_ITEMS);
-    }
-
-    // At the end of each unit block: continue to the next unit, or stop and place the learner.
-    placementCheckpoint() {
-        const s = this.state.activitySession;
-        const blockEnd = s.blockStart + PLACEMENT_ITEMS - 1;
-        if (s.currentIndex < blockEnd && s.currentIndex < s.questions.length - 1) return false;
-        const block = s.results.slice(s.blockStart, s.blockStart + PLACEMENT_ITEMS);
-        const right = block.filter(r => r.correct).length;
-        const techniques = this.data.getTechniques();
-        if (right >= PLACEMENT_PASS && s.placementUnit + 1 < techniques.length) {
-            const next = this.placementItems(s.placementUnit + 1);
-            s.placementUnit += 1;
-            s.blockStart = s.results.length;
-            s.questions.push(...next);
-            s.total = s.questions.length;
-            return false;
-        }
-        // Weak on short-vowel words (unit 1): start with the letter-sound bridge (unit 0).
-        const startUnit = right >= PLACEMENT_PASS ? techniques.length - 1 : (s.placementUnit === 1 ? 0 : s.placementUnit);
-        this.finishPlacement(startUnit);
-        return true;
-    }
-
-    finishPlacement(startUnit) {
-        const techniques = this.data.getTechniques();
-        this.state.setPlacement(startUnit);
-        const tech = techniques[startUnit];
-        const number = startUnit + 1;
-        this.showResult({
-            emoji: '🧭',
-            title: 'نتيجة تحديد المستوى',
-            score: startUnit === 0
-                ? `ننصحك بالبدء من الوحدة 1 (${tech.name_ar}) لتثبيت الأساس.`
-                : `ننصحك بالبدء من الوحدة ${number}: ${tech.name_ar}.`,
-            advice: startUnit === 0 ? '' : 'فُتحت لك الوحدات التي قبلها، وتستطيع أن تبدأ فيها بالاختبار مباشرةً.',
-            main: { label: `ابدأ الوحدة ${number} ⬅`, onClick: () => this.nav.replace(routes.unit(tech.id)) }
-        });
-    }
-
     // ---------------- end of a session ----------------
     endSession() {
         const session = this.state.activitySession;
         const { techniqueId, subSkillId, step } = session;
-
-        if (step === 'placement') {
-            this.finishPlacement(Math.min(session.placementUnit + 1, this.data.getTechniques().length - 1));
-            return;
-        }
 
         const total = session.results.length || 1;
         const right = session.firstTryCorrect;

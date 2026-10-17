@@ -45,7 +45,7 @@ class ModernPhonicsApp {
 
   // ---------------- start-up ----------------
   // The start screen shows a spinner until the course is loaded, and a retry button if it cannot be.
-  // New learners then choose "start" or "placement"; returning learners go straight to where they were.
+  // New learners then tap "start"; returning learners go straight to where they were.
   async boot() {
     const el = this.uiManager.elements;
     el.boot_loading.classList.remove('hidden');
@@ -87,11 +87,10 @@ class ModernPhonicsApp {
     this.route();
   }
 
-  startCourse(placement = false) {
+  startCourse() {
     this.effectsManager.soundManager.resumeAudioContext();
     this.stateManager.markStarted();
     this.enterApp();
-    if (placement) this.navigate(routes.placement());
   }
 
   registerServiceWorker() {
@@ -206,7 +205,7 @@ class ModernPhonicsApp {
     if (ok) this.exitActivity();
   }
 
-  // Back to the page under the activity (its unit, or home for review and placement).
+  // Back to the page under the activity (its unit, or home for review).
   exitActivity() {
     const page = pageOf(parseRoute(location.hash));
     this.leaving = true;
@@ -322,7 +321,6 @@ class ModernPhonicsApp {
     window.addEventListener('hashchange', () => this.route());
 
     el.start_btn.addEventListener('click', () => this.startCourse());
-    el.placement_start_btn.addEventListener('click', () => this.startCourse(true));
     el.boot_retry.addEventListener('click', () => this.boot());
 
     el.nav_btn.addEventListener('click', () => {
@@ -334,7 +332,6 @@ class ModernPhonicsApp {
     // Menu items replace the menu's entry, so Back from their page returns home.
     document.getElementById('menu-progress').addEventListener('click', () => this.replace(routes.progress()));
     document.getElementById('menu-review').addEventListener('click', () => this.replace(routes.review()));
-    document.getElementById('menu-placement').addEventListener('click', () => this.replace(routes.placement()));
     document.getElementById('menu-note').addEventListener('click', () => this.replace(routes.note()));
     el.menu_unlock.addEventListener('click', () => {
       this.stateManager.toggleUnlockAll();
@@ -372,7 +369,7 @@ class ModernPhonicsApp {
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.main_title.addEventListener(ev, () => clearTimeout(pressTimer)));
 
-    // Clicks on rendered content: audio, navigation, locked units, notices.
+    // Clicks on rendered content: audio, navigation, locked units.
     document.addEventListener('click', (e) => {
       const target = e.target;
       const soundOutBtn = target.closest('[data-soundout]');
@@ -399,13 +396,7 @@ class ModernPhonicsApp {
       const locked = target.closest('[data-locked]');
       if (locked) {
         const i = Number(locked.dataset.locked);
-        this.uiManager.toast(`الوحدة ${i + 1} مقفلة. انجح في اختبارات الوحدة ${i} لتفتحها، أو حدّد مستواك من القائمة.`);
-        return;
-      }
-
-      if (target.closest('[data-dismiss-notice]')) {
-        this.stateManager.dismissUpdateNotice();
-        target.closest('.home-notice')?.remove();
+        this.uiManager.toast(`الوحدة ${i + 1} مقفلة. انجح في اختبارات الوحدة ${i} لتفتحها.`);
         return;
       }
 

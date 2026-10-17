@@ -23,7 +23,7 @@
   <!-- celebration particles container -->
   <div class="celebration-particles" id="particles-container" aria-hidden="true"></div>
 
-  <!-- Start screen: shown while the course loads; new learners choose where to start, returning learners skip it -->
+  <!-- Start screen: shown while the course loads; returning learners skip it -->
   <main id="boot" class="boot">
     <div class="boot-card card">
       <div class="boot-emoji" aria-hidden="true">📖</div>
@@ -39,7 +39,6 @@
       </div>
       <div id="boot-actions" class="boot-actions hidden">
         <button id="start-btn" class="btn-primary btn-lg">ابدأ الدورة</button>
-        <button id="placement-start-btn" class="btn-secondary">🧭 أعرف بعض القراءة — حدّد مستواي</button>
       </div>
       <noscript><p class="boot-status">يحتاج البرنامج إلى تفعيل JavaScript في المتصفح.</p></noscript>
     </div>
@@ -72,7 +71,7 @@
             <button id="share-btn" class="btn-secondary hidden">📤 أرسل النسخة</button>
             <label class="btn-secondary file-btn">⬆️ افتح نسخة محفوظة<input id="import-input" class="sr-only" type="file" accept=".json,application/json"></label>
           </div>
-          <p class="hint">بدأت من جهاز جديد بلا نسخة؟ يفتح لك <b>اختبار تحديد المستوى</b> الوحدات التي تعرفها، أو اختر <b>فتح جميع الوحدات</b> من القائمة.</p>
+          <p class="hint">بدأت من جهاز جديد بلا نسخة؟ اختر <b>فتح جميع الوحدات</b> من القائمة.</p>
         </div>
         <div class="panel">
           <h2 class="panel-title">ملاحظاتك</h2>
@@ -86,7 +85,7 @@
     </main>
   </div>
 
-  <!-- Activity dialog: lessons, practice, tests, review and placement -->
+  <!-- Activity dialog: lessons, practice, tests and review -->
   <div id="activity-modal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
     <div class="sheet card">
       <div class="sheet-head">
@@ -130,7 +129,6 @@
       <nav class="drawer-nav" aria-label="القائمة">
         <button id="menu-progress" class="menu-item">📊 تقدّمي</button>
         <button id="menu-review" class="menu-item">🔁 المراجعة</button>
-        <button id="menu-placement" class="menu-item">🧭 اختبار تحديد المستوى</button>
         <button id="menu-unlock" class="menu-item" aria-pressed="false">🔓 فتح جميع الوحدات</button>
         <button id="menu-note" class="menu-item">💾 حفظ تقدّمك ونقله</button>
         <a id="menu-website" href="https://my2ndlang.blog" target="_blank" rel="noopener" class="menu-item">🌐 لغتي الثانية</a>

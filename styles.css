@@ -142,13 +142,6 @@ button { font: inherit; }
     border: none; border-radius: 999px; background: none;
     color: var(--primary-strong); font-weight: 700; cursor: pointer;
 }
-.link-btn {
-    min-height: 44px; padding: 8px 4px;
-    border: none; background: none;
-    color: var(--primary-strong); font-weight: 600;
-    text-decoration: underline; text-underline-offset: 4px;
-    cursor: pointer;
-}
 .icon-btn {
     flex-shrink: 0;
     width: 44px; height: 44px;
@@ -178,7 +171,7 @@ button { font: inherit; }
     }
     .step.is-next:hover, .q-speaker:hover { transform: translateY(-2px); }
     .theme-btn:hover { border-color: var(--border-strong); }
-    .link-btn:hover, .btn-text:hover { color: var(--primary); }
+    .btn-text:hover { color: var(--primary); }
 }
 
 /* ==============================
@@ -235,15 +228,6 @@ button { font: inherit; }
 /* ==============================
    Home
    ============================== */
-.home-notice {
-    display: flex; align-items: flex-start; gap: 10px;
-    margin-bottom: 16px; padding: 10px 12px;
-    border-radius: 14px;
-    background: var(--note-bg); color: var(--note-text);
-    line-height: 1.8;
-}
-.home-notice p { flex: 1; }
-.home-notice .icon-btn { width: 36px; height: 36px; border-color: transparent; background: transparent; color: var(--note-text); }
 
 .continue-card {
     margin-bottom: 14px; padding: 18px 16px;
@@ -293,7 +277,6 @@ button { font: inherit; }
     cursor: pointer;
 }
 .review-count { color: var(--primary-strong); }
-.home-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 4px; }
 
 .unit-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .unit-row {

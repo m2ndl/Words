@@ -84,7 +84,7 @@ export class StateManager {
     this._saveJson(PROGRESS_KEY, this.userProgress);
   }
 
-  // Nothing done yet: the start screen offers "start" and "placement".
+  // Nothing done yet: the start screen shows "start".
   isNewLearner() {
     const p = this.userProgress;
     const anyStep = Object.values(p.techniques || {}).some(t => Object.values(t.subSkills || {}).some(s => s.length));
@@ -94,16 +94,6 @@ export class StateManager {
   markStarted() {
     if (this.userProgress.started) return;
     this.userProgress.started = true;
-    this.saveProgress();
-  }
-
-  // Shown once to learners who used the old version of the course.
-  showUpdateNotice() {
-    return this.migratedFromV1 && !this.userProgress.placementDone && !this.userProgress.noticeDismissed;
-  }
-
-  dismissUpdateNotice() {
-    this.userProgress.noticeDismissed = true;
     this.saveProgress();
   }
 
@@ -214,7 +204,7 @@ export class StateManager {
     return prevProgress.mastered;
   }
 
-  // Units the learner can test out of: opened by "unlock all", or before the unit placement suggested.
+  // Units the learner can test out of: opened by "unlock all", or before the unit an earlier placement check suggested.
   isUnitFree(techniqueIndex) {
     return this.unlockAll || techniqueIndex < (this.userProgress.placementUnit || 0);
   }
@@ -267,12 +257,6 @@ export class StateManager {
       if (hit) return hit;
     }
     return null;
-  }
-
-  setPlacement(unitIndex) {
-    this.userProgress.placementUnit = Math.max(this.userProgress.placementUnit || 0, unitIndex);
-    this.userProgress.placementDone = true;
-    this.saveProgress();
   }
 
   // Words from every lesson whose test has been passed (targets, built words and heart words).
