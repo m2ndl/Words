@@ -5,12 +5,15 @@ import { soundOutButton, soundOut } from './soundOut.js';
 import { openDialog, closeDialog, isDialogOpen } from './dialogs.js';
 import { routes } from './router.js';
 
-const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة' };
+const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة', skip: '⏭️ اختبار تخطّي الوحدة' };
 // Leaving these before the end loses the result, so the learner is asked first.
 const LEAVE_MESSAGES = {
     drill: { title: 'تخرج من التمرين؟', text: 'لن تُحفظ نتيجة هذا التمرين.', cancel: 'تابع التمرين', ok: 'نعم، اخرج' },
-    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' }
+    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' },
+    skip: { title: 'توقف الاختبار؟', text: 'لن يُحفظ ما أجبته، وتستطيع أن تعيده من صفحة الوحدة.', cancel: 'تابع الاختبار', ok: 'نعم، توقّف' }
 };
+// Skipping a unit: a short test drawn from all its lessons' tests; SKIP_PASS of SKIP_ITEMS right skips it.
+const SKIP_ITEMS = 8, SKIP_PASS = 7;
 // Learn shows this many example cards (heart-word lessons show all their words).
 const LEARN_EXAMPLES = 4;
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -53,6 +56,7 @@ export class GameEngine {
         el.modal_body.classList.remove('fade-out');
         let started;
         if (activity.kind === 'review') started = this.startReview();
+        else if (activity.kind === 'skip') started = this.startSkipTest(activity.techId);
         else started = this.runActivity(activity.techId, activity.subId, activity.kind);
         if (!started) return false;
         if (!isDialogOpen(el.activity_modal)) openDialog(el.activity_modal, { onCancel: () => this.nav.requestExit(), focus: el.modal_title });
@@ -202,7 +206,7 @@ export class GameEngine {
 
         const cap = Math.max(this.state.difficultySettings.questionsPerSession, 1);
         let list = questions;
-        if (questions.length > cap) {
+        if (step !== 'skip' && questions.length > cap) {
             // Practice keeps its authored order (read aloud → hear → build), so take a spread of items, not just the first ones.
             const keep = new Set(this.shuffleArray(questions.map((_, i) => i)).slice(0, cap));
             list = step === 'drill' ? questions.filter((_, i) => keep.has(i)) : questions.slice(0, cap);
@@ -450,6 +454,59 @@ export class GameEngine {
         return true;
     }
 
+    // ---------------- skipping a unit ----------------
+    // For a learner who already knows an open unit: items from every lesson's test, taken in turn so each lesson is asked.
+    startSkipTest(techId) {
+        const techniques = this.data.getTechniques();
+        const index = techniques.findIndex(t => t.id === techId);
+        const tech = techniques[index];
+        if (!tech || !this.state.isTechniqueUnlocked(index, techniques) || this.state.getTechniqueProgress(techId).mastered) return false;
+        const pools = tech.subSkills.map(s => this.shuffleArray(s.quiz.questions.map(q => ({ ...q, techniqueId: tech.id, subSkillId: s.id }))));
+        const items = [];
+        for (let round = 0; items.length < SKIP_ITEMS && pools.some(p => p.length > round); round++) {
+            pools.forEach(p => { if (p[round] && items.length < SKIP_ITEMS) items.push(p[round]); });
+        }
+        this.state.activitySession = { techniqueId: tech.id, subSkillId: null };
+        this.startSession('skip', this.shuffleArray(items));
+        this.setTitle(STEP_TITLES.skip, tech.name_ar);
+        return true;
+    }
+
+    finishSkipTest(tech, right, total, scoreLine) {
+        const techniques = this.data.getTechniques();
+        const index = techniques.indexOf(tech);
+        const pass = Math.ceil(total * SKIP_PASS / SKIP_ITEMS);
+        if (right < pass) {
+            // On to the unit's first unfinished lesson, at its next step.
+            const lesson = tech.subSkills.find(s => this.state.firstOpenStep(tech.id, s.id)) || tech.subSkills[0];
+            const step = this.state.firstOpenStep(tech.id, lesson.id) || 'learn';
+            this.showResult({
+                emoji: '💪',
+                title: 'هذه الوحدة تفيدك',
+                score: `${scoreLine} — تحتاج ${pass} للتخطّي.`,
+                advice: 'تعلّمها خطوة خطوة، درساً بعد درس.',
+                main: { label: 'تابع الوحدة ⬅', onClick: () => this.nav.replace(routes.step(tech.id, lesson.id, step)) }
+            });
+            return;
+        }
+        // Skipped: every lesson counts as done. Only the items missed here join the daily review: the learner
+        // showed they know the rest, and skipping several units must not leave hundreds of items to review.
+        tech.subSkills.forEach(s => ['learn', 'drill', 'quiz'].forEach(st => this.state.markStepComplete(tech.id, s.id, st)));
+        const missed = this.state.activitySession.results.filter(r => !r.correct).map(({ q }) => `${q.techniqueId}|${q.subSkillId}|${q.id}`);
+        if (missed.length) this.state.addToReview(missed);
+        this.state.markTechniqueMastered(tech.id);
+        this.effects.createCelebrationBurst();
+        const nextTech = techniques[index + 1];
+        this.showResult({
+            emoji: '⏭️',
+            title: 'تخطّيت هذه الوحدة!',
+            score: scoreLine,
+            advice: nextTech ? `الوحدة التالية: ${nextTech.name_ar}.` : 'أنهيت كل وحدات الدورة. راجع كل يوم لتثبّت ما تعلّمته.',
+            main: nextTech ? { label: 'الوحدة التالية ⬅', onClick: () => this.nav.replace(routes.unit(nextTech.id)) }
+                : { label: 'الصفحة الرئيسية', onClick: () => this.nav.replace(routes.home()) }
+        });
+    }
+
     // ---------------- end of a session ----------------
     endSession() {
         const session = this.state.activitySession;
@@ -470,6 +527,10 @@ export class GameEngine {
         }
 
         const technique = this.data.getTechnique(techniqueId);
+        if (step === 'skip') {
+            this.finishSkipTest(technique, right, total, scoreLine);
+            return;
+        }
         const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
         const stepRoute = st => routes.step(techniqueId, subSkillId, st);
         const backToUnit = { label: 'رجوع', onClick: () => this.nav.exit() };

@@ -4,6 +4,7 @@
 //   #/                                home
 //   #/u/<unit>                        a unit
 //   #/u/<unit>/<lesson>/<step>        a lesson step (learn, drill, quiz), shown over its unit
+//   #/u/<unit>/skip                   the short test that skips a unit the learner already knows, over the unit
 //   #/review                          review, shown over home
 //   #/progress (#/progress/teacher)   the learning dashboard (with the teacher settings)
 //   #/note                            saving and moving progress; contact
@@ -15,6 +16,7 @@ export function parseRoute(hash = location.hash) {
   const [a, b, c, d] = hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
   if (a === 'u' && b) {
     if (c && STEPS.includes(d)) return { view: 'unit', techId: b, activity: { kind: d, techId: b, subId: c } };
+    if (c === 'skip' && !d) return { view: 'unit', techId: b, activity: { kind: 'skip', techId: b } };
     return { view: 'unit', techId: b };
   }
   if (a === 'review') return { view: 'home', activity: { kind: a } };
@@ -31,6 +33,7 @@ export const routes = {
   progress: () => '#/progress',
   review: () => '#/review',
   unit: techId => `#/u/${encodeURIComponent(techId)}`,
+  skip: techId => `#/u/${encodeURIComponent(techId)}/skip`,
   step: (techId, subId, step) => `#/u/${encodeURIComponent(techId)}/${encodeURIComponent(subId)}/${step}`
 };
 
