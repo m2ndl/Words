@@ -477,21 +477,23 @@ export class GameEngine {
         const index = techniques.indexOf(tech);
         const pass = Math.ceil(total * SKIP_PASS / SKIP_ITEMS);
         if (right < pass) {
-            const first = tech.subSkills.find(s => this.state.firstOpenStep(tech.id, s.id)) || tech.subSkills[0];
+            // On to the unit's first unfinished lesson, at its next step.
+            const lesson = tech.subSkills.find(s => this.state.firstOpenStep(tech.id, s.id)) || tech.subSkills[0];
+            const step = this.state.firstOpenStep(tech.id, lesson.id) || 'learn';
             this.showResult({
                 emoji: '💪',
-                title: 'ابدأ من الدرس الأول',
+                title: 'هذه الوحدة تفيدك',
                 score: `${scoreLine} — تحتاج ${pass} للتخطّي.`,
-                advice: 'هذه الوحدة تفيدك. ستتعلّمها خطوة خطوة.',
-                main: { label: 'ابدأ الدرس ⬅', onClick: () => this.nav.replace(routes.step(tech.id, first.id, this.state.firstOpenStep(tech.id, first.id) || 'learn')) }
+                advice: 'تعلّمها خطوة خطوة، درساً بعد درس.',
+                main: { label: 'تابع الوحدة ⬅', onClick: () => this.nav.replace(routes.step(tech.id, lesson.id, step)) }
             });
             return;
         }
-        // Skipped: every lesson counts as done, and the unit's words join the daily review.
-        tech.subSkills.forEach(s => {
-            ['learn', 'drill', 'quiz'].forEach(st => this.state.markStepComplete(tech.id, s.id, st));
-            this.state.addToReview(s.quiz.questions.map(q => `${tech.id}|${s.id}|${q.id}`));
-        });
+        // Skipped: every lesson counts as done. Only the items missed here join the daily review: the learner
+        // showed they know the rest, and skipping several units must not leave hundreds of items to review.
+        tech.subSkills.forEach(s => ['learn', 'drill', 'quiz'].forEach(st => this.state.markStepComplete(tech.id, s.id, st)));
+        const missed = this.state.activitySession.results.filter(r => !r.correct).map(({ q }) => `${q.techniqueId}|${q.subSkillId}|${q.id}`);
+        if (missed.length) this.state.addToReview(missed);
         this.state.markTechniqueMastered(tech.id);
         this.effects.createCelebrationBurst();
         const nextTech = techniques[index + 1];
