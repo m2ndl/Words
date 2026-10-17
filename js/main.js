@@ -14,6 +14,8 @@ import { parseRoute, routes, activityKey, pageOf, canGoBack, pushRoute, replaceR
 const APP_NAME = 'دورة قراءة الكلمات';
 const IMPORTED_FLAG = 'wordsImported';
 const TEACHER_PRESS_MS = 1000;
+// A tab left in the background this long reloads when the learner comes back, so it runs the latest version.
+const STALE_AFTER_MS = 30 * 60 * 1000;
 
 class ModernPhonicsApp {
   constructor() {
@@ -41,6 +43,18 @@ class ModernPhonicsApp {
     this.initEventListeners();
     this.boot();
     this.registerServiceWorker();
+    this.reloadWhenStale();
+  }
+
+  // Phones resume a background tab instead of reloading it, so it could keep old code for days. After a long
+  // absence, reload on return, but never in the middle of an activity (progress and the page survive a reload).
+  reloadWhenStale() {
+    let hiddenAt = null;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { hiddenAt = Date.now(); return; }
+      const stale = hiddenAt !== null && Date.now() - hiddenAt >= STALE_AFTER_MS;
+      if (stale && !this.activityKey && !isDialogOpen(this.uiManager.elements.confirm_dialog)) location.reload();
+    });
   }
 
   // ---------------- start-up ----------------
