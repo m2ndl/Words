@@ -153,13 +153,13 @@ export class UIManager {
       ? `<span class="mini-bar" aria-hidden="true"><span style="width:${Math.round(done / total * 100)}%"></span></span>` : '';
   }
 
-  // One line per open unit, and the next locked one; the units after it stay out of sight.
+  // One line per open unit, and the first locked one; the other locked units stay out of sight.
   // A locked unit explains itself when tapped.
   unitRows(techniques, next) {
     const firstLocked = techniques.findIndex((_, i) => !this.state.isTechniqueUnlocked(i, techniques));
-    const shown = firstLocked === -1 ? techniques : techniques.slice(0, firstLocked + 1);
-    return shown.map((tech, i) => {
-      const unlocked = i !== firstLocked;
+    return techniques.map((tech, i) => {
+      const unlocked = this.state.isTechniqueUnlocked(i, techniques);
+      if (!unlocked && i !== firstLocked) return '';
       const mastered = this.state.getTechniqueProgress(tech.id).mastered;
       const current = !!next && next.index === i;
       const status = mastered ? '✓' : !unlocked ? '🔒' : current ? '▸' : '';
