@@ -326,6 +326,8 @@ button { font: inherit; }
 .lesson-icon { font-size: 1.6rem; }
 .lesson-name { flex: 1; min-width: 0; }
 .lesson-state { flex-shrink: 0; font-size: 0.95rem; white-space: nowrap; }
+.skip-unit { margin: 8px 0; text-align: center; }
+#home-view .skip-unit { margin: -6px 0 6px; }
 .lesson-row.is-done .lesson-state { color: var(--primary-strong); }
 
 /* Every unit, folded away under the continue card. */

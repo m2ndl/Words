@@ -97,6 +97,7 @@ export class UIManager {
     el.innerHTML = `
       ${this.homeStats()}
       ${this.continueCard(next)}
+      ${next ? this.skipLink(next.tech) : ''}
       ${review}
       <details class="all-units">
         <summary class="section-title"><span>كل الوحدات</span><span class="chev" aria-hidden="true">▾</span></summary>
@@ -142,6 +143,12 @@ export class UIManager {
         ${this.unitBar(tech)}
         <button class="btn-primary btn-lg btn-block" data-go="${routes.step(tech.id, sub.id, step)}">${quizTried ? 'أعد الاختبار' : STEP_START[step]} ⬅</button>
       </section>`;
+  }
+
+  // For learners who already know a unit: a short test that skips it (not shown once the unit is mastered).
+  skipLink(tech) {
+    if (this.state.getTechniqueProgress(tech.id).mastered) return '';
+    return `<div class="skip-unit"><button class="btn-text" data-go="${routes.skip(tech.id)}">⏭️ أعرف هذه الوحدة — اختبرني</button></div>`;
   }
 
   // How much of a unit is done, as a thin bar (nothing before the first step).
@@ -204,7 +211,8 @@ export class UIManager {
       </div>
       ${free ? '<p class="unit-free-note">هذه الوحدة مفتوحة لك.</p>' : ''}
       ${this.unitBar(tech)}
-      <ol class="lesson-list">${tech.subSkills.map(sub => this.lessonRow(tech, index, sub, target, techniques)).join('')}</ol>`;
+      <ol class="lesson-list">${tech.subSkills.map(sub => this.lessonRow(tech, index, sub, target, techniques)).join('')}</ol>
+      ${this.skipLink(tech)}`;
     this.fallbackPictures(el);
     this.setHeader(ar(tech.name_ar), false);
     this.showView('unit');
