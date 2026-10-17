@@ -14,6 +14,8 @@ import { parseRoute, routes, activityKey, pageOf, canGoBack, pushRoute, replaceR
 const APP_NAME = 'دورة قراءة الكلمات';
 const IMPORTED_FLAG = 'wordsImported';
 const TEACHER_PRESS_MS = 1000;
+// A tab left in the background this long reloads when the learner comes back, so it runs the latest version.
+const STALE_AFTER_MS = 30 * 60 * 1000;
 
 class ModernPhonicsApp {
   constructor() {
@@ -41,11 +43,23 @@ class ModernPhonicsApp {
     this.initEventListeners();
     this.boot();
     this.registerServiceWorker();
+    this.reloadWhenStale();
+  }
+
+  // Phones resume a background tab instead of reloading it, so it could keep old code for days. After a long
+  // absence, reload on return, but never in the middle of an activity (progress and the page survive a reload).
+  reloadWhenStale() {
+    let hiddenAt = null;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { hiddenAt = Date.now(); return; }
+      const stale = hiddenAt !== null && Date.now() - hiddenAt >= STALE_AFTER_MS;
+      if (stale && !this.activityKey && !isDialogOpen(this.uiManager.elements.confirm_dialog)) location.reload();
+    });
   }
 
   // ---------------- start-up ----------------
   // The start screen shows a spinner until the course is loaded, and a retry button if it cannot be.
-  // New learners then choose "start" or "placement"; returning learners go straight to where they were.
+  // New learners then tap "start"; returning learners go straight to where they were.
   async boot() {
     const el = this.uiManager.elements;
     el.boot_loading.classList.remove('hidden');
@@ -87,11 +101,10 @@ class ModernPhonicsApp {
     this.route();
   }
 
-  startCourse(placement = false) {
+  startCourse() {
     this.effectsManager.soundManager.resumeAudioContext();
     this.stateManager.markStarted();
     this.enterApp();
-    if (placement) this.navigate(routes.placement());
   }
 
   registerServiceWorker() {
@@ -206,11 +219,11 @@ class ModernPhonicsApp {
     if (ok) this.exitActivity();
   }
 
-  // Back to the page under the activity (its unit, or home for review and placement).
+  // Back to the page the activity was opened from (home, when it was started there), or else the page under it.
   exitActivity() {
     const page = pageOf(parseRoute(location.hash));
     this.leaving = true;
-    if (canGoBack() && this.openedFrom === page) history.back();
+    if (canGoBack() && this.openedFrom) history.back();
     else this.replace(page);
   }
 
@@ -218,7 +231,6 @@ class ModernPhonicsApp {
   setMenu(open) {
     const { side_menu: menu, nav_btn: btn } = this.uiManager.elements;
     if (open && !isDialogOpen(menu)) {
-      this.refreshUnlockButton();
       openDialog(menu, { onCancel: () => this.closeMenu(), focus: menu.querySelector('.menu-item') });
       btn.setAttribute('aria-expanded', 'true');
     } else if (!open && isDialogOpen(menu)) {
@@ -229,13 +241,6 @@ class ModernPhonicsApp {
 
   closeMenu() {
     if (parseRoute(location.hash).menu) this.goBack();
-  }
-
-  refreshUnlockButton() {
-    const btn = this.uiManager.elements.menu_unlock;
-    const on = this.stateManager.unlockAll;
-    btn.textContent = on ? '🔒 إلغاء فتح جميع الوحدات' : '🔓 فتح جميع الوحدات';
-    btn.setAttribute('aria-pressed', String(on));
   }
 
   // ---------------- progress transfer (note page) ----------------
@@ -322,7 +327,6 @@ class ModernPhonicsApp {
     window.addEventListener('hashchange', () => this.route());
 
     el.start_btn.addEventListener('click', () => this.startCourse());
-    el.placement_start_btn.addEventListener('click', () => this.startCourse(true));
     el.boot_retry.addEventListener('click', () => this.boot());
 
     el.nav_btn.addEventListener('click', () => {
@@ -334,16 +338,7 @@ class ModernPhonicsApp {
     // Menu items replace the menu's entry, so Back from their page returns home.
     document.getElementById('menu-progress').addEventListener('click', () => this.replace(routes.progress()));
     document.getElementById('menu-review').addEventListener('click', () => this.replace(routes.review()));
-    document.getElementById('menu-placement').addEventListener('click', () => this.replace(routes.placement()));
     document.getElementById('menu-note').addEventListener('click', () => this.replace(routes.note()));
-    el.menu_unlock.addEventListener('click', () => {
-      this.stateManager.toggleUnlockAll();
-      this.refreshUnlockButton();
-      this.uiManager.toast(this.stateManager.unlockAll
-        ? 'فُتحت جميع الوحدات، وتستطيع أن تبدأ أي وحدة بالاختبار مباشرةً.'
-        : 'عادت الوحدات تُفتح بالترتيب.');
-      this.closeMenu();
-    });
 
     // Note page: save, send and open a copy of the progress; copy the e-mail address.
     document.getElementById('export-btn').addEventListener('click', () => this.downloadProgress());
@@ -372,7 +367,7 @@ class ModernPhonicsApp {
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.main_title.addEventListener(ev, () => clearTimeout(pressTimer)));
 
-    // Clicks on rendered content: audio, navigation, locked units, notices.
+    // Clicks on rendered content: audio, navigation, locked units.
     document.addEventListener('click', (e) => {
       const target = e.target;
       const soundOutBtn = target.closest('[data-soundout]');
@@ -399,13 +394,7 @@ class ModernPhonicsApp {
       const locked = target.closest('[data-locked]');
       if (locked) {
         const i = Number(locked.dataset.locked);
-        this.uiManager.toast(`الوحدة ${i + 1} مقفلة. انجح في اختبارات الوحدة ${i} لتفتحها، أو حدّد مستواك من القائمة.`);
-        return;
-      }
-
-      if (target.closest('[data-dismiss-notice]')) {
-        this.stateManager.dismissUpdateNotice();
-        target.closest('.home-notice')?.remove();
+        this.uiManager.toast(`الوحدة ${i + 1} مقفلة. انجح في اختبارات الوحدة ${i} لتفتحها.`);
         return;
       }
 

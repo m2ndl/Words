@@ -5,18 +5,17 @@ import { soundOutButton, soundOut } from './soundOut.js';
 import { openDialog, closeDialog, isDialogOpen } from './dialogs.js';
 import { routes } from './router.js';
 
-const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة', placement: '🧭 تحديد المستوى' };
-// Placement: per unit, 4 items from its quizzes; 3 or more correct moves on to the next unit.
-const PLACEMENT_ITEMS = 4, PLACEMENT_PASS = 3;
+const STEP_TITLES = { learn: '📖 تعلّم', drill: '🎯 التمرين', quiz: '🏆 الاختبار', review: '🔁 المراجعة' };
 // Leaving these before the end loses the result, so the learner is asked first.
 const LEAVE_MESSAGES = {
     drill: { title: 'تخرج من التمرين؟', text: 'لن تُحفظ نتيجة هذا التمرين.', cancel: 'تابع التمرين', ok: 'نعم، اخرج' },
-    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' },
-    placement: { title: 'توقف تحديد المستوى؟', text: 'لن يُحفظ ما أجبته، وتستطيع أن تبدأه من جديد من القائمة.', cancel: 'تابع', ok: 'نعم، توقّف' }
+    quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' }
 };
+// Learn shows this many example cards (heart-word lessons show all their words).
+const LEARN_EXAMPLES = 4;
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-// The core logic for running lessons, practice, tests, review and the placement check, inside the activity dialog.
+// The core logic for running lessons, practice, tests, and review, inside the activity dialog.
 // Every item gets one attempt. Scores count first attempts only; in practice a missed item comes back at the end.
 // Each result screen's main button leads to the next step. `nav` (set by the app) moves between routes.
 export class GameEngine {
@@ -43,7 +42,7 @@ export class GameEngine {
     isLocked() { return !!this.state.activitySession.locked; }
 
     // ---------------- the dialog ----------------
-    // activity: { kind: learn|drill|quiz|review|placement, techId, subId }. Returns false if it cannot start.
+    // activity: { kind: learn|drill|quiz|review, techId, subId }. Returns false if it cannot start.
     open(activity) {
         const el = this.ui.elements;
         this.audio.stop();
@@ -54,7 +53,6 @@ export class GameEngine {
         el.modal_body.classList.remove('fade-out');
         let started;
         if (activity.kind === 'review') started = this.startReview();
-        else if (activity.kind === 'placement') started = this.showPlacementIntro();
         else started = this.runActivity(activity.techId, activity.subId, activity.kind);
         if (!started) return false;
         if (!isDialogOpen(el.activity_modal)) openDialog(el.activity_modal, { onCancel: () => this.nav.requestExit(), focus: el.modal_title });
@@ -122,7 +120,7 @@ export class GameEngine {
         this.state.setLastLesson(techniqueId, subSkillId);
         this.state.activitySession = { techniqueId, subSkillId, step };
         if (step === 'learn') {
-            this.renderLearn(subSkill, 0);
+            this.renderLearn(subSkill);
         } else {
             const data = step === 'drill' ? subSkill.drill : subSkill.quiz;
             const questions = data.questions.map(q => ({ ...q, techniqueId, subSkillId }));
@@ -131,26 +129,28 @@ export class GameEngine {
         return true;
     }
 
-    // Learn comes in two short panels: the rule, then the examples. Closing it does not count it as done.
-    renderLearn(subSkill, panel) {
+    // Learn is one short screen: the rule in one line, a few words to hear, and the full explanation folded away.
+    // Closing it does not count it as done.
+    renderLearn(subSkill) {
         const el = this.ui.elements;
-        this.state.activitySession.panel = panel;
         this.setTitle(STEP_TITLES.learn, subSkill.name);
-        el.modal_progress.innerHTML = `<div class="q-dots learn-dots" aria-hidden="true">${this.dots(2, panel)}</div><span class="q-count">${panel + 1} من 2</span>`;
+        el.modal_progress.innerHTML = '';
         el.modal_feedback.innerHTML = '';
-        el.modal_body.innerHTML = panel === 0 ? this.learnRuleHTML(subSkill) : this.learnExamplesHTML(subSkill);
+        el.modal_body.innerHTML = this.learnHTML(subSkill);
         el.modal_scroll.scrollTop = 0;
-        if (panel === 0) {
-            this.setFooter({ label: 'التالي: أمثلة ⬅', onClick: () => this.renderLearn(subSkill, 1) });
-        } else {
-            this.setFooter({ label: 'فهمت — ابدأ التمرين ⬅', onClick: () => this.finishLearn() },
-                { label: '→ السابق', onClick: () => this.renderLearn(subSkill, 0) });
-            el.modal_body.querySelector('.learn-panel')?.focus({ preventScroll: true });
-        }
+        this.setFooter({ label: 'فهمت — ابدأ التمرين ⬅', onClick: () => this.finishLearn() });
     }
 
-    learnRuleHTML(subSkill) {
-        return `<div class="learn-panel" tabindex="-1"><div class="learn-text">${expandLearnMarkup(subSkill.learn_info || '', subSkill.focus || [])}</div></div>`;
+    learnHTML(subSkill) {
+        const full = `<div class="learn-text">${expandLearnMarkup(subSkill.learn_info || '', subSkill.focus || [])}</div>`;
+        const lead = subSkill.tip ? `<p class="learn-lead">${ar(subSkill.tip)}</p>` : full;
+        const more = subSkill.tip && subSkill.learn_info
+            ? `<details class="learn-more"><summary>📖 الشرح كاملاً</summary>${full}</details>` : '';
+        return `<div class="learn-panel" tabindex="-1">
+                  ${lead}
+                  ${this.learnExamplesHTML(subSkill)}
+                  ${more}
+                </div>`;
     }
 
     learnExamplesHTML(subSkill) {
@@ -163,7 +163,9 @@ export class GameEngine {
             return `<div class="example-word">${wordButton(w, shown)}</div>
                     <div class="example-gloss">${gloss(w)} ${soundOutButton(this.audio, w)}</div>`;
         };
-        const examplesHTML = (subSkill.examples || []).map(ex => {
+        // A few words are enough to hear the pattern; heart words are the lesson itself, so all of them stay.
+        const examples = subSkill.kind === 'heart' ? subSkill.examples || [] : (subSkill.examples || []).slice(0, LEARN_EXAMPLES);
+        const examplesHTML = examples.map(ex => {
             if (ex.mark) {
                 return `<div class="example-card"><div class="example-word">${wordButton(ex.before, highlightPart(ex.before, ex.mark))}</div>
                         <div class="example-gloss">${gloss(ex.before)}</div></div>`;
@@ -176,13 +178,10 @@ export class GameEngine {
                       <div>${wordHTML(ex.after, ex.before)}</div>
                     </div>`;
         }).join('');
-        const title = subSkill.kind === 'heart' ? 'كلمات هذا الدرس — الجزء الملوّن هو الصعب. اضغط الكلمة لتسمعها:'
-            : examplesHTML.includes('data-soundout') ? 'أمثلة — اضغط الكلمة لتسمعها، و🐢 لتسمعها صوتاً صوتاً:' : 'أمثلة — اضغط الكلمة لتسمعها:';
-        return `<div class="learn-panel" tabindex="-1">
-                  <h3 class="examples-title">${title}</h3>
-                  <div class="examples-grid">${examplesHTML}</div>
-                  ${subSkill.tip ? `<div class="learn-tip">💡 ${ar(subSkill.tip)}</div>` : ''}
-                </div>`;
+        if (!examplesHTML) return '';
+        const title = subSkill.kind === 'heart' ? 'الجزء الملوّن هو الصعب. اضغط الكلمة لتسمعها:' : 'اضغط الكلمة لتسمعها:';
+        return `<h3 class="examples-title">${title}</h3>
+                <div class="examples-grid">${examplesHTML}</div>`;
     }
 
     // "فهمت": Learn is done, and practice starts straight away.
@@ -194,7 +193,7 @@ export class GameEngine {
     }
 
     // ---------------- sessions ----------------
-    // Generic session runner. Each question carries techniqueId/subSkillId so review and placement can mix lessons.
+    // Generic session runner. Each question carries techniqueId/subSkillId so review can mix lessons.
     startSession(step, questions, extra = {}) {
         const session = this.state.activitySession;
         const subSkill = session.subSkillId ? this.data.getSubSkill(session.techniqueId, session.subSkillId) : null;
@@ -203,7 +202,7 @@ export class GameEngine {
 
         const cap = Math.max(this.state.difficultySettings.questionsPerSession, 1);
         let list = questions;
-        if (step !== 'placement' && questions.length > cap) {
+        if (questions.length > cap) {
             // Practice keeps its authored order (read aloud → hear → build), so take a spread of items, not just the first ones.
             const keep = new Set(this.shuffleArray(questions.map((_, i) => i)).slice(0, cap));
             list = step === 'drill' ? questions.filter((_, i) => keep.has(i)) : questions.slice(0, cap);
@@ -251,18 +250,10 @@ export class GameEngine {
 
     renderProgress() {
         const s = this.state.activitySession;
-        let dots, count;
-        if (s.step === 'placement') {
-            // Placement shows the current unit's block and which unit it is on.
-            const blockSize = Math.min(PLACEMENT_ITEMS, s.questions.length - s.blockStart);
-            dots = this.dots(blockSize, s.currentIndex - s.blockStart);
-            count = `الوحدة ${s.placementUnit + 1} من ${this.data.getTechniques().length}`;
-        } else {
-            dots = this.dots(s.questions.length, s.currentIndex);
-            count = `${s.currentIndex + 1} من ${s.questions.length}`;
-        }
+        const dots = this.dots(s.questions.length, s.currentIndex);
+        const count = `${s.currentIndex + 1} من ${s.questions.length}`;
         this.ui.elements.modal_progress.innerHTML =
-            `<div class="q-dots ${s.questions.length > 12 && s.step !== 'placement' ? 'many' : ''}" aria-hidden="true">${dots}</div><span class="q-count">${count}</span>`;
+            `<div class="q-dots ${s.questions.length > 12 ? 'many' : ''}" aria-hidden="true">${dots}</div><span class="q-count">${count}</span>`;
     }
 
     // Downloads the clips of this item and the next one, so they play without a wait.
@@ -341,7 +332,6 @@ export class GameEngine {
     nextQuestion() {
         const session = this.state.activitySession;
         if (!session.questions || session.done) return;
-        if (session.step === 'placement' && this.placementCheckpoint()) return;
         session.currentIndex++;
         if (session.currentIndex < session.questions.length) this.renderCurrentQuestion();
         else this.endSession();
@@ -460,90 +450,15 @@ export class GameEngine {
         return true;
     }
 
-    // ---------------- placement check ----------------
-    showPlacementIntro() {
-        const el = this.ui.elements;
-        this.state.activitySession = { step: 'placement-intro' };
-        this.setTitle(STEP_TITLES.placement);
-        el.modal_body.innerHTML = `
-            <div class="result-panel" tabindex="-1">
-                <p><b>نعرف معاً من أين تبدأ.</b> نسألك عن الوحدات بالترتيب، من الأسهل إلى الأصعب: أربعة أسئلة لكل وحدة.</p>
-                <p>إذا أجبت ثلاثة منها صحيحاً ننتقل إلى الوحدة التالية، وإلا نقترح عليك أن تبدأ منها.</p>
-                <p>يستغرق ذلك عشر دقائق على الأكثر، وتستطيع أن تتوقّف متى شئت.</p>
-            </div>`;
-        el.modal_scroll.scrollTop = 0;
-        this.setFooter({ label: 'ابدأ ⬅', onClick: () => this.startPlacement() });
-        return true;
-    }
-
-    startPlacement() {
-        this.state.activitySession = { techniqueId: null, subSkillId: null };
-        this.startSession('placement', this.placementItems(1), { placementUnit: 1, blockStart: 0 });
-    }
-
-    placementItems(unitIndex) {
-        const tech = this.data.getTechniques()[unitIndex];
-        if (!tech) return [];
-        const pool = [];
-        tech.subSkills.filter(s => s.kind !== 'heart').forEach(s => {
-            s.quiz.questions.filter(q => q.type === 'read' || q.type === 'listen' || q.type === 'sentence')
-                .forEach(q => pool.push({ ...q, techniqueId: tech.id, subSkillId: s.id }));
-        });
-        return this.shuffleArray(pool).slice(0, PLACEMENT_ITEMS);
-    }
-
-    // At the end of each unit block: continue to the next unit, or stop and place the learner.
-    placementCheckpoint() {
-        const s = this.state.activitySession;
-        const blockEnd = s.blockStart + PLACEMENT_ITEMS - 1;
-        if (s.currentIndex < blockEnd && s.currentIndex < s.questions.length - 1) return false;
-        const block = s.results.slice(s.blockStart, s.blockStart + PLACEMENT_ITEMS);
-        const right = block.filter(r => r.correct).length;
-        const techniques = this.data.getTechniques();
-        if (right >= PLACEMENT_PASS && s.placementUnit + 1 < techniques.length) {
-            const next = this.placementItems(s.placementUnit + 1);
-            s.placementUnit += 1;
-            s.blockStart = s.results.length;
-            s.questions.push(...next);
-            s.total = s.questions.length;
-            return false;
-        }
-        // Weak on short-vowel words (unit 1): start with the letter-sound bridge (unit 0).
-        const startUnit = right >= PLACEMENT_PASS ? techniques.length - 1 : (s.placementUnit === 1 ? 0 : s.placementUnit);
-        this.finishPlacement(startUnit);
-        return true;
-    }
-
-    finishPlacement(startUnit) {
-        const techniques = this.data.getTechniques();
-        this.state.setPlacement(startUnit);
-        const tech = techniques[startUnit];
-        const number = startUnit + 1;
-        this.showResult({
-            emoji: '🧭',
-            title: 'نتيجة تحديد المستوى',
-            score: startUnit === 0
-                ? `ننصحك بالبدء من الوحدة 1 (${tech.name_ar}) لتثبيت الأساس.`
-                : `ننصحك بالبدء من الوحدة ${number}: ${tech.name_ar}.`,
-            advice: startUnit === 0 ? '' : 'فُتحت لك الوحدات التي قبلها، وتستطيع أن تبدأ فيها بالاختبار مباشرةً.',
-            main: { label: `ابدأ الوحدة ${number} ⬅`, onClick: () => this.nav.replace(routes.unit(tech.id)) }
-        });
-    }
-
     // ---------------- end of a session ----------------
     endSession() {
         const session = this.state.activitySession;
         const { techniqueId, subSkillId, step } = session;
 
-        if (step === 'placement') {
-            this.finishPlacement(Math.min(session.placementUnit + 1, this.data.getTechniques().length - 1));
-            return;
-        }
-
         const total = session.results.length || 1;
         const right = session.firstTryCorrect;
         const pct = Math.round((right / total) * 100);
-        const scoreLine = `${right} من ${total} صحيحة من أول محاولة (${pct}%)`;
+        const scoreLine = `${right} من ${total} ✓`;
 
         if (step === 'review') {
             this.showResult({
@@ -557,23 +472,21 @@ export class GameEngine {
         const technique = this.data.getTechnique(techniqueId);
         const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
         const stepRoute = st => routes.step(techniqueId, subSkillId, st);
-        const backToUnit = { label: 'رجوع إلى الوحدة', onClick: () => this.nav.exit() };
+        const backToUnit = { label: 'رجوع', onClick: () => this.nav.exit() };
         this.state.recordScore(subSkillId, step, right / total);
 
         if (step === 'drill') {
             this.state.markStepComplete(techniqueId, subSkillId, 'drill');
             const ready = pct >= 60;
-            const self = session.selfChecks || [];
             if (pct >= 80) this.effects.soundManager.playSuccessSound();
             this.showResult({
                 emoji: pct >= 80 ? '🎯' : '📖',
                 title: pct >= 80 ? 'أحسنت!' : 'أنهيت التمرين',
                 score: scoreLine,
-                note: self.length ? `القراءة بصوت عالٍ: ${self.filter(Boolean).length} من ${self.length} صحيحة بتقديرك.` : '',
-                advice: ready ? 'أنت جاهز للاختبار.' : 'راجع الدرس، ثم أعد التمرين قبل الاختبار.',
+                advice: ready ? 'أنت جاهز للاختبار.' : 'راجع الدرس، ثم أعد التمرين.',
                 main: ready ? { label: 'ابدأ الاختبار ⬅', onClick: () => this.nav.replace(stepRoute('quiz')) }
                     : { label: '📖 راجع الدرس', onClick: () => this.nav.replace(stepRoute('learn')) },
-                secondary: ready ? backToUnit : { label: 'أعد التمرين', onClick: () => this.restart() }
+                secondary: ready ? null : { label: 'أعد التمرين', onClick: () => this.restart() }
             });
             return;
         }
@@ -584,7 +497,7 @@ export class GameEngine {
             this.showResult({
                 emoji: '💪',
                 title: 'لم تنجح هذه المرة',
-                score: `نتيجتك: ${scoreLine}. تحتاج ${Math.round(passMark * 100)}% للنجاح.`,
+                score: `${scoreLine} — تحتاج ${Math.ceil(passMark * total - 1e-9)} للنجاح.`,
                 advice: 'راجع الدرس، ثم أعد الاختبار.',
                 main: { label: '📖 راجع الدرس', onClick: () => this.nav.replace(stepRoute('learn')) },
                 secondary: { label: 'أعد الاختبار', onClick: () => this.restart() }
@@ -606,11 +519,11 @@ export class GameEngine {
             this.showResult({
                 emoji: '🏆',
                 title: `أتقنت وحدة «${technique.name_ar}»!`,
-                score: `نجحت في الاختبار: ${scoreLine}.`,
-                advice: nextTech ? `فُتحت الوحدة ${index + 2}: ${nextTech.name_ar}.` : 'أنهيت كل وحدات الدورة. واصل المراجعة اليومية لتثبّت ما تعلّمته.',
-                main: nextTech ? { label: 'الوحدة التالية ⬅', onClick: () => this.nav.replace(routes.unit(nextTech.id)) }
-                    : { label: 'الصفحة الرئيسية', onClick: () => this.nav.replace(routes.home()) },
-                secondary: backToUnit
+                score: scoreLine,
+                advice: nextTech ? `الوحدة التالية: ${nextTech.name_ar}.` : 'أنهيت كل وحدات الدورة. راجع كل يوم لتثبّت ما تعلّمته.',
+                // Straight into the next unit's first lesson, not to a page to choose from.
+                main: nextTech ? { label: 'الوحدة التالية ⬅', onClick: () => this.nav.replace(routes.step(nextTech.id, nextTech.subSkills[0].id, 'learn')) }
+                    : { label: 'الصفحة الرئيسية', onClick: () => this.nav.replace(routes.home()) }
             });
             return;
         }
@@ -620,9 +533,8 @@ export class GameEngine {
             emoji: '✅',
             title: 'نجحت في الاختبار!',
             score: scoreLine,
-            advice: next ? `أُضيفت كلمات هذا الدرس إلى مراجعتك اليومية. الدرس التالي: ${next.sub.name}` : 'أُضيفت كلمات هذا الدرس إلى مراجعتك اليومية.',
-            main: next ? { label: 'الدرس التالي ⬅', onClick: () => this.nav.replace(routes.step(techniqueId, next.sub.id, next.step)) } : backToUnit,
-            secondary: next ? backToUnit : null
+            advice: next ? `الدرس التالي: ${next.sub.name}` : '',
+            main: next ? { label: 'الدرس التالي ⬅', onClick: () => this.nav.replace(routes.step(techniqueId, next.sub.id, next.step)) } : backToUnit
         });
     }
 }

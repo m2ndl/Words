@@ -2,7 +2,7 @@
 
 // Offline support, so a lesson keeps working on patchy mobile data.
 // - The app (HTML, CSS, JS, the course) comes from the network first, so updates show at once, and from the
-//   cache when offline.
+//   cache when offline. It always asks the server (no-cache), so the browser's own cache cannot hold back an update.
 // - Audio clips and font files come from the cache first: a clip's address changes when the clip does (?v=<hash>).
 //   Opening a unit downloads its clips in the background (js/audioManager.js, prefetch).
 // Bump VERSION to drop the old caches. Keep SHELL in step with the files the page loads.
@@ -60,7 +60,8 @@ async function cacheFirst(request, cacheName) {
 async function networkFirst(request, cacheName) {
   const cache = await caches.open(cacheName);
   try {
-    const response = await fetch(request);
+    // An unchanged file costs only a short "not modified" answer.
+    const response = await fetch(request, { cache: 'no-cache' });
     if (response.ok) cache.put(request, response.clone());
     return response;
   } catch (error) {

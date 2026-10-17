@@ -1,4 +1,5 @@
 'use strict';
+import { SOUND_OUT_ENABLED } from './soundOut.js';
 
 // Plays the recorded clips listed in audio/manifest.json (made by tools/audio/generate.py), and falls
 // back to the device's text-to-speech for anything without a clip.
@@ -154,7 +155,7 @@ export class AudioManager {
         if (c && (c.saveData || /2g/.test(c.effectiveType || ''))) return;
         const urls = new Set();
         texts.forEach(t => this.clipUrls(t).forEach(u => urls.add(u)));
-        Object.values(this.sounds).forEach(path => urls.add(BASE + path));
+        if (SOUND_OUT_ENABLED) Object.values(this.sounds).forEach(path => urls.add(BASE + path));
         const queue = [...urls].filter(u => !this.prefetched.has(u));
         queue.forEach(u => this.prefetched.add(u));
         const worker = async () => {
