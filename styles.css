@@ -2,33 +2,43 @@
    Theme tokens
    One action colour per theme (buttons, progress, links), one teaching colour (the letters a lesson
    teaches), and green/red only for right and wrong. Every text/background pair passes WCAG AA.
+   Default theme: the my2ndlang "Ocean Ember" palette, Soft Sand-led (see the block at the end of this file).
    ============================== */
 :root {
-    --primary: #5A67D8;          /* action colour: white text on it is 4.8:1 */
-    --primary-2: #6B46C1;        /* second stop of the action gradient */
-    --primary-strong: #4C51BF;   /* action colour as text on white (6.5:1) */
-    --primary-soft: #E9EBFA;     /* tint behind action-coloured text */
-    --background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+    --deep-current: #0A2F3A;     /* text and header */
+    --golden-drift: #D8975A;     /* on Deep Current only (5.7:1) */
+    --copper: #A35E33;           /* the main continue action only: white text on it is 5.0:1 */
+    --copper-2: #8C4F2A;
+    --primary: #1D6B78;          /* Oceanic Teal, action colour: white text on it is 6.1:1 */
+    --primary-2: #175A65;        /* second stop of the action gradient */
+    --primary-strong: #1D6B78;   /* action colour as text on white (6.1:1) */
+    --primary-soft: rgba(29, 107, 120, 0.12);   /* tint behind action-coloured text (5.2:1) */
+    --background: #EEF4F4;
     --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-    --pattern: #B83280;          /* teaching colour: the letters being taught (5.5:1) */
-    --pattern-soft: #FCEAF4;
-    --right: #2F855A;
-    --right-2: #276749;
-    --right-soft: #E6F4EA;
-    --wrong: #C53030;
-    --wrong-2: #9B2C2C;
-    --wrong-soft: #FDECEC;
-    --note-bg: #FEF5E7;
-    --note-text: #7B341E;
+    --cta: linear-gradient(135deg, var(--copper) 0%, var(--copper-2) 100%);
+    --pattern: #A3286A;          /* teaching colour: the letters being taught (6.8:1) */
+    --pattern-soft: rgba(163, 40, 106, 0.10);
+    --right: #2E7D32;
+    --right-2: #1B5E20;
+    --right-soft: #E8F3E9;
+    --wrong: #B3261E;
+    --wrong-2: #8C1D18;
+    --wrong-soft: #FBEAE8;
+    --note-bg: rgba(241, 217, 179, 0.45);
+    --note-text: #5A4839;
     --card-bg: #FFFFFF;
-    --surface: #F7F8FC;
-    --border: #E2E8F0;
-    --border-strong: #CBD5E0;
-    --text-primary: #2D3748;
-    --text-secondary: #4A5568;
-    --text-muted: #5B6472;
-    --shadow: 0 8px 28px rgba(31, 38, 135, 0.14);
+    --surface: rgba(10, 47, 58, 0.04);
+    --sand-card: rgba(241, 217, 179, 0.42);   /* Soft Sand #F1D9B3 tint */
+    --border: rgba(10, 47, 58, 0.13);
+    --border-strong: rgba(10, 47, 58, 0.22);
+    --text-primary: #0A2F3A;
+    --text-secondary: rgba(10, 47, 58, 0.84);
+    --text-muted: rgba(10, 47, 58, 0.72);
+    --shadow: 0 8px 28px rgba(10, 47, 58, 0.10);
     --radius: 20px;
+    --font-body: 'Andika', 'IBM Plex Sans Arabic', 'Segoe UI', 'Geeza Pro', 'Noto Sans Arabic', Tahoma, system-ui, sans-serif;
+    --font-heading: 'Andika', 'Alexandria', 'IBM Plex Sans Arabic', 'Segoe UI', 'Geeza Pro', 'Noto Sans Arabic', Tahoma, system-ui, sans-serif;
+    --font-ui-latin: 'Archivo', 'IBM Plex Sans Arabic', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Ocean */
@@ -64,8 +74,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-    /* Andika first: it covers only Latin, so every English letter uses it and Arabic falls through to Rubik. */
-    font-family: 'Andika', 'Rubik', system-ui, sans-serif;
+    /* Andika first: it covers only Latin, so every English letter uses it and Arabic falls through to IBM Plex Sans Arabic. */
+    font-family: var(--font-body);
     background: var(--background);
     color: var(--text-primary);
     min-height: 100vh;
@@ -75,7 +85,7 @@ body {
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
 }
-.english-font, [lang="en"] { font-family: 'Andika', 'Rubik', sans-serif; }
+.english-font, [lang="en"] { font-family: 'Andika', 'IBM Plex Sans Arabic', system-ui, sans-serif; }
 .hidden { display: none !important; }
 .sr-only {
     position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -701,3 +711,36 @@ mark.diff { padding: 0 1px; border-radius: 4px; background: var(--pattern-soft);
         scroll-behavior: auto !important;
     }
 }
+
+/* ==============================
+   Ocean Ember, Soft Sand-led (default theme)
+   Cool light ground, Soft Sand word cards, Deep Current text and header, Oceanic Teal controls,
+   copper only for the main continue action. Fonts apply to every theme; these colours to the default theme only.
+   ============================== */
+/* Arabic headings in Alexandria; Andika stays first so English letters in a heading keep the reading font. */
+h1, h2, h3, h4, .fb-title, .continue-lesson { font-family: var(--font-heading); }
+/* Latin UI labels (counts, scores, the email address) in Archivo; Arabic in them falls through to IBM Plex Sans Arabic. */
+.q-count, .stat-value, .dash-pct, #words-count, #streak-count, .email-field { font-family: var(--font-ui-latin); }
+
+[data-theme="default"] .app-header { background: var(--deep-current); color: #fff; }
+[data-theme="default"] .app-header :focus-visible { outline-color: var(--golden-drift); }
+[data-theme="default"] .app-header .icon-btn { border-color: rgba(255, 255, 255, 0.28); background: transparent; color: #fff; }
+[data-theme="default"] .app-header .chip { border: 1px solid rgba(216, 151, 90, 0.5); background: transparent; color: var(--golden-drift); }
+@media (hover: hover) and (pointer: fine) {
+    [data-theme="default"] .app-header .icon-btn:hover { border-color: var(--golden-drift); background-color: rgba(255, 255, 255, 0.08); }
+}
+[data-theme="default"] .boot-title { color: var(--deep-current); }
+
+/* Soft Sand panels: the word cards and the continue card */
+[data-theme="default"] .example-card { background: var(--sand-card); }
+[data-theme="default"] .continue-card { border-color: rgba(241, 217, 179, 0.9); background: linear-gradient(180deg, var(--sand-card) 0%, #fff 75%); }
+
+/* Copper: the one main continue action on each screen */
+[data-theme="default"] #start-btn,
+[data-theme="default"] .continue-card .btn-primary,
+[data-theme="default"] #modal-action-btn:not(:disabled),
+[data-theme="default"] .lesson-row.is-current { background: var(--cta); color: #fff; }
+
+[data-theme="default"] .overlay { background: rgba(10, 47, 58, 0.55); }
+[data-theme="default"] .drawer-backdrop { background: rgba(10, 47, 58, 0.45); }
+[data-theme="default"] .toast { background: var(--deep-current); }

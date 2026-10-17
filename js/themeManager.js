@@ -1,7 +1,7 @@
 'use strict';
 
 // Browser bar colour for each theme (its action colour).
-const THEME_COLORS = { default: '#5A67D8', ocean: '#0369A1', forest: '#047857', sunset: '#C2410C' };
+const THEME_COLORS = { default: '#0A2F3A', ocean: '#0369A1', forest: '#047857', sunset: '#C2410C' };
 
 // Manages UI themes and the theme selector buttons.
 export class ThemeManager {
