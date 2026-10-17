@@ -4,7 +4,7 @@ import { EffectsManager } from './effectsManager.js';
 import { DataManager } from './dataManager.js';
 import { StateManager } from './stateManager.js';
 import { AudioManager } from './audioManager.js';
-import { UIManager } from './uiManager.js';
+import { UIManager, HOME_SCREEN_TIP } from './uiManager.js';
 import { TeacherDashboard } from './teacherDashboard.js';
 import { GameEngine } from './gameEngine.js';
 import { soundOut, wordElementFor, setSoundOutLabel, SOUND_OUT_HINT, SOUND_OUT_HINT_USES } from './soundOut.js';
@@ -367,7 +367,7 @@ class ModernPhonicsApp {
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.main_title.addEventListener(ev, () => clearTimeout(pressTimer)));
 
-    // Clicks on rendered content: audio, navigation, locked units.
+    // Clicks on rendered content: audio, navigation, locked units, the Home Screen tip.
     document.addEventListener('click', (e) => {
       const target = e.target;
       const soundOutBtn = target.closest('[data-soundout]');
@@ -395,6 +395,12 @@ class ModernPhonicsApp {
       if (locked) {
         const i = Number(locked.dataset.locked);
         this.uiManager.toast(`الوحدة ${i + 1} مقفلة. انجح في اختبارات الوحدة ${i} لتفتحها.`);
+        return;
+      }
+
+      if (target.closest('[data-dismiss-tip]')) {
+        this.stateManager.bumpHint(HOME_SCREEN_TIP);
+        target.closest('.home-tip')?.remove();
         return;
       }
 

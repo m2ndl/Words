@@ -327,6 +327,11 @@ button { font: inherit; }
 .lesson-name { flex: 1; min-width: 0; }
 .lesson-state { flex-shrink: 0; font-size: 0.95rem; white-space: nowrap; }
 .skip-unit { margin: 8px 0; text-align: center; }
+.home-tip { margin-bottom: 12px; padding: 14px 16px 6px; border-radius: 16px; background: var(--note-bg); color: var(--note-text); line-height: 1.8; }
+.home-tip-title { margin-bottom: 4px; font-size: 1.05rem; font-weight: 700; }
+.home-tip-steps { margin-top: 4px; font-weight: 600; }
+.home-tip .btn-text { color: var(--note-text); }
+.share-icon { display: inline-block; width: 1.25em; height: 1.25em; vertical-align: -0.2em; }
 #home-view .skip-unit { margin: -6px 0 6px; }
 .lesson-row.is-done .lesson-state { color: var(--primary-strong); }
 

@@ -8,6 +8,18 @@ const STEP_START = { learn: 'ابدأ الدرس', drill: 'ابدأ التمري
 const STEPS = ['learn', 'drill', 'quiz'];
 // The "words you can read" chip appears once the learner can read this many words.
 const MIN_WORDS_SHOWN = 5;
+// The "add to Home Screen" tip, shown on iPhone and iPad in Safari until it is closed.
+export const HOME_SCREEN_TIP = 'homeScreenTip';
+const SHARE_ICON = '<svg class="share-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 2.5v10M6.5 6 10 2.5 13.5 6"/><path d="M7 9H5v8.5h10V9h-2"/></svg>';
+
+// Safari deletes a website's saved data (here: the learner's progress) after 7 days of use without a visit;
+// an app opened from the Home Screen keeps it. In-app browsers (no "Safari" in the user agent) cannot add to it.
+function needsHomeScreenTip() {
+  const ua = navigator.userAgent;
+  const apple = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const installed = navigator.standalone || window.matchMedia?.('(display-mode: standalone)').matches;
+  return apple && /Safari/.test(ua) && !installed;
+}
 
 // Renders the pages (home, unit), the header, short messages and confirmations.
 export class UIManager {
@@ -99,6 +111,7 @@ export class UIManager {
       ${this.continueCard(next)}
       ${next ? this.skipLink(next.tech) : ''}
       ${review}
+      ${this.homeScreenTip()}
       <details class="all-units">
         <summary class="section-title"><span>كل الوحدات</span><span class="chev" aria-hidden="true">▾</span></summary>
         <ol class="unit-list">${this.unitRows(techniques, next)}</ol>
@@ -143,6 +156,17 @@ export class UIManager {
         ${this.unitBar(tech)}
         <button class="btn-primary btn-lg btn-block" data-go="${routes.step(tech.id, sub.id, step)}">${quizTried ? 'أعد الاختبار' : STEP_START[step]} ⬅</button>
       </section>`;
+  }
+
+  homeScreenTip() {
+    if (this.state.hintCount(HOME_SCREEN_TIP) || !needsHomeScreenTip()) return '';
+    return `
+      <aside class="home-tip" aria-labelledby="home-tip-title">
+        <h2 id="home-tip-title" class="home-tip-title">📲 احفظ تقدّمك على هذا الجهاز</h2>
+        <p>أضف البرنامج إلى الشاشة الرئيسية، فلا يضيع تقدّمك إذا لم تفتحه أسبوعاً.</p>
+        <p class="home-tip-steps">اضغط زر المشاركة ${SHARE_ICON} ثم «إضافة إلى الشاشة الرئيسية».</p>
+        <button class="btn-text" data-dismiss-tip>حسناً</button>
+      </aside>`;
   }
 
   // For learners who already know a unit: a short test that skips it (not shown once the unit is mastered).
