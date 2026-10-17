@@ -96,8 +96,8 @@ export class QuestionRenderer {
             btn.onclick = () => {
                 const correct = btn.dataset.self === 'yes';
                 this.game.handleAnswer({ correct, chosen: btn.dataset.self, target: word, el: btn, selfCheck: true });
-                // Not yet: hear it sound by sound while the letters light up.
-                if (!correct) soundOut(this.audio, word, this.body.querySelector('.q-word'), null, check);
+                // Not yet: hear it sound by sound while the letters light up (or just hear it again).
+                if (!correct && !soundOut(this.audio, word, this.body.querySelector('.q-word'), null, check)) this.audio.speak(word, { el: check });
             };
         });
     }

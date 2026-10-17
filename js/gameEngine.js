@@ -11,6 +11,8 @@ const LEAVE_MESSAGES = {
     drill: { title: 'تخرج من التمرين؟', text: 'لن تُحفظ نتيجة هذا التمرين.', cancel: 'تابع التمرين', ok: 'نعم، اخرج' },
     quiz: { title: 'تخرج من الاختبار؟', text: 'لن تُحفظ نتيجة هذا الاختبار، وستبدؤه من جديد في المرة القادمة.', cancel: 'تابع الاختبار', ok: 'نعم، اخرج' }
 };
+// Learn shows this many example cards (heart-word lessons show all their words).
+const LEARN_EXAMPLES = 4;
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 // The core logic for running lessons, practice, tests, and review, inside the activity dialog.
@@ -118,7 +120,7 @@ export class GameEngine {
         this.state.setLastLesson(techniqueId, subSkillId);
         this.state.activitySession = { techniqueId, subSkillId, step };
         if (step === 'learn') {
-            this.renderLearn(subSkill, 0);
+            this.renderLearn(subSkill);
         } else {
             const data = step === 'drill' ? subSkill.drill : subSkill.quiz;
             const questions = data.questions.map(q => ({ ...q, techniqueId, subSkillId }));
@@ -127,26 +129,28 @@ export class GameEngine {
         return true;
     }
 
-    // Learn comes in two short panels: the rule, then the examples. Closing it does not count it as done.
-    renderLearn(subSkill, panel) {
+    // Learn is one short screen: the rule in one line, a few words to hear, and the full explanation folded away.
+    // Closing it does not count it as done.
+    renderLearn(subSkill) {
         const el = this.ui.elements;
-        this.state.activitySession.panel = panel;
         this.setTitle(STEP_TITLES.learn, subSkill.name);
-        el.modal_progress.innerHTML = `<div class="q-dots learn-dots" aria-hidden="true">${this.dots(2, panel)}</div><span class="q-count">${panel + 1} من 2</span>`;
+        el.modal_progress.innerHTML = '';
         el.modal_feedback.innerHTML = '';
-        el.modal_body.innerHTML = panel === 0 ? this.learnRuleHTML(subSkill) : this.learnExamplesHTML(subSkill);
+        el.modal_body.innerHTML = this.learnHTML(subSkill);
         el.modal_scroll.scrollTop = 0;
-        if (panel === 0) {
-            this.setFooter({ label: 'التالي: أمثلة ⬅', onClick: () => this.renderLearn(subSkill, 1) });
-        } else {
-            this.setFooter({ label: 'فهمت — ابدأ التمرين ⬅', onClick: () => this.finishLearn() },
-                { label: '→ السابق', onClick: () => this.renderLearn(subSkill, 0) });
-            el.modal_body.querySelector('.learn-panel')?.focus({ preventScroll: true });
-        }
+        this.setFooter({ label: 'فهمت — ابدأ التمرين ⬅', onClick: () => this.finishLearn() });
     }
 
-    learnRuleHTML(subSkill) {
-        return `<div class="learn-panel" tabindex="-1"><div class="learn-text">${expandLearnMarkup(subSkill.learn_info || '', subSkill.focus || [])}</div></div>`;
+    learnHTML(subSkill) {
+        const full = `<div class="learn-text">${expandLearnMarkup(subSkill.learn_info || '', subSkill.focus || [])}</div>`;
+        const lead = subSkill.tip ? `<p class="learn-lead">${ar(subSkill.tip)}</p>` : full;
+        const more = subSkill.tip && subSkill.learn_info
+            ? `<details class="learn-more"><summary>📖 الشرح كاملاً</summary>${full}</details>` : '';
+        return `<div class="learn-panel" tabindex="-1">
+                  ${lead}
+                  ${this.learnExamplesHTML(subSkill)}
+                  ${more}
+                </div>`;
     }
 
     learnExamplesHTML(subSkill) {
@@ -159,7 +163,9 @@ export class GameEngine {
             return `<div class="example-word">${wordButton(w, shown)}</div>
                     <div class="example-gloss">${gloss(w)} ${soundOutButton(this.audio, w)}</div>`;
         };
-        const examplesHTML = (subSkill.examples || []).map(ex => {
+        // A few words are enough to hear the pattern; heart words are the lesson itself, so all of them stay.
+        const examples = subSkill.kind === 'heart' ? subSkill.examples || [] : (subSkill.examples || []).slice(0, LEARN_EXAMPLES);
+        const examplesHTML = examples.map(ex => {
             if (ex.mark) {
                 return `<div class="example-card"><div class="example-word">${wordButton(ex.before, highlightPart(ex.before, ex.mark))}</div>
                         <div class="example-gloss">${gloss(ex.before)}</div></div>`;
@@ -172,13 +178,10 @@ export class GameEngine {
                       <div>${wordHTML(ex.after, ex.before)}</div>
                     </div>`;
         }).join('');
-        const title = subSkill.kind === 'heart' ? 'كلمات هذا الدرس — الجزء الملوّن هو الصعب. اضغط الكلمة لتسمعها:'
-            : examplesHTML.includes('data-soundout') ? 'أمثلة — اضغط الكلمة لتسمعها، و🐢 لتسمعها صوتاً صوتاً:' : 'أمثلة — اضغط الكلمة لتسمعها:';
-        return `<div class="learn-panel" tabindex="-1">
-                  <h3 class="examples-title">${title}</h3>
-                  <div class="examples-grid">${examplesHTML}</div>
-                  ${subSkill.tip ? `<div class="learn-tip">💡 ${ar(subSkill.tip)}</div>` : ''}
-                </div>`;
+        if (!examplesHTML) return '';
+        const title = subSkill.kind === 'heart' ? 'الجزء الملوّن هو الصعب. اضغط الكلمة لتسمعها:' : 'اضغط الكلمة لتسمعها:';
+        return `<h3 class="examples-title">${title}</h3>
+                <div class="examples-grid">${examplesHTML}</div>`;
     }
 
     // "فهمت": Learn is done, and practice starts straight away.
@@ -455,7 +458,7 @@ export class GameEngine {
         const total = session.results.length || 1;
         const right = session.firstTryCorrect;
         const pct = Math.round((right / total) * 100);
-        const scoreLine = `${right} من ${total} صحيحة من أول محاولة (${pct}%)`;
+        const scoreLine = `${right} من ${total} ✓`;
 
         if (step === 'review') {
             this.showResult({
@@ -469,23 +472,21 @@ export class GameEngine {
         const technique = this.data.getTechnique(techniqueId);
         const subSkill = this.data.getSubSkill(techniqueId, subSkillId);
         const stepRoute = st => routes.step(techniqueId, subSkillId, st);
-        const backToUnit = { label: 'رجوع إلى الوحدة', onClick: () => this.nav.exit() };
+        const backToUnit = { label: 'رجوع', onClick: () => this.nav.exit() };
         this.state.recordScore(subSkillId, step, right / total);
 
         if (step === 'drill') {
             this.state.markStepComplete(techniqueId, subSkillId, 'drill');
             const ready = pct >= 60;
-            const self = session.selfChecks || [];
             if (pct >= 80) this.effects.soundManager.playSuccessSound();
             this.showResult({
                 emoji: pct >= 80 ? '🎯' : '📖',
                 title: pct >= 80 ? 'أحسنت!' : 'أنهيت التمرين',
                 score: scoreLine,
-                note: self.length ? `القراءة بصوت عالٍ: ${self.filter(Boolean).length} من ${self.length} صحيحة بتقديرك.` : '',
-                advice: ready ? 'أنت جاهز للاختبار.' : 'راجع الدرس، ثم أعد التمرين قبل الاختبار.',
+                advice: ready ? 'أنت جاهز للاختبار.' : 'راجع الدرس، ثم أعد التمرين.',
                 main: ready ? { label: 'ابدأ الاختبار ⬅', onClick: () => this.nav.replace(stepRoute('quiz')) }
                     : { label: '📖 راجع الدرس', onClick: () => this.nav.replace(stepRoute('learn')) },
-                secondary: ready ? backToUnit : { label: 'أعد التمرين', onClick: () => this.restart() }
+                secondary: ready ? null : { label: 'أعد التمرين', onClick: () => this.restart() }
             });
             return;
         }
@@ -496,7 +497,7 @@ export class GameEngine {
             this.showResult({
                 emoji: '💪',
                 title: 'لم تنجح هذه المرة',
-                score: `نتيجتك: ${scoreLine}. تحتاج ${Math.round(passMark * 100)}% للنجاح.`,
+                score: `${scoreLine} — تحتاج ${Math.ceil(passMark * total - 1e-9)} للنجاح.`,
                 advice: 'راجع الدرس، ثم أعد الاختبار.',
                 main: { label: '📖 راجع الدرس', onClick: () => this.nav.replace(stepRoute('learn')) },
                 secondary: { label: 'أعد الاختبار', onClick: () => this.restart() }
@@ -518,11 +519,11 @@ export class GameEngine {
             this.showResult({
                 emoji: '🏆',
                 title: `أتقنت وحدة «${technique.name_ar}»!`,
-                score: `نجحت في الاختبار: ${scoreLine}.`,
-                advice: nextTech ? `فُتحت الوحدة ${index + 2}: ${nextTech.name_ar}.` : 'أنهيت كل وحدات الدورة. واصل المراجعة اليومية لتثبّت ما تعلّمته.',
-                main: nextTech ? { label: 'الوحدة التالية ⬅', onClick: () => this.nav.replace(routes.unit(nextTech.id)) }
-                    : { label: 'الصفحة الرئيسية', onClick: () => this.nav.replace(routes.home()) },
-                secondary: backToUnit
+                score: scoreLine,
+                advice: nextTech ? `الوحدة التالية: ${nextTech.name_ar}.` : 'أنهيت كل وحدات الدورة. راجع كل يوم لتثبّت ما تعلّمته.',
+                // Straight into the next unit's first lesson, not to a page to choose from.
+                main: nextTech ? { label: 'الوحدة التالية ⬅', onClick: () => this.nav.replace(routes.step(nextTech.id, nextTech.subSkills[0].id, 'learn')) }
+                    : { label: 'الصفحة الرئيسية', onClick: () => this.nav.replace(routes.home()) }
             });
             return;
         }
@@ -532,9 +533,8 @@ export class GameEngine {
             emoji: '✅',
             title: 'نجحت في الاختبار!',
             score: scoreLine,
-            advice: next ? `أُضيفت كلمات هذا الدرس إلى مراجعتك اليومية. الدرس التالي: ${next.sub.name}` : 'أُضيفت كلمات هذا الدرس إلى مراجعتك اليومية.',
-            main: next ? { label: 'الدرس التالي ⬅', onClick: () => this.nav.replace(routes.step(techniqueId, next.sub.id, next.step)) } : backToUnit,
-            secondary: next ? backToUnit : null
+            advice: next ? `الدرس التالي: ${next.sub.name}` : '',
+            main: next ? { label: 'الدرس التالي ⬅', onClick: () => this.nav.replace(routes.step(techniqueId, next.sub.id, next.step)) } : backToUnit
         });
     }
 }

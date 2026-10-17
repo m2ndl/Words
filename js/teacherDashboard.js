@@ -2,7 +2,7 @@
 import { ar, en } from './textUtils.js';
 
 // The learning dashboard page ("تقدّمي"): progress, first-try accuracy per lesson, the words most often confused,
-// and — in teacher mode only — the settings (session length, test pass mark, auto-advance).
+// and — in teacher mode only — the settings (session length, test pass mark, auto-advance, unlock all units).
 // Teacher mode: open #/progress/teacher, or press and hold the page title for a second.
 export class TeacherDashboard {
   constructor(dataManager, stateManager) {
@@ -32,6 +32,12 @@ export class TeacherDashboard {
           <label class="setting-check" for="input-auto">
             <input id="input-auto" type="checkbox" ${settings.autoAdvance ? 'checked' : ''}>
             الانتقال التلقائي إلى السؤال التالي (بدلاً من الضغط على «التالي»)
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="setting-check" for="input-unlock">
+            <input id="input-unlock" type="checkbox" ${this.state.unlockAll ? 'checked' : ''}>
+            فتح جميع الوحدات
           </label>
         </div>
         <button id="teacher-off" class="btn-secondary">إغلاق إعدادات المعلّم</button>
@@ -74,6 +80,9 @@ export class TeacherDashboard {
 
     const auto = this.container.querySelector('#input-auto');
     auto.addEventListener('change', () => { this.state.difficultySettings.autoAdvance = !!auto.checked; this.state.saveDifficultySettings(); });
+
+    const unlock = this.container.querySelector('#input-unlock');
+    unlock.addEventListener('change', () => this.state.setUnlockAll(unlock.checked));
   }
 
   _collectStats() {

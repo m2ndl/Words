@@ -1,18 +1,13 @@
 'use strict';
-import { escapeHtml, ar, en, highlightFocus, wordButton } from './textUtils.js';
+import { escapeHtml, ar, highlightFocus, wordButton } from './textUtils.js';
 import { openDialog, closeDialog, isDialogOpen } from './dialogs.js';
 import { routes } from './router.js';
 
-const STEP_INFO = {
-  learn: { icon: '📖', label: 'تعلّم', start: 'ابدأ التعلّم' },
-  drill: { icon: '🎯', label: 'تمرين', start: 'ابدأ التمرين' },
-  quiz: { icon: '🏆', label: 'اختبار', start: 'ابدأ الاختبار' }
-};
+// The main button's label for each step of a lesson.
+const STEP_START = { learn: 'ابدأ الدرس', drill: 'ابدأ التمرين', quiz: 'ابدأ الاختبار' };
 const STEPS = ['learn', 'drill', 'quiz'];
-const LOCK_REASON = { drill: 'بعد التعلّم', quiz: 'بعد التمرين' };
 // The "words you can read" chip appears once the learner can read this many words.
 const MIN_WORDS_SHOWN = 5;
-const pct = score => Math.round(score * 100);
 
 // Renders the pages (home, unit), the header, short messages and confirmations.
 export class UIManager {
@@ -33,7 +28,7 @@ export class UIManager {
       'activity-modal', 'modal-title', 'modal-close-btn', 'modal-progress', 'modal-scroll', 'modal-body', 'modal-feedback',
       'modal-footer', 'modal-action-btn', 'modal-secondary-btn',
       'confirm-dialog', 'confirm-title', 'confirm-text', 'confirm-ok', 'confirm-cancel',
-      'side-menu', 'menu-unlock', 'toast'
+      'side-menu', 'toast'
     ];
     ids.forEach(id => {
       this.elements[id.replace(/-/g, '_')] = document.getElementById(id);
@@ -103,8 +98,10 @@ export class UIManager {
       ${this.homeStats()}
       ${this.continueCard(next)}
       ${review}
-      <h2 class="section-title">الوحدات</h2>
-      <ol class="unit-list">${this.unitRows(techniques, next)}</ol>`;
+      <details class="all-units">
+        <summary class="section-title"><span>كل الوحدات</span><span class="chev" aria-hidden="true">▾</span></summary>
+        <ol class="unit-list">${this.unitRows(techniques, next)}</ol>
+      </details>`;
     this.fallbackPictures(el);
     this.setHeader('دورة قراءة الكلمات', true);
     this.showView('home');
@@ -132,11 +129,6 @@ export class UIManager {
     const { tech, sub, step, index } = next;
     const fresh = !this.state.userProgress.lastLesson;
     const quizTried = step === 'quiz' && this.state.getScore(sub.id, 'quiz') !== undefined;
-    const track = STEPS.map(st => {
-      const done = this.state.isStepComplete(tech.id, sub.id, st);
-      const cls = st === step ? 'is-next' : done ? 'is-done' : '';
-      return `<li class="${cls}"><span aria-hidden="true">${STEP_INFO[st].icon}</span> ${STEP_INFO[st].label}${done ? ' <span aria-hidden="true">✓</span><span class="sr-only">(تمّ)</span>' : ''}</li>`;
-    }).join('');
     return `
       <section class="continue-card" aria-labelledby="continue-title">
         <h2 id="continue-title" class="continue-kicker">${fresh ? 'ابدأ من هنا' : 'تابع من حيث توقّفت'}</h2>
@@ -147,26 +139,33 @@ export class UIManager {
             <div class="continue-lesson">${ar(sub.name)}</div>
           </div>
         </div>
-        <ol class="step-track" aria-label="خطوات الدرس">${track}</ol>
-        <button class="btn-primary btn-lg btn-block" data-go="${routes.step(tech.id, sub.id, step)}">${quizTried ? 'أعد الاختبار' : STEP_INFO[step].start} ⬅</button>
+        ${this.unitBar(tech)}
+        <button class="btn-primary btn-lg btn-block" data-go="${routes.step(tech.id, sub.id, step)}">${quizTried ? 'أعد الاختبار' : STEP_START[step]} ⬅</button>
       </section>`;
   }
 
-  // One line per unit: status, picture, name and progress. A locked unit explains itself when tapped.
+  // How much of a unit is done, as a thin bar (nothing before the first step).
+  unitBar(tech) {
+    const progress = this.state.getTechniqueProgress(tech.id);
+    const done = tech.subSkills.reduce((n, s) => n + (progress.subSkills[s.id] || []).length, 0);
+    const total = tech.subSkills.length * STEPS.length;
+    return done && done < total
+      ? `<span class="mini-bar" aria-hidden="true"><span style="width:${Math.round(done / total * 100)}%"></span></span>` : '';
+  }
+
+  // One line per open unit, and the next locked one; the units after it stay out of sight.
+  // A locked unit explains itself when tapped.
   unitRows(techniques, next) {
-    return techniques.map((tech, i) => {
-      const unlocked = this.state.isTechniqueUnlocked(i, techniques);
-      const progress = this.state.getTechniqueProgress(tech.id);
-      const done = tech.subSkills.reduce((n, s) => n + (progress.subSkills[s.id] || []).length, 0);
-      const total = tech.subSkills.length * STEPS.length;
-      const mastered = progress.mastered;
+    const firstLocked = techniques.findIndex((_, i) => !this.state.isTechniqueUnlocked(i, techniques));
+    const shown = firstLocked === -1 ? techniques : techniques.slice(0, firstLocked + 1);
+    return shown.map((tech, i) => {
+      const unlocked = i !== firstLocked;
+      const mastered = this.state.getTechniqueProgress(tech.id).mastered;
       const current = !!next && next.index === i;
       const status = mastered ? '✓' : !unlocked ? '🔒' : current ? '▸' : '';
       const statusText = mastered ? 'أُتقنت' : !unlocked ? 'مقفلة' : current ? 'الوحدة الحالية' : '';
       const cls = ['unit-row', mastered && 'is-mastered', !unlocked && 'is-locked', current && 'is-current'].filter(Boolean).join(' ');
       const action = unlocked ? `data-go="${routes.unit(tech.id)}"` : `data-locked="${i}" aria-disabled="true"`;
-      const bar = unlocked && !mastered && done
-        ? `<span class="mini-bar" aria-hidden="true"><span style="width:${Math.round(done / total * 100)}%"></span></span>` : '';
       return `
         <li>
           <button class="${cls}" ${action}>
@@ -175,10 +174,8 @@ export class UIManager {
             <span class="unit-text">
               <span class="unit-num">الوحدة ${i + 1}${statusText ? `<span class="sr-only"> (${statusText})</span>` : ''}</span>
               <span class="unit-name">${ar(tech.name_ar)}</span>
-              <span class="unit-en">${en(tech.name)}</span>
-              ${bar}
+              ${unlocked && !mastered ? this.unitBar(tech) : ''}
             </span>
-            <span class="unit-count"><span class="sr-only">الخطوات المنجزة: </span>${done}/${total}</span>
           </button>
         </li>`;
     }).join('');
@@ -200,13 +197,14 @@ export class UIManager {
       <div class="unit-head">
         ${this.unitPicture(tech, 'lg')}
         <div class="unit-head-text">
-          <p class="unit-num">الوحدة ${index + 1} · ${en(tech.name)}</p>
+          <p class="unit-num">الوحدة ${index + 1}</p>
           ${this.keywordButton(tech)}
           ${tech.intro ? `<p class="unit-intro">${ar(tech.intro)}</p>` : ''}
         </div>
       </div>
-      ${free ? '<p class="unit-free-note">هذه الوحدة مفتوحة لك: إن كنت تعرفها فابدأ بالاختبار مباشرةً.</p>' : ''}
-      <ol class="lesson-list">${tech.subSkills.map(sub => this.lessonCard(tech, index, sub, target, techniques)).join('')}</ol>`;
+      ${free ? '<p class="unit-free-note">هذه الوحدة مفتوحة لك.</p>' : ''}
+      ${this.unitBar(tech)}
+      <ol class="lesson-list">${tech.subSkills.map(sub => this.lessonRow(tech, index, sub, target, techniques)).join('')}</ol>`;
     this.fallbackPictures(el);
     this.setHeader(ar(tech.name_ar), false);
     this.showView('unit');
@@ -221,29 +219,24 @@ export class UIManager {
     return null;
   }
 
-  lessonCard(tech, index, sub, target, techniques) {
+  // One button per lesson: it opens the lesson's next step (or Learn again once the lesson is done).
+  // The learn / practice / test steps are not shown; the lesson simply carries on from where it was left.
+  lessonRow(tech, index, sub, target, techniques) {
     const isTarget = !!target && target.sub.id === sub.id;
-    const steps = STEPS.map(step => this.stepButton(tech, index, sub, step, isTarget && target.step === step, techniques)).join('');
+    const open = this.state.firstOpenStep(tech.id, sub.id);
+    const step = open && this.state.isStepAvailable(index, techniques, sub.id, open) ? open : 'learn';
+    const started = STEPS.some(st => this.state.isStepComplete(tech.id, sub.id, st));
+    const state = !open ? '<span aria-hidden="true">✓</span><span class="sr-only">(تمّ)</span>'
+      : isTarget ? (started ? 'تابع ⬅' : 'ابدأ ⬅') : '';
+    const cls = ['lesson-row', isTarget && 'is-current', !open && 'is-done'].filter(Boolean).join(' ');
     return `
-      <li class="lesson-card${isTarget ? ' is-current' : ''}">
-        <h2 class="lesson-title"><span class="lesson-icon" aria-hidden="true">${sub.icon}</span><span>${ar(sub.name)}</span></h2>
-        <div class="steps" role="group" aria-label="خطوات الدرس">${steps}</div>
+      <li>
+        <button class="${cls}" data-go="${routes.step(tech.id, sub.id, step)}">
+          <span class="lesson-icon" aria-hidden="true">${sub.icon}</span>
+          <span class="lesson-name">${ar(sub.name)}</span>
+          <span class="lesson-state">${state}</span>
+        </button>
       </li>`;
-  }
-
-  // The next step is the main button; done steps show ✓ (and the score); locked steps say why.
-  stepButton(tech, index, sub, step, isNext, techniques) {
-    const info = STEP_INFO[step];
-    const done = this.state.isStepComplete(tech.id, sub.id, step);
-    const available = this.state.isStepAvailable(index, techniques, sub.id, step);
-    const score = step === 'learn' ? undefined : this.state.getScore(sub.id, step);
-    let cls = 'step', state = '';
-    if (!available) state = `🔒 ${LOCK_REASON[step]}`;
-    else if (isNext) { cls += ' is-next'; state = score !== undefined ? `${pct(score)}% · أعد` : 'ابدأ'; }
-    else if (done) { cls += ' is-done'; state = score !== undefined ? `✓ ${pct(score)}%` : '✓ تمّ'; }
-    else if (score !== undefined) { cls += ' is-retry'; state = `${pct(score)}%`; }
-    const attrs = available ? `data-go="${routes.step(tech.id, sub.id, step)}"` : 'disabled';
-    return `<button class="${cls}" ${attrs}><span class="step-icon" aria-hidden="true">${info.icon}</span><span class="step-label">${info.label}</span><span class="step-state">${state}</span></button>`;
   }
 
   // ---------------- messages ----------------

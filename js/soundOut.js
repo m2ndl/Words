@@ -4,6 +4,10 @@ import { escapeHtml } from './textUtils.js';
 // "Sound it out" (c – a – t … cat): each sound plays while its letters light up, then the whole word.
 // It models blending for decodable words; heart words are learnt as wholes and have no button.
 
+// Retired for now (not reliable enough yet): no 🐢 buttons, and soundOut() returns false so callers just say the word.
+// Set to true to bring it back.
+export const SOUND_OUT_ENABLED = false;
+
 // The 🐢 button carries a text label ("قطّع") until the learner has used it a few times.
 export const SOUND_OUT_HINT = 'soundOut';
 export const SOUND_OUT_HINT_USES = 3;
@@ -11,7 +15,7 @@ let showLabel = true;
 export function setSoundOutLabel(show) { showLabel = !!show; }
 
 export function soundOutButton(audio, word, size = 'sm') {
-    if (!audio.canSoundOut(word)) return '';
+    if (!SOUND_OUT_ENABLED || !audio.canSoundOut(word)) return '';
     const label = showLabel ? '<span class="so-label">قطّع</span>' : '';
     return `<button class="soundout-btn soundout-${size}${label ? ' has-label' : ''}" data-soundout="${escapeHtml(word)}" title="قطّع الكلمة: صوتاً صوتاً" aria-label="قطّع الكلمة: صوتاً صوتاً"><span aria-hidden="true">🐢</span>${label}</button>`;
 }
@@ -30,6 +34,7 @@ function letterGroups(text, parts) {
 // Plays the word sound by sound. el (optional) shows the word; its letters light up as they are said.
 // button (optional) shows the loading/playing state.
 export function soundOut(audio, word, el = null, onend = null, button = null) {
+    if (!SOUND_OUT_ENABLED) return false;
     const parts = audio.partsOf(word);
     let restore = () => {};
     let step = () => {};

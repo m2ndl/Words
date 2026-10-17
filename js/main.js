@@ -205,11 +205,11 @@ class ModernPhonicsApp {
     if (ok) this.exitActivity();
   }
 
-  // Back to the page under the activity (its unit, or home for review).
+  // Back to the page the activity was opened from (home, when it was started there), or else the page under it.
   exitActivity() {
     const page = pageOf(parseRoute(location.hash));
     this.leaving = true;
-    if (canGoBack() && this.openedFrom === page) history.back();
+    if (canGoBack() && this.openedFrom) history.back();
     else this.replace(page);
   }
 
@@ -217,7 +217,6 @@ class ModernPhonicsApp {
   setMenu(open) {
     const { side_menu: menu, nav_btn: btn } = this.uiManager.elements;
     if (open && !isDialogOpen(menu)) {
-      this.refreshUnlockButton();
       openDialog(menu, { onCancel: () => this.closeMenu(), focus: menu.querySelector('.menu-item') });
       btn.setAttribute('aria-expanded', 'true');
     } else if (!open && isDialogOpen(menu)) {
@@ -228,13 +227,6 @@ class ModernPhonicsApp {
 
   closeMenu() {
     if (parseRoute(location.hash).menu) this.goBack();
-  }
-
-  refreshUnlockButton() {
-    const btn = this.uiManager.elements.menu_unlock;
-    const on = this.stateManager.unlockAll;
-    btn.textContent = on ? '🔒 إلغاء فتح جميع الوحدات' : '🔓 فتح جميع الوحدات';
-    btn.setAttribute('aria-pressed', String(on));
   }
 
   // ---------------- progress transfer (note page) ----------------
@@ -333,14 +325,6 @@ class ModernPhonicsApp {
     document.getElementById('menu-progress').addEventListener('click', () => this.replace(routes.progress()));
     document.getElementById('menu-review').addEventListener('click', () => this.replace(routes.review()));
     document.getElementById('menu-note').addEventListener('click', () => this.replace(routes.note()));
-    el.menu_unlock.addEventListener('click', () => {
-      this.stateManager.toggleUnlockAll();
-      this.refreshUnlockButton();
-      this.uiManager.toast(this.stateManager.unlockAll
-        ? 'فُتحت جميع الوحدات، وتستطيع أن تبدأ أي وحدة بالاختبار مباشرةً.'
-        : 'عادت الوحدات تُفتح بالترتيب.');
-      this.closeMenu();
-    });
 
     // Note page: save, send and open a copy of the progress; copy the e-mail address.
     document.getElementById('export-btn').addEventListener('click', () => this.downloadProgress());
