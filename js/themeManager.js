@@ -6,10 +6,9 @@ const THEME_COLORS = { default: '#0A2F3A', ocean: '#0369A1', forest: '#047857', 
 // Manages UI themes and the theme selector buttons.
 export class ThemeManager {
     constructor() {
-        // localStorage throws when the browser blocks site data; fall back to the default theme
-        let savedTheme = null;
-        try { savedTheme = localStorage.getItem('phonics-theme'); } catch {}
-        this.currentTheme = THEME_COLORS[savedTheme] ? savedTheme : 'default';
+        // The theme picker was retired: everyone gets the default theme, whatever an earlier choice or an imported
+        // progress file says (the app's look is styled for the default theme only).
+        this.currentTheme = 'default';
         this.applyTheme(this.currentTheme);
         this.initThemeSelector();
     }

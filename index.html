@@ -141,6 +141,16 @@
 
   <!-- load app -->
   <script type="module" src="./js/main.js"></script>
+  <!-- Safety net: if the app's files did not load together (a connection lost mid-update), main.js never runs and the
+       spinner would turn forever. Offer a reload instead; once main.js runs, its own start-up takes over. -->
+  <script>
+    setTimeout(function () {
+      if (window.wordsLoaded) return;
+      document.getElementById('boot-loading').classList.add('hidden');
+      document.getElementById('boot-error').classList.remove('hidden');
+      document.getElementById('boot-retry').onclick = function () { location.reload(); };
+    }, 15000);
+  </script>
   <script async src="https://cdn.counter.dev/script.js" data-id="35518a59-3260-4067-a297-1de0e9870d4a" data-utcoffset="3"></script>
 </body>
 </html>
