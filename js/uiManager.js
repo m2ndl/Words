@@ -13,7 +13,8 @@ export const HOME_SCREEN_TIP = 'homeScreenTip';
 const SHARE_ICON = '<svg class="share-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 2.5v10M6.5 6 10 2.5 13.5 6"/><path d="M7 9H5v8.5h10V9h-2"/></svg>';
 
 // Safari deletes a website's saved data (here: the learner's progress) after 7 days of use without a visit;
-// an app opened from the Home Screen keeps it. In-app browsers (no "Safari" in the user agent) cannot add to it.
+// an app opened from the Home Screen keeps it, but starts with its own, empty storage: a learner with progress
+// is pointed to the page that saves a copy of it. In-app browsers (no "Safari" in the user agent) cannot add to it.
 function needsHomeScreenTip() {
   const ua = navigator.userAgent;
   const apple = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -165,6 +166,8 @@ export class UIManager {
         <h2 id="home-tip-title" class="home-tip-title">📲 احفظ تقدّمك على هذا الجهاز</h2>
         <p>أضف البرنامج إلى الشاشة الرئيسية، فلا يضيع تقدّمك إذا لم تفتحه أسبوعاً.</p>
         <p class="home-tip-steps">اضغط زر المشاركة ${SHARE_ICON} ثم «إضافة إلى الشاشة الرئيسية».</p>
+        ${this.state.countWordsLearned(this.data.getTechniques()) || this.state.userProgress.lastLesson ? `
+        <p>البرنامج على الشاشة الرئيسية يبدأ من جديد. لتنقل تقدّمك إليه: <button class="btn-text btn-inline" data-go="${routes.note()}">احفظ نسخة من تقدّمك</button> ثم افتحها فيه.</p>` : ''}
         <button class="btn-text" data-dismiss-tip>حسناً</button>
       </aside>`;
   }

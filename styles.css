@@ -341,6 +341,7 @@ button { font: inherit; }
 .home-tip-title { margin-bottom: 4px; font-size: 1.05rem; font-weight: 700; }
 .home-tip-steps { margin-top: 4px; font-weight: 600; }
 .home-tip .btn-text { color: var(--note-text); }
+.home-tip .btn-inline { min-height: 0; padding: 0; text-decoration: underline; text-underline-offset: 4px; }
 .share-icon { display: inline-block; width: 1.25em; height: 1.25em; vertical-align: -0.2em; }
 #home-view .skip-unit { margin: -6px 0 6px; }
 .lesson-row.is-done .lesson-state { color: var(--primary-strong); }

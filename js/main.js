@@ -14,6 +14,8 @@ import { parseRoute, routes, activityKey, pageOf, canGoBack, pushRoute, replaceR
 const APP_NAME = 'دورة قراءة الكلمات';
 const IMPORTED_FLAG = 'wordsImported';
 const TEACHER_PRESS_MS = 1000;
+// The start screen's safety net (index.html) shows "retry" if this is not set: the app's files failed to load together.
+window.wordsLoaded = true;
 // A tab left in the background this long reloads when the learner comes back, so it runs the latest version.
 const STALE_AFTER_MS = 30 * 60 * 1000;
 
@@ -219,11 +221,12 @@ class ModernPhonicsApp {
     if (ok) this.exitActivity();
   }
 
-  // Back to the page the activity was opened from (home, when it was started there), or else the page under it.
+  // Back to home when the activity was started there, or to the page under it. An activity started on a unit
+  // page can move on to the next unit (replacing the route), and then ✕ shows that unit, not the previous entry.
   exitActivity() {
     const page = pageOf(parseRoute(location.hash));
     this.leaving = true;
-    if (canGoBack() && this.openedFrom) history.back();
+    if (canGoBack() && (this.openedFrom === page || this.openedFrom === routes.home())) history.back();
     else this.replace(page);
   }
 
